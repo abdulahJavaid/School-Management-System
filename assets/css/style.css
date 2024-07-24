@@ -1231,3 +1231,27 @@ h6 {
   font-size: 13px;
   color: #012970;
 }
+
+/*--------------------------------------------------------------
+# Custom Css
+--------------------------------------------------------------*/
+.sidebar {
+  background-color: #2193b0 !important;
+  scrollbar-color: #6dd5ed !important;
+}
+.sidebar-nav .nav-link {
+  background: #6dd5ed !important;
+  color: black !important;
+}
+.header {
+  background-color: #2193b0 !important;
+}
+.logo span {
+  color: black;
+}
+.header .toggle-sidebar-btn {
+  color: black;
+}
+.header-nav .nav-icon {
+  color: black;
+}
