@@ -3,14 +3,14 @@
 <ul class="sidebar-nav" id="sidebar-nav">
 
   <li class="nav-item">
-    <a class="nav-link " href="index.html">
+    <a class="nav-link " href="index.php">
       <i class="bi bi-grid"></i>
       <span>Dashboard</span>
     </a>
   </li><!-- End Dashboard Nav -->
 
   <li class="nav-item">
-    <a class="nav-link collapsed" data-bs-target="#components-nav" href="#"> <!-- data-bs-toggle="collapse" -->
+    <a class="nav-link collapsed" data-bs-target="#components-nav" href="profile.php"> <!-- data-bs-toggle="collapse" -->
       <i class=""><img src="images/schoolprofile.jpeg" width="20px" height="20px" alt=""></i><span>School Profile</span>
       <!-- <i class="bi bi-chevron-down ms-auto"></i> -->
     </a>
@@ -89,22 +89,22 @@
   </li><!-- End Components Nav -->
 
   <li class="nav-item">
-    <a class="nav-link collapsed" data-bs-target="#forms-nav" href="#">
+    <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
       <i class=""><img src="images/dailyexpeness.jpeg" width="30px" height="30px" alt=""></i><span>Daily Expence and Receiving</span>
-      <!-- <i class="bi bi-chevron-down ms-auto"></i> -->
+      <i class="bi bi-chevron-down ms-auto"></i>
     </a>
-    <!-- <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+    <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
       <li>
-        <a href="forms-elements.html">
-          <i class="bi bi-circle"></i><span>Form Elements</span>
+        <a href="add-expense.php">
+          <i class="bi bi-arrow-right"></i><span>Add Expenses</span>
         </a>
       </li>
       <li>
-        <a href="forms-layouts.html">
-          <i class="bi bi-circle"></i><span>Form Layouts</span>
+        <a href="add-receiving.php">
+          <i class="bi bi-arrow-right"></i><span>Add Receivings</span>
         </a>
       </li>
-      <li>
+      <!-- <li>
         <a href="forms-editors.html">
           <i class="bi bi-circle"></i><span>Form Editors</span>
         </a>
@@ -113,8 +113,8 @@
         <a href="forms-validation.html">
           <i class="bi bi-circle"></i><span>Form Validation</span>
         </a>
-      </li>
-    </ul> -->
+      </li> -->
+    </ul>
   </li><!-- End Forms Nav -->
 
   <li class="nav-item">
