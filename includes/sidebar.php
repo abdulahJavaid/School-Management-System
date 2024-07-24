@@ -118,7 +118,7 @@
   </li><!-- End Forms Nav -->
 
   <li class="nav-item">
-    <a class="nav-link collapsed" data-bs-target="#tables-nav" href="#">
+    <a class="nav-link collapsed" data-bs-target="#tables-nav" href="add-student-reports.php">
       <i class=><img src="images/studentrepots.jpeg" width="30px" height="30px" alt=""></i><span>Student Reports/Tracking</span>
       <!-- <i class="bi bi-chevron-down ms-auto"></i> -->
     </a>
@@ -137,27 +137,27 @@
   </li><!-- End Tables Nav -->
 
   <li class="nav-item">
-    <a class="nav-link collapsed" data-bs-target="#charts-nav" href="#">
+    <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
       <i class=><img src="images/STUDENTFEEANDFUND.jpeg" width="30px" height="30px" alt=""></i><span>Student Fee and Funds Status</span>
-      <!-- <i class="bi bi-chevron-down ms-auto"></i> -->
+      <i class="bi bi-chevron-down ms-auto"></i>
     </a>
-    <!-- <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+    <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
       <li>
-        <a href="charts-chartjs.html">
-          <i class="bi bi-circle"></i><span>Chart.js</span>
+        <a href="add-student-fee.php">
+          <i class="bi bi-arrow-right"></i><span>Student fees</span>
         </a>
       </li>
       <li>
-        <a href="charts-apexcharts.html">
-          <i class="bi bi-circle"></i><span>ApexCharts</span>
+        <a href="#">
+          <i class="bi bi-arrow-right"></i><span>Fund Status</span>
         </a>
       </li>
-      <li>
+      <!-- <li>
         <a href="charts-echarts.html">
           <i class="bi bi-circle"></i><span>ECharts</span>
         </a>
-      </li>
-    </ul> -->
+      </li> -->
+    </ul>
   </li><!-- End Charts Nav -->
 
   <li class="nav-item">
@@ -184,24 +184,49 @@
     </ul> -->
   </li><!-- End Icons Nav -->
 
+  <li class="nav-item">
+    <a class="nav-link collapsed" data-bs-target="#chart-nav" data-bs-toggle="collapse" href="#">
+      <i class=><img src="images/timetable.jpeg" width="30px" height="30px" alt=""></i><span>Time Table/Schedules</span>
+      <i class="bi bi-chevron-down ms-auto"></i>
+    </a>
+    <ul id="chart-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+      <li>
+        <a href="add-time-table.php">
+          <i class="bi bi-arrow-right"></i><span>Add Time Table</span>
+        </a>
+      </li>
+      <li>
+        <a href="add-exam-schedule.php">
+          <i class="bi bi-arrow-right"></i><span>Add Exam Schedule</span>
+        </a>
+      </li>
+      <!-- <li>
+        <a href="charts-echarts.html">
+          <i class="bi bi-circle"></i><span>ECharts</span>
+        </a>
+      </li> -->
+    </ul>
+  </li><!-- End Charts Nav -->
+
   <!-- <li class="nav-heading">Pages</li> -->
 
-  <li class="nav-item">
+  <!-- <li class="nav-item">
     <a class="nav-link collapsed" href="users-profile.html">
       <i class=><img src="images/timetable.jpeg" width="30px" height="30px" alt=""></i>
       <span>Time Table/Schedules</span>
     </a>
-  </li><!-- End Profile Page Nav -->
+  </li> -->
+  <!-- End Profile Page Nav -->
 
   <li class="nav-item">
-    <a class="nav-link collapsed" href="pages-faq.html">
+    <a class="nav-link collapsed" href="add-announcements.php">
       <i class=><img src="images/announcment.jpeg" width="30px" height="30px" alt=""></i>
-      <span>Announcements</span>
+      <span>Add Announcements</span>
     </a>
   </li><!-- End F.A.Q Page Nav -->
 
   <li class="nav-item">
-    <a class="nav-link collapsed" href="pages-contact.html">
+    <a class="nav-link collapsed" href="#">
       <i class=><img src="images/morereport.jpeg" width="30px" height="30px" alt=""></i>
       <span>More Reports</span>
     </a>
