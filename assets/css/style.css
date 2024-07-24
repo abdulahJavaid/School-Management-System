@@ -1243,6 +1243,10 @@ h6 {
   background: #6dd5ed !important;
   color: black !important;
 }
+.sidebar-nav .nav-link:hover {
+  /* background: #6dd5ed !important; */
+  color: white !important;
+}
 .header {
   background-color: #2193b0 !important;
 }
@@ -1254,4 +1258,10 @@ h6 {
 }
 .header-nav .nav-icon {
   color: black;
+}
+.sidebar-nav .nav-content a {
+  color: black;
+}
+.sidebar-nav .nav-content a:hover {
+  color: white;
 }

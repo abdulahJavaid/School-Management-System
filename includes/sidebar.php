@@ -11,7 +11,7 @@
 
   <li class="nav-item">
     <a class="nav-link collapsed" data-bs-target="#components-nav" href="profile.php"> <!-- data-bs-toggle="collapse" -->
-      <i class=""><img src="images/schoolprofile.jpeg" width="20px" height="20px" alt=""></i><span>School Profile</span>
+      <i class=""><img src="images/schoolprofile.jpeg" width="30px" height="30px" alt=""></i><span>School Profile</span>
       <!-- <i class="bi bi-chevron-down ms-auto"></i> -->
     </a>
     <!-- <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
@@ -90,7 +90,7 @@
 
   <li class="nav-item">
     <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
-      <i class=""><img src="images/dailyexpeness.jpeg" width="30px" height="30px" alt=""></i><span>Daily Expence and Receiving</span>
+      <i class=""><img src="images/dailyexpness.jpg" width="30px" height="30px" alt=""></i><span>Daily Expence and Receiving</span>
       <i class="bi bi-chevron-down ms-auto"></i>
     </a>
     <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
@@ -119,7 +119,7 @@
 
   <li class="nav-item">
     <a class="nav-link collapsed" data-bs-target="#tables-nav" href="add-student-reports.php">
-      <i class=><img src="images/studentrepots.jpeg" width="30px" height="30px" alt=""></i><span>Student Reports/Tracking</span>
+      <i class=><img src="images/reporttracking.jpg" width="30px" height="30px" alt=""></i><span>Student Reports/Tracking</span>
       <!-- <i class="bi bi-chevron-down ms-auto"></i> -->
     </a>
     <!-- <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
@@ -138,7 +138,7 @@
 
   <li class="nav-item">
     <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
-      <i class=><img src="images/STUDENTFEEANDFUND.jpeg" width="30px" height="30px" alt=""></i><span>Student Fee and Funds Status</span>
+      <i class=><img src="images/fee.jpg" width="30px" height="30px" alt=""></i><span>Student Fee and Funds Status</span>
       <i class="bi bi-chevron-down ms-auto"></i>
     </a>
     <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
@@ -162,7 +162,7 @@
 
   <li class="nav-item">
     <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
-      <i class=><img src="images/schoolfiNANCE.jpeg" width="30px" height="30px" alt=""></i><span>School Finance Management</span>
+      <i class=><img src="images/schoolfinance.png" width="30px" height="30px" alt=""></i><span>School Finance Management</span>
       <!-- <i class="bi bi-chevron-down ms-auto"></i> -->
     </a>
     <!-- <ul id="icons-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
@@ -186,7 +186,7 @@
 
   <li class="nav-item">
     <a class="nav-link collapsed" data-bs-target="#chart-nav" data-bs-toggle="collapse" href="#">
-      <i class=><img src="images/timetable.jpeg" width="30px" height="30px" alt=""></i><span>Time Table/Schedules</span>
+      <i class=><img src="images/timeable.png" width="30px" height="30px" alt=""></i><span>Time Table/Schedules</span>
       <i class="bi bi-chevron-down ms-auto"></i>
     </a>
     <ul id="chart-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
@@ -220,14 +220,14 @@
 
   <li class="nav-item">
     <a class="nav-link collapsed" href="add-announcements.php">
-      <i class=><img src="images/announcment.jpeg" width="30px" height="30px" alt=""></i>
+      <i class=><img src="images/announcments.jpg" width="30px" height="30px" alt=""></i>
       <span>Add Announcements</span>
     </a>
   </li><!-- End F.A.Q Page Nav -->
 
   <li class="nav-item">
     <a class="nav-link collapsed" href="#">
-      <i class=><img src="images/morereport.jpeg" width="30px" height="30px" alt=""></i>
+      <i class=><img src="images/morereports.jpg" width="30px" height="30px" alt=""></i>
       <span>More Reports</span>
     </a>
   </li><!-- End Contact Page Nav -->
