@@ -90,7 +90,7 @@
 
   <li class="nav-item">
     <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
-      <i class=""><img src="images/dailyexpness.jpg" width="30px" height="30px" alt=""></i><span>Daily Expence and Receiving</span>
+      <i class=""><img src="images/dailyexpness.jpg" width="30px" height="30px" alt=""></i><span>Finance Management</span>
       <i class="bi bi-chevron-down ms-auto"></i>
     </a>
     <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
@@ -160,11 +160,11 @@
     </ul>
   </li><!-- End Charts Nav -->
 
-  <li class="nav-item">
+  <!-- <li class="nav-item">
     <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
       <i class=><img src="images/schoolfinance.png" width="30px" height="30px" alt=""></i><span>School Finance Management</span>
-      <!-- <i class="bi bi-chevron-down ms-auto"></i> -->
-    </a>
+      <i class="bi bi-chevron-down ms-auto"></i>
+    </a> -->
     <!-- <ul id="icons-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
       <li>
         <a href="icons-bootstrap.html">
