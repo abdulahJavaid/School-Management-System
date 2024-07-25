@@ -1,3 +1,12 @@
+<?php require_once("init.php"); // inclusion fo init file ?>
+
+<?php
+  // cheking if the user is logged in
+  if(!isset($_SESSION['login_access'])){
+    redirect("./login.php");
+  }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -212,7 +221,7 @@
 
         <li class="nav-item dropdown pe-3">
 
-          <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#"> <!-- data-bs-toggle="dropdown" -->
+          <a class="nav-link nav-profile d-flex align-items-center pe-0" href="includes/logout.php?get=yes"> <!-- data-bs-toggle="dropdown" -->
             <!-- <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle"> -->
             <i class="bi bi-box-arrow-right"></i>
             <span class="d-none d-md-block ps-2">Logout</span>
