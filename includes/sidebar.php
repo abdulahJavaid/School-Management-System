@@ -9,11 +9,8 @@
     </a>
   </li><!-- End Dashboard Nav -->
 
-  <li class="nav-item">
-    <a class="nav-link collapsed" data-bs-target="#components-nav" href="profile.php"> <!-- data-bs-toggle="collapse" -->
-      <i class=""><img src="images/schoolprofile.jpeg" width="30px" height="30px" alt=""></i><span>School Profile</span>
-      <!-- <i class="bi bi-chevron-down ms-auto"></i> -->
-    </a>
+  
+ 
     <!-- <ul id="components-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
       <li>
         <a href="components-alerts.html">
@@ -21,6 +18,7 @@
         </a>
       </li>
       <li>
+        
         <a href="components-accordion.html">
           <i class="bi bi-circle"></i><span>Accordion</span>
         </a>
@@ -87,6 +85,35 @@
       </li>
     </ul> -->
   </li><!-- End Components Nav -->
+  <li class="nav-item">
+    <a class="nav-link collapsed" data-bs-target="#components-nav" href="profile.php"> <!-- data-bs-toggle="collapse" -->
+      <i class=""><img src="images/schoolprofile.jpeg" width="30px" height="30px" alt=""></i><span>School Profile</span>
+      <!-- <i class="bi bi-chevron-down ms-auto"></i> -->
+    </a>
+
+
+    <li class="nav-item">
+    <a class="nav-link collapsed" data-bs-target="#profiling" data-bs-toggle="collapse" href="#">
+      <i class=""><img src="images/dailyexpness.jpg" width="30px" height="30px" alt=""></i><span>Profiling</span>
+      <i class="bi bi-chevron-down ms-auto"></i>
+    </a>
+    <ul id="profiling" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+      <li>
+        <a href="staff-profile.php">
+          <i class="bi bi-arrow-right"></i><span>Staff profiling</span>
+        </a>
+      </li>
+      <li>
+        <a href="student-profile.php">
+          <i class="bi bi-arrow-right"></i><span>Student profiling</span>
+        </a>
+        </ul>
+      </li>
+
+
+
+
+
 
   <li class="nav-item">
     <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
@@ -207,6 +234,7 @@
       </li> -->
     </ul>
   </li><!-- End Charts Nav -->
+  
 
   <!-- <li class="nav-heading">Pages</li> -->
 
