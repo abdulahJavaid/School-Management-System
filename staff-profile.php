@@ -164,7 +164,7 @@ VALUES('$name', '$cnic', '$f_name', '$phone_no', '$qualification', '$issue_code'
 
 
                                     <div class="text-center">
-                                        <button type="submit" name="submit" class="btn btn-primary">Submit</button>
+                                        <button type="submit" name="submit" class="btn btn-primary button">Submit</button>
                                     </div>
                                 </form><!-- End Profile Edit Form -->
 

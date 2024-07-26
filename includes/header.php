@@ -221,13 +221,13 @@
 
         <li class="nav-item dropdown pe-3">
 
-          <a class="nav-link nav-profile d-flex align-items-center pe-0" href="includes/logout.php?get=yes"> <!-- data-bs-toggle="dropdown" -->
-            <!-- <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle"> -->
-            <i class="bi bi-box-arrow-right"></i>
-            <span class="d-none d-md-block ps-2">Logout</span>
+          <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown" >  <!-- includes/logout.php?get=yes-->
+            <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
+            <!--<i class="bi bi-box-arrow-right"></i>-->
+            <span class="d-none d-md-block ps-2">Profile</span>
           </a><!-- End Profile Iamge Icon -->
 
-          <!-- <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
               <h6>Kevin Anderson</h6>
               <span>Web Designer</span>
@@ -273,7 +273,7 @@
               </a>
             </li>
 
-          </ul>--><!--End Profile Dropdown Items -->
+          </ul><!--End Profile Dropdown Items -->
         </li><!-- End Profile Nav -->
 
       </ul>
