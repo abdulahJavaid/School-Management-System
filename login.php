@@ -49,11 +49,13 @@
         <label for="password">Password</label>
         <input type="password" placeholder="Password" id="password" name="password">
 
-        <button name="submit">Log In</button>
+        <button name="submit">Log In</button><br><br>
+        <p class="login-link">Reset password? <a href="signup.php">Sign up</a></p>
         <!-- <div class="social">
           <div class="go"><i class="fab fa-google"></i>  Google</div>
           <div class="fb"><i class="fab fa-facebook"></i>  Facebook</div>
         </div> -->
     </form>
+  
 </body>
 </html>

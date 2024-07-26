@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 25, 2024 at 04:14 PM
+-- Generation Time: Jul 26, 2024 at 03:09 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -29,6 +29,8 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `admin` (
   `admin_id` int(10) NOT NULL,
+  `name` varchar(200) NOT NULL,
+  `email` varchar(50) NOT NULL,
   `password` varchar(255) NOT NULL,
   `access` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -37,9 +39,16 @@ CREATE TABLE `admin` (
 -- Dumping data for table `admin`
 --
 
-INSERT INTO `admin` (`admin_id`, `password`, `access`) VALUES
-(1, 'admin', 'super'),
-(2, 'accountant', 'accountant');
+INSERT INTO `admin` (`admin_id`, `name`, `email`, `password`, `access`) VALUES
+(1, '', '', 'admin', 'super'),
+(2, '', '', 'accountant', 'accountant'),
+(4, '', '', '', ''),
+(5, 'Ali Raza', 'alirazaali5723@gmail.com', 'admin2', ''),
+(6, '', '', '', ''),
+(7, '', '', '', ''),
+(8, '', '', '', ''),
+(9, '', '', '', ''),
+(10, '', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -125,7 +134,7 @@ ALTER TABLE `teacher_profile`
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `admin_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `admin_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `student_profile`
