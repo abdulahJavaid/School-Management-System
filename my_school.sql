@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 27, 2024 at 07:25 AM
+-- Generation Time: Jul 27, 2024 at 07:11 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -40,15 +40,30 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`admin_id`, `name`, `email`, `password`, `access`) VALUES
-(1, '', '', 'admin', 'super'),
-(2, '', '', 'accountant', 'accountant'),
-(4, '', '', '', ''),
-(5, 'Ali Raza', 'alirazaali5723@gmail.com', 'admin2', ''),
-(6, '', '', '', ''),
-(7, '', '', '', ''),
-(8, '', '', '', ''),
-(9, '', '', '', ''),
-(10, '', '', '', '');
+(1, 'admin', 'admin@email.com', 'admin', 'super'),
+(2, 'accountant', 'accountant@email.com', 'accountant', 'accountant'),
+(5, 'Ali Raza', 'alirazaali5723@gmail.com', 'admin2', 'developer');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `logs`
+--
+
+CREATE TABLE `logs` (
+  `log_id` int(20) NOT NULL,
+  `log` text NOT NULL,
+  `time` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `logs`
+--
+
+INSERT INTO `logs` (`log_id`, `log`, `time`) VALUES
+(1, '<strong>admin</strong> with <strong>ID: 1</strong> added new student to Database!', '2024/07/27 08:53:10'),
+(2, '<strong>admin</strong> with <strong>ID: 1</strong> added new student to Database!', '2024/07/27 09:00:05'),
+(3, '<strong>admin</strong> with <strong>ID: 1</strong> added new student to Database!', '2024/07/27 07:04:56');
 
 -- --------------------------------------------------------
 
@@ -825,7 +840,16 @@ INSERT INTO `student_profile` (`student_id`, `name`, `cnic`, `f_name`, `phone_no
 (2256, 'name 27', 'cnic 27', 'f_name 27', 'phone_no 27', '12', 'E', '0000-00-00', 'address 27', 'issue_code 27', 'password 27'),
 (2257, 'name 28', 'cnic 28', 'f_name 28', 'phone_no 28', '12', 'E', '0000-00-00', 'address 28', 'issue_code 28', 'password 28'),
 (2258, 'name 29', 'cnic 29', 'f_name 29', 'phone_no 29', '12', 'E', '0000-00-00', 'address 29', 'issue_code 29', 'password 29'),
-(2259, 'name 30', 'cnic 30', 'f_name 30', 'phone_no 30', '12', 'E', '0000-00-00', 'address 30', 'issue_code 30', 'password 30');
+(2259, 'name 30', 'cnic 30', 'f_name 30', 'phone_no 30', '12', 'E', '0000-00-00', 'address 30', 'issue_code 30', 'password 30'),
+(2260, 'dummy', 'v', 'dummy', 'dummy', 'dummy', 'dummy', '2024-07-10', 'dummy', 'dummy', 'dummy'),
+(2261, 'dummy', 'v', 'dummy', 'dummy', 'dummy', 'dummy', '2024-07-10', 'dummy', 'dummy', 'dummy'),
+(2262, 'dummy', 'v', 'dummy', 'dummy', 'dummy', 'dummy', '2024-07-10', 'dummy', 'dummy', 'dummy'),
+(2263, 'dummy', 'v', 'dummy', 'dummy', 'dummy', 'dummy', '2024-07-10', 'dummy', 'dummy', 'dummy'),
+(2264, 'dummy', 'v', 'dummy', 'dummy', 'dummy', 'dummy', '2024-07-10', 'dummy', 'dummy', 'dummy'),
+(2265, 'dummy', 'v', 'dummy', 'dummy', 'dummy', 'dummy', '2024-07-10', 'dummy', 'dummy', 'dummy'),
+(2266, 'dummy', 'v', 'dummy', 'dummy', 'dummy', 'dummy', '2024-07-10', 'dummy', 'dummy', 'dummy'),
+(2267, 'dummy', 'dummy', 'dummy', 'dummy', 'dummy', 'dummy', '2024-07-10', 'dummy', 'dummy', 'dummy'),
+(2268, 'dummy', 'dummy', 'dummy', 'dummy', 'dummy', 'dummy', '2024-07-09', 'dummy', 'dummy', 'dummy');
 
 -- --------------------------------------------------------
 
@@ -865,6 +889,12 @@ ALTER TABLE `admin`
   ADD PRIMARY KEY (`admin_id`);
 
 --
+-- Indexes for table `logs`
+--
+ALTER TABLE `logs`
+  ADD PRIMARY KEY (`log_id`);
+
+--
 -- Indexes for table `student_profile`
 --
 ALTER TABLE `student_profile`
@@ -887,10 +917,16 @@ ALTER TABLE `admin`
   MODIFY `admin_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
+-- AUTO_INCREMENT for table `logs`
+--
+ALTER TABLE `logs`
+  MODIFY `log_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `student_profile`
 --
 ALTER TABLE `student_profile`
-  MODIFY `student_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2260;
+  MODIFY `student_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2269;
 
 --
 -- AUTO_INCREMENT for table `teacher_profile`
