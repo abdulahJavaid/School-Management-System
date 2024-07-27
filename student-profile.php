@@ -26,7 +26,7 @@ VALUES('$name', '$cnic', '$f_name', '$phone_no', '$class', '$section', '$dob', '
         $name = $fetch['name'];
         $id = $_SESSION['login_id'];
         $log = "<strong>$name</strong> with <strong>ID: $id</strong> added new student to Database!";
-        $time = date('Y/m/d h:i:s', time());
+        $time = date('d/m/Y h:i a', time());
         $time = (string) $time;
 
         $query = "INSERT INTO logs(log, time) VALUES('$log', '$time')";

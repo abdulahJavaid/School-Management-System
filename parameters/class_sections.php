@@ -6,11 +6,11 @@
     // create subarrays for all classes
     // then create sections for each class
     $sections = array(
-        array('A', 'B', 'C', 'D', 'E'), // sections of first class in school - in this case 8
-        array('A', 'B', 'C', 'D', 'E'), // sections of second class in school - in this case 9
-        array('A', 'B', 'C', 'D', 'E'), // sections of third clss in school - in this case 10
-        array('A', 'B', 'C', 'D', 'E'), // sections of fourth class in school - in this case 11
-        array('A', 'B', 'C', 'D', 'E')  // sections of fifth class in school - in this case 12
+        "8" => array('A', 'B', 'C', 'D', 'E'), // sections of first class in school - in this case 8
+        "9" => array('A', 'B', 'C', 'D', 'E'), // sections of second class in school - in this case 9
+        "10" => array('A', 'B', 'C', 'D', 'E'), // sections of third clss in school - in this case 10
+        "11" =>array('A', 'B', 'C', 'D', 'E'), // sections of fourth class in school - in this case 11
+        "12" => array('A', 'B', 'C', 'D', 'E')  // sections of fifth class in school - in this case 12
     );
     
 

@@ -157,7 +157,14 @@ VALUES('$name', '$cnic', '$f_name', '$phone_no', '$qualification', '$issue_code'
                                     <div class="row mb-3">
                                         <label for="staff_status" class="col-md-4 col-lg-3 col-form-label">Staff ststus</label>
                                         <div class="col-md-8 col-lg-9">
-                                            <input name="staff_status" type="text" class="form-control" id="Facebook" value="" placeholder="Enter your status">
+                                            <select id="inputState" name="section" class="form-select">
+                                                <option selected value="<?php echo "other"; ?>">Select</option>
+                                                <option value="<?php echo "administration"; ?>">Administration</option>
+                                                <option value="<?php echo "teacher"; ?>">Teacher</option>
+                                                <option value="<?php echo "other"; ?>">Other</option>
+                                                <option value="<?php echo "D"; ?>">D</option>
+                                                <option value="<?php echo "E"; ?>">E</option>
+                                            </select>
                                         </div>
                                     </div>
 
