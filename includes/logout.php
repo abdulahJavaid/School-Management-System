@@ -10,6 +10,7 @@
 
     if(isset($_GET['get']) && $_GET['get'] == 'yes'){ // if the request is valid
         unset($_SESSION['login_access']);
+        unset($_SESSION['login_id']);
         redirect('../');
     }else{ // if the request is not valid
         redirect('../');

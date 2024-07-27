@@ -48,12 +48,12 @@
                     </select>
                 </div>
                 <div class="row">
-                <div class="col-md-2">
-                    <input type="submit" name="submit" class="btn btn-md btn-primary button mx-auto" value="Check">
-                </div>
-                <div class="d-flex justify-content-end">
-        <a class="btn btn-primary button" href="./student-profile.php">Add Student</a>
-        </div>
+                    <div class="col-md-2">
+                        <input type="submit" name="submit" class="btn btn-md btn-primary button mx-auto" value="Check">
+                    </div>
+                    <div class="d-flex justify-content-end">
+                        <a class="btn btn-primary button" href="./student-profile.php">Add Student</a>
+                    </div>
                 </div>
             </form>
         </div>

@@ -23,6 +23,7 @@
     if($result){
       if($password == $result['password']){
         $_SESSION['login_access'] = $result['access'];
+        $_SESSION['login_id'] = $result['admin_id'];
         redirect('./');
       }else{
         $message = "Your password is not correct!";

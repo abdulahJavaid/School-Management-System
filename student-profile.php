@@ -18,9 +18,23 @@ if (isset($_POST['submit'])) {
 
     $query = "INSERT INTO student_profile(name, cnic, f_name, phone_no, class, section, dob, address, issue_code, password) 
 VALUES('$name', '$cnic', '$f_name', '$phone_no', '$class', '$section', '$dob', '$address', '$issue_code', '$password')";
-    $result = mysqli_query($conn, $query);
-    if ($result) {
-        echo "data has been successfully inserted";
+    $pass_query = mysqli_query($conn, $query);
+    if ($pass_query) {
+        // code to add log into the database
+        $result = sql_where('admin', 'admin_id', $_SESSION['login_id']);
+        $fetch = mysqli_fetch_assoc($result);
+        $name = $fetch['name'];
+        $id = $_SESSION['login_id'];
+        $log = "<strong>$name</strong> with <strong>ID: $id</strong> added new student to Database!";
+        $time = date('Y/m/d h:i:s', time());
+        $time = (string) $time;
+
+        $query = "INSERT INTO logs(log, time) VALUES('$log', '$time')";
+        $pass_query2 = mysqli_query($conn, $query);
+        if(!$pass_query2){
+            echo "Error: " . mysqli_error($conn);
+        }
+
     } else {
         echo "Error: " . mysqli_error($conn);
     }
