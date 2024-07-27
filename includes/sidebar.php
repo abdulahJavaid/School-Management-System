@@ -4,7 +4,7 @@
 
   <li class="nav-item">
     <a class="nav-link " href="index.php">
-      <i class="bi bi-grid"></i>
+      <i class=""><img src="images/dashboard.jpeg" width="30px" height="30px" alt=""></i>
       <span>Dashboard</span>
     </a>
   </li><!-- End Dashboard Nav -->
@@ -87,14 +87,14 @@
   </li><!-- End Components Nav -->
   <li class="nav-item">
     <a class="nav-link collapsed" data-bs-target="#components-nav" href="profile.php"> <!-- data-bs-toggle="collapse" -->
-      <i class=""><img src="images/schoolprofile.jpeg" width="30px" height="30px" alt=""></i><span>School Profile</span>
+      <i class=""><img src="images/schoolprofile1.jpeg" width="30px" height="30px" alt=""></i><span>School Profile</span>
       <!-- <i class="bi bi-chevron-down ms-auto"></i> -->
     </a>
 
 
     <li class="nav-item">
     <a class="nav-link collapsed" data-bs-target="#profiling" data-bs-toggle="collapse" href="#">
-      <i class=""><img src="images/dailyexpness.jpg" width="30px" height="30px" alt=""></i><span>Profiles</span>
+      <i class=""><img src="images/profile.jpeg" width="30px" height="30px" alt=""></i><span>Profiles</span>
       <i class="bi bi-chevron-down ms-auto"></i>
     </a>
     <ul id="profiling" class="nav-content collapse " data-bs-parent="#sidebar-nav">

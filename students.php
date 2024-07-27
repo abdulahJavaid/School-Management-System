@@ -73,11 +73,12 @@
                                 <tr>
                                     <th scope="col">Issued Code</th>
                                     <th scope="col">Name</th>
-                                    <th scope="col">CNIC</th>
                                     <th scope="col">Father Name</th>
-                                    <th scope="col">Phone#</th>
                                     <th scope="col">Class</th>
                                     <th scope="col">Section</th>
+                                    <th scope="col">Dues</th>
+                                    <th scope="col">See Profile</th>
+                                    <th scope="col">Edit</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -99,11 +100,14 @@
                                         <tr>
                                             <td><?php echo $row['issue_code']; ?></td><!--scope="row" -->
                                             <td><?php echo $row['name']; ?></td>
-                                            <td><?php echo $row['cnic']; ?></td>
+                                            
                                             <td><?php echo $row['f_name']; ?></td>
-                                            <td><?php echo $row['phone_no']; ?></td>
+                                           
                                             <td><?php echo $row['class']; ?></td>
                                             <td><?php echo $row['section']; ?></td>
+                                            <td>null</td>
+                                            <td><a href="#">View profile</a></td>
+                                            <td><a href="#">Edit profile</a></td>
                                             <!-- <td></td> -->
                                             <!-- <td></td> -->
                                         </tr>
@@ -117,11 +121,15 @@
                                         <tr>
                                             <td><?php echo $row['issue_code']; ?></td><!--scope="row" -->
                                             <td><?php echo $row['name']; ?></td>
-                                            <td><?php echo $row['cnic']; ?></td>
+                                            
                                             <td><?php echo $row['f_name']; ?></td>
-                                            <td><?php echo $row['phone_no']; ?></td>
+                                            
                                             <td><?php echo $row['class']; ?></td>
                                             <td><?php echo $row['section']; ?></td>
+                                            <td>null</td>
+                                            <td><a href="#">View profile</a></td>
+                                            <td><a href="#">Edit profile</a></td>
+
                                         </tr>
                                 <?php
                                     }
