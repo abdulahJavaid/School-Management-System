@@ -223,8 +223,9 @@
 
           <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown" >  <!-- includes/logout.php?get=yes-->
             <img src="assets/img/profile-img.jpg" alt="Profile" class="rounded-circle">
-            <!--<i class="bi bi-box-arrow-right"></i>-->
-            <span class="d-none d-md-block ps-2">Profile</span>
+            <!-- <i class="bi bi-box-arrow-right"></i> -->
+            <span class="d-none d-md-block ps-2">Profile&nbsp;</span>
+            <i class="bi bi-chevron-down"></i>
           </a><!-- End Profile Iamge Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
@@ -280,3 +281,33 @@
     </nav><!-- End Icons Navigation -->
 
   </header><!-- End Header -->
+
+<?php
+
+//     for($i = 8; $i < 13; $i++){
+//       for($j = 0; $j < 5; $j++){
+//         for($l = 1; $l < 31; $l++){
+//           $arr = ['A', 'B', 'C', 'D', 'E'];
+//     $name = 'name ' . $l;
+//     $cnic = 'cnic ' . $l;
+//     $f_name = 'f_name ' . $l;
+//     $phone_no = 'phone_no ' . $l;
+//     $class = $i;
+//     $section =  $arr[$j];
+//     $dob = date(time());
+//     $address = 'address ' . $l;
+//     $issue_code = 'issue_code ' . $l;
+//     $password = 'password ' . $l;
+
+//     $query = "INSERT INTO student_profile(name, cnic, f_name, phone_no, class, section, dob, address, issue_code, password) 
+// VALUES('$name', '$cnic', '$f_name', '$phone_no', '$class', '$section', '$dob', '$address', '$issue_code', '$password')";
+//     $result = mysqli_query($conn, $query);
+//     if ($result) {
+//         echo "data has been successfully inserted";
+//     } else {
+//         echo "Error: " . mysqli_error($conn);
+//     }
+//   }
+//   }
+//   }
+    ?>

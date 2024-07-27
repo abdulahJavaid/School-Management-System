@@ -6,6 +6,7 @@
 
     require_once("db_connection/configs.php"); // database connection constants
     require_once("db_connection/connection.php"); // database connection
+    require_once("parameters/class_sections.php"); // database connection
     require_once("functions.php"); // all the functions for my school system
 
 ?>

@@ -94,18 +94,18 @@
 
     <li class="nav-item">
     <a class="nav-link collapsed" data-bs-target="#profiling" data-bs-toggle="collapse" href="#">
-      <i class=""><img src="images/dailyexpness.jpg" width="30px" height="30px" alt=""></i><span>Profiling</span>
+      <i class=""><img src="images/dailyexpness.jpg" width="30px" height="30px" alt=""></i><span>Profiles</span>
       <i class="bi bi-chevron-down ms-auto"></i>
     </a>
     <ul id="profiling" class="nav-content collapse " data-bs-parent="#sidebar-nav">
       <li>
         <a href="staff-profile.php">
-          <i class="bi bi-arrow-right"></i><span>Staff profiling</span>
+          <i class="bi bi-arrow-right"></i><span>Staff Profiles</span>
         </a>
       </li>
       <li>
-        <a href="student-profile.php">
-          <i class="bi bi-arrow-right"></i><span>Student profiling</span>
+        <a href="students.php">
+          <i class="bi bi-arrow-right"></i><span>Student Profiles</span>
         </a>
         </ul>
       </li>
