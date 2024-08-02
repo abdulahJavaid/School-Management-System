@@ -3,7 +3,7 @@
     define('DB_SERVER', 'localhost');
     define('DB_USER', 'root');
     define('DB_PASSWORD', '');
-    define('DB_NAME', 'my_school');
+    define('DB_NAME', '_myschool_db');
 
     $db_name = 'kddjkdjk';
 

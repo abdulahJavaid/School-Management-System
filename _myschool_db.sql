@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 02, 2024 at 10:32 AM
+-- Generation Time: Aug 02, 2024 at 11:14 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -145,7 +145,8 @@ CREATE TABLE `periods` (
 --
 
 CREATE TABLE `progress_report` (
-  `student_id` int(20) NOT NULL,
+  `progress_id` int(11) NOT NULL,
+  `fk_student_id` int(20) NOT NULL,
   `progress_remarks` varchar(50) NOT NULL,
   `date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -159,7 +160,8 @@ CREATE TABLE `progress_report` (
 CREATE TABLE `student_class` (
   `student_class_id` int(11) NOT NULL,
   `fk_student_id` int(20) NOT NULL,
-  `class` varchar(50) NOT NULL,
+  `fk_class_id` int(11) NOT NULL,
+  `fk_section_id` int(11) NOT NULL,
   `status` int(10) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -195,19 +197,6 @@ CREATE TABLE `student_profile` (
   `image` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `student_section`
---
-
-CREATE TABLE `student_section` (
-  `student_section_id` int(11) NOT NULL,
-  `fk_student_id` int(20) NOT NULL,
-  `section` varchar(50) NOT NULL,
-  `status` int(10) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -313,14 +302,17 @@ ALTER TABLE `periods`
 -- Indexes for table `progress_report`
 --
 ALTER TABLE `progress_report`
-  ADD KEY `fk_student_progress_id` (`student_id`);
+  ADD PRIMARY KEY (`progress_id`),
+  ADD KEY `fk_student_progress_id` (`fk_student_id`);
 
 --
 -- Indexes for table `student_class`
 --
 ALTER TABLE `student_class`
   ADD PRIMARY KEY (`student_class_id`),
-  ADD KEY `fk_student_class_id` (`fk_student_id`);
+  ADD KEY `fk_student_class_id` (`fk_student_id`),
+  ADD KEY `fk_student_class` (`fk_class_id`),
+  ADD KEY `fk_student_section` (`fk_section_id`);
 
 --
 -- Indexes for table `student_fee`
@@ -336,13 +328,6 @@ ALTER TABLE `student_profile`
   ADD PRIMARY KEY (`student_id`);
 
 --
--- Indexes for table `student_section`
---
-ALTER TABLE `student_section`
-  ADD PRIMARY KEY (`student_section_id`),
-  ADD KEY `fk_student_section_id` (`fk_student_id`);
-
---
 -- Indexes for table `teacher_profile`
 --
 ALTER TABLE `teacher_profile`
@@ -352,7 +337,8 @@ ALTER TABLE `teacher_profile`
 -- Indexes for table `timetable`
 --
 ALTER TABLE `timetable`
-  ADD PRIMARY KEY (`timetable_id`);
+  ADD PRIMARY KEY (`timetable_id`),
+  ADD KEY `fk_section_table_id` (`fk_section_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -413,6 +399,12 @@ ALTER TABLE `periods`
   MODIFY `period_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `progress_report`
+--
+ALTER TABLE `progress_report`
+  MODIFY `progress_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `student_class`
 --
 ALTER TABLE `student_class`
@@ -429,12 +421,6 @@ ALTER TABLE `student_fee`
 --
 ALTER TABLE `student_profile`
   MODIFY `student_id` int(20) NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT for table `student_section`
---
-ALTER TABLE `student_section`
-  MODIFY `student_section_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `teacher_profile`
@@ -489,13 +475,15 @@ ALTER TABLE `periods`
 -- Constraints for table `progress_report`
 --
 ALTER TABLE `progress_report`
-  ADD CONSTRAINT `fk_student_progress_id` FOREIGN KEY (`student_id`) REFERENCES `student_profile` (`student_id`);
+  ADD CONSTRAINT `fk_student_progress_id` FOREIGN KEY (`fk_student_id`) REFERENCES `student_profile` (`student_id`);
 
 --
 -- Constraints for table `student_class`
 --
 ALTER TABLE `student_class`
-  ADD CONSTRAINT `fk_student_class_id` FOREIGN KEY (`fk_student_id`) REFERENCES `student_profile` (`student_id`);
+  ADD CONSTRAINT `fk_student_class` FOREIGN KEY (`fk_class_id`) REFERENCES `all_classes` (`class_id`),
+  ADD CONSTRAINT `fk_student_class_id` FOREIGN KEY (`fk_student_id`) REFERENCES `student_profile` (`student_id`),
+  ADD CONSTRAINT `fk_student_section` FOREIGN KEY (`fk_section_id`) REFERENCES `class_sections` (`section_id`);
 
 --
 -- Constraints for table `student_fee`
@@ -504,10 +492,10 @@ ALTER TABLE `student_fee`
   ADD CONSTRAINT `fk_student_fee_id` FOREIGN KEY (`fk_student_id`) REFERENCES `student_profile` (`student_id`);
 
 --
--- Constraints for table `student_section`
+-- Constraints for table `timetable`
 --
-ALTER TABLE `student_section`
-  ADD CONSTRAINT `fk_student_section_id` FOREIGN KEY (`fk_student_id`) REFERENCES `student_profile` (`student_id`);
+ALTER TABLE `timetable`
+  ADD CONSTRAINT `fk_section_table_id` FOREIGN KEY (`fk_section_id`) REFERENCES `class_sections` (`section_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
