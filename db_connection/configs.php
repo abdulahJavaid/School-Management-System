@@ -5,8 +5,6 @@
     define('DB_PASSWORD', '');
     define('DB_NAME', '_myschool_db');
 
-    $db_name = 'kddjkdjk';
-
     // const DB_SERRVER = 'localhost';
 
 ?>
