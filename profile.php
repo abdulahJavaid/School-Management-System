@@ -11,10 +11,15 @@
     <ol class="breadcrumb">
       <!-- <li class="breadcrumb-item"><a href="index.html">Home</a></li>
       <li class="breadcrumb-item">Users</li> -->
-      <li class="breadcrumb-item active">School name here</li>
+      <li class="breadcrumb-item active">Savy School</li>
     </ol>
   </nav>
-</div><!-- End Page Title -->
+</div>
+
+<!-- End Page Title -->
+
+
+
 
 <section class="section profile">
   <div class="row">
@@ -23,9 +28,9 @@
       <div class="card">
         <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
-          <img src="images/school-profile.svg" alt="Profile" class="rounded-circle">
+          <img src="images/savy.png" alt="Profile" class="rounded-circle">
           <h2>School Name</h2>
-          <h3>School city</h3>
+          <h3>Savy School</h3>
           <div class="social-links mt-2">
             <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
             <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
@@ -61,152 +66,157 @@
             </li> -->
 
           </ul>
-          <div class="tab-content pt-2">
+<div class="tab-content pt-2">
 
-            <div class="tab-pane fade show active profile-overview" id="profile-overview">
-              <h5 class="card-title">About</h5>
-              <p class="small fst-italic">Sunt est soluta temporibus accusantium neque nam maiores cumque temporibus. Tempora libero non est unde veniam est qui dolor. Ut sunt iure rerum quae quisquam autem eveniet perspiciatis odit. Fuga sequi sed ea saepe at unde.</p>
+<?php
+$query = "SELECT * FROM school_profile_";  
+$result = mysqli_query($conn, $query);
+
+if (mysqli_num_rows($result) > 0) {}
+if ($result->num_rows > 0) {
+    // Fetch data
+    $row = $result->fetch_assoc();
+    $about = $row['about'];
+    $name = $row['name'];
+    $slogan = $row['slogan'];
+    $private = $row['private'];
+    $address = $row['address'];
+    $city = $row['city'];
+    $contact = $row['contact'];
+    $email = $row['email'];
+} else {
+    echo "No data found";
+}
+$conn->close();
+?>
+<div class="tab-pane fade show active profile-overview" id="profile-overview">
+              <h5 class="card-title">About School</h5>
+              <p class="small fst-italic"><?php echo $about; ?></p>
 
               <h5 class="card-title">School Details</h5>
 
               <div class="row">
-                <div class="col-lg-3 col-md-4 label ">Full Name</div>
-                <div class="col-lg-9 col-md-8">Kevin Anderson</div>
+                <div class="col-lg-3 col-md-4 label ">School Name</div>
+                <div class="col-lg-9 col-md-8"><?php echo $name; ?></div>
               </div>
 
               <div class="row">
-                <div class="col-lg-3 col-md-4 label">Company</div>
-                <div class="col-lg-9 col-md-8">Lueilwitz, Wisoky and Leuschke</div>
+                <div class="col-lg-3 col-md-4 label">School Slogan</div>
+                <div class="col-lg-9 col-md-8"><?php echo $slogan; ?></div>
               </div>
 
               <div class="row">
-                <div class="col-lg-3 col-md-4 label">Job</div>
-                <div class="col-lg-9 col-md-8">Web Designer</div>
-              </div>
-
-              <div class="row">
-                <div class="col-lg-3 col-md-4 label">Country</div>
-                <div class="col-lg-9 col-md-8">USA</div>
+                <div class="col-lg-3 col-md-4 label">School Type</div>
+                <div class="col-lg-9 col-md-8"><?php echo $private; ?></div>
               </div>
 
               <div class="row">
                 <div class="col-lg-3 col-md-4 label">Address</div>
-                <div class="col-lg-9 col-md-8">A108 Adam Street, New York, NY 535022</div>
+                <div class="col-lg-9 col-md-8"><?php echo $address; ?></div>
               </div>
 
               <div class="row">
-                <div class="col-lg-3 col-md-4 label">Phone</div>
-                <div class="col-lg-9 col-md-8">(436) 486-3538 x29071</div>
+                <div class="col-lg-3 col-md-4 label">City</div>
+                <div class="col-lg-9 col-md-8"><?php echo $city; ?></div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-3 col-md-4 label">Contact No</div>
+                <div class="col-lg-9 col-md-8"><?php echo $contact; ?></div>
               </div>
 
               <div class="row">
                 <div class="col-lg-3 col-md-4 label">Email</div>
-                <div class="col-lg-9 col-md-8">k.anderson@example.com</div>
+                <div class="col-lg-9 col-md-8"><?php echo $email; ?></div>
               </div>
 
             </div>
 
-            <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
+</div>
+
+          <div class="tab-content pt-2">          
+          <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
+
+
 
               <!-- Profile Edit Form -->
-              <form>
-                <div class="row mb-3">
-                  <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
+  
+
+              <form action="includes/add-school-info.php" method="post" enctype="multipart/form-data">
+              <div class="row mb-3">
+                  <label for="about" class="col-md-4 col-lg-3 col-form-label">About School</label>
                   <div class="col-md-8 col-lg-9">
-                    <img src="images/school-profile.svg" alt="Profile">
+                    <input name="about" type="text" class="form-control" id="fullName" placeholder="School Descrption">
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label for="image" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
+                  <div class="col-md-8 col-lg-9">
+                    <input name="image" type="file" class="form-control" id="fullName" placeholder="Profile Image">
+                  </div>
+                    <!-- <img src="images/school-profile.svg" alt="Profile">
                     <div class="pt-2">
                       <a href="#" class="btn btn-primary btn-sm" title="Upload new profile image"><i class="bi bi-upload"></i></a>
                       <a href="#" class="btn btn-danger btn-sm" title="Remove my profile image"><i class="bi bi-trash"></i></a>
-                    </div>
+                    </div> -->
+                  
+                </div>
+
+                <div class="row mb-3">
+                  <label for="name" class="col-md-4 col-lg-3 col-form-label">School Name</label>
+                  <div class="col-md-8 col-lg-9">
+                    <input name="name" type="text" class="form-control" id="fullName" placeholder="Enter School Name">
                   </div>
                 </div>
 
                 <div class="row mb-3">
-                  <label for="fullName" class="col-md-4 col-lg-3 col-form-label">Full Name</label>
+                  <label for="slogan" class="col-md-4 col-lg-3 col-form-label">School Slogan</label>
                   <div class="col-md-8 col-lg-9">
-                    <input name="fullName" type="text" class="form-control" id="fullName" value="Kevin Anderson">
+                    <input name="slogan" type="text" class="form-control" id="fullName" placeholder="Enter School Slogan">
+                  </div>
+                </div>
+
+
+                
+                <div class="row mb-3">
+                  <label for="private" class="col-md-4 col-lg-3 col-form-label">School Type</label>
+                  <div class="col-md-8 col-lg-9">
+                    <input name="private" type="text" class="form-control" id="company" placeholder="School Type">
                   </div>
                 </div>
 
                 <div class="row mb-3">
-                  <label for="about" class="col-md-4 col-lg-3 col-form-label">About</label>
+                  <label for="address" class="col-md-4 col-lg-3 col-form-label">Address</label>
                   <div class="col-md-8 col-lg-9">
-                    <textarea name="about" class="form-control" id="about" style="height: 100px">Sunt est soluta temporibus accusantium neque nam maiores cumque temporibus. Tempora libero non est unde veniam est qui dolor. Ut sunt iure rerum quae quisquam autem eveniet perspiciatis odit. Fuga sequi sed ea saepe at unde.</textarea>
+                    <input name="address" type="text" class="form-control" id="Job" placeholder="School Location">
                   </div>
                 </div>
 
                 <div class="row mb-3">
-                  <label for="company" class="col-md-4 col-lg-3 col-form-label">Company</label>
+                  <label for="city" class="col-md-4 col-lg-3 col-form-label">City</label>
                   <div class="col-md-8 col-lg-9">
-                    <input name="company" type="text" class="form-control" id="company" value="Lueilwitz, Wisoky and Leuschke">
+                    <input name="city" type="text" class="form-control" id="Country" placeholder="Enter city">
                   </div>
                 </div>
 
                 <div class="row mb-3">
-                  <label for="Job" class="col-md-4 col-lg-3 col-form-label">Job</label>
+                  <label for="Contact" class="col-md-4 col-lg-3 col-form-label">Contact No</label>
                   <div class="col-md-8 col-lg-9">
-                    <input name="job" type="text" class="form-control" id="Job" value="Web Designer">
+                    <input name="contact" type="text" class="form-control" id="Address" placeholder="Ennter contact no">
                   </div>
                 </div>
 
-                <div class="row mb-3">
-                  <label for="Country" class="col-md-4 col-lg-3 col-form-label">Country</label>
-                  <div class="col-md-8 col-lg-9">
-                    <input name="country" type="text" class="form-control" id="Country" value="USA">
-                  </div>
-                </div>
-
-                <div class="row mb-3">
-                  <label for="Address" class="col-md-4 col-lg-3 col-form-label">Address</label>
-                  <div class="col-md-8 col-lg-9">
-                    <input name="address" type="text" class="form-control" id="Address" value="A108 Adam Street, New York, NY 535022">
-                  </div>
-                </div>
-
-                <div class="row mb-3">
-                  <label for="Phone" class="col-md-4 col-lg-3 col-form-label">Phone</label>
-                  <div class="col-md-8 col-lg-9">
-                    <input name="phone" type="text" class="form-control" id="Phone" value="(436) 486-3538 x29071">
-                  </div>
-                </div>
 
                 <div class="row mb-3">
                   <label for="Email" class="col-md-4 col-lg-3 col-form-label">Email</label>
                   <div class="col-md-8 col-lg-9">
-                    <input name="email" type="email" class="form-control" id="Email" value="k.anderson@example.com">
+                    <input name="email" type="email" class="form-control" id="Email" placeholder="Email address">
                   </div>
                 </div>
 
-                <div class="row mb-3">
-                  <label for="Twitter" class="col-md-4 col-lg-3 col-form-label">Twitter Profile</label>
-                  <div class="col-md-8 col-lg-9">
-                    <input name="twitter" type="text" class="form-control" id="Twitter" value="https://twitter.com/#">
-                  </div>
-                </div>
-
-                <div class="row mb-3">
-                  <label for="Facebook" class="col-md-4 col-lg-3 col-form-label">Facebook Profile</label>
-                  <div class="col-md-8 col-lg-9">
-                    <input name="facebook" type="text" class="form-control" id="Facebook" value="https://facebook.com/#">
-                  </div>
-                </div>
-
-                <div class="row mb-3">
-                  <label for="Instagram" class="col-md-4 col-lg-3 col-form-label">Instagram Profile</label>
-                  <div class="col-md-8 col-lg-9">
-                    <input name="instagram" type="text" class="form-control" id="Instagram" value="https://instagram.com/#">
-                  </div>
-                </div>
-
-                <div class="row mb-3">
-                  <label for="Linkedin" class="col-md-4 col-lg-3 col-form-label">Linkedin Profile</label>
-                  <div class="col-md-8 col-lg-9">
-                    <input name="linkedin" type="text" class="form-control" id="Linkedin" value="https://linkedin.com/#">
-                  </div>
-                </div>
 
                 <div class="text-center">
-                  <button type="submit" class="btn btn-primary">Save Changes</button>
+                  <button type="submit" name="submit" class="btn btn-primary">Save Changes</button>
                 </div>
               </form><!-- End Profile Edit Form -->
 

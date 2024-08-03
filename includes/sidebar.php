@@ -99,7 +99,7 @@
     </a>
     <ul id="profiling" class="nav-content collapse " data-bs-parent="#sidebar-nav">
       <li>
-        <a href="staff-profile.php">
+        <a href="teachers.php">
           <i class="bi bi-arrow-right"></i><span>Staff Profiles</span>
         </a>
       </li>

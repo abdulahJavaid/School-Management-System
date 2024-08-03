@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 02, 2024 at 11:14 AM
+-- Generation Time: Aug 03, 2024 at 11:20 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -28,12 +28,20 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `admin` (
-  `adminId` int(11) NOT NULL,
+  `admin_id` int(11) NOT NULL,
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `role` varchar(100) NOT NULL,
   `status` int(10) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `admin`
+--
+
+INSERT INTO `admin` (`admin_id`, `email`, `password`, `role`, `status`) VALUES
+(1, 'email@mail.com', 'pass', 'developer', 1),
+(2, 'email@mail.com', 'pass', 'developer', 1);
 
 -- --------------------------------------------------------
 
@@ -154,6 +162,33 @@ CREATE TABLE `progress_report` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `school_profile_`
+--
+
+CREATE TABLE `school_profile_` (
+  `id` int(11) NOT NULL,
+  `about` varchar(400) NOT NULL,
+  `image` varchar(255) NOT NULL,
+  `name` varchar(200) NOT NULL,
+  `slogan` varchar(255) NOT NULL,
+  `private` varchar(100) NOT NULL,
+  `address` varchar(255) NOT NULL,
+  `city` varchar(150) NOT NULL,
+  `contact` varchar(30) NOT NULL,
+  `email` varchar(150) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `school_profile_`
+--
+
+INSERT INTO `school_profile_` (`id`, `about`, `image`, `name`, `slogan`, `private`, `address`, `city`, `contact`, `email`) VALUES
+(3, 'A school is an educational institution where students receive formal instruction and learning under the guidance of teachers. Schools play a vital role in shaping the intellectual, social, and emotional development of students. They provide a structured environment for acquiring knowledge in various subjects, fostering critical thinking, creativity, and problem-solving skills. Schools also promote', '', 'savy school', '\"Empowering Minds, Shaping Futures\"', 'private', 'Rahwali Cantt', 'Gujranwala', '05512344556', 'infosavy@gmail.com'),
+(4, 'A school is an educational institution where students receive formal instruction and learning under the guidance of teachers. Schools play a vital role in shaping the intellectual, social, and emotional development of students. They provide a structured environment for acquiring knowledge in various subjects, fostering critical thinking, creativity, and problem-solving skills. Schools also promote', '', 'A+', '\"Empowering Minds, Shaping Futures\"', 'private', 'Rahwali Cantt', 'Gujranwala', '0302938398', 'A+i5723@gmail.com');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `student_class`
 --
 
@@ -220,6 +255,14 @@ CREATE TABLE `teacher_profile` (
   `password` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `teacher_profile`
+--
+
+INSERT INTO `teacher_profile` (`teacher_id`, `name`, `cnic`, `f_name`, `phone_no`, `qualification`, `dob`, `address`, `email`, `school_id`, `image`, `password`) VALUES
+(181, '', '', '', '', '', '0000-00-00', '', '', '', '', ''),
+(182, '', '', '', '', '', '0000-00-00', '', '', '', '', '');
+
 -- --------------------------------------------------------
 
 --
@@ -240,7 +283,7 @@ CREATE TABLE `timetable` (
 -- Indexes for table `admin`
 --
 ALTER TABLE `admin`
-  ADD PRIMARY KEY (`adminId`);
+  ADD PRIMARY KEY (`admin_id`);
 
 --
 -- Indexes for table `admin_logs`
@@ -306,6 +349,12 @@ ALTER TABLE `progress_report`
   ADD KEY `fk_student_progress_id` (`fk_student_id`);
 
 --
+-- Indexes for table `school_profile_`
+--
+ALTER TABLE `school_profile_`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `student_class`
 --
 ALTER TABLE `student_class`
@@ -348,7 +397,7 @@ ALTER TABLE `timetable`
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
-  MODIFY `adminId` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `admin_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `admin_logs`
@@ -405,6 +454,12 @@ ALTER TABLE `progress_report`
   MODIFY `progress_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT for table `school_profile_`
+--
+ALTER TABLE `school_profile_`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
 -- AUTO_INCREMENT for table `student_class`
 --
 ALTER TABLE `student_class`
@@ -426,7 +481,7 @@ ALTER TABLE `student_profile`
 -- AUTO_INCREMENT for table `teacher_profile`
 --
 ALTER TABLE `teacher_profile`
-  MODIFY `teacher_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `teacher_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=183;
 
 --
 -- AUTO_INCREMENT for table `timetable`

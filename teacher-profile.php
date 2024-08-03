@@ -10,17 +10,19 @@ if (isset($_POST['submit'])) {
     $f_name = $_POST['f_name'];
     $phone_no = $_POST['phone_no'];
     $qualification = $_POST['qualification'];
-    $issue_code = $_POST['issue_code'];
-    $address = $_POST['address'];
     $dob = $_POST['dob'];
+    $address = $_POST['address'];
+    $email = $_POST['email'];
+    $school_id = $_POST['school_id'];
+    $image = $_POST['image'];
     $password = $_POST['password'];
-    $staff_status = $_POST['staff_status'];
 
-    $query = "INSERT INTO teacher_profile(name, cnic, f_name, phone_no, qualification, issue_code, address, dob, password, staff_status) 
-VALUES('$name', '$cnic', '$f_name', '$phone_no', '$qualification', '$issue_code', '$address', '$dob', '$password', '$staff_status')";
+    $query = "INSERT INTO teacher_profile(name, cnic, f_name, phone_no, qualification, dob, address, email, school_id, image, password) 
+VALUES('$name', '$cnic', '$f_name', '$phone_no', '$qualification', '$dob', '$address', '$email', '$school_id', '$image', '$password')";
     $result = mysqli_query($conn, $query);
     if ($result) {
         echo "data has been successfully inserted";
+        redirect("./teacher-profile.php");
     } else {
         echo "Error: " . mysqli_error($conn);
     }
@@ -76,23 +78,12 @@ VALUES('$name', '$cnic', '$f_name', '$phone_no', '$qualification', '$issue_code'
 
                             <div class="tab-pane fade show active profile-edit pt-3" id="profile-edit">
 
-                                <!-- Profile Edit Form -->
-
-                                <!-- <div class="row mb-3">
-                  <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
-                  <div class="col-md-8 col-lg-9">
-                    <img src="images/school-profile.svg" alt="Profile">
-                    <div class="pt-2">
-                      <a href="#" class="btn btn-primary btn-sm" title="Upload new profile image"><i class="bi bi-upload"></i></a>
-                      <a href="#" class="btn btn-danger btn-sm" title="Remove my profile image"><i class="bi bi-trash"></i></a>
-                    </div>
-                  </div>
-                </div> -->
-                                <form method="post" action="" enctype="multipart/form-data">
+                             <form method="post" action="" enctype="multipart/form-data">
+                                   
                                     <div class="row mb-3">
-                                        <label for="name" class="col-md-4 col-lg-3 col-form-label">Staff Name</label>
+                                        <label for="name" class="col-md-4 col-lg-3 col-form-label">Name</label>
                                         <div class="col-md-8 col-lg-9">
-                                            <input name="name" type="text" class="form-control" id="fullName" value="" placeholder="Enter Staff Name">
+                                            <input name="name" type="text" class="form-control" id="fullName" value="" placeholder="Enter Teacher Name">
                                         </div>
                                     </div>
                                     <div class="row mb-3">
@@ -127,23 +118,37 @@ VALUES('$name', '$cnic', '$f_name', '$phone_no', '$qualification', '$issue_code'
                                     </div>
 
                                     <div class="row mb-3">
-                                        <label for="issue_code" class="col-md-4 col-lg-3 col-form-label">Issue code</label>
+                                        <label for="dob" class="col-md-4 col-lg-3 col-form-label">Date of  Birth</label>
                                         <div class="col-md-8 col-lg-9">
-                                            <input name="issue_code" type="text" class="form-control" id="Address" value="" placeholder="Enter section">
+                                            <input name="dob" type="date" class="form-control" id="Address" value="" placeholder="Enter Date of Birth">
                                         </div>
                                     </div>
 
                                     <div class="row mb-3">
                                         <label for="address" class="col-md-4 col-lg-3 col-form-label">Address</label>
                                         <div class="col-md-8 col-lg-9">
-                                            <input name="address" type="text" class="form-control" id="Phone" value="" placeholder="Date your Address">
+                                            <input name="address" type="text" class="form-control" id="Phone" value="" placeholder="Enter Address">
                                         </div>
                                     </div>
 
                                     <div class="row mb-3">
-                                        <label for="dob" class="col-md-4 col-lg-3 col-form-label">Date of Birth</label>
+                                        <label for="email" class="col-md-4 col-lg-3 col-form-label">Email</label>
                                         <div class="col-md-8 col-lg-9">
-                                            <input name="dob" type="text" class="form-control" id="Email" value="" placeholder="Enter Date of birth">
+                                            <input name="email" type="text" class="form-control" id="Email" value="" placeholder="Enter Email Address">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row mb-3">
+                                        <label for="school_id" class="col-md-4 col-lg-3 col-form-label">School Id</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="school_id" type="no" class="form-control" id="Email" value="" placeholder="Enter School Id">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="row mb-3">
+                                        <label for="image" class="col-md-4 col-lg-3 col-form-label">Image</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="image" type="file" class="form-control" id="Email" value="" placeholder="Upload Image">
                                         </div>
                                     </div>
 
@@ -154,7 +159,7 @@ VALUES('$name', '$cnic', '$f_name', '$phone_no', '$qualification', '$issue_code'
                                         </div>
                                     </div>
 
-                                    <div class="row mb-3">
+                                    <!-- <div class="row mb-3">
                                         <label for="staff_status" class="col-md-4 col-lg-3 col-form-label">Staff ststus</label>
                                         <div class="col-md-8 col-lg-9">
                                             <select id="inputState" name="section" class="form-select">
@@ -167,7 +172,7 @@ VALUES('$name', '$cnic', '$f_name', '$phone_no', '$qualification', '$issue_code'
                                             </select>
                                         </div>
                                     </div>
-
+ -->
 
 
                                     <div class="text-center">

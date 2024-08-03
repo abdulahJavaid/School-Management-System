@@ -6,7 +6,7 @@
 <main id="main" class="main">
 
     <div class="pagetitle">
-        <h1>Staff</h1>
+        <h1>Teachers</h1>
         <nav>
             <ol class="breadcrumb">
                 <!-- <li class="breadcrumb-item"><a href="index.html">Home</a></li>
@@ -25,7 +25,7 @@
             // $color = filter_input(INPUT_POST, 'color', FILTER_SANITIZE_STRING);
 
             ?>
-            <!-- <form action="" method="post">
+            <form action="" method="post">
                 <div class="col-md-4">
                     <select id="inputState" name="class" class="form-select">
                         <option selected>Choose Class</option>
@@ -33,18 +33,18 @@
                         // getting classes
                         for ($i = $first_class; $i <= $last_class; $i++) {
                         ?>
-                            <option value="<?php //echo $i; ?>"><?php //echo $i; ?></option>
+                            <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
                         <?php } ?>
                     </select>
                 </div>
                 <div class="col-md-4">
                     <select id="inputState" name="section" class="form-select">
                         <option selected>Choose Section</option>
-                        <option value="<?php //echo "A"; ?>">A</option>
-                        <option value="<?php //echo "B"; ?>">B</option>
-                        <option value="<?php //echo "C"; ?>">C</option>
-                        <option value="<?php //echo "D"; ?>">D</option>
-                        <option value="<?php //echo "E"; ?>">E</option>
+                        <option value="<?php echo "A"; ?>">A</option>
+                        <option value="<?php echo "B"; ?>">B</option>
+                        <option value="<?php echo "C"; ?>">C</option>
+                        <option value="<?php echo "D"; ?>">D</option>
+                        <option value="<?php echo "E"; ?>">E</option>
                     </select>
                 </div>
                 <div class="row">
@@ -52,10 +52,10 @@
                         <input type="submit" name="submit" class="btn btn-md btn-primary button mx-auto" value="Check">
                     </div>
                     <div class="d-flex justify-content-end">
-                        <a class="btn btn-primary button" href="./student-profile.php">Add Student</a>
+                        <a class="btn btn-primary button" href="./teacher-profile.php">Add Teacher</a>
                     </div>
                 </div>
-            </form> -->
+            </form>
         </div>
     </div><!-- End Page Title -->
 
@@ -64,21 +64,26 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Staff Details</h5>
-                        <p>Details of all working staff of <code>School Name</code>.</p>
+                        <h5 class="card-title">Teachers Details</h5>
+                        <p>Teacher Details of All the registered Teacher of <code>School Name</code>.</p>
 
                         <!-- Primary Color Bordered Table -->
                         <table class="table table-bordered border-primary">
                             <thead>
                                 <tr>
-                                    <th scope="col">Issued Code</th>
+                                    <th scope="col">Teacher Id</th>
                                     <th scope="col">Name</th>
+                                    <th scope="col">Cnic</th>
                                     <th scope="col">Father Name</th>
+                                    <th scope="col">Phone No</th>
                                     <th scope="col">Qualification</th>
-                                    <th scope="col">Staff Status</th>
-                                    <th scope="col">Paid</th>
-                                    <th scope="col">View Profile</th>
-                                    <th scope="col">Edit Profile</th>
+                                    <th scope="col">Date Of Birth</th>
+                                    <th scope="col">Address</th>
+                                    <th scope="col">Email</th>
+                                    <th scope="col">School Id</th>
+                                    <th scope="col">Image</th>
+                                    <th scope="col">Password</th>
+
                                 </tr>
                             </thead>
                             <tbody>
@@ -100,11 +105,14 @@
                                         <tr>
                                             <td><?php echo $row['issue_code']; ?></td><!--scope="row" -->
                                             <td><?php echo $row['name']; ?></td>
-                                            <td><?php echo $row['cnic']; ?></td>
+                                            
                                             <td><?php echo $row['f_name']; ?></td>
-                                            <td><?php echo $row['phone_no']; ?></td>
+                                           
                                             <td><?php echo $row['class']; ?></td>
                                             <td><?php echo $row['section']; ?></td>
+                                            <td>null</td>
+                                            <td><a href="#">View profile</a></td>
+                                            <td><a href="#">Edit profile</a></td>
                                             <!-- <td></td> -->
                                             <!-- <td></td> -->
                                         </tr>
@@ -112,17 +120,21 @@
                                     <?php }
                                 } else {
                                     // Selecting all student records from database
-                                    $result = sql_select_all('teacher_profile');
+                                    $result = sql_select_all('student_profile');
                                     while ($row = mysqli_fetch_assoc($result)) {
                                     ?>
                                         <tr>
                                             <td><?php echo $row['issue_code']; ?></td><!--scope="row" -->
                                             <td><?php echo $row['name']; ?></td>
-                                            <td><?php echo $row['cnic']; ?></td>
+                                            
                                             <td><?php echo $row['f_name']; ?></td>
-                                            <td><?php echo $row['phone_no']; ?></td>
+                                            
                                             <td><?php echo $row['class']; ?></td>
                                             <td><?php echo $row['section']; ?></td>
+                                            <td>null</td>
+                                            <td><a href="#">View profile</a></td>
+                                            <td><a href="#">Edit profile</a></td>
+
                                         </tr>
                                 <?php
                                     }
