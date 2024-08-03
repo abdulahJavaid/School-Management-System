@@ -32,4 +32,11 @@
         return ($result) ? $result : false;
     }
 
+    // for passing the query
+    function query($query) {
+        global $conn;
+        $result = mysqli_query($conn, $query);
+        return ($result) ? $result : false;
+    }
+
 ?>

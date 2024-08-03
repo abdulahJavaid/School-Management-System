@@ -28,7 +28,7 @@ if(!isset($_GET['id'])){
   $query .= "INNER JOIN class_sections ON all_classes.class_id = class_sections.fk_class_id ";
   $query .= "INNER JOIN student_class ON class_sections.section_id = student_class.fk_section_id ";
   $query .= "INNER JOIN student_profile ON student_class.fk_student_id = student_profile.student_id ";
-  $query .= "WHERE student_id = '$id'";
+  $query .= "WHERE student_id = '$id' AND status='1'";
   $pass = mysqli_query($conn, $query);
   $row = mysqli_fetch_assoc($pass);
   ?>
@@ -42,7 +42,7 @@ if(!isset($_GET['id'])){
 
             <img src="images/profile.jpeg" alt="Profile" class="rounded-circle">
             <h2><?php echo $row['name']; ?></h2>
-            <h3><?php echo $row['address']; ?></h3>
+            <h3>Class: <?php echo $row['class_name'] . ' ' . $row['section_name']; ?></h3>
             <div class="social-links mt-2">
               <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
               <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>

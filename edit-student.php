@@ -8,6 +8,18 @@ if (!isset($_GET['id'])) {
   redirect('./students.php');
 }
 ?>
+<?php
+// fetching the student data here
+$id = $_GET['id'];
+$query = "SELECT * FROM all_classes ";
+$query .= "INNER JOIN class_sections ON all_classes.class_id = class_sections.fk_class_id ";
+$query .= "INNER JOIN student_class ON class_sections.section_id = student_class.fk_section_id ";
+$query .= "INNER JOIN student_profile ON student_class.fk_student_id = student_profile.student_id ";
+$query .= "WHERE student_id = '$id'";
+$pass = mysqli_query($conn, $query);
+$row = mysqli_fetch_assoc($pass);
+?>
+
 <main id="main" class="main">
 
   <div class="pagetitle">
@@ -22,24 +34,24 @@ if (!isset($_GET['id'])) {
   </div><!-- End Page Title -->
   <?php
   // updating student
-  if ("")
+  if (isset($_POST['submit'])) {
+    $id = $_GET['id'];
+    $name = $_POST['name'];
+    $roll_no = $_POST['roll_no'];
+    $cnic = $_POST['cnic'];
+    $dob = $_POST['dob'];
+    $address = $_POST['address'];
+    $mobile_no = $_POST['mobile_no'];
+    $email = $_POST['email'];
+
+    $query = "UPDATE student_profile SET name='$name', roll_no='$roll_no', cnic='$cnic', dob='$dob', ";
+    $query .= "address='$address', email='$email', mobile_no='$mobile_no' ";
+    $query .= "WHERE student_id='$id'";
+
+    $get = query($query);
+  }
 
 
-  ?>
-
-
-
-
-  <?php
-// fetching the student data here
-$id = $_GET['id'];
-$query = "SELECT * FROM all_classes ";
-$query .= "INNER JOIN class_sections ON all_classes.class_id = class_sections.fk_class_id ";
-$query .= "INNER JOIN student_class ON class_sections.section_id = student_class.fk_section_id ";
-$query .= "INNER JOIN student_profile ON student_class.fk_student_id = student_profile.student_id ";
-$query .= "WHERE student_id = '$id'";
-$pass = mysqli_query($conn, $query);
-$row = mysqli_fetch_assoc($pass);
   ?>
 
   <section class="section profile">
@@ -51,12 +63,29 @@ $row = mysqli_fetch_assoc($pass);
 
             <img src="images/profile.jpeg" alt="Profile" class="rounded-circle">
             <h2><?php echo $row['name']; ?></h2>
-            <h3><?php echo $row['address']; ?></h3>
+            <h3>Class: <?php echo $row['class_name'] . ' ' . $row['section_name']; ?></h3>
+
+            <!-- edit here -->
+            <div class="btn-group">
+              <button type="button" class="btn btn-danger">Action</button>
+              <button type="button" class="btn btn-danger dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" data-bs-target="drop" aria-haspopup="true" aria-expanded="false">
+                <span class="sr-only">Toggle Dropdown</span>
+              </button>
+              <div class="dropdown-menu" id="drop">
+                <a class="dropdown-item" href="#">Action</a>
+                <a class="dropdown-item" href="#">Another action</a>
+                <a class="dropdown-item" href="#">Something else here</a>
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="#">Separated link</a>
+              </div>
+            </div>
+            <!-- end edit -->
+             
             <div class="social-links mt-2">
-              <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
+              <!-- <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
               <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
               <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
-              <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+              <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a> -->
             </div>
           </div>
         </div>
@@ -123,18 +152,20 @@ $row = mysqli_fetch_assoc($pass);
                   </div>
                 </div> -->
 
-                <div class="row mb-3">
+                <!-- <div class="row mb-3">
                   <label for="company" class="col-md-4 col-lg-3 col-form-label">Class</label>
                   <div class="col-md-8 col-lg-9">
-                    <input name="class_name" type="text" class="form-control" id="company" value="<?php echo $row['class_name']; ?>">
+                    <input name="class_name" type="text" class="form-control" id="company" value="<?php //echo $row['class_name']; 
+                                                                                                  ?>" readonly>
                   </div>
                 </div>
                 <div class="row mb-3">
                   <label for="company" class="col-md-4 col-lg-3 col-form-label">Section</label>
                   <div class="col-md-8 col-lg-9">
-                    <input name="section_name" type="text" class="form-control" id="company" value="<?php echo $row['section_name']; ?>">
+                    <input name="section_name" type="text" class="form-control" id="company" value="<?php //echo $row['section_name']; 
+                                                                                                    ?>" readonly>
                   </div>
-                </div>
+                </div> -->
 
                 <div class="row mb-3">
                   <label for="Job" class="col-md-4 col-lg-3 col-form-label">Cnic/B-form</label>
@@ -146,7 +177,7 @@ $row = mysqli_fetch_assoc($pass);
                 <div class="row mb-3">
                   <label for="Country" class="col-md-4 col-lg-3 col-form-label">Date of Birth</label>
                   <div class="col-md-8 col-lg-9">
-                    <input name="dob" type="text" class="form-control" id="Country" value="<?php echo $row['dob']; ?>">
+                    <input name="dob" type="date" class="form-control" id="Country" value="<?php echo $row['dob']; ?>">
                   </div>
                 </div>
 

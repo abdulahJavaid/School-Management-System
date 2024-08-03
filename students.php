@@ -116,7 +116,7 @@
                                     $que .= "INNER JOIN class_sections ON all_classes.class_id = class_sections.fk_class_id ";
                                     $que .= "INNER JOIN student_class ON class_sections.section_id = student_class.fk_section_id ";
                                     $que .= "INNER JOIN student_profile ON student_class.fk_student_id = student_profile.student_id ";
-                                    $que .= "WHERE class_id = '$class' AND section_id = '$section'";
+                                    $que .= "WHERE class_id = '$class' AND section_id = '$section' AND status='1'";
                                     // $que .= "student_class.fk_section_id = class_sections.section_id INNER JOIN all_classes ";
                                     // $que .= "ON class_sections.fk_class_id = all_classes.class_id INNER JOIN student_profile ON ";
                                     // $que .= "student_class.fk_student_id = student_profile.student_id";
@@ -163,7 +163,7 @@
                                     $queri = "SELECT * FROM student_profile INNER JOIN student_class ";
                                     $queri .= "ON student_profile.student_id = student_class.fk_student_id INNER JOIN ";
                                     $queri .= "class_sections ON student_class.fk_section_id = class_sections.section_id INNER JOIN ";
-                                    $queri .= "all_classes ON class_sections.fk_class_id = all_classes.class_id";
+                                    $queri .= "all_classes ON class_sections.fk_class_id = all_classes.class_id WHERE status='1'";
 
                                     $result = mysqli_query($conn, $queri);
                                     while ($row = mysqli_fetch_assoc($result)) {
