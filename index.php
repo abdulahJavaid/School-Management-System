@@ -241,7 +241,7 @@
 
               <?php
                 // fetching recent 5 actions
-                $query = "SELECT * FROM logs ORDER BY log_id DESC LIMIT 5";
+                $query = "SELECT * FROM admin_logs ORDER BY admin_log_id DESC LIMIT 5";
                 $result = mysqli_query($conn, $query);
                 while($row = mysqli_fetch_assoc($result)){
                   ?>
@@ -249,7 +249,7 @@
                   <div class="activite-label"><?php echo substr($row['time'], -8); ?></div>
                   <i class='bi bi-circle-fill activity-badge text-danger align-self-start'></i>
                   <div class="activity-content">
-                  <?php echo $row['log']; ?>
+                  <?php echo $row['log_message']; ?>
                   </div>
                 </div><!-- End activity item-->
 

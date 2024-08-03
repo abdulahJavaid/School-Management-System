@@ -43,15 +43,15 @@
 
                             <?php
                             // fetching recent 5 actions
-                            $query = "SELECT * FROM logs ORDER BY log_id DESC";
+                            $query = "SELECT * FROM admin_logs ORDER BY admin_log_id DESC";
                             $result = mysqli_query($conn, $query);
                             while ($row = mysqli_fetch_assoc($result)) {
                             ?>
                                 <div class="activity-item d-flex">
-                                    <div class="activite-label"><?php echo $row['time'], -8; ?></div>
+                                    <div class="activite-label"><?php echo $row['time']; ?></div>
                                     <i class='bi bi-circle-fill activity-badge text-danger align-self-start'></i>
                                     <div class="activity-content">
-                                        <?php echo $row['log']; ?>
+                                        <?php echo $row['log_message']; ?>
                                     </div>
                                 </div><!-- End activity item-->
 
