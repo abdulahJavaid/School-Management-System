@@ -65,21 +65,17 @@ $row = mysqli_fetch_assoc($pass);
             <h2><?php echo $row['name']; ?></h2>
             <h3>Class: <?php echo $row['class_name'] . ' ' . $row['section_name']; ?></h3>
 
-            <!-- edit here -->
-            <div class="btn-group">
-              <button type="button" class="btn btn-danger">Action</button>
-              <button type="button" class="btn btn-danger dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" data-bs-target="drop" aria-haspopup="true" aria-expanded="false">
-                <span class="sr-only">Toggle Dropdown</span>
-              </button>
-              <div class="dropdown-menu" id="drop">
-                <a class="dropdown-item" href="#">Action</a>
-                <a class="dropdown-item" href="#">Another action</a>
-                <a class="dropdown-item" href="#">Something else here</a>
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="#">Separated link</a>
-              </div>
-            </div>
-            <!-- end edit -->
+            <div class="dropdown">
+  <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown">
+    Action
+  </button>
+  <ul class="dropdown-menu">
+    <li><a class="dropdown-item" href="#">Link 1</a></li>
+    <li><a class="dropdown-item" href="#">Link 2</a></li>
+    <li><a class="dropdown-item" href="#">Link 3</a></li>
+  </ul>
+</div>
+
              
             <div class="social-links mt-2">
               <!-- <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
