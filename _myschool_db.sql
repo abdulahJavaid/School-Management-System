@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 03, 2024 at 11:20 AM
+-- Generation Time: Aug 03, 2024 at 12:53 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -55,6 +55,21 @@ CREATE TABLE `admin_logs` (
   `time` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `admin_logs`
+--
+
+INSERT INTO `admin_logs` (`admin_log_id`, `log_message`, `time`) VALUES
+(1, 'Admin with <strong>ID: 1</strong> added <strong>student: ali</strong> to Database!', '03/08/2024 11:54 am'),
+(2, 'Admin with <strong>ID: 1</strong> added <strong>student: abdullah</strong> to Database!', '03/08/2024 11:55 am'),
+(3, 'Admin with <strong>ID: 1</strong> added <strong>student: mukarram</strong> to Database!', '03/08/2024 11:57 am'),
+(4, 'Admin with <strong>ID: 1</strong> added <strong>student: qQQq</strong> to Database!', '03/08/2024 11:57 am'),
+(5, 'Admin with <strong>ID: 1</strong> added <strong>student: </strong> to Database!', '03/08/2024 11:58 am'),
+(6, 'Admin with <strong>ID: 1</strong> added <strong>student: Cccc</strong> to Database!', '03/08/2024 11:58 am'),
+(7, 'Admin with <strong>ID: 1</strong> added <strong>student: </strong> to Database!', '03/08/2024 11:58 am'),
+(8, 'Admin with <strong>ID: 1</strong> added <strong>student: o</strong> to Database!', '03/08/2024 11:59 am'),
+(9, 'Admin with <strong>ID: 1</strong> added <strong>student: faizan</strong> to Database!', '03/08/2024 11:59 am');
+
 -- --------------------------------------------------------
 
 --
@@ -65,6 +80,22 @@ CREATE TABLE `all_classes` (
   `class_id` int(11) NOT NULL,
   `class_name` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `all_classes`
+--
+
+INSERT INTO `all_classes` (`class_id`, `class_name`) VALUES
+(1, '1'),
+(2, '2'),
+(3, '3'),
+(4, '4'),
+(5, '5'),
+(6, '6'),
+(7, '7'),
+(8, '8'),
+(9, '9'),
+(10, '10');
 
 -- --------------------------------------------------------
 
@@ -104,6 +135,32 @@ CREATE TABLE `class_sections` (
   `fk_class_id` int(11) NOT NULL,
   `section_name` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `class_sections`
+--
+
+INSERT INTO `class_sections` (`section_id`, `fk_class_id`, `section_name`) VALUES
+(1, 1, 'A'),
+(2, 1, 'B'),
+(3, 2, 'A'),
+(4, 2, 'B'),
+(5, 3, 'A'),
+(6, 3, 'B'),
+(7, 4, 'A'),
+(8, 4, 'B'),
+(9, 5, 'A'),
+(10, 5, 'B'),
+(11, 6, 'A'),
+(12, 6, 'B'),
+(13, 7, 'A'),
+(14, 7, 'B'),
+(15, 8, 'A'),
+(16, 8, 'B'),
+(17, 9, 'A'),
+(18, 9, 'B'),
+(19, 10, 'A'),
+(20, 10, 'B');
 
 -- --------------------------------------------------------
 
@@ -169,22 +226,28 @@ CREATE TABLE `school_profile_` (
   `id` int(11) NOT NULL,
   `about` varchar(400) NOT NULL,
   `image` varchar(255) NOT NULL,
+  `school_id` varchar(100) NOT NULL,
   `name` varchar(200) NOT NULL,
+  `o_name` varchar(255) NOT NULL,
   `slogan` varchar(255) NOT NULL,
   `private` varchar(100) NOT NULL,
   `address` varchar(255) NOT NULL,
   `city` varchar(150) NOT NULL,
   `contact` varchar(30) NOT NULL,
-  `email` varchar(150) NOT NULL
+  `email` varchar(150) NOT NULL,
+  `expiry` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `school_profile_`
 --
 
-INSERT INTO `school_profile_` (`id`, `about`, `image`, `name`, `slogan`, `private`, `address`, `city`, `contact`, `email`) VALUES
-(3, 'A school is an educational institution where students receive formal instruction and learning under the guidance of teachers. Schools play a vital role in shaping the intellectual, social, and emotional development of students. They provide a structured environment for acquiring knowledge in various subjects, fostering critical thinking, creativity, and problem-solving skills. Schools also promote', '', 'savy school', '\"Empowering Minds, Shaping Futures\"', 'private', 'Rahwali Cantt', 'Gujranwala', '05512344556', 'infosavy@gmail.com'),
-(4, 'A school is an educational institution where students receive formal instruction and learning under the guidance of teachers. Schools play a vital role in shaping the intellectual, social, and emotional development of students. They provide a structured environment for acquiring knowledge in various subjects, fostering critical thinking, creativity, and problem-solving skills. Schools also promote', '', 'A+', '\"Empowering Minds, Shaping Futures\"', 'private', 'Rahwali Cantt', 'Gujranwala', '0302938398', 'A+i5723@gmail.com');
+INSERT INTO `school_profile_` (`id`, `about`, `image`, `school_id`, `name`, `o_name`, `slogan`, `private`, `address`, `city`, `contact`, `email`, `expiry`) VALUES
+(5, 'A school is an educational institution where students receive formal instruction and learning under the guidance of teachers. Schools play a vital role in shaping the intellectual, social, and emotional development of students. They provide a structured environment for acquiring knowledge in various subjects, fostering critical thinking, creativity, and problem-solving skills. Schools also promote', '', '', 'allied', 'Ali raza', 'secure your future with allied', 'private', 'defence ', 'islambad', '78907876878', 'allieda@gmail.com', '0000-00-00'),
+(6, '', '', '', '', '', '', '', '', '', '', '', '0000-00-00'),
+(7, '', '', '', '', '', '', '', '', '', '', '', '2024-08-14'),
+(8, '', '', '', '', '', '', '', '', '', '', '', '2024-08-14'),
+(9, 'A school is an educational institution where students receive formal instruction and learning under the guidance of teachers. Schools play a vital role in shaping the intellectual, social, and emotional development of students. They provide a structured environment for acquiring knowledge in various subjects, fostering critical thinking, creativity, and problem-solving skills. Schools also promote', '', '', 'Dar e Arqam School', 'Altaf Hussain', '\"Empowering Minds, Shaping Futures\"', 'private', 'Gulbarg Lahore', 'Lahore', '03245434454534', 'darearqam@gmail.com', '2025-03-03');
 
 -- --------------------------------------------------------
 
@@ -199,6 +262,21 @@ CREATE TABLE `student_class` (
   `fk_section_id` int(11) NOT NULL,
   `status` int(10) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `student_class`
+--
+
+INSERT INTO `student_class` (`student_class_id`, `fk_student_id`, `fk_class_id`, `fk_section_id`, `status`) VALUES
+(1, 1, 1, 1, 1),
+(2, 2, 1, 2, 1),
+(3, 3, 2, 3, 1),
+(4, 4, 6, 12, 1),
+(5, 5, 10, 20, 1),
+(7, 6, 5, 9, 1),
+(8, 5, 10, 20, 1),
+(9, 9, 9, 17, 1),
+(10, 10, 4, 8, 1);
 
 -- --------------------------------------------------------
 
@@ -228,11 +306,27 @@ CREATE TABLE `student_profile` (
   `dob` date NOT NULL,
   `address` varchar(500) NOT NULL,
   `mobile_no` varchar(50) NOT NULL,
-  `reg_no` varchar(50) NOT NULL,
+  `roll_no` varchar(50) NOT NULL,
   `image` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `student_profile`
+--
+
+INSERT INTO `student_profile` (`student_id`, `name`, `cnic`, `dob`, `address`, `mobile_no`, `roll_no`, `image`, `email`, `password`) VALUES
+(1, 'ali', '34567890', '2024-08-07', 'gujranwala', '4567845678', '23445', '', 'email', '1234567'),
+(2, 'abdullah', '23456789', '2024-07-30', 'Rahwali Cantt', '345678678', '342342', '', 'email', '1234567'),
+(3, 'mukarram', '09876543', '2024-08-07', 'sargoodha', '1234567890', '0987654321', '', 'email', '1234567'),
+(4, 'qQQq', 'Q', '0000-00-00', 'Q', 'Q', 'Q', '', 'email', '1234567'),
+(5, '', 'A', '0000-00-00', 'A', 'A', 'A', '', 'email', '1234567'),
+(6, 'Cccc', 'c', '0000-00-00', 'c', 'c', 'c', '', 'email', '1234567'),
+(7, 'Cccc', 'c', '0000-00-00', 'c', 'c', 'c', '', 'email', '1234567'),
+(8, '', 'l', '0000-00-00', 'l', 'l', 'l', '', 'email', '1234567'),
+(9, 'o', 'o', '0000-00-00', 'o', 'o', 'o', '', 'email', '1234567'),
+(10, 'faizan', '345734895', '2024-08-02', 'lahore', '1234567890', '789', '', 'email', '1234567');
 
 -- --------------------------------------------------------
 
@@ -403,13 +497,13 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `admin_logs`
 --
 ALTER TABLE `admin_logs`
-  MODIFY `admin_log_id` int(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `admin_log_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `all_classes`
 --
 ALTER TABLE `all_classes`
-  MODIFY `class_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `class_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `assigned_classes`
@@ -427,7 +521,7 @@ ALTER TABLE `attendance`
 -- AUTO_INCREMENT for table `class_sections`
 --
 ALTER TABLE `class_sections`
-  MODIFY `section_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `section_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `exam_schedule`
@@ -457,13 +551,13 @@ ALTER TABLE `progress_report`
 -- AUTO_INCREMENT for table `school_profile_`
 --
 ALTER TABLE `school_profile_`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `student_class`
 --
 ALTER TABLE `student_class`
-  MODIFY `student_class_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `student_class_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `student_fee`
@@ -475,7 +569,7 @@ ALTER TABLE `student_fee`
 -- AUTO_INCREMENT for table `student_profile`
 --
 ALTER TABLE `student_profile`
-  MODIFY `student_id` int(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `student_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `teacher_profile`

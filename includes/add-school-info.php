@@ -10,21 +10,23 @@
     if (isset($_POST['submit'])) {
       $about = $_POST['about'];
         // $image = $_POST['image'];
+        $school_id = $_POST['school_id'];
         $name = $_POST['name'];
+        $o_name = $_POST['o_name'];
         $slogan = $_POST['slogan'];
         $private= $_POST['private'];
         $address = $_POST['address'];
         $city = $_POST['city'];
         $contact = $_POST['contact'];
         $email = $_POST['email'];
+        $expiry = $_POST['expiry'];
        
     
-        $query = "INSERT INTO school_profile_(about, name, slogan, private, address, city, contact, email) 
-    VALUES('$about', '$name', '$slogan', '$private', '$address', '$city', '$contact', '$email')";
+        $query = "INSERT INTO school_profile_(about, name,o_name, slogan, private, address, city, contact, email,expiry) 
+    VALUES('$about', '$name', '$o_name', '$slogan', '$private', '$address', '$city', '$contact', '$email', '$expiry')";
         $result1 = mysqli_query($conn, $query);
         if ($result1) {
-            echo "data has been successfully inserted";
-            // redirect("../profile.php");
+            redirect("../school-profile.php");
         } else {
             echo "Error: " . mysqli_error($conn);
         }

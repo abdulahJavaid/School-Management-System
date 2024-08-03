@@ -86,7 +86,7 @@
     </ul> -->
   </li><!-- End Components Nav -->
   <li class="nav-item">
-    <a class="nav-link collapsed" data-bs-target="#components-nav" href="profile.php"> <!-- data-bs-toggle="collapse" -->
+    <a class="nav-link collapsed" data-bs-target="#components-nav" href="school_profile.php"> <!-- data-bs-toggle="collapse" -->
       <i class=""><img src="images/schoolprofile1.jpeg" width="30px" height="30px" alt=""></i><span>School Profile</span>
       <!-- <i class="bi bi-chevron-down ms-auto"></i> -->
     </a>
