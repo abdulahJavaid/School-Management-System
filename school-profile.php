@@ -161,10 +161,16 @@ $conn->close();
   
 
               <form action="includes/add-school-info.php" method="post" enctype="multipart/form-data">
-              <div class="row mb-3">
+              <!-- <div class="row mb-3">
                   <label for="about" class="col-md-4 col-lg-3 col-form-label">About School</label>
                   <div class="col-md-8 col-lg-9">
-                    <input name="about" type="text" class="form-control" id="fullName" placeholder="School Descrption" value="<?php echo $about; ?>"> 
+                    <input name="about" type="text" class="form-control" id="fullName" placeholder="School Descrption" value="<?php //echo $about; ?>"> 
+                  </div>
+                </div> -->
+                <div class="row mb-3">
+                  <label for="about" class="col-md-4 col-lg-3 col-form-label">About School</label>
+                  <div class="col-md-8 col-lg-9">
+                    <textarea name="about" class="form-control" id="about" style="height: 100px"><?php echo $about; ?></textarea>
                   </div>
                 </div>
                 <div class="row mb-3">

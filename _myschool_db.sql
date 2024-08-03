@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 03, 2024 at 12:53 PM
+-- Generation Time: Aug 03, 2024 at 05:49 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -68,7 +68,33 @@ INSERT INTO `admin_logs` (`admin_log_id`, `log_message`, `time`) VALUES
 (6, 'Admin with <strong>ID: 1</strong> added <strong>student: Cccc</strong> to Database!', '03/08/2024 11:58 am'),
 (7, 'Admin with <strong>ID: 1</strong> added <strong>student: </strong> to Database!', '03/08/2024 11:58 am'),
 (8, 'Admin with <strong>ID: 1</strong> added <strong>student: o</strong> to Database!', '03/08/2024 11:59 am'),
-(9, 'Admin with <strong>ID: 1</strong> added <strong>student: faizan</strong> to Database!', '03/08/2024 11:59 am');
+(9, 'Admin with <strong>ID: 1</strong> added <strong>student: faizan</strong> to Database!', '03/08/2024 11:59 am'),
+(10, 'Admin with <strong>ID: 1</strong> edited profile of <strong>student: new name</strong>!', '03/08/2024 01:22 pm'),
+(11, 'Admin with <strong>ID: 1</strong> edited profile of <strong>student: ali</strong>!', '03/08/2024 01:27 pm'),
+(12, 'Admin with <strong>ID: 1</strong> edited profile of <strong>student: ali</strong>!', '03/08/2024 01:27 pm'),
+(13, 'Admin with <strong>ID: 1</strong> edited profile of <strong>student: ali</strong>!', '03/08/2024 01:27 pm'),
+(14, 'Admin with <strong>ID: 1</strong> edited profile of <strong>student: Abdul Ghafoor</strong>!', '03/08/2024 02:39 pm'),
+(15, 'Admin with <strong>ID: 1</strong> edited profile of <strong>teacher: Moawia</strong>!', '03/08/2024 02:50 pm'),
+(16, 'Admin with <strong>ID: 1</strong> edited profile of <strong>teacher: Moawia</strong>!', '03/08/2024 02:51 pm'),
+(17, 'Admin with <strong>ID: 1</strong> edited profile of <strong>teacher: Moawia</strong>!', '03/08/2024 02:52 pm'),
+(18, 'Admin with <strong>ID: 1</strong> edited profile of <strong>teacher: Abdul Ghafoor</strong>!', '03/08/2024 02:53 pm'),
+(19, 'Admin with <strong>ID: 1</strong> edited profile of <strong>student: new name</strong>!', '03/08/2024 02:54 pm'),
+(20, 'Admin with <strong>ID: 1</strong> edited profile of <strong>student: ali</strong>!', '03/08/2024 02:54 pm'),
+(21, 'Admin with <strong>ID: 1</strong> edited profile of <strong>student: ali</strong>!', '03/08/2024 02:54 pm'),
+(22, 'Admin with <strong>ID: 1</strong> edited profile of <strong>student: ali</strong>!', '03/08/2024 02:54 pm'),
+(23, 'Admin with <strong>ID: 1</strong> edited profile of <strong>teacher: Moawia</strong>!', '03/08/2024 02:55 pm'),
+(24, 'Admin with <strong>ID: 1</strong> edited profile of <strong>teacher: Moawia</strong>!', '03/08/2024 02:59 pm'),
+(25, 'Admin with <strong>ID: 1</strong> edited profile of <strong>teacher: Moaz</strong>!', '03/08/2024 03:07 pm'),
+(26, 'Admin with <strong>ID: 1</strong> edited profile of <strong>teacher: Abdul Ghafoor</strong>!', '03/08/2024 03:09 pm'),
+(27, 'Admin with <strong>ID: 1</strong> edited profile of <strong>teacher: ali</strong>!', '03/08/2024 03:10 pm'),
+(28, 'Admin with <strong>ID: 1</strong> edited profile of <strong>teacher: ali</strong>!', '03/08/2024 03:12 pm'),
+(29, 'Admin with <strong>ID: 1</strong> edited profile of <strong>teacher: addg</strong>!', '03/08/2024 03:12 pm'),
+(30, 'Admin with <strong>ID: 1</strong> edited profile of <strong>teacher: addg</strong>!', '03/08/2024 03:13 pm'),
+(31, 'Admin with <strong>ID: 1</strong> edited profile of <strong>teacher: addg</strong>!', '03/08/2024 03:14 pm'),
+(32, 'Admin with <strong>ID: 1</strong> edited profile of <strong>teacher: Moa</strong>!', '03/08/2024 03:26 pm'),
+(33, 'Admin with <strong>ID: 1</strong> edited profile of <strong>teacher: Mo</strong>!', '03/08/2024 03:26 pm'),
+(34, 'Admin with <strong>ID: 1</strong> added <strong>teacher: Ibrar</strong> to Database!', '03/08/2024 03:30 pm'),
+(35, 'Admin with <strong>ID: 1</strong> edited profile of <strong>student: hamza</strong>!', '03/08/2024 05:05 pm');
 
 -- --------------------------------------------------------
 
@@ -108,6 +134,7 @@ CREATE TABLE `assigned_classes` (
   `fk_teacher_id` int(11) NOT NULL,
   `fk_class_id` int(11) NOT NULL,
   `fk_section_id` int(11) NOT NULL,
+  `subject` varchar(50) NOT NULL,
   `status` int(10) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -186,7 +213,8 @@ CREATE TABLE `notices` (
   `notice_id` int(20) NOT NULL,
   `fk_student_id` int(20) NOT NULL,
   `notice_description` varchar(1000) NOT NULL,
-  `notice_status` varchar(20) NOT NULL DEFAULT 'global'
+  `notice_status` varchar(20) NOT NULL DEFAULT 'global',
+  `time` int(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -247,7 +275,9 @@ INSERT INTO `school_profile_` (`id`, `about`, `image`, `school_id`, `name`, `o_n
 (6, '', '', '', '', '', '', '', '', '', '', '', '0000-00-00'),
 (7, '', '', '', '', '', '', '', '', '', '', '', '2024-08-14'),
 (8, '', '', '', '', '', '', '', '', '', '', '', '2024-08-14'),
-(9, 'A school is an educational institution where students receive formal instruction and learning under the guidance of teachers. Schools play a vital role in shaping the intellectual, social, and emotional development of students. They provide a structured environment for acquiring knowledge in various subjects, fostering critical thinking, creativity, and problem-solving skills. Schools also promote', '', '', 'Dar e Arqam School', 'Altaf Hussain', '\"Empowering Minds, Shaping Futures\"', 'private', 'Gulbarg Lahore', 'Lahore', '03245434454534', 'darearqam@gmail.com', '2025-03-03');
+(9, 'A school is an educational institution where students receive formal instruction and learning under the guidance of teachers. Schools play a vital role in shaping the intellectual, social, and emotional development of students. They provide a structured environment for acquiring knowledge in various subjects, fostering critical thinking, creativity, and problem-solving skills. Schools also promote', '', '', 'Dar e Arqam School', 'Altaf Hussain', '\"Empowering Minds, Shaping Futures\"', 'private', 'Gulbarg Lahore', 'Lahore', '03245434454534', 'darearqam@gmail.com', '2025-03-03'),
+(10, 'A school is an educational institution where students receive formal instruction and learning under the guidance of teachers. Schools play a vital role in shaping the intellectual, social, and emotional development of students. They provide a structured environment for acquiring knowledge in various subjects, fostering critical thinking, creativity, and problem-solving skills. Schools also promote', '', '', 'Dar e Arqam School', 'Altaf Hussain', '', 'private', 'Gujrnawala', 'Lahore', '03245434454534', 'darearqam@gmail.com', '2025-03-03'),
+(11, 'A school A school A school A school A school A school A school A school A school A school A school A school A school A school A school A school A school A school A school A school A school A school A school A school A school A school ', '', '3', 'Dar e Arqam School', 'Altaf Hussain', '', 'private', 'Gujrnawala', 'Lahore', '03245434454534', 'darearqam@gmail.com', '2025-03-03');
 
 -- --------------------------------------------------------
 
@@ -309,24 +339,25 @@ CREATE TABLE `student_profile` (
   `roll_no` varchar(50) NOT NULL,
   `image` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL
+  `password` varchar(255) NOT NULL,
+  `student_status` int(5) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `student_profile`
 --
 
-INSERT INTO `student_profile` (`student_id`, `name`, `cnic`, `dob`, `address`, `mobile_no`, `roll_no`, `image`, `email`, `password`) VALUES
-(1, 'ali', '34567890', '2024-08-07', 'gujranwala', '4567845678', '23445', '', 'email', '1234567'),
-(2, 'abdullah', '23456789', '2024-07-30', 'Rahwali Cantt', '345678678', '342342', '', 'email', '1234567'),
-(3, 'mukarram', '09876543', '2024-08-07', 'sargoodha', '1234567890', '0987654321', '', 'email', '1234567'),
-(4, 'qQQq', 'Q', '0000-00-00', 'Q', 'Q', 'Q', '', 'email', '1234567'),
-(5, '', 'A', '0000-00-00', 'A', 'A', 'A', '', 'email', '1234567'),
-(6, 'Cccc', 'c', '0000-00-00', 'c', 'c', 'c', '', 'email', '1234567'),
-(7, 'Cccc', 'c', '0000-00-00', 'c', 'c', 'c', '', 'email', '1234567'),
-(8, '', 'l', '0000-00-00', 'l', 'l', 'l', '', 'email', '1234567'),
-(9, 'o', 'o', '0000-00-00', 'o', 'o', 'o', '', 'email', '1234567'),
-(10, 'faizan', '345734895', '2024-08-02', 'lahore', '1234567890', '789', '', 'email', '1234567');
+INSERT INTO `student_profile` (`student_id`, `name`, `cnic`, `dob`, `address`, `mobile_no`, `roll_no`, `image`, `email`, `password`, `student_status`) VALUES
+(1, 'ali', '34567890', '2024-08-07', 'gujranwala', '4567845678', '23445g', '', 'email@mail.com', '1234567', 1),
+(2, 'abdullah', '23456789', '2024-07-30', 'Rahwali Cantt', '345678678', '342342', '', 'email', '1234567', 1),
+(3, 'mukarram ali', '09876543', '2024-08-07', 'sargoodha', '1234567890', '0987654321', '', 'email@mail.com', '1234567', 1),
+(4, 'new name', '673938738903', '2024-08-30', 'sjkd', '038763536789', '386378', '', 'email@mail.com', '1234567', 1),
+(5, 'hamza', 'A', '0000-00-00', 'A', 'A', 'A', '', 'email@mail.com', '1234567', 1),
+(6, 'Cccc', 'c', '0000-00-00', 'c', 'c', 'c', '', 'email', '1234567', 1),
+(7, 'Cccc', 'c', '0000-00-00', 'c', 'c', 'c', '', 'email', '1234567', 1),
+(8, '', 'l', '0000-00-00', 'l', 'l', 'l', '', 'email', '1234567', 1),
+(9, 'o', 'o', '0000-00-00', 'o', 'o', 'o', '', 'email', '1234567', 1),
+(10, 'faizan', '345734895', '2024-08-02', 'lahore', '1234567890', '789', '', 'email', '1234567', 1);
 
 -- --------------------------------------------------------
 
@@ -354,8 +385,10 @@ CREATE TABLE `teacher_profile` (
 --
 
 INSERT INTO `teacher_profile` (`teacher_id`, `name`, `cnic`, `f_name`, `phone_no`, `qualification`, `dob`, `address`, `email`, `school_id`, `image`, `password`) VALUES
-(181, '', '', '', '', '', '0000-00-00', '', '', '', '', ''),
-(182, '', '', '', '', '', '0000-00-00', '', '', '', '', '');
+(181, 'Mo', '0938763583373', 'Abdul Ghafoor', '0387389', 'jdk', '0000-00-00', '', 'email@mail.com', '937u3', '', ''),
+(182, '', '', '', '', 'k', '0000-00-00', '', '', '', '', ''),
+(183, 'addg', '9398763789029', 'ajdl', '09876289373', 'cs', '2024-08-13', 'Gujranwala', 'email@mail.com', '9387484', '', '123'),
+(184, 'Ibrar', '08763563789383', 'Abdul Ghani', '08736673893', 'BS(Botany)', '2024-08-22', 'Gujranwala', 'eamil@mail.com', '93873', '', '123');
 
 -- --------------------------------------------------------
 
@@ -497,7 +530,7 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `admin_logs`
 --
 ALTER TABLE `admin_logs`
-  MODIFY `admin_log_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `admin_log_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT for table `all_classes`
@@ -551,7 +584,7 @@ ALTER TABLE `progress_report`
 -- AUTO_INCREMENT for table `school_profile_`
 --
 ALTER TABLE `school_profile_`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `student_class`
@@ -575,7 +608,7 @@ ALTER TABLE `student_profile`
 -- AUTO_INCREMENT for table `teacher_profile`
 --
 ALTER TABLE `teacher_profile`
-  MODIFY `teacher_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=183;
+  MODIFY `teacher_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=185;
 
 --
 -- AUTO_INCREMENT for table `timetable`

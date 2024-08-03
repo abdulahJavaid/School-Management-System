@@ -35,7 +35,7 @@ $row = mysqli_fetch_assoc($pass);
   <?php
   // updating student
   if (isset($_POST['submit'])) {
-    $id = $_GET['id'];
+    $cid = $_GET['id'];
     $name = $_POST['name'];
     $roll_no = $_POST['roll_no'];
     $cnic = $_POST['cnic'];
@@ -46,9 +46,25 @@ $row = mysqli_fetch_assoc($pass);
 
     $query = "UPDATE student_profile SET name='$name', roll_no='$roll_no', cnic='$cnic', dob='$dob', ";
     $query .= "address='$address', email='$email', mobile_no='$mobile_no' ";
-    $query .= "WHERE student_id='$id'";
+    $query .= "WHERE student_id='$cid'";
 
     $get = query($query);
+    if($get) {
+      // code to add admin_log into the database
+      $result = sql_where('admin', 'admin_id', $_SESSION['login_id']);
+      $fetch = mysqli_fetch_assoc($result);
+      $id = $_SESSION['login_id'];
+      $log = "Admin with <strong>ID: $id</strong> edited profile of <strong>student: $name</strong>!";
+      $time = date('d/m/Y h:i a', time());
+      $time = (string) $time;
+
+      $query = "INSERT INTO admin_logs(log_message, time) VALUES('$log', '$time')";
+      $pass_query2 = mysqli_query($conn, $query);
+      if (!$pass_query2) {
+          echo "Error: " . mysqli_error($conn);
+      }
+      redirect("./edit-student.php?id=$cid");
+    }
   }
 
 
