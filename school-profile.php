@@ -12,6 +12,7 @@ if (mysqli_num_rows($result) > 0) {}
 if ($result->num_rows > 0) {
     // Fetch data
     $row = $result->fetch_assoc();
+    $school_id = $row['school_id'];
     $about = $row['about'];
     $name = $row['name'];
     $o_name = $row['o_name'];
@@ -98,6 +99,11 @@ $conn->close();
               <h5 class="card-title">School Details</h5>
 
               <div class="row">
+                <div class="col-lg-3 col-md-4 label ">School Id</div>
+                <div class="col-lg-9 col-md-8"><?php echo $school_id; ?></div>
+              </div>
+
+              <div class="row">
                 <div class="col-lg-3 col-md-4 label ">School Name</div>
                 <div class="col-lg-9 col-md-8"><?php echo $name; ?></div>
               </div>
@@ -158,7 +164,7 @@ $conn->close();
               <div class="row mb-3">
                   <label for="about" class="col-md-4 col-lg-3 col-form-label">About School</label>
                   <div class="col-md-8 col-lg-9">
-                    <input name="about" type="text" class="form-control" id="fullName" placeholder="School Descrption">
+                    <input name="about" type="text" class="form-control" id="fullName" placeholder="School Descrption" value="<?php echo $about; ?>"> 
                   </div>
                 </div>
                 <div class="row mb-3">
@@ -176,28 +182,28 @@ $conn->close();
                   <div class="row mb-3">
                   <label for="school_id" class="col-md-4 col-lg-3 col-form-label">School Id</label>
                   <div class="col-md-8 col-lg-9">
-                    <input name="school_id" type="text" class="form-control" id="fullName" placeholder="Enter School Id">
+                    <input name="school_id" type="text" class="form-control" id="fullName" placeholder="Enter School Id" value="<?php echo $school_id; ?>">
                   </div>
                 </div>
 
                 <div class="row mb-3">
                   <label for="name" class="col-md-4 col-lg-3 col-form-label">School Name</label>
                   <div class="col-md-8 col-lg-9">
-                    <input name="name" type="text" class="form-control" id="fullName" placeholder="Enter School Name">
+                    <input name="name" type="text" class="form-control" id="fullName" placeholder="Enter School Name" value="<?php echo $name; ?>">
                   </div>
                 </div>
 
                 <div class="row mb-3">
                   <label for="o_name" class="col-md-4 col-lg-3 col-form-label">Owner Name</label>
                   <div class="col-md-8 col-lg-9">
-                    <input name="o_name" type="text" class="form-control" id="fullName" placeholder="Enter Owner  Name">
+                    <input name="o_name" type="text" class="form-control" id="fullName" placeholder="Enter Owner  Name" value="<?php echo $o_name; ?>">
                   </div>
                 </div>
 
                 <div class="row mb-3">
                   <label for="slogan" class="col-md-4 col-lg-3 col-form-label">School Slogan</label>
                   <div class="col-md-8 col-lg-9">
-                    <input name="slogan" type="text" class="form-control" id="fullName" placeholder="Enter School Slogan">
+                    <input name="slogan" type="text" class="form-control" id="fullName" placeholder="Enter School Slogan" value="<?php echo $slogan; ?>">
                   </div>
                 </div>
 
@@ -206,28 +212,28 @@ $conn->close();
                 <div class="row mb-3">
                   <label for="private" class="col-md-4 col-lg-3 col-form-label">School Type</label>
                   <div class="col-md-8 col-lg-9">
-                    <input name="private" type="text" class="form-control" id="company" placeholder="School Type">
+                    <input name="private" type="text" class="form-control" id="company" placeholder="School Type" value="<?php echo $private; ?>">
                   </div>
                 </div>
 
                 <div class="row mb-3">
                   <label for="address" class="col-md-4 col-lg-3 col-form-label">Address</label>
                   <div class="col-md-8 col-lg-9">
-                    <input name="address" type="text" class="form-control" id="Job" placeholder="School Location">
+                    <input name="address" type="text" class="form-control" id="Job" placeholder="School Location" value="<?php echo $address; ?>">
                   </div>
                 </div>
 
                 <div class="row mb-3">
                   <label for="city" class="col-md-4 col-lg-3 col-form-label">City</label>
                   <div class="col-md-8 col-lg-9">
-                    <input name="city" type="text" class="form-control" id="Country" placeholder="Enter city">
+                    <input name="city" type="text" class="form-control" id="Country" placeholder="Enter city" value="<?php echo $city; ?>">
                   </div>
                 </div>
 
                 <div class="row mb-3">
                   <label for="Contact" class="col-md-4 col-lg-3 col-form-label">Contact No</label>
                   <div class="col-md-8 col-lg-9">
-                    <input name="contact" type="text" class="form-control" id="Address" placeholder="Ennter contact no">
+                    <input name="contact" type="text" class="form-control" id="Address" placeholder="Ennter contact no" value="<?php echo $contact; ?>">
                   </div>
                 </div>
 
@@ -235,7 +241,7 @@ $conn->close();
                 <div class="row mb-3">
                   <label for="Email" class="col-md-4 col-lg-3 col-form-label">Email</label>
                   <div class="col-md-8 col-lg-9">
-                    <input name="email" type="email" class="form-control" id="Email" placeholder="Email address">
+                    <input name="email" type="email" class="form-control" id="Email" placeholder="Email address" value="<?php echo $email; ?>">
                   </div>
                 </div>
 
@@ -243,7 +249,7 @@ $conn->close();
                 <div class="row mb-3">
                   <label for="expiry" class="col-md-4 col-lg-3 col-form-label">Expiry Date</label>
                   <div class="col-md-8 col-lg-9">
-                    <input name="expiry" type="date" class="form-control" id="Email" placeholder="Expiry Date">
+                    <input name="expiry" type="date" class="form-control" id="Email" placeholder="Expiry Date" value="<?php echo $expiry; ?>">
                   </div>
                 </div>
 

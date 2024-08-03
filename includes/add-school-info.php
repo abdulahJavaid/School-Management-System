@@ -22,8 +22,8 @@
         $expiry = $_POST['expiry'];
        
     
-        $query = "INSERT INTO school_profile_(about, name,o_name, slogan, private, address, city, contact, email,expiry) 
-    VALUES('$about', '$name', '$o_name', '$slogan', '$private', '$address', '$city', '$contact', '$email', '$expiry')";
+        $query = "INSERT INTO school_profile_(about,school_id, name,o_name, slogan, private, address, city, contact, email,expiry) 
+    VALUES('$about', '$school_id', '$name', '$o_name', '$slogan', '$private', '$address', '$city', '$contact', '$email', '$expiry')";
         $result1 = mysqli_query($conn, $query);
         if ($result1) {
             redirect("../school-profile.php");
