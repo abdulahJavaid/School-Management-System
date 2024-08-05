@@ -6,7 +6,7 @@
 <main id="main" class="main">
 
     <div class="pagetitle">
-        <h1>Daily expences and receiving</h1>
+        <h1>Daily expences</h1>
         <nav>
             <ol class="breadcrumb">
                 <!-- <li class="breadcrumb-item"><a href="index.html">Home</a></li>
@@ -24,31 +24,21 @@
                         <h5 class="card-title text-center ">Add Expenscss</h5>
 
                         <!-- Multi Columns Form -->
-                        <form class="row g-3">
-                        <div class="col-md-12">
-                                <label for="inputCity" class="form-label">Date</label>
-                                <input type="text" class="form-control" id="inputCity">
+                        <form method="post" action="" enctype="multipart/form-data"  class="row g-3">
+                       
+                            <div class="col-md-12">
+                                <label for="image" class="form-label">Upload image</label>
+                                <input type="file" class="form-control" id="image">
                             </div>
                             <div class="col-md-12">
-                                <label for="inputName5" class="form-label">Pay</label>
-                                <input type="text" class="form-control" id="inputName5">
+                                <label for="comment" class="form-label">Comment</label>
+                                <input type="text" class="form-control" id="comment">
                             </div>
-                            <div class="col-md-6">
-                                <label for="inputEmail5" class="form-label">Electricity</label>
-                                <input type="email" class="form-control" id="inputEmail5">
+                            <div class="col-md-12">
+                                <label for="cost" class="form-label">Cost/expencess</label>
+                                <input type="text" class="form-control" id="cost">
                             </div>
-                            <div class="col-md-6">
-                                <label for="inputPassword5" class="form-label">Rent</label>
-                                <input type="password" class="form-control" id="inputPassword5">
-                            </div>
-                            <div class="col-12">
-                                <label for="inputAddress5" class="form-label">Furniture</label>
-                                <input type="text" class="form-control" id="inputAddres5s" placeholder="">
-                            </div>
-                            <div class="col-12">
-                                <label for="inputAddress2" class="form-label">construction</label>
-                                <input type="text" class="form-control" id="inputAddress2" placeholder="">
-                            </div>
+                           
                             <div class="col-md-12">
                                 <label for="inputCity" class="form-label">Other Expencess</label>
                                 <input type="text" class="form-control" id="inputCity">
