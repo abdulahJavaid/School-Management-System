@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 03, 2024 at 05:49 PM
+-- Generation Time: Aug 05, 2024 at 06:19 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -94,7 +94,15 @@ INSERT INTO `admin_logs` (`admin_log_id`, `log_message`, `time`) VALUES
 (32, 'Admin with <strong>ID: 1</strong> edited profile of <strong>teacher: Moa</strong>!', '03/08/2024 03:26 pm'),
 (33, 'Admin with <strong>ID: 1</strong> edited profile of <strong>teacher: Mo</strong>!', '03/08/2024 03:26 pm'),
 (34, 'Admin with <strong>ID: 1</strong> added <strong>teacher: Ibrar</strong> to Database!', '03/08/2024 03:30 pm'),
-(35, 'Admin with <strong>ID: 1</strong> edited profile of <strong>student: hamza</strong>!', '03/08/2024 05:05 pm');
+(35, 'Admin with <strong>ID: 1</strong> edited profile of <strong>student: hamza</strong>!', '03/08/2024 05:05 pm'),
+(36, 'Admin with <strong>ID: 1</strong> added <strong>student: Ali</strong> to Database!', '04/08/2024 10:19 pm'),
+(37, 'Admin with <strong>ID: 1</strong> added <strong>student: Hmaza</strong> to Database!', '04/08/2024 10:19 pm'),
+(38, 'Admin with <strong>ID: 1</strong> added <strong>student: Elahi</strong> to Database!', '04/08/2024 10:20 pm'),
+(39, 'Admin with <strong>ID: 1</strong> added <strong>student: Abu Bakar</strong> to Database!', '04/08/2024 10:21 pm'),
+(40, 'Admin with <strong>ID: 1</strong> added <strong>student: Sultan</strong> to Database!', '04/08/2024 10:22 pm'),
+(41, 'Admin with <strong>ID: 1</strong> added <strong>student: Butt</strong> to Database!', '04/08/2024 10:22 pm'),
+(42, 'Admin with <strong>ID: 1</strong> added <strong>student: Talha</strong> to Database!', '04/08/2024 10:23 pm'),
+(43, 'Admin with <strong>ID: 1</strong> added <strong>student: Nouman</strong> to Database!', '04/08/2024 10:24 pm');
 
 -- --------------------------------------------------------
 
@@ -151,6 +159,28 @@ CREATE TABLE `attendance` (
   `date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `attendance`
+--
+
+INSERT INTO `attendance` (`attendance_id`, `fk_student_id`, `attendance`, `date`) VALUES
+(25, 11, 'present', '2024-08-05'),
+(26, 12, 'absent', '2024-08-05'),
+(27, 13, 'present', '2024-08-05'),
+(28, 14, 'present', '2024-08-05'),
+(29, 15, 'present', '2024-08-05'),
+(30, 16, 'present', '2024-08-05'),
+(31, 17, 'present', '2024-08-05'),
+(32, 18, 'present', '2024-08-05'),
+(33, 11, 'present', '2024-08-05'),
+(34, 12, 'absent', '2024-08-05'),
+(35, 13, 'present', '2024-08-05'),
+(36, 14, 'present', '2024-08-05'),
+(37, 15, 'leave', '2024-08-05'),
+(38, 16, 'present', '2024-08-05'),
+(39, 17, 'absent', '2024-08-05'),
+(40, 18, 'present', '2024-08-05');
+
 -- --------------------------------------------------------
 
 --
@@ -187,7 +217,8 @@ INSERT INTO `class_sections` (`section_id`, `fk_class_id`, `section_name`) VALUE
 (17, 9, 'A'),
 (18, 9, 'B'),
 (19, 10, 'A'),
-(20, 10, 'B');
+(20, 10, 'B'),
+(21, 10, 'C');
 
 -- --------------------------------------------------------
 
@@ -298,15 +329,14 @@ CREATE TABLE `student_class` (
 --
 
 INSERT INTO `student_class` (`student_class_id`, `fk_student_id`, `fk_class_id`, `fk_section_id`, `status`) VALUES
-(1, 1, 1, 1, 1),
-(2, 2, 1, 2, 1),
-(3, 3, 2, 3, 1),
-(4, 4, 6, 12, 1),
-(5, 5, 10, 20, 1),
-(7, 6, 5, 9, 1),
-(8, 5, 10, 20, 1),
-(9, 9, 9, 17, 1),
-(10, 10, 4, 8, 1);
+(11, 11, 1, 1, 1),
+(12, 12, 1, 1, 1),
+(13, 13, 1, 1, 1),
+(14, 14, 1, 1, 1),
+(15, 15, 1, 1, 1),
+(16, 16, 1, 1, 1),
+(17, 17, 1, 1, 1),
+(18, 18, 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -348,16 +378,14 @@ CREATE TABLE `student_profile` (
 --
 
 INSERT INTO `student_profile` (`student_id`, `name`, `cnic`, `dob`, `address`, `mobile_no`, `roll_no`, `image`, `email`, `password`, `student_status`) VALUES
-(1, 'ali', '34567890', '2024-08-07', 'gujranwala', '4567845678', '23445g', '', 'email@mail.com', '1234567', 1),
-(2, 'abdullah', '23456789', '2024-07-30', 'Rahwali Cantt', '345678678', '342342', '', 'email', '1234567', 1),
-(3, 'mukarram ali', '09876543', '2024-08-07', 'sargoodha', '1234567890', '0987654321', '', 'email@mail.com', '1234567', 1),
-(4, 'new name', '673938738903', '2024-08-30', 'sjkd', '038763536789', '386378', '', 'email@mail.com', '1234567', 1),
-(5, 'hamza', 'A', '0000-00-00', 'A', 'A', 'A', '', 'email@mail.com', '1234567', 1),
-(6, 'Cccc', 'c', '0000-00-00', 'c', 'c', 'c', '', 'email', '1234567', 1),
-(7, 'Cccc', 'c', '0000-00-00', 'c', 'c', 'c', '', 'email', '1234567', 1),
-(8, '', 'l', '0000-00-00', 'l', 'l', 'l', '', 'email', '1234567', 1),
-(9, 'o', 'o', '0000-00-00', 'o', 'o', 'o', '', 'email', '1234567', 1),
-(10, 'faizan', '345734895', '2024-08-02', 'lahore', '1234567890', '789', '', 'email', '1234567', 1);
+(11, 'Ali', '038484767777', '2024-08-04', 'gujranwala', '0378383883', '937839', '', 'email', '1234567', 1),
+(12, 'Hmaza', '0398390883', '2024-08-04', 'gujranwala', '903293739', '937387', '', 'email', '1234567', 1),
+(13, 'Elahi', '8329798234', '2024-08-04', 'Gujranwala', '03983793', '039803893', '', 'email', '1234567', 1),
+(14, 'Abu Bakar', '038393983', '2024-08-04', 'Gujranwala', '0399303993', '309894', '', 'email', '1234567', 1),
+(15, 'Sultan', '039404949', '2024-08-04', 'Gujranwala', '038333783', '039388', '', 'email', '1234567', 1),
+(16, 'Butt', '23893883773', '2024-08-04', 'Gujranwala', '0937839', '0393893', '', 'email', '1234567', 1),
+(17, 'Talha', '0893883883', '2024-08-04', 'Gujranwala', '038389837', '0383783', '', 'email', '1234567', 1),
+(18, 'Nouman', '03883834443', '2024-08-04', 'Gujranwala', '083378838', '837848', '', 'email', '1234567', 1);
 
 -- --------------------------------------------------------
 
@@ -530,7 +558,7 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `admin_logs`
 --
 ALTER TABLE `admin_logs`
-  MODIFY `admin_log_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `admin_log_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT for table `all_classes`
@@ -548,13 +576,13 @@ ALTER TABLE `assigned_classes`
 -- AUTO_INCREMENT for table `attendance`
 --
 ALTER TABLE `attendance`
-  MODIFY `attendance_id` int(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `attendance_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT for table `class_sections`
 --
 ALTER TABLE `class_sections`
-  MODIFY `section_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `section_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `exam_schedule`
@@ -590,7 +618,7 @@ ALTER TABLE `school_profile_`
 -- AUTO_INCREMENT for table `student_class`
 --
 ALTER TABLE `student_class`
-  MODIFY `student_class_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `student_class_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `student_fee`
@@ -602,7 +630,7 @@ ALTER TABLE `student_fee`
 -- AUTO_INCREMENT for table `student_profile`
 --
 ALTER TABLE `student_profile`
-  MODIFY `student_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `student_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `teacher_profile`
