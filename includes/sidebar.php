@@ -81,12 +81,12 @@
       </ul>
     </li>
 
-    <li class="nav-item">
+    <!-- <li class="nav-item">
       <a class="nav-link " href="add-attendance.php">
         <i class=""><img src="images/dashboard.jpeg" width="30px" height="30px" alt=""></i>
         <span>Mark Attendance</span>
       </a>
-    </li>
+    </li> -->
 
     <li class="nav-item">
       <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
