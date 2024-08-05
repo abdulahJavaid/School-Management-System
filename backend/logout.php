@@ -4,7 +4,7 @@
     ob_start();
     require_once('../db_connection/configs.php');
     require_once('../db_connection/connection.php');
-    require_once('./functions.php');
+    require_once('../includes/functions.php');
 
     // code to logout the user
 

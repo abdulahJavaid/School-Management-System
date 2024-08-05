@@ -58,7 +58,7 @@ $t_name = $get_r['name'];
 
                                         </div>
                                         <div class="row mb-3">
-                                            <button type="submit" class="btn btn-sm btn-primary button" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Assign class to teacher: <?php echo $t_name; ?>">
+                                            <button type="submit" class="btn btn-sm btn-dark" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Assign class to teacher: <?php echo $t_name; ?>">
                                                 Assign
                                             </button>
                                         </div>

@@ -160,7 +160,7 @@ $conn->close();
               <!-- Profile Edit Form -->
   
 
-              <form action="includes/add-school-info.php" method="post" enctype="multipart/form-data">
+              <form action="backend/add-school-info.php" method="post" enctype="multipart/form-data">
               <!-- <div class="row mb-3">
                   <label for="about" class="col-md-4 col-lg-3 col-form-label">About School</label>
                   <div class="col-md-8 col-lg-9">
