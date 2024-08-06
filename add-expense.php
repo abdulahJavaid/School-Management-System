@@ -3,8 +3,13 @@
 <!-- ======= Sidebar ======= -->
 <?php require_once("includes/sidebar.php"); ?>
 
-<main id="main" class="main">
 
+
+
+
+
+
+<main id="main" class="main">
     <div class="pagetitle">
         <h1>Daily expences</h1>
         <nav>
@@ -24,29 +29,29 @@
                         <h5 class="card-title text-center ">Add Expenscss</h5>
 
                         <!-- Multi Columns Form -->
-                        <form method="post" action="" enctype="multipart/form-data"  class="row g-3">
+                        <form method="post" action="./backend/back-add-expencess.php" enctype="multipart/form-data"  class="row g-3">
                        
                             <div class="col-md-12">
                                 <label for="image" class="form-label">Upload image</label>
-                                <input type="file" class="form-control" id="image">
+                                <input name="image" type="file" class="form-control" id="image">
                             </div>
                             <div class="col-md-12">
                                 <label for="comment" class="form-label">Comment</label>
-                                <input type="text" class="form-control" id="comment">
+                                <input name="comment" type="text" class="form-control" id="comment">
                             </div>
                             <div class="col-md-12">
-                                <label for="cost" class="form-label">Cost/expencess</label>
-                                <input type="text" class="form-control" id="cost">
+                                <label for="cost" class="form-label">Cost</label>
+                                <input name="cost" type="text" class="form-control" id="cost">
                             </div>
                            
-                            <div class="col-md-12">
+                            <!-- <div class="col-md-12">
                                 <label for="inputCity" class="form-label">Other Expencess</label>
                                 <input type="text" class="form-control" id="inputCity">
                             </div>
-                           
+                            -->
                           
                             <div class="text-center">
-                                <button type="submit" class="btn btn-primary button">Submit</button>
+                            <button type="submit" name="submit" class="btn btn-primary">Submit</button>
                                 <button type="reset" class="btn btn-secondary">Reset</button>
                             </div>
                         </form><!-- End Multi Columns Form -->
