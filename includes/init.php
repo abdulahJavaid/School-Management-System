@@ -11,6 +11,6 @@
 
 
     // parameter files for easier management
-    require_once("parameters/class_sections.php"); // specify how many classes and sections for each class
+    // require_once("parameters/class_sections.php"); // specify how many classes and sections for each class
 
 ?>

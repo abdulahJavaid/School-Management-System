@@ -26,7 +26,15 @@
             <div class="col-md-8 offset-md-2">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title text-center ">Add Expenscss</h5>
+                        <h3 class="card-title text-center ">Add Expenscss</h3>
+                        <?php
+                            if(isset($_GET['message'])){
+                                $message = $_GET['message'];
+                          ?>
+                        <center><span class="bg-secondary msg">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $message; ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></center>
+                          <?php      
+                            }
+                        ?>
 
                         <!-- Multi Columns Form -->
                         <form method="post" action="./backend/back-add-expencess.php" enctype="multipart/form-data"  class="row g-3">

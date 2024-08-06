@@ -24,7 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($check !== false) {
             // Allow certain file formats
             if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") {
-                echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
+                redirect("../add-expense.php?message=Sorry, only JPG, JPEG, PNG, GIF files are allowed.&variable=836736");
                 $uploadOk = 0;
             }
         } else {
@@ -50,7 +50,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $query = "INSERT INTO add_exp (image, comment, cost) VALUES ('$pic', '$comment', '$cost')";
                 $result = mysqli_query($conn, $query);
                 if ($result) {
-                    echo "Data has been successfully inserted.";
+                    // echo "Data has been successfully inserted.";
+                    redirect("../add-expense.php");
                 } else {
                     echo "Error: " . mysqli_error($conn);
                 }
