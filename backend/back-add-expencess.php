@@ -24,23 +24,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($check !== false) {
             // Allow certain file formats
             if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") {
-                redirect("../add-expense.php?message=Sorry, only JPG, JPEG, PNG, GIF files are allowed.&variable=836736");
+                redirect("../add-expense.php?m=Sorry, only JPG, JPEG, PNG, GIF files are allowed.");
                 $uploadOk = 0;
             }
         } else {
-            echo "File is not an image.";
+            redirect("../add-expense.php?m=File is not an image.");
             $uploadOk = 0;
         }
 
         // Check if the file already exists
         if (file_exists($target_file)) {
-            echo "Sorry, the file already exists.";
+            redirect("../add-expense.php?m=Sorry, the file already exists.");
             $uploadOk = 0;
         }
 
         // Check if $uploadOk is set to 0 by an error
         if ($uploadOk == 0) {
-            echo "Sorry, your file was not uploaded.";
+            redirect("../add-expense.php?m=Sorry, your file was not uploaded.");
         } else {
             // if everything is ok, try to upload file
             if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
@@ -51,12 +51,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $result = mysqli_query($conn, $query);
                 if ($result) {
                     // echo "Data has been successfully inserted.";
-                    redirect("../add-expense.php");
+                    redirect("../add-expense.php?m=Data has been successfully inserted.");
                 } else {
-                    echo "Error: " . mysqli_error($conn);
+                    redirect("../add-expense.php?m=Error: " . mysqli_error($conn). "");
+                    // echo "Error: " . mysqli_error($conn);
                 }
             } else {
-                echo "Sorry, there was an error uploading your file.";
+                redirect("../add-expense.php?m=Sorry, there was an error uploading your file.");
             }
         }
     } else {

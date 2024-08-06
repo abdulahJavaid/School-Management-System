@@ -28,8 +28,8 @@
                     <div class="card-body">
                         <h3 class="card-title text-center ">Add Expenscss</h3>
                         <?php
-                            if(isset($_GET['message'])){
-                                $message = $_GET['message'];
+                            if(isset($_GET['m'])){
+                                $message = $_GET['m'];
                           ?>
                         <center><span class="bg-secondary msg">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $message; ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></center>
                           <?php      

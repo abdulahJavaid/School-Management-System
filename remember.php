@@ -6,6 +6,7 @@
     // 4. hover for buttons
     // 5. define access level for teacher & admins(accountant, profiler, scheduler)
     // 6. students parents are missing
+    // 7. Required missing on form fields
 
 
 ?>
