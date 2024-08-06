@@ -54,12 +54,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $query = "INSERT INTO add_receiving (image, comment, receving,date) VALUES ('$pic', '$comment', '$receving', '$date')";
                 $result = mysqli_query($conn, $query);
                 if ($result) {
-                    echo "Data has been successfully inserted.";
+                    // echo "Data has been successfully inserted.";
+                    redirect("../add-receiving.php?m=Data has been successfully inserted.");
                 } else {
-                    echo "Error: " . mysqli_error($conn);
+                    redirect("../add-receiving.php?m=Error: " . mysqli_error($conn). "");
+                    // echo "Error: " . mysqli_error($conn);
                 }
             } else {
-                echo "Sorry, there was an error uploading your file.";
+                redirect("../add-receiving.php?m=Sorry, there was an error uploading your file.");
             }
         }
     } else {
@@ -67,3 +69,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
     mysqli_close($conn);
 }
+?>

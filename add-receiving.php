@@ -25,6 +25,14 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title text-center">Payment Receving Form</h5>
+                        <?php
+                            if(isset($_GET['m'])){
+                                $message = $_GET['m'];
+                          ?>
+                        <center><span class="bg-secondary msg">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $message; ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></center>
+                          <?php      
+                            }
+                        ?>
 
                         <!-- Multi Columns Form -->
                         <form method="post" action="./backend/back-add-receving.php" enctype="multipart/form-data"  class="row g-3">
@@ -43,9 +51,8 @@
                                 <input name="receving" type="text" class="form-control" id="receving">
                             </div>
                               <?php
-                              $date = date('Y/m/d', time());
-                              $time = strtotime($date);
-                              $date = date('Y-m-d', $time);
+
+                              $date = date('Y-m-d', time());
                               ?>
                             <div class="col-md-12">
     <label for="date" class="form-label">Date</label>

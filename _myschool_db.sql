@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 06, 2024 at 04:03 PM
+-- Generation Time: Aug 06, 2024 at 05:02 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -28,44 +28,20 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `add_exp` (
-  `expense_id` int(20) NOT NULL,
+  `expense_id` int(11) NOT NULL,
   `image` varchar(255) NOT NULL,
-  `comment` varchar(200) NOT NULL,
-  `cost` varchar(20) NOT NULL
+  `comment` varchar(500) NOT NULL,
+  `cost` varchar(100) NOT NULL,
+  `date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `add_exp`
 --
 
-INSERT INTO `add_exp` (`expense_id`, `image`, `comment`, `cost`) VALUES
-(1, '', '', ''),
-(2, '', '', ''),
-(3, '', '', ''),
-(4, '', '', ''),
-(5, '', '', ''),
-(6, '', '', ''),
-(7, '', '', ''),
-(8, '', '', ''),
-(9, '', '', ''),
-(10, '', '', ''),
-(11, '', '', ''),
-(12, '', '', ''),
-(13, '', '', ''),
-(14, '', '', ''),
-(16, '', '', ''),
-(17, '', 'test', 'test'),
-(18, '../uploads/1q.PNG', 'guest refreshment', '1000'),
-(19, '1lamp.PNG', 'cach give to school owner', '5000'),
-(20, 'What is SMM strategy, #codsmine.png', 'cach give to school owner ffjjfjfjfjf', '100000'),
-(21, 'What is SMM strategy, #codsmine.png', 'cach give to school owner ffjjfjfjfjf', '100000'),
-(22, '3lamp.PNG', 'cach give to school ow2222', '50000'),
-(23, '3lamp.PNG', 'cach give to school ow2222', '50000'),
-(24, '2lamp.PNG', 'cach give to school ow2222', '50000'),
-(25, 'vecteezy_it-is-good-to-wander-on-the-lock-among-historical-things_24300086 (1).png', 'cach give to school ow2222', '50000'),
-(26, 'vecteezy_it-is-good-to-wander-on-the-lock-among-historical-things_24300086 (1).png', '1', '1'),
-(27, 'Social Media Marketing Fundamentals (1).png', 'asdfg', '1234'),
-(28, '3lamp.PNG', 'tryt', '');
+INSERT INTO `add_exp` (`expense_id`, `image`, `comment`, `cost`, `date`) VALUES
+(1, '2lamp.PNG', 'q', 'qqqqq', '0000-00-00'),
+(2, '5.png', 'rrrrrr', 'yyyyy', '2024-08-06');
 
 -- --------------------------------------------------------
 
@@ -91,7 +67,10 @@ INSERT INTO `add_receiving` (`receiving_id`, `image`, `comment`, `receving`, `da
 (3, '3lamp.PNG', 'tryt', 'yytg', '0000-00-00'),
 (4, '2lamp.PNG', 'aaaa', 'qaaaa', '0000-00-00'),
 (5, '1lamp.PNG', 'q', '', '2024-08-06'),
-(6, 'fee.jpg', 'q', 'qqqqqqqqqqq', '2024-08-06');
+(6, 'fee.jpg', 'q', 'qqqqqqqqqqq', '2024-08-06'),
+(7, 'cycle.png', 'q', 'aaaaaaaaaaaaaaaaaa', '2024-08-06'),
+(8, 'Listening and Engagement #what is SMM #codsmineuk #codesmine #.png', 'testing', 'fnrjfrfj', '2024-08-06'),
+(9, '5.png', 'eq', 'eer', '2024-08-06');
 
 -- --------------------------------------------------------
 
@@ -615,13 +594,13 @@ ALTER TABLE `timetable`
 -- AUTO_INCREMENT for table `add_exp`
 --
 ALTER TABLE `add_exp`
-  MODIFY `expense_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
+  MODIFY `expense_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `add_receiving`
 --
 ALTER TABLE `add_receiving`
-  MODIFY `receiving_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `receiving_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `admin`

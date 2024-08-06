@@ -51,7 +51,15 @@
                                 <label for="cost" class="form-label">Cost</label>
                                 <input name="cost" type="text" class="form-control" id="cost">
                             </div>
-                           
+
+                            <?php
+
+                              $date = date('Y-m-d', time());
+                              ?>
+                            <div class="col-md-12">
+    <label for="date" class="form-label">Date</label>
+    <input type="date" class="form-control" id="date" name="date" value="<?php echo $date; ?>" readonly>
+</div>
                             <!-- <div class="col-md-12">
                                 <label for="inputCity" class="form-label">Other Expencess</label>
                                 <input type="text" class="form-control" id="inputCity">

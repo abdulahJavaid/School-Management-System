@@ -11,6 +11,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // Get form data
         $comment = $_POST["comment"];
         $cost = $_POST["cost"];
+        $date = $_POST["date"];
         
         // File upload handling
         $target_dir = "../uploads/expense-uploads/"; // Directory where the file will be saved
@@ -47,7 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 // Image uploaded successfully, now insert form data into the database
 
                 // Insert form data and image path into the database
-                $query = "INSERT INTO add_exp (image, comment, cost) VALUES ('$pic', '$comment', '$cost')";
+                $query = "INSERT INTO add_exp (image, comment, cost,date) VALUES ('$pic', '$comment', '$cost', '$date')";
                 $result = mysqli_query($conn, $query);
                 if ($result) {
                     // echo "Data has been successfully inserted.";
