@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 06, 2024 at 02:37 PM
+-- Generation Time: Aug 06, 2024 at 04:03 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -64,7 +64,8 @@ INSERT INTO `add_exp` (`expense_id`, `image`, `comment`, `cost`) VALUES
 (24, '2lamp.PNG', 'cach give to school ow2222', '50000'),
 (25, 'vecteezy_it-is-good-to-wander-on-the-lock-among-historical-things_24300086 (1).png', 'cach give to school ow2222', '50000'),
 (26, 'vecteezy_it-is-good-to-wander-on-the-lock-among-historical-things_24300086 (1).png', '1', '1'),
-(27, 'Social Media Marketing Fundamentals (1).png', 'asdfg', '1234');
+(27, 'Social Media Marketing Fundamentals (1).png', 'asdfg', '1234'),
+(28, '3lamp.PNG', 'tryt', '');
 
 -- --------------------------------------------------------
 
@@ -86,7 +87,11 @@ CREATE TABLE `add_receiving` (
 
 INSERT INTO `add_receiving` (`receiving_id`, `image`, `comment`, `receving`, `date`) VALUES
 (1, '', 'testing', 'testinfg', '0000-00-00'),
-(2, '', 'testing', 'testinfg', '0000-00-00');
+(2, '', 'testing', 'testinfg', '0000-00-00'),
+(3, '3lamp.PNG', 'tryt', 'yytg', '0000-00-00'),
+(4, '2lamp.PNG', 'aaaa', 'qaaaa', '0000-00-00'),
+(5, '1lamp.PNG', 'q', '', '2024-08-06'),
+(6, 'fee.jpg', 'q', 'qqqqqqqqqqq', '2024-08-06');
 
 -- --------------------------------------------------------
 
@@ -610,13 +615,13 @@ ALTER TABLE `timetable`
 -- AUTO_INCREMENT for table `add_exp`
 --
 ALTER TABLE `add_exp`
-  MODIFY `expense_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `expense_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=29;
 
 --
 -- AUTO_INCREMENT for table `add_receiving`
 --
 ALTER TABLE `add_receiving`
-  MODIFY `receiving_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `receiving_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `admin`

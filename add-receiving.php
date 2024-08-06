@@ -28,10 +28,10 @@
 
                         <!-- Multi Columns Form -->
                         <form method="post" action="./backend/back-add-receving.php" enctype="multipart/form-data"  class="row g-3">
-                        <!-- <div class="col-md-12">
+                        <div class="col-md-12">
                                 <label for="image" class="form-label">Upload image</label>
                                 <input name="image" type="file" class="form-control" id="image">
-                            </div> -->
+                            </div>
 
                             <div class="col-md-12">
                                 <label for="comment" class="form-label">Comment</label>
@@ -42,10 +42,14 @@
                                 <label for="receving" class="form-label">Receving</label>
                                 <input name="receving" type="text" class="form-control" id="receving">
                             </div>
-                              
+                              <?php
+                              $date = date('Y/m/d', time());
+                              $time = strtotime($date);
+                              $date = date('Y-m-d', $time);
+                              ?>
                             <div class="col-md-12">
     <label for="date" class="form-label">Date</label>
-    <input type="date" class="form-control" id="date" name="date" value="<?php echo $dateFromDatabase; ?>" readonly>
+    <input type="date" class="form-control" id="date" name="date" value="<?php echo $date; ?>" readonly>
 </div>
 
                             <!-- <div class="col-md-4">
