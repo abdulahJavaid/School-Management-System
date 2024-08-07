@@ -13,21 +13,44 @@ require_once('./includes/functions.php');
 // requiring the autoload file for dompdf
 require __DIR__ . "/vendor/autoload.php";
 
+$query = "SELECT * FROM school_profile_ ORDER BY id DESC LIMIT 1";
+$result = mysqli_query($conn, $query);
+$row = mysqli_fetch_assoc($result);
 
-$html = "<center><h3>The expense sheet</h3></center>";
-$html .= "<table style='border: 1px solid black;'>
+$name = $row['name'];
+$address = $row['address'];
+$contact = $row['contact'];
+$email = $row['email'];
+
+
+$html = "<div style='clear:float;'><img style='float:left;' src='images/savy.png' height='155px' width='155px' alt='school-image'>";
+$html .= "<h1>$name</h1><h5>$address</h5><h5>$contact</h5><h5>$email</h5></div><br><h2 style='clear:both;'>Total expenditure</h2>";
+$html .= "<table border='1' style='border-collapse:collapse'>
 <thead>
 <tr>
-<th>One</th>
-<th>Two</th>
+<th colspan='3' style='min-width:auto;'>Total Expenses</th>
+</tr>
+<tr>
+<th style='min-width:200px;'>Description</th>
+<th style='min-width:200px;'>Cost</th>
+<th style='min-width:200px;'>Date</th>
 </tr>
 </thead>
-<tbody>
-<tr>
-<td>one</td>
-<td>two</td>
-</tr>
-</tbody>
+<tbody>";
+$query = "SELECT * FROM add_exp WHERE date='2024-08-06'";
+$result = mysqli_query($conn, $query);
+
+while($row = mysqli_fetch_assoc($result)){
+    $comment = $row['comment'];
+    $cost = $row['cost'];
+    $date = $row['date'];
+$html .= "<tr>
+<td>$comment</td>
+<td>Rs. $cost</td>
+<td>$date</td>
+</tr>";
+}
+$html .= "</tbody>
 </table>";
 
 // using the Dompdf namespace
