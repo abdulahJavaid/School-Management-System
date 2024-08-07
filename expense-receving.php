@@ -16,20 +16,20 @@
   <div class="container">
   <div class="row">
     <div class="col-md-3">
-      <form method="post" action="">
+      <form method="post" action="generate-pdf.php">
         <div class="input-group mb-3">
           <button class="btn btn-primary mt-3" type="button">From</button>
-          <input type="date" class="form-control mt-3">
+          <input type="date" name="one" class="form-control mt-3">
         </div>
     </div>
     <div class="col-md-3">
         <div class="input-group mb-3">
           <button class="btn btn-primary mt-3" type="button">To</button>
-          <input type="date" class="form-control mt-3">
+          <input type="date" name="two" class="form-control mt-3">
         </div>
     </div>
     <div class="col-md-4">
-        <button class="btn btn-md btn-primary mt-3 ml-3" type="button">Generate PDF</button>
+        <button class="btn btn-md btn-primary mt-3 ml-3" name="generate" type="submit">Generate PDF</button>
     </div>
     </form>
   </div>
@@ -62,13 +62,14 @@
               $date = date('Y-m-d', time());
 
               // select the records from database of today
-              $query = "SELECT * FROM expense_receiving WHERE date='$date' ORDER BY er_id DESC";
+              $query = "SELECT * FROM expense_receiving WHERE date='$date'";
               $result = query($query);
               $exp = 0;
               $rec = 0;
               while ($row = mysqli_fetch_assoc($result)) {
                 $exp += (int) $row['expense'];
                 $rec += (int) $row['receiving'];
+                $image = $row['image'];
               ?>
                 <tr>
                   <td><?php echo $row['date']; ?></td>
@@ -85,7 +86,7 @@
                       else
                         echo 'Rs. ' . $row['receiving'];
                       ?></td>
-                  <td><img src="uploads/expense-receiving/<?php echo $row['image']; ?>" width="30px" height="30px" alt="img"></td>
+                  <td><a href="./image.php?image=<?php echo $image; ?>"><img src="uploads/expense-receiving/<?php echo $row['image']; ?>" width="30px" height="30px" alt="img"></a></td>
                 </tr>
               <?php
               }
