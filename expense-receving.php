@@ -13,14 +13,36 @@
       </ol>
     </nav>
   </div><!-- End Page Title -->
+  <div class="container">
+  <div class="row">
+    <div class="col-md-3">
+      <form method="post" action="">
+        <div class="input-group mb-3">
+          <button class="btn btn-primary mt-3" type="button">From</button>
+          <input type="date" class="form-control mt-3">
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="input-group mb-3">
+          <button class="btn btn-primary mt-3" type="button">To</button>
+          <input type="date" class="form-control mt-3">
+        </div>
+    </div>
+    <div class="col-md-4">
+        <button class="btn btn-md btn-primary mt-3 ml-3" type="button">Generate PDF</button>
+    </div>
+    </form>
+  </div>
+</div>
+
 
   <section class="section profile">
-    <div class="row">
-
       <!-- First Card -->
       <!-- <div class="col-md-6"> -->
+     
       <div class="card">
         <div class="card-body">
+   
           <h5 class="card-title">Expense and Receiving</h5>
           <p>Total expense and receiving records for <code>today</code>.</p>
 
@@ -84,6 +106,7 @@
               </tr>
             </tbody>
           </table>
+          
 
         </div>
       </div>
