@@ -7,14 +7,14 @@ require_once('../includes/functions.php');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Check if all fields are set
-    if (isset($_FILES["image"]) && isset($_POST["comment"]) && isset($_POST["cost"])) {
+    if (isset($_FILES["image"]) && isset($_POST["comment"]) && isset($_POST["expense"])) {
         // Get form data
         $comment = $_POST["comment"];
-        $cost = $_POST["cost"];
+        $cost = $_POST["expense"];
         $date = $_POST["date"];
         
         // File upload handling
-        $target_dir = "../uploads/expense-uploads/"; // Directory where the file will be saved
+        $target_dir = "../uploads/expense-receiving/"; // Directory where the file will be saved
         $target_file = $target_dir . basename($_FILES["image"]["name"]); // Path of the uploaded file
         $pic = basename($_FILES["image"]["name"]);
         $uploadOk = 1; // Flag to check if file is uploaded successfully
@@ -48,7 +48,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 // Image uploaded successfully, now insert form data into the database
 
                 // Insert form data and image path into the database
-                $query = "INSERT INTO add_exp (image, comment, cost,date) VALUES ('$pic', '$comment', '$cost', '$date')";
+                $query = "INSERT INTO expense_receiving (image, comment, expense, receiving,date) VALUES ('$pic', '$comment', '$cost', '0', '$date')";
                 $result = mysqli_query($conn, $query);
                 if ($result) {
                     // echo "Data has been successfully inserted.";

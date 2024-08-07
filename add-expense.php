@@ -4,7 +4,14 @@
 <?php require_once("includes/sidebar.php"); ?>
 
 
+<?php
+// $pageWasRefreshed = isset($_SERVER['HTTP_CACHE_CONTROL']) && $_SERVER['HTTP_CACHE_CONTROL'] === 'max-age=10';
+// if(isset($_GET['message']) && $pageWasRefreshed ) {
+//     // unset($_GET['message']);
+//     redirect("./add-expense.php");
+// }
 
+?>
 
 
 
@@ -28,17 +35,17 @@
                     <div class="card-body">
                         <h3 class="card-title text-center ">Add Expenscss</h3>
                         <?php
-                            if(isset($_GET['m'])){
-                                $message = $_GET['m'];
-                          ?>
-                        <center><span class="bg-secondary msg">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $message; ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></center>
-                          <?php      
-                            }
+                        if (isset($_GET['m'])) {
+                            $message = $_GET['m'];
+                        ?>
+                            <center><span class="bg-secondary msg">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $message; ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></center>
+                        <?php
+                        }
                         ?>
 
                         <!-- Multi Columns Form -->
-                        <form method="post" action="./backend/back-add-expencess.php" enctype="multipart/form-data"  class="row g-3">
-                       
+                        <form method="post" action="./backend/back-add-expencess.php" enctype="multipart/form-data" class="row g-3">
+
                             <div class="col-md-12">
                                 <label for="image" class="form-label">Upload image</label>
                                 <input name="image" type="file" class="form-control" id="image">
@@ -49,25 +56,25 @@
                             </div>
                             <div class="col-md-12">
                                 <label for="cost" class="form-label">Cost</label>
-                                <input name="cost" type="text" class="form-control" id="cost">
+                                <input name="expense" type="text" class="form-control" id="cost">
                             </div>
 
                             <?php
 
-                              $date = date('Y-m-d', time());
-                              ?>
+                            $date = date('Y-m-d', time());
+                            ?>
                             <div class="col-md-12">
-    <label for="date" class="form-label">Date</label>
-    <input type="date" class="form-control" id="date" name="date" value="<?php echo $date; ?>" readonly>
-</div>
+                                <label for="date" class="form-label">Date</label>
+                                <input type="date" class="form-control" id="date" name="date" value="<?php echo $date; ?>" readonly>
+                            </div>
                             <!-- <div class="col-md-12">
                                 <label for="inputCity" class="form-label">Other Expencess</label>
                                 <input type="text" class="form-control" id="inputCity">
                             </div>
                             -->
-                          
+
                             <div class="text-center">
-                            <button type="submit" name="submit" class="btn btn-primary">Submit</button>
+                                <button type="submit" name="submit" class="btn btn-primary">Submit</button>
                                 <button type="reset" class="btn btn-secondary">Reset</button>
                             </div>
                         </form><!-- End Multi Columns Form -->

@@ -1,6 +1,3 @@
-
-
-
 <?php require_once("includes/header.php"); ?>
 
 <!-- ======= Sidebar ======= -->
@@ -26,17 +23,17 @@
                     <div class="card-body">
                         <h5 class="card-title text-center">Payment Receving Form</h5>
                         <?php
-                            if(isset($_GET['m'])){
-                                $message = $_GET['m'];
-                          ?>
-                        <center><span class="bg-secondary msg">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $message; ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></center>
-                          <?php      
-                            }
+                        if (isset($_GET['m'])) {
+                            $message = $_GET['m'];
+                        ?>
+                            <center><span class="bg-secondary msg">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $message; ?>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></center>
+                        <?php
+                        }
                         ?>
 
                         <!-- Multi Columns Form -->
-                        <form method="post" action="./backend/back-add-receving.php" enctype="multipart/form-data"  class="row g-3">
-                        <div class="col-md-12">
+                        <form method="post" action="./backend/back-add-receving.php" enctype="multipart/form-data" class="row g-3">
+                            <div class="col-md-12">
                                 <label for="image" class="form-label">Upload image</label>
                                 <input name="image" type="file" class="form-control" id="image">
                             </div>
@@ -47,17 +44,17 @@
                             </div>
 
                             <div class="col-md-12">
-                                <label for="receving" class="form-label">Receving</label>
-                                <input name="receving" type="text" class="form-control" id="receving">
+                                <label for="receiving" class="form-label">Receving</label>
+                                <input name="receiving" type="text" class="form-control" id="receving">
                             </div>
-                              <?php
+                            <?php
 
-                              $date = date('Y-m-d', time());
-                              ?>
+                            $date = date('Y-m-d', time());
+                            ?>
                             <div class="col-md-12">
-    <label for="date" class="form-label">Date</label>
-    <input type="date" class="form-control" id="date" name="date" value="<?php echo $date; ?>" readonly>
-</div>
+                                <label for="date" class="form-label">Date</label>
+                                <input type="date" class="form-control" id="date" name="date" value="<?php echo $date; ?>" readonly>
+                            </div>
 
                             <!-- <div class="col-md-4">
                                 <label for="inputState" class="form-label">State</label>
@@ -66,8 +63,8 @@
                                     <option>...</option>
                                 </select>
                             </div> -->
-                           
-                          
+
+
                             <div class="text-center">
                                 <button type="submit" class="btn btn-primary button">Submit</button>
                                 <button type="reset" class="btn btn-secondary">Reset</button>

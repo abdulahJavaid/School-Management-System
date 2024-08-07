@@ -5,83 +5,85 @@
 
 <main id="main" class="main">
 
-  <div class="pagetitle"><h1>View Profile</h1>
-<nav>
-  <ol class="breadcrumb">
-    <li class="breadcrumb-item active">School name here</li>
-  </ol>
-</nav>
-</div><!-- End Page Title -->
+  <div class="pagetitle">
+    <h1>View Profile</h1>
+    <nav>
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item active">School name here</li>
+      </ol>
+    </nav>
+  </div><!-- End Page Title -->
 
-<section class="section profile">
-  <div class="row">
-    
-    <!-- First Card -->
-    <div class="col-md-6">
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">Expense</h5>
+  <section class="section profile">
+    <div class="row">
 
-          <?php  
-            $query = "SELECT * FROM add_exp";
-            $result = mysqli_query($conn, $query);
-
-            // Check if there are any rows returned
-            if (mysqli_num_rows($result) > 0) {
-              echo "<table border='1' class='table table-bordered border-primary'>
-                      <thead>
-                        <tr>
-                          <th scope='col'>Date</th>
-                          <th scope='col'>Image</th>
-                          <th scope='col'>Comment</th>
-                          <th scope='col'>Cost</th>
-                        </tr>
-                      </thead>
-                      <tbody>";
-
-              while ($row = mysqli_fetch_assoc($result)) {
-                echo "<tr>
-                        <td>" . $row['date'] . "</td>
-                        <td><img src='uploads/expense-uploads/" . $row['image'] . "' width='100px' height='100px'></td>
-                        <td>" . $row['comment'] . "</td>
-                        <td>" . $row['cost'] . "</td>
-                      </tr>";
-              }
-
-              echo "</tbody>
-                    </table>";
-            } else {
-              echo "0 results";
-            }
-
-            mysqli_close($conn);
-          ?>
-
-        </div>
-      </div>
-    </div><!-- End First Card Column -->
-
-
-      <!-- Second Card -->
-      <div class="col-md-6">
+      <!-- First Card -->
+      <!-- <div class="col-md-6"> -->
         <div class="card">
           <div class="card-body">
-            <h5 class="card-title">Receving</h5>
-            <!-- <p>Student Details of All the registered students of <code>School Name</code>.</p> -->
+            <h5 class="card-title">Expense and Receiving</h5>
+            <p>Total expense and receiving records for <code>today</code>.</p>
 
-            <table class="table table-bordered border-primary">
+            <table class="table table-bordered border-primary tbl">
               <thead>
                 <tr>
                   <th scope="col">Date</th>
-                  <th scope="col">Image</th>
                   <th scope="col">Comment</th>
-                  <th scope="col">Cost</th>
+                  <th scope="col">Expense</th>
+                  <th scope="col">Receiving</th>
+                  <th scope="col">Image</th>
                 </tr>
               </thead>
-            </table>
+              <tbody>
+                <?php
+                // the current date
+                $date = date('Y-m-d', time());
+
+                // select the records from database of today
+                $query = "SELECT * FROM expense_receiving WHERE date='$date' ORDER BY er_id DESC";
+                $result = query($query);
+                while ($row = mysqli_fetch_assoc($result)) {
+                ?>
+                  <tr>
+                    <td><?php echo $row['date']; ?></td>
+                    <td><?php echo $row['comment']; ?></td>
+                    <td><?php 
+                    if($row['expense'] == 0)
+                    echo '---';
+                    else
+                    echo 'Rs. '.$row['expense']; 
+                    ?></td>
+                    <td><?php 
+                    if($row['receiving'] == 0)
+                    echo '---';
+                    else
+                    echo 'Rs. '.$row['receiving']; 
+                    ?></td>
+                    <td><img src="uploads/expense-receiving/<?php echo $row['image']; ?>" width="30px" height="30px" alt="img"></td>
+                  </tr>
+                <?php
+                }
+                ?>
+                <tr>
+                  <td>---</td>
+                  <td>---</td>
+                  <td><strong>Total: </strong></td>
+                  <td><strong>Total: </strong></td>
+                  <td>---</td>
+                </tr>
+                <tr>
+                  <td>---</td>
+                  <td>---</td>
+                  <td colspan="2"><strong>Total: </strong></td>
+                  <!-- <td><strong>Total: </strong></td> -->
+                  <td>---</td>
+                </tr>
+              </tbody>
+              </table>
+
           </div>
         </div>
-      </div><!-- End Second Card Column -->
+
 
     </div><!-- End Row -->
   </section>

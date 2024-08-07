@@ -24,11 +24,11 @@ $email = $row['email'];
 
 
 $html = "<div style='clear:float;'><img style='float:left;' src='images/savy.png' height='155px' width='155px' alt='school-image'>";
-$html .= "<h1>$name</h1><h5>$address</h5><h5>$contact</h5><h5>$email</h5></div><br><h2 style='clear:both;'>Total expenditure</h2>";
+$html .= "<h1>$name</h1><h5>$address</h5><h5>$contact</h5><h5>$email</h5></div><br><h2 style='clear:both;'>Revenue Sheet</h2>";
 $html .= "<table border='1' style='border-collapse:collapse'>
 <thead>
 <tr>
-<th colspan='3' style='min-width:auto;'>Total Expenses</th>
+<th colspan='4' style='min-width:auto;'><h3>Total Expenses</h3></th>
 </tr>
 <tr>
 <th style='min-width:200px;'>Description</th>
@@ -44,6 +44,7 @@ while($row = mysqli_fetch_assoc($result)){
     $comment = $row['comment'];
     $cost = $row['cost'];
     $date = $row['date'];
+    $img = $row['image'];
 $html .= "<tr>
 <td>$comment</td>
 <td>Rs. $cost</td>
@@ -52,6 +53,7 @@ $html .= "<tr>
 }
 $html .= "</tbody>
 </table>";
+// <td><img src='./uploads/expense-uploads/$img' width='50px' height='50px' alt=''></td>
 
 // using the Dompdf namespace
 use Dompdf\Dompdf;

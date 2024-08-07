@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 06, 2024 at 05:02 PM
+-- Generation Time: Aug 07, 2024 at 01:36 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -20,57 +20,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `_myschool_db`
 --
-
--- --------------------------------------------------------
-
---
--- Table structure for table `add_exp`
---
-
-CREATE TABLE `add_exp` (
-  `expense_id` int(11) NOT NULL,
-  `image` varchar(255) NOT NULL,
-  `comment` varchar(500) NOT NULL,
-  `cost` varchar(100) NOT NULL,
-  `date` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `add_exp`
---
-
-INSERT INTO `add_exp` (`expense_id`, `image`, `comment`, `cost`, `date`) VALUES
-(1, '2lamp.PNG', 'q', 'qqqqq', '0000-00-00'),
-(2, '5.png', 'rrrrrr', 'yyyyy', '2024-08-06');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `add_receiving`
---
-
-CREATE TABLE `add_receiving` (
-  `receiving_id` int(11) NOT NULL,
-  `image` varchar(255) NOT NULL,
-  `comment` varchar(400) NOT NULL,
-  `receving` varchar(30) NOT NULL,
-  `date` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `add_receiving`
---
-
-INSERT INTO `add_receiving` (`receiving_id`, `image`, `comment`, `receving`, `date`) VALUES
-(1, '', 'testing', 'testinfg', '0000-00-00'),
-(2, '', 'testing', 'testinfg', '0000-00-00'),
-(3, '3lamp.PNG', 'tryt', 'yytg', '0000-00-00'),
-(4, '2lamp.PNG', 'aaaa', 'qaaaa', '0000-00-00'),
-(5, '1lamp.PNG', 'q', '', '2024-08-06'),
-(6, 'fee.jpg', 'q', 'qqqqqqqqqqq', '2024-08-06'),
-(7, 'cycle.png', 'q', 'aaaaaaaaaaaaaaaaaa', '2024-08-06'),
-(8, 'Listening and Engagement #what is SMM #codsmineuk #codesmine #.png', 'testing', 'fnrjfrfj', '2024-08-06'),
-(9, '5.png', 'eq', 'eer', '2024-08-06');
 
 -- --------------------------------------------------------
 
@@ -145,7 +94,12 @@ INSERT INTO `admin_logs` (`admin_log_id`, `log_message`, `time`) VALUES
 (32, 'Admin with <strong>ID: 1</strong> edited profile of <strong>teacher: Moa</strong>!', '03/08/2024 03:26 pm'),
 (33, 'Admin with <strong>ID: 1</strong> edited profile of <strong>teacher: Mo</strong>!', '03/08/2024 03:26 pm'),
 (34, 'Admin with <strong>ID: 1</strong> added <strong>teacher: Ibrar</strong> to Database!', '03/08/2024 03:30 pm'),
-(35, 'Admin with <strong>ID: 1</strong> edited profile of <strong>student: hamza</strong>!', '03/08/2024 05:05 pm');
+(35, 'Admin with <strong>ID: 1</strong> edited profile of <strong>student: hamza</strong>!', '03/08/2024 05:05 pm'),
+(36, 'Admin with <strong>ID: 1</strong> added <strong>student: ali</strong> to Database!', '07/08/2024 12:30 pm'),
+(37, 'Admin with <strong>ID: 1</strong> added <strong>student: hamza</strong> to Database!', '07/08/2024 12:31 pm'),
+(38, 'Admin with <strong>ID: 1</strong> added <strong>student: talha</strong> to Database!', '07/08/2024 12:31 pm'),
+(39, 'Admin with <strong>ID: 1</strong> added <strong>student: Butt</strong> to Database!', '07/08/2024 12:32 pm'),
+(40, 'Admin with <strong>ID: 1</strong> added <strong>teacher: mbvdfghj</strong> to Database!', '07/08/2024 01:20 pm');
 
 -- --------------------------------------------------------
 
@@ -202,6 +156,17 @@ CREATE TABLE `attendance` (
   `date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `attendance`
+--
+
+INSERT INTO `attendance` (`attendance_id`, `fk_student_id`, `attendance`, `date`) VALUES
+(1, 1, 'present', '2024-08-07'),
+(2, 1, 'present', '2024-08-07'),
+(3, 5, 'absent', '2024-08-07'),
+(4, 13, 'present', '2024-08-07'),
+(5, 14, 'present', '2024-08-07');
+
 -- --------------------------------------------------------
 
 --
@@ -253,6 +218,39 @@ CREATE TABLE `exam_schedule` (
   `subject` varchar(20) NOT NULL,
   `time` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `expense_receiving`
+--
+
+CREATE TABLE `expense_receiving` (
+  `er_id` int(11) NOT NULL,
+  `image` varchar(255) NOT NULL,
+  `comment` varchar(500) NOT NULL,
+  `expense` varchar(100) NOT NULL,
+  `receiving` varchar(100) NOT NULL,
+  `date` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `expense_receiving`
+--
+
+INSERT INTO `expense_receiving` (`er_id`, `image`, `comment`, `expense`, `receiving`, `date`) VALUES
+(1, '2lamp.PNG', 'q', 'qqqqq', '', '0000-00-00'),
+(2, '5.png', 'rrrrrr', 'yyyyy', '', '2024-08-06'),
+(3, 'images-2.jpg', 'The exp', '12', '', '2024-08-06'),
+(4, '_large_image_4.jpg', 'The tea', '635', '', '2024-08-06'),
+(5, '_large_image_3.jpg', 'Given to owner', '10000', '', '2024-08-06'),
+(6, 'images-4.jpg', 'Spent on construction', '20000', '', '2024-08-06'),
+(7, 'images-6.jpg', ' the expense  the expense  the expense  the expense  the expense  the expense  the expense  the expense  the expense  the expense  the expense  the expense  the expense  the expense  the expense  the expense  the expense  the expense  the expense  the expense  the expense  the expense  the expense  the expense  the expense  the expense  the expense  the expense  the expense  the expense  the expense  the expense  the expense  the expense  the expense  the expense  the expense  the expense  the e', '1200', '', '2024-08-06'),
+(8, 'images-44.jpg', 'a new table test', '1200', '0', '2024-08-07'),
+(9, 'images-28.jpg', 'the new test', '1200', '0', '2024-08-07'),
+(10, '_large_image_2.jpg', 'refresh test', '12000', '0', '2024-08-07'),
+(11, 'images-50.jpg', 'refresh test', '120489', '0', '2024-08-07'),
+(12, 'images-31.jpg', 'the receiving', '0', '1399347', '2024-08-07');
 
 -- --------------------------------------------------------
 
@@ -335,7 +333,8 @@ INSERT INTO `school_profile_` (`id`, `about`, `image`, `school_id`, `name`, `o_n
 (8, '', '', '', '', '', '', '', '', '', '', '', '2024-08-14'),
 (9, 'A school is an educational institution where students receive formal instruction and learning under the guidance of teachers. Schools play a vital role in shaping the intellectual, social, and emotional development of students. They provide a structured environment for acquiring knowledge in various subjects, fostering critical thinking, creativity, and problem-solving skills. Schools also promote', '', '', 'Dar e Arqam School', 'Altaf Hussain', '\"Empowering Minds, Shaping Futures\"', 'private', 'Gulbarg Lahore', 'Lahore', '03245434454534', 'darearqam@gmail.com', '2025-03-03'),
 (10, 'A school is an educational institution where students receive formal instruction and learning under the guidance of teachers. Schools play a vital role in shaping the intellectual, social, and emotional development of students. They provide a structured environment for acquiring knowledge in various subjects, fostering critical thinking, creativity, and problem-solving skills. Schools also promote', '', '', 'Dar e Arqam School', 'Altaf Hussain', '', 'private', 'Gujrnawala', 'Lahore', '03245434454534', 'darearqam@gmail.com', '2025-03-03'),
-(11, 'A school A school A school A school A school A school A school A school A school A school A school A school A school A school A school A school A school A school A school A school A school A school A school A school A school A school ', '', '3', 'Dar e Arqam School', 'Altaf Hussain', '', 'private', 'Gujrnawala', 'Lahore', '03245434454534', 'darearqam@gmail.com', '2025-03-03');
+(11, 'A school A school A school A school A school A school A school A school A school A school A school A school A school A school A school A school A school A school A school A school A school A school A school A school A school A school ', '', '3', 'Dar e Arqam School', 'Altaf Hussain', '', 'private', 'Gujrnawala', 'Lahore', '03245434454534', 'darearqam@gmail.com', '2025-03-03'),
+(12, 'It has good teachers who teach in a way that helps students learn. My school has 2 grassy playgrounds for outdoor sports. There is a good reputation for my school in the city.', '', '2', 'Savy School', 'Munawwar Hussain', 'We strive to Learn', 'private', 'Rahwali, Gujranwala Cantt', 'Gujranwala', '03265434765', 'savyschool@gmail.com', '2025-03-04');
 
 -- --------------------------------------------------------
 
@@ -364,7 +363,11 @@ INSERT INTO `student_class` (`student_class_id`, `fk_student_id`, `fk_class_id`,
 (7, 6, 5, 9, 1),
 (8, 5, 10, 20, 1),
 (9, 9, 9, 17, 1),
-(10, 10, 4, 8, 1);
+(10, 10, 4, 8, 1),
+(11, 1, 1, 1, 1),
+(12, 5, 1, 1, 1),
+(13, 13, 1, 1, 1),
+(14, 14, 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -415,7 +418,11 @@ INSERT INTO `student_profile` (`student_id`, `name`, `cnic`, `dob`, `address`, `
 (7, 'Cccc', 'c', '0000-00-00', 'c', 'c', 'c', '', 'email', '1234567', 1),
 (8, '', 'l', '0000-00-00', 'l', 'l', 'l', '', 'email', '1234567', 1),
 (9, 'o', 'o', '0000-00-00', 'o', 'o', 'o', '', 'email', '1234567', 1),
-(10, 'faizan', '345734895', '2024-08-02', 'lahore', '1234567890', '789', '', 'email', '1234567', 1);
+(10, 'faizan', '345734895', '2024-08-02', 'lahore', '1234567890', '789', '', 'email', '1234567', 1),
+(11, 'ali', '9389', '2024-08-07', 'lajkfd', '0287389', '9387893', '', 'email', '1234567', 1),
+(12, 'hamza', '09876378390', '2024-08-15', 'kjhdgshjkdsl', '928778290', '0928789', '', 'email', '1234567', 1),
+(13, 'talha', '039873890', '2024-08-23', 'ksjhdhjkdl', '0398763789', '93873890', '', 'email', '1234567', 1),
+(14, 'Butt', '039873890', '2024-08-07', 'sjhjskd', '03987839', '9387839', '', 'email', '1234567', 1);
 
 -- --------------------------------------------------------
 
@@ -446,7 +453,8 @@ INSERT INTO `teacher_profile` (`teacher_id`, `name`, `cnic`, `f_name`, `phone_no
 (181, 'Mo', '0938763583373', 'Abdul Ghafoor', '0387389', 'jdk', '0000-00-00', '', 'email@mail.com', '937u3', '', ''),
 (182, '', '', '', '', 'k', '0000-00-00', '', '', '', '', ''),
 (183, 'addg', '9398763789029', 'ajdl', '09876289373', 'cs', '2024-08-13', 'Gujranwala', 'email@mail.com', '9387484', '', '123'),
-(184, 'Ibrar', '08763563789383', 'Abdul Ghani', '08736673893', 'BS(Botany)', '2024-08-22', 'Gujranwala', 'eamil@mail.com', '93873', '', '123');
+(184, 'Ibrar', '08763563789383', 'Abdul Ghani', '08736673893', 'BS(Botany)', '2024-08-22', 'Gujranwala', 'eamil@mail.com', '93873', '', '123'),
+(185, 'mbvdfghj', '', '', '', '', '0000-00-00', '', '', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -463,18 +471,6 @@ CREATE TABLE `timetable` (
 --
 -- Indexes for dumped tables
 --
-
---
--- Indexes for table `add_exp`
---
-ALTER TABLE `add_exp`
-  ADD PRIMARY KEY (`expense_id`);
-
---
--- Indexes for table `add_receiving`
---
-ALTER TABLE `add_receiving`
-  ADD PRIMARY KEY (`receiving_id`);
 
 --
 -- Indexes for table `admin`
@@ -523,6 +519,12 @@ ALTER TABLE `class_sections`
 ALTER TABLE `exam_schedule`
   ADD PRIMARY KEY (`exam_schedule_id`),
   ADD KEY `fk_section_exam_id` (`fk_section_id`);
+
+--
+-- Indexes for table `expense_receiving`
+--
+ALTER TABLE `expense_receiving`
+  ADD PRIMARY KEY (`er_id`);
 
 --
 -- Indexes for table `notices`
@@ -591,18 +593,6 @@ ALTER TABLE `timetable`
 --
 
 --
--- AUTO_INCREMENT for table `add_exp`
---
-ALTER TABLE `add_exp`
-  MODIFY `expense_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT for table `add_receiving`
---
-ALTER TABLE `add_receiving`
-  MODIFY `receiving_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
-
---
 -- AUTO_INCREMENT for table `admin`
 --
 ALTER TABLE `admin`
@@ -612,7 +602,7 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `admin_logs`
 --
 ALTER TABLE `admin_logs`
-  MODIFY `admin_log_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `admin_log_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT for table `all_classes`
@@ -630,7 +620,7 @@ ALTER TABLE `assigned_classes`
 -- AUTO_INCREMENT for table `attendance`
 --
 ALTER TABLE `attendance`
-  MODIFY `attendance_id` int(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `attendance_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `class_sections`
@@ -643,6 +633,12 @@ ALTER TABLE `class_sections`
 --
 ALTER TABLE `exam_schedule`
   MODIFY `exam_schedule_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `expense_receiving`
+--
+ALTER TABLE `expense_receiving`
+  MODIFY `er_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `notices`
@@ -666,13 +662,13 @@ ALTER TABLE `progress_report`
 -- AUTO_INCREMENT for table `school_profile_`
 --
 ALTER TABLE `school_profile_`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `student_class`
 --
 ALTER TABLE `student_class`
-  MODIFY `student_class_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `student_class_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `student_fee`
@@ -684,13 +680,13 @@ ALTER TABLE `student_fee`
 -- AUTO_INCREMENT for table `student_profile`
 --
 ALTER TABLE `student_profile`
-  MODIFY `student_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `student_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `teacher_profile`
 --
 ALTER TABLE `teacher_profile`
-  MODIFY `teacher_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=185;
+  MODIFY `teacher_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=186;
 
 --
 -- AUTO_INCREMENT for table `timetable`
