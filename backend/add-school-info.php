@@ -33,11 +33,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($check !== false) {
             // Allow certain file formats
             if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") {
-                redirect("../add-expense.php?m=Sorry, only JPG, JPEG, PNG, GIF files are allowed.");
+                redirect("../school-profile.php?m=Sorry, only JPG, JPEG, PNG, GIF files are allowed.");
                 $uploadOk = 0;
             }
         } else {
-            redirect("../add-expense.php?m=File is not an image.");
+            redirect("../school-profile.php?m=File is not an image.");
             $uploadOk = 0;
         }
 
