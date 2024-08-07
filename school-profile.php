@@ -12,6 +12,7 @@ if (mysqli_num_rows($result) > 0) {}
 if ($result->num_rows > 0) {
     // Fetch data
     $row = $result->fetch_assoc();
+    $img = $row['image'];
     $school_id = $row['school_id'];
     $about = $row['about'];
     $name = $row['name'];
@@ -51,7 +52,8 @@ $conn->close();
       <div class="card">
         <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
-          <img src="" <?php echo $image; ?> alt="Profile" class="rounded-circle">
+        <img src="uploads/school-profile-uploads/<?php echo $img; ?>" alt="Profile" class="rounded-circle" style="width: 300px; height: 150px;">
+
           <h2>School Name</h2>
           <h3><?php echo $name; ?></h3>
           <div class="social-links mt-2">

@@ -33,23 +33,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($check !== false) {
             // Allow certain file formats
             if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") {
-                // redirect("../add-expense.php?m=Sorry, only JPG, JPEG, PNG, GIF files are allowed.");
+                redirect("../add-expense.php?m=Sorry, only JPG, JPEG, PNG, GIF files are allowed.");
                 $uploadOk = 0;
             }
         } else {
-            // redirect("../add-expense.php?m=File is not an image.");
+            redirect("../add-expense.php?m=File is not an image.");
             $uploadOk = 0;
         }
 
         // Check if the file already exists
         if (file_exists($target_file)) {
-            // redirect("../school-profile.php?m=Sorry, the file already exists.");
+            redirect("../school-profile.php?m=Sorry, the file already exists.");
             $uploadOk = 0;
         }
 
         // Check if $uploadOk is set to 0 by an error
         if ($uploadOk == 0) {
-            // redirect("../school-profile.php?m=Sorry, your file was not uploaded.");
+            redirect("../school-profile.php?m=Sorry, your file was not uploaded.");
         } else {
             // if everything is ok, try to upload file
             if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
@@ -60,15 +60,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 VALUES ('$about', '$pic', '$school_id', '$name', '$o_name', '$slogan', '$private', '$address', '$city', '$contact', '$email', '$expiry')";
                 $result = mysqli_query($conn, $query);
                 if ($result) {
-                    // echo "Data has been successfully inserted.";
-                    // redirect("../school-profile.php?m=Data has been successfully inserted.");
+                    echo "Data has been successfully inserted.";
+                    redirect("../school-profile.php?m=Data has been successfully inserted.");
                 } else {
                     redirect("../school-profile.php?m=Error: " . mysqli_error($conn));
-                    // echo "Error: " . mysqli_error($conn);
+                    echo "Error: " . mysqli_error($conn);
                 }
             } else {
-            //     redirect("../school-profile.php?m=Sorry, there was an error uploading your file.");
-            // }
+                redirect("../school-profile.php?m=Sorry, there was an error uploading your file.");
+            }
         }
     } else {
         echo "All fields are required.";
