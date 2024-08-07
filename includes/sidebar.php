@@ -93,6 +93,10 @@
     </a>
     <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
       <li>
+
+      <a href="expense-receving.php">
+          <i class="bi bi-arrow-right"></i><span>Expense/Receving</span>
+        </a>
         <a href="add-expense.php">
           <i class="bi bi-arrow-right"></i><span>Add Expenses</span>
         </a>
@@ -103,9 +107,7 @@
         </a>
       </li>
       <li>
-        <a href="download-pdf.php">
-          <i class="bi bi-arrow-right"></i><span>Download Pdf</span>
-        </a>
+       
       </li>
       <!-- <li>
         <a href="forms-editors.html">

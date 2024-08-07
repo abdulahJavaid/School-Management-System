@@ -1,35 +1,78 @@
 <?php
-    // inclusion of required files and functions
-    session_start();
-    ob_start();
-    require_once('../db_connection/configs.php');
-    require_once('../db_connection/connection.php');
-    require_once('../includes/functions.php');
+session_start();
+ob_start();
+require_once('../db_connection/configs.php');
+require_once('../db_connection/connection.php');
+require_once('../includes/functions.php');
 
-    
-    if (isset($_POST['submit'])) {
-      $about = $_POST['about'];
-        // $image = $_POST['image'];
-        $school_id = $_POST['school_id'];
-        $name = $_POST['name'];
-        $o_name = $_POST['o_name'];
-        $slogan = $_POST['slogan'];
-        $private= $_POST['private'];
-        $address = $_POST['address'];
-        $city = $_POST['city'];
-        $contact = $_POST['contact'];
-        $email = $_POST['email'];
-        $expiry = $_POST['expiry'];
-       
-    
-        $query = "INSERT INTO school_profile_(about,school_id, name,o_name, slogan, private, address, city, contact, email,expiry) 
-    VALUES('$about', '$school_id', '$name', '$o_name', '$slogan', '$private', '$address', '$city', '$contact', '$email', '$expiry')";
-        $result1 = mysqli_query($conn, $query);
-        if ($result1) {
-            redirect("../school-profile.php");
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Check if all fields are set
+    if (isset($_POST["about"]) && isset($_FILES["image"]) && isset($_POST["school_id"]) && isset($_POST["name"])  && isset($_POST["o_name"])  && isset($_POST["slogan"])  && isset($_POST["private"])  && isset($_POST["address"])  && isset($_POST["city"])  && isset($_POST["contact"])  && isset($_POST["email"])  && isset($_POST["expiry"])) {
+        // Get form data
+        $about = $_POST["about"];
+        $school_id = $_POST["school_id"];
+        $name = $_POST["name"];
+        $o_name = $_POST["o_name"];
+        $slogan = $_POST["slogan"];
+        $private = $_POST["private"];
+        $address = $_POST["address"];
+        $city = $_POST["city"];
+        $contact = $_POST["contact"];
+        $email = $_POST["email"];
+        $expiry = $_POST["expiry"];
+        
+        // File upload handling
+        $target_dir = "../uploads/school-profile-uploads/"; // Directory where the file will be saved
+        $target_file = $target_dir . basename($_FILES["image"]["name"]); // Path of the uploaded file
+        $pic = basename($_FILES["image"]["name"]);
+        $uploadOk = 1; // Flag to check if file is uploaded successfully
+        $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION)); // File extension
+
+        // Check if image file is an actual image or a fake image
+        $check = getimagesize($_FILES["image"]["tmp_name"]);
+        if ($check !== false) {
+            // Allow certain file formats
+            if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") {
+                // redirect("../add-expense.php?m=Sorry, only JPG, JPEG, PNG, GIF files are allowed.");
+                $uploadOk = 0;
+            }
         } else {
-            echo "Error: " . mysqli_error($conn);
+            // redirect("../add-expense.php?m=File is not an image.");
+            $uploadOk = 0;
         }
-        mysqli_close($conn);
+
+        // Check if the file already exists
+        if (file_exists($target_file)) {
+            // redirect("../school-profile.php?m=Sorry, the file already exists.");
+            $uploadOk = 0;
+        }
+
+        // Check if $uploadOk is set to 0 by an error
+        if ($uploadOk == 0) {
+            // redirect("../school-profile.php?m=Sorry, your file was not uploaded.");
+        } else {
+            // if everything is ok, try to upload file
+            if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
+                // Image uploaded successfully, now insert form data into the database
+
+                // Insert form data and image path into the database
+                $query = "INSERT INTO school_profile_ (about, image, school_id, name, o_name, slogan, private, address, city, contact, email, expiry) 
+                VALUES ('$about', '$pic', '$school_id', '$name', '$o_name', '$slogan', '$private', '$address', '$city', '$contact', '$email', '$expiry')";
+                $result = mysqli_query($conn, $query);
+                if ($result) {
+                    // echo "Data has been successfully inserted.";
+                    // redirect("../school-profile.php?m=Data has been successfully inserted.");
+                } else {
+                    redirect("../school-profile.php?m=Error: " . mysqli_error($conn));
+                    // echo "Error: " . mysqli_error($conn);
+                }
+            } else {
+            //     redirect("../school-profile.php?m=Sorry, there was an error uploading your file.");
+            // }
+        }
+    } else {
+        echo "All fields are required.";
     }
-    ?>
+    mysqli_close($conn);
+}
+?>
