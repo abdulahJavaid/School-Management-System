@@ -8,6 +8,7 @@
     // 6. students parents are missing
     // 7. Required missing from all form fields
     // 8. Set password for teachers and students profile
+    // 9. School name missing on all pages (admin-panel)
 ?>
 
 
