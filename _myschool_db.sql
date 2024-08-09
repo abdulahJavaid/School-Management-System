@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 07, 2024 at 01:36 PM
+-- Generation Time: Aug 09, 2024 at 11:52 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -214,7 +214,7 @@ INSERT INTO `class_sections` (`section_id`, `fk_class_id`, `section_name`) VALUE
 CREATE TABLE `exam_schedule` (
   `exam_schedule_id` int(11) NOT NULL,
   `fk_section_id` int(11) NOT NULL,
-  `day` varchar(20) NOT NULL,
+  `date` date NOT NULL,
   `subject` varchar(20) NOT NULL,
   `time` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -239,18 +239,22 @@ CREATE TABLE `expense_receiving` (
 --
 
 INSERT INTO `expense_receiving` (`er_id`, `image`, `comment`, `expense`, `receiving`, `date`) VALUES
-(1, '2lamp.PNG', 'q', 'qqqqq', '', '0000-00-00'),
-(2, '5.png', 'rrrrrr', 'yyyyy', '', '2024-08-06'),
-(3, 'images-2.jpg', 'The exp', '12', '', '2024-08-06'),
-(4, '_large_image_4.jpg', 'The tea', '635', '', '2024-08-06'),
-(5, '_large_image_3.jpg', 'Given to owner', '10000', '', '2024-08-06'),
-(6, 'images-4.jpg', 'Spent on construction', '20000', '', '2024-08-06'),
-(7, 'images-6.jpg', ' the expense  the expense  the expense  the expense  the expense  the expense  the expense  the expense  the expense  the expense  the expense  the expense  the expense  the expense  the expense  the expense  the expense  the expense  the expense  the expense  the expense  the expense  the expense  the expense  the expense  the expense  the expense  the expense  the expense  the expense  the expense  the expense  the expense  the expense  the expense  the expense  the expense  the expense  the e', '1200', '', '2024-08-06'),
+(3, 'images-2.jpg', 'The exp', '12', '0', '2024-08-06'),
+(4, '_large_image_4.jpg', 'The tea', '635', '0', '2024-08-06'),
+(5, '_large_image_3.jpg', 'Given to owner', '10000', '0', '2024-08-06'),
+(6, 'images-4.jpg', 'Spent on construction', '20000', '0', '2024-08-06'),
+(7, 'images-6.jpg', 'the expense', '1200', '0', '2024-08-06'),
 (8, 'images-44.jpg', 'a new table test', '1200', '0', '2024-08-07'),
 (9, 'images-28.jpg', 'the new test', '1200', '0', '2024-08-07'),
 (10, '_large_image_2.jpg', 'refresh test', '12000', '0', '2024-08-07'),
 (11, 'images-50.jpg', 'refresh test', '120489', '0', '2024-08-07'),
-(12, 'images-31.jpg', 'the receiving', '0', '1399347', '2024-08-07');
+(12, 'images-31.jpg', 'the receiving', '0', '1399347', '2024-08-07'),
+(13, '_large_image_1.jpg', 'expense 1', '13000', '0', '2024-08-08'),
+(14, 'images-3.jpg', 'expense 3', '340000', '0', '2024-08-08'),
+(15, 'images-20.jpg', 'new receiving', '0', '12000', '2024-08-08'),
+(16, 'images-32.jpg', 'ecpence', '120000', '0', '2024-08-08'),
+(17, 'images-33.jpg', 'the cost', '30000', '0', '2024-08-08'),
+(18, 'images-43.jpg', 'the cost 2', '70000', '0', '2024-08-08');
 
 -- --------------------------------------------------------
 
@@ -263,15 +267,15 @@ CREATE TABLE `notices` (
   `fk_student_id` int(20) NOT NULL,
   `notice_description` varchar(1000) NOT NULL,
   `notice_status` varchar(20) NOT NULL DEFAULT 'global',
-  `time` int(20) NOT NULL
+  `notice_date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `notices`
 --
 
-INSERT INTO `notices` (`notice_id`, `fk_student_id`, `notice_description`, `notice_status`, `time`) VALUES
-(1, 0, 'This is notice', 'global', 0);
+INSERT INTO `notices` (`notice_id`, `fk_student_id`, `notice_description`, `notice_status`, `notice_date`) VALUES
+(1, 0, 'This is notice', 'global', '0000-00-00');
 
 -- --------------------------------------------------------
 
@@ -283,8 +287,8 @@ CREATE TABLE `periods` (
   `period_id` int(11) NOT NULL,
   `fk_section_id` int(11) NOT NULL,
   `fk_timetable_id` int(11) NOT NULL,
-  `period_name` varchar(20) NOT NULL,
-  `time` varchar(20) NOT NULL
+  `period_name` varchar(255) NOT NULL,
+  `time` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -450,11 +454,11 @@ CREATE TABLE `teacher_profile` (
 --
 
 INSERT INTO `teacher_profile` (`teacher_id`, `name`, `cnic`, `f_name`, `phone_no`, `qualification`, `dob`, `address`, `email`, `school_id`, `image`, `password`) VALUES
-(181, 'Mo', '0938763583373', 'Abdul Ghafoor', '0387389', 'jdk', '0000-00-00', '', 'email@mail.com', '937u3', '', ''),
-(182, '', '', '', '', 'k', '0000-00-00', '', '', '', '', ''),
-(183, 'addg', '9398763789029', 'ajdl', '09876289373', 'cs', '2024-08-13', 'Gujranwala', 'email@mail.com', '9387484', '', '123'),
-(184, 'Ibrar', '08763563789383', 'Abdul Ghani', '08736673893', 'BS(Botany)', '2024-08-22', 'Gujranwala', 'eamil@mail.com', '93873', '', '123'),
-(185, 'mbvdfghj', '', '', '', '', '0000-00-00', '', '', '', '', '');
+(181, 'Maria', '0938763583373', 'Abdul Ghafoor', '0387389', 'jdk', '0000-00-00', '', 'email@mail.com', '937u3', '', ''),
+(182, 'Ghazanfar', '', '', '', 'k', '0000-00-00', '', '', '', '', ''),
+(183, 'Hammad', '9398763789029', 'ajdl', '09876289373', 'cs', '2024-08-13', 'Gujranwala', 'email@mail.com', '9387484', '', '123'),
+(184, 'Ayesha', '08763563789383', 'Abdul Ghani', '08736673893', 'BS(Botany)', '2024-08-22', 'Gujranwala', 'eamil@mail.com', '93873', '', '123'),
+(185, 'Ali', '', '', '', '', '0000-00-00', '', '', '', '', '');
 
 -- --------------------------------------------------------
 
@@ -467,6 +471,36 @@ CREATE TABLE `timetable` (
   `fk_section_id` int(11) NOT NULL,
   `day` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `timetable`
+--
+
+INSERT INTO `timetable` (`timetable_id`, `fk_section_id`, `day`) VALUES
+(7, 9, 'Monday'),
+(8, 9, 'Tuesday'),
+(9, 9, 'Wednesday'),
+(10, 9, 'Thursday'),
+(11, 9, 'Friday'),
+(12, 9, 'Saturday'),
+(13, 10, 'Monday'),
+(14, 10, 'Tuesday'),
+(15, 10, 'Wednesday'),
+(16, 10, 'Thursday'),
+(17, 10, 'Friday'),
+(18, 10, 'Saturday'),
+(19, 17, 'Monday'),
+(20, 17, 'Tuesday'),
+(21, 17, 'Wednesday'),
+(22, 17, 'Thursday'),
+(23, 17, 'Friday'),
+(24, 17, 'Saturday'),
+(25, 2, 'Monday'),
+(26, 2, 'Tuesday'),
+(27, 2, 'Wednesday'),
+(28, 2, 'Thursday'),
+(29, 2, 'Friday'),
+(30, 2, 'Saturday');
 
 --
 -- Indexes for dumped tables
@@ -638,7 +672,7 @@ ALTER TABLE `exam_schedule`
 -- AUTO_INCREMENT for table `expense_receiving`
 --
 ALTER TABLE `expense_receiving`
-  MODIFY `er_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `er_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT for table `notices`
@@ -650,7 +684,7 @@ ALTER TABLE `notices`
 -- AUTO_INCREMENT for table `periods`
 --
 ALTER TABLE `periods`
-  MODIFY `period_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `period_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=253;
 
 --
 -- AUTO_INCREMENT for table `progress_report`
@@ -692,7 +726,7 @@ ALTER TABLE `teacher_profile`
 -- AUTO_INCREMENT for table `timetable`
 --
 ALTER TABLE `timetable`
-  MODIFY `timetable_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `timetable_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
 -- Constraints for dumped tables
