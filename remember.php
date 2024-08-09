@@ -9,6 +9,7 @@
     // 7. Required missing from all form fields
     // 8. Set password for teachers and students profile
     // 9. School name missing on all pages (admin-panel)
+    // 10. teacher_status missing from db_table teacher_profile
 ?>
 
 
