@@ -130,6 +130,8 @@
   </div>
   <!-- end update timetable -->
 
+
+  <!-- to add the timetable -->
   <section class="section profile">
     <div class="row">
       <div class="col-md-12">
@@ -309,6 +311,112 @@
       </div>
     </div>
   </section>
+  <!-- end add timetable -->
+
+  <!-- to view the timetable -->
+  <section class="section profile">
+    <div class="row">
+      <div class="col-md-12">
+        <?php
+        // if add timetable request is submitted
+        if (isset($_POST['view'])) {
+          $fetch = $_POST['select'];
+          $length = strlen($fetch);
+          $find = strpos($fetch, ' ');
+          $number = $find + 1;
+          $useable = $length - $number;
+          $useable1 = $find;
+
+          $section = substr($fetch, -$useable);
+          $class = substr($fetch, 0, $find);
+          $section = (int) $section;
+          $class = (int) $class;
+
+          $result = sql_where('all_classes', 'class_id', $class);
+          $row = mysqli_fetch_assoc($result);
+          $result1 = sql_where_and('class_sections', 'section_id', $section, 'fk_class_id', $class);
+          $row1 = mysqli_fetch_assoc($result1);
+          $sid = $row1['section_id'];
+
+        ?>
+          <!-- start of card -->
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Class: <?php echo $row['class_name'] . " " . $row1['section_name']; ?></h5>
+              <p><code><u>Timetable:</u></code></p>
+
+              <!-- Primary Color Bordered Table -->
+              <table class="table table-bordered border-primary">
+                <thead>
+                  <tr>
+                    <th scope="col"><input type="hidden" name="section_id" value="<?php echo $row1['section_id']; ?>">#</th>
+                    <?php
+                    // Select day names from the database
+                    $query = "SELECT * FROM timetable WHERE fk_section_id='$sid'";
+                    $result = query($query);
+                    while ($row3 = mysqli_fetch_assoc($result)) {
+                      $day = $row3['day'];
+                    ?>
+                      <th scope="col"><?php echo $day; ?></th>
+                    <?php
+                    }
+                    ?>
+                  </tr>
+                </thead>
+                <tbody>
+
+                    <?php
+                      // to fetch all the periods
+                      $query = "SELECT * FROM periods WHERE fk_section_id='$sid'";
+                      // $query = "ON periods.fk_section_id=timetable.fk_section_id";
+                      $ge = query($query);
+                      $arr = array(0, 6, 12, 18, 24, 30, 36, 42, 48, 54, 60);
+                      $arr1 = array(5, 11, 17, 23, 29, 35, 41, 47, 53, 59, 65);
+                      $va = 0;
+                      while($ro = mysqli_fetch_assoc($ge)){
+                        if(in_array($va, $arr)){
+
+                          ?>
+                          <tr>
+                          <td><?php echo $ro['time']; ?></td>
+                          <td><?php echo $ro['period_name']; ?></td>
+                          <?php
+                        }else{
+                          ?>
+                          <td><?php echo $ro['period_name']; ?></td>
+
+                          <?php
+                          if(in_array($va, $arr1)){
+                            echo "</tr>";
+                          }
+                        }
+                        $va++;
+                      }
+                    ?>
+                    <!-- start tr -->
+                    
+                      
+                 
+
+                </tbody>
+              </table>
+              <div class="d-flex justify-content-end">
+                <button type="submit" name="submit" class="btn btn-primary button">Submit timetable</button>
+              </div>
+            <?php
+            // end of if statement
+          }
+            ?>
+            <!-- End Primary Color Bordered Table -->
+
+            </div>
+          </div>
+          <!-- end of card -->
+
+      </div>
+    </div>
+  </section>
+  <!-- end view timetable -->
 
 </main><!-- End #main -->
 

@@ -14,20 +14,25 @@ if (isset($_POST['submit'])) {
     $result = query($query);
     $count = mysqli_num_rows($result);
     if (!$count) {
-        $num = 0;
         foreach ($day as $d) {
             $query = "INSERT INTO timetable (fk_section_id, day) VALUES ('$section_id', '$d')";
             $result = query($query);
-            if ($result) {
-                $tb_id = mysqli_insert_id($conn);
-                $names = array('dm', 'dt', 'dw', 'dth', 'df', 'ds');
-                $names1 = array('tm', 'tt', 'tw', 'tth', 'tf', 'ts');
-                $names2 = array('bm', 'bt', 'bw', 'bth', 'bf', 'bs');
-                for ($j = 1; $j < 10; $j++) {
-                    $var = $names[$num] . $j . '';
-                    $var1 = $names1[$num] . $j . '';
-                    $var2 = 'time' . $j . '';
-                    $var3 = $names2[$num] . $j . '';
+        }
+        $names = array('dm', 'dt', 'dw', 'dth', 'df', 'ds');
+        $names1 = array('tm', 'tt', 'tw', 'tth', 'tf', 'ts');
+        $names2 = array('bm', 'bt', 'bw', 'bth', 'bf', 'bs');
+        for ($i = 1; $i < 10; $i++) {
+            $var2 = 'time' . $i . '';
+            $time = $_POST[$var2];
+            if (!empty($time)) {
+                $query = "SELECT * FROM timetable WHERE fk_section_id='$section_id'";
+                $ans = query($query);
+                $j = 0;
+                while ($get = mysqli_fetch_assoc($ans)) {
+                    $tb_id = $get['timetable_id'];
+                    $var = $names[$j] . $i . '';
+                    $var1 = $names1[$j] . $i . '';
+                    $var3 = $names2[$j] . $i . '';
                     $period = $_POST[$var];
                     $teacher = $_POST[$var1];
                     if (empty($teacher) && empty($period)) {
@@ -42,16 +47,14 @@ if (isset($_POST['submit'])) {
                     if (isset($_POST[$var3])) {
                         $period = 'break';
                     }
-                    $time = $_POST[$var2];
-                    if (!empty($time)) {
-                        $query = "INSERT INTO periods (fk_section_id, fk_timetable_id, period_name, time)";
-                        $query .= "VALUES ('$section_id', '$tb_id', '$period', '$time')";
 
-                        $results = query($query);
-                    }
+                    $query = "INSERT INTO periods (fk_section_id, fk_timetable_id, period_name, time)";
+                    $query .= "VALUES ('$section_id', '$tb_id', '$period', '$time')";
+
+                    $results = query($query);
+                    $j++;
                 }
             }
-            $num++;
         }
     } else {
         $num = 0;
@@ -67,38 +70,46 @@ if (isset($_POST['submit'])) {
                 $query = "DELETE FROM periods WHERE period_id='$pid'";
                 $result = query($query);
             }
-            $names = array('dm', 'dt', 'dw', 'dth', 'df', 'ds');
-            $names1 = array('tm', 'tt', 'tw', 'tth', 'tf', 'ts');
-            $names2 = array('bm', 'bt', 'bw', 'bth', 'bf', 'bs');
-            for ($j = 1; $j < 10; $j++) {
-                $var = $names[$num] . $j . '';
-                $var1 = $names1[$num] . $j . '';
-                $var2 = 'time' . $j . '';
-                $var3 = $names2[$num] . $j . '';
-                $period = $_POST[$var];
-                $teacher = $_POST[$var1];
-                if (empty($teacher) && empty($period)) {
-                    $period = "---";
-                } elseif (empty($period)) {
-                    $period = "subject not-assigned - " . $teacher . "";
-                } elseif (empty($teacher)) {
-                    $period .= " - teacher not-assigned";
-                } else {
-                    $period .= ' - ' . $teacher . '';
-                }
-                if (isset($_POST[$var3])) {
-                    $period = 'break';
-                }
-                $time = $_POST[$var2];
-                if (!empty($time)) {
+        }
+        $names = array('dm', 'dt', 'dw', 'dth', 'df', 'ds');
+        $names1 = array('tm', 'tt', 'tw', 'tth', 'tf', 'ts');
+        $names2 = array('bm', 'bt', 'bw', 'bth', 'bf', 'bs');
+        for ($i = 1; $i < 10; $i++) {
+            $var2 = 'time' . $i . '';
+            $time = $_POST[$var2];
+            if (!empty($time)) {
+                $query = "SELECT * FROM timetable WHERE fk_section_id='$section_id'";
+                $ans = query($query);
+                $j = 0;
+                while ($get = mysqli_fetch_assoc($ans)) {
+                    $tb_id = $get['timetable_id'];
+                    $var = $names[$j] . $i . '';
+                    $var1 = $names1[$j] . $i . '';
+                    $var3 = $names2[$j] . $i . '';
+                    $period = $_POST[$var];
+                    $teacher = $_POST[$var1];
+                    if (empty($teacher) && empty($period)) {
+                        $period = "---";
+                    } elseif (empty($period)) {
+                        $period = "subject not-assigned - " . $teacher . "";
+                    } elseif (empty($teacher)) {
+                        $period .= " - teacher not-assigned";
+                    } else {
+                        $period .= ' - ' . $teacher . '';
+                    }
+                    if (isset($_POST[$var3])) {
+                        $period = 'break';
+                    }
+
                     $query = "INSERT INTO periods (fk_section_id, fk_timetable_id, period_name, time)";
                     $query .= "VALUES ('$section_id', '$tb_id', '$period', '$time')";
 
                     $results = query($query);
+                    $j++;
                 }
             }
-            $num++;
         }
+
     }
     redirect("../add-time-table.php");
 }
