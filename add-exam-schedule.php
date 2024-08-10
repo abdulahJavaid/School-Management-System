@@ -19,9 +19,9 @@
       <div class="col-md-3">
         <form method="post" action="">
           <div class="input-group mb-3">
-            <button class="btn btn-primary mt-3" type="button">Select Class</button>
-            <select id="inputState" name="select" class="form-select mt-3">
-              <option selected>Choose Class</option>
+            <button class="btn btn-primary mt-3" type="button" id="selectButton">Select Class</button>
+            <select id="classSelect" name="select" class="form-select mt-3">
+              <option selected disabled>Choose Class</option>
               <?php
               // Fetching all the classes 
               $result = sql_select_all("all_classes");
@@ -43,13 +43,14 @@
           </div>
       </div>
       <div class="col-md-4">
-        <button class="btn btn-md btn-primary mt-3 ml-3" name="class" type="submit">Add Exam Schedule</button>
+        <button class="btn btn-md btn-primary mt-3 ml-3" id="addScheduleButton" type="button">Add Exam Schedule</button>
       </div>
       </form>
     </div>
   </div>
 
-  <section class="section profile">
+  <!-- Exam Schedule Form, hidden by default -->
+  <section class="section profile" id="examScheduleForm" style="display: none;">
     <div class="row">
       <div class="col-md-12">
         <div class="card">
@@ -92,3 +93,15 @@
 
 <!-- ======= Footer ======= -->
 <?php include_once("includes/footer.php"); ?>
+
+<!-- JavaScript to handle form visibility -->
+<script>
+  document.getElementById('addScheduleButton').addEventListener('click', function() {
+    var classSelect = document.getElementById('classSelect');
+    if (classSelect.value !== "Choose Class" && classSelect.value !== "") {
+      document.getElementById('examScheduleForm').style.display = 'block';
+    } else {
+      alert("Please select a class first.");
+    }
+  });
+</script>
