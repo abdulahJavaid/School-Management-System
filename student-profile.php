@@ -28,10 +28,14 @@ if (isset($_POST['submit'])) {
     $roll_no = $_POST['roll_no'];
     $email = $_POST['email'];
     $password = '1234567';
+    $fee_amount = $_POST['fee_amount'];
 
-    $query = "INSERT INTO student_profile(name, cnic, mobile_no, dob, address, roll_no, email, password) 
-VALUES('$name', '$cnic', '$mobile_no', '$dob', '$address', '$roll_no', 'email', '$password')";
+    $query = "INSERT INTO student_profile(name, cnic, mobile_no, dob, ";
+    $query .= "address, roll_no, email, password, fee_amount) ";
+    $query .= "VALUES('$name', '$cnic', '$mobile_no', '$dob', ";
+    $query .= "'$address', '$roll_no', '$email', '$password', '$fee_amount')";
     $pass_query = mysqli_query($conn, $query);
+    
     if ($pass_query) {
         // getting class id
         // $get = sql_where('all_classes', 'class_name', $class);
@@ -94,7 +98,7 @@ VALUES('$name', '$cnic', '$mobile_no', '$dob', '$address', '$roll_no', 'email', 
                         <!-- Bordered Tabs -->
                         <ul class="nav nav-tabs nav-tabs-bordered">
                             <li class="nav-item">
-                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Edit Profile</button>
+                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Add Student</button>
                             </li>
                         </ul>
                         <div class="tab-content pt-2">
@@ -103,45 +107,51 @@ VALUES('$name', '$cnic', '$mobile_no', '$dob', '$address', '$roll_no', 'email', 
                                     <div class="row mb-3">
                                         <label for="name" class="col-md-4 col-lg-3 col-form-label">Student Name</label>
                                         <div class="col-md-8 col-lg-9">
-                                            <input name="name" type="text" class="form-control" id="fullName" value="" placeholder="Enter Student Name">
+                                            <input name="name" type="text" class="form-control" id="fullName" value="" placeholder="Full Name">
                                         </div>
                                     </div>
                                     <div class="row mb-3">
                                         <label for="cnic" class="col-md-4 col-lg-3 col-form-label">CNIC/B-FORM</label>
                                         <div class="col-md-8 col-lg-9">
-                                            <input name="cnic" type="text" class="form-control" id="fullName" value="" placeholder="Enter CNIC">
+                                            <input name="cnic" type="text" class="form-control" id="fullName" value="" placeholder="CNIC/Form-B">
                                         </div>
                                     </div>
                                     <div class="row mb-3">
                                         <label for="cnic" class="col-md-4 col-lg-3 col-form-label">Date of Birth</label>
                                         <div class="col-md-8 col-lg-9">
-                                            <input name="dob" type="date" class="form-control" id="fullName" value="" placeholder="Date of Birth">
+                                            <input name="dob" type="date" class="form-control" id="fullName" value="" placeholder="DOB">
                                         </div>
                                     </div>
                                     <div class="row mb-3">
                                         <label for="cnic" class="col-md-4 col-lg-3 col-form-label">Address</label>
                                         <div class="col-md-8 col-lg-9">
-                                            <input name="address" type="text" class="form-control" id="fullName" value="" placeholder="Enter address">
+                                            <input name="address" type="text" class="form-control" id="fullName" value="" placeholder="Full address">
                                         </div>
                                     </div>
 
                                     <div class="row mb-3">
                                         <label for="phone_no" class="col-md-4 col-lg-3 col-form-label">Phone No.</label>
                                         <div class="col-md-8 col-lg-9">
-                                            <input name="mobile_no" type="text" class="form-control" id="Job" value="" placeholder="Enter Phone No">
+                                            <input name="mobile_no" type="text" class="form-control" id="Job" value="" placeholder="Contact info">
                                         </div>
                                     </div>
 
                                     <div class="row mb-3">
                                         <label for="class" class="col-md-4 col-lg-3 col-form-label">Email</label>
                                         <div class="col-md-8 col-lg-9">
-                                            <input name="email" type="email" class="form-control" id="Country" value="" placeholder="Enter email">
+                                            <input name="email" type="email" class="form-control" id="Country" value="" placeholder="Valid email">
                                         </div>
                                     </div>
                                     <div class="row mb-3">
                                         <label for="class" class="col-md-4 col-lg-3 col-form-label">Reg no#</label>
                                         <div class="col-md-8 col-lg-9">
-                                            <input name="roll_no" type="text" class="form-control" id="Country" value="" placeholder="Enter roll number">
+                                            <input name="roll_no" type="text" class="form-control" id="Country" value="" placeholder="Student reg. number">
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label for="class" class="col-md-4 col-lg-3 col-form-label">Monthly Fee</label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="fee_amount" type="text" class="form-control" id="Country" value="" placeholder="Fees in - (Rs)">
                                         </div>
                                     </div>
                                     <!-- <div class="row mb-3">

@@ -74,6 +74,7 @@
                                     <th scope="col">Name</th>
                                     <th scope="col">Class</th>
                                     <th scope="col">Section</th>
+                                    <th scope="col">Monthly Fee</th>
                                     <th scope="col">Dues</th>
                                     <th scope="col">See Profile</th>
                                     <th scope="col">Edit</th>
@@ -173,6 +174,7 @@
                                             <td><?php echo $row['name']; ?></td>
                                             <td><?php echo $row['class_name']; ?></td>
                                             <td><?php echo $row['section_name']; ?></td>
+                                            <td>Rs. <?php echo $row['fee_amount']; ?></td>
                                             <td>null</td>
                                             <td><a href="view-student.php?id=<?php echo $row['student_id']; ?>">View profile</a></td>
                                             <td><a href="edit-student.php?id=<?php echo $row['student_id']; ?>">Edit profile</a></td>

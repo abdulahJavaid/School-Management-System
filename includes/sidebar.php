@@ -144,6 +144,45 @@
     </li><!-- End Charts Nav -->
 
     <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
+        <i class=><img src="images/fee.jpg" width="30px" height="30px" alt=""></i><span>Student Fee</span>
+        <i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+        <li>
+          <a href="pending-fee-requests.php">
+            <i class="bi bi-arrow-right"></i><span>Fee paid requests</span>
+          </a>
+        </li>
+        <li>
+          <a href="">
+            <i class="bi bi-arrow-right"></i><span>Students - fee paid</span>
+          </a>
+        </li>
+        <li>
+          <a href="">
+            <i class="bi bi-arrow-right"></i><span>Students - pending dues</span>
+          </a>
+        </li>
+        <li>
+          <a href="">
+            <i class="bi bi-arrow-right"></i><span>Students - fee not-paid</span>
+          </a>
+        </li>
+        <!-- <li>
+          <a href="#">
+            <i class="bi bi-arrow-right"></i><span>Fund Status</span>
+          </a>
+        </li> -->
+        <!-- <li>
+        <a href="charts-echarts.html">
+          <i class="bi bi-circle"></i><span>ECharts</span>
+        </a>
+      </li> -->
+      </ul>
+    </li><!-- End Charts Nav -->
+
+    <li class="nav-item">
       <a class="nav-link collapsed" data-bs-target="#tables-nav" href="add-student-reports.php">
         <i class=><img src="images/reporttracking.jpg" width="30px" height="30px" alt=""></i><span>Student Reports/Tracking</span>
         <!-- <i class="bi bi-chevron-down ms-auto"></i> -->
@@ -161,30 +200,6 @@
       </li>
     </ul> -->
     </li><!-- End Tables Nav -->
-
-    <li class="nav-item">
-      <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
-        <i class=><img src="images/fee.jpg" width="30px" height="30px" alt=""></i><span>Student Fee and Funds Status</span>
-        <i class="bi bi-chevron-down ms-auto"></i>
-      </a>
-      <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-        <li>
-          <a href="add-student-fee.php">
-            <i class="bi bi-arrow-right"></i><span>Student fees</span>
-          </a>
-        </li>
-        <li>
-          <a href="#">
-            <i class="bi bi-arrow-right"></i><span>Fund Status</span>
-          </a>
-        </li>
-        <!-- <li>
-        <a href="charts-echarts.html">
-          <i class="bi bi-circle"></i><span>ECharts</span>
-        </a>
-      </li> -->
-      </ul>
-    </li><!-- End Charts Nav -->
 
     <!-- <li class="nav-item">
     <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">

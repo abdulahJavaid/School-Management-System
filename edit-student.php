@@ -49,7 +49,7 @@ $row = mysqli_fetch_assoc($pass);
     $query .= "WHERE student_id='$cid'";
 
     $get = query($query);
-    if($get) {
+    if ($get) {
       // code to add admin_log into the database
       $result = sql_where('admin', 'admin_id', $_SESSION['login_id']);
       $fetch = mysqli_fetch_assoc($result);
@@ -61,7 +61,7 @@ $row = mysqli_fetch_assoc($pass);
       $query = "INSERT INTO admin_logs(log_message, time) VALUES('$log', '$time')";
       $pass_query2 = mysqli_query($conn, $query);
       if (!$pass_query2) {
-          echo "Error: " . mysqli_error($conn);
+        echo "Error: " . mysqli_error($conn);
       }
       redirect("./edit-student.php?id=$cid");
     }
@@ -82,17 +82,17 @@ $row = mysqli_fetch_assoc($pass);
             <h3>Class: <?php echo $row['class_name'] . ' ' . $row['section_name']; ?></h3>
 
             <div class="dropdown">
-  <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown">
-    Action
-  </button>
-  <ul class="dropdown-menu">
-    <li><a class="dropdown-item" href="#">Link 1</a></li>
-    <li><a class="dropdown-item" href="#">Link 2</a></li>
-    <li><a class="dropdown-item" href="#">Link 3</a></li>
-  </ul>
-</div>
+              <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown">
+                Action
+              </button>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Link 1</a></li>
+                <li><a class="dropdown-item" href="#">Link 2</a></li>
+                <li><a class="dropdown-item" href="#">Link 3</a></li>
+              </ul>
+            </div>
 
-             
+
             <div class="social-links mt-2">
               <!-- <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
               <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
@@ -213,6 +213,14 @@ $row = mysqli_fetch_assoc($pass);
                     <input name="email" type="email" class="form-control" id="Email" value="<?php echo $row['email']; ?>">
                   </div>
                 </div>
+
+                <div class="row mb-3">
+                  <label for="Phone" class="col-md-4 col-lg-3 col-form-label">Monthly Fee</label>
+                  <div class="col-md-8 col-lg-9">
+                    <input name="fee_amount" type="text" class="form-control" id="Phone" value="<?php echo $row['fee_amount']; ?>">
+                  </div>
+                </div>
+
 
                 <!-- <div class="row mb-3">
                   <label for="Twitter" class="col-md-4 col-lg-3 col-form-label">Twitter Profile</label>
