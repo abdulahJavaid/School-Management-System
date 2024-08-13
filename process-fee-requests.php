@@ -6,6 +6,7 @@
 <?php
 // checking session for appropriate access
 if ($_SESSION['login_access'] == 'developer' || $_SESSION['login_access'] == 'accountant' || $_SESSION['login_access'] == 'super') {
+} else {
     redirect("./");
 }
 ?>
@@ -13,7 +14,7 @@ if ($_SESSION['login_access'] == 'developer' || $_SESSION['login_access'] == 'ac
 <?php
 // if get request is valid
 if (!isset($_GET['id'])) {
-    redirect("./pending-fee-requests.php");
+    redirect("./fee-requests.php");
 }
 ?>
 
@@ -25,11 +26,11 @@ if (isset($_POST['rejected']) && !empty($_POST['rejection_reason'])) {
     $id = $_POST['id'];
     // echo $_GET['id'];
     $rejection_reason = $_POST['rejection_reason'];
-    $q = "UPDATE fee_requests SET fee_method='', fee_request_status='rejected', rejection_reason='$rejection_reason' ";
-    $q .= "WHERE fee_request_id=$id";
+    $q = "UPDATE student_fee SET fee_method='', payment_date='', fee_status='rejected', admin_remarks='$rejection_reason' ";
+    $q .= "WHERE fee_id=$id";
     $result = query($q);
     if ($result) {
-        redirect("./pending-fee-requests.php");
+        redirect("./fee-requests.php");
     }
 } elseif (isset($_POST['rejected']) && empty($_POST['rejection_reason'])) {
     $message = "Please add fee rejection reason!";
@@ -38,19 +39,22 @@ if (isset($_POST['rejected']) && !empty($_POST['rejection_reason'])) {
 // fee with dues
 if (isset($_POST['due']) && !empty($_POST['dues'])) {
     $id = $_POST['id'];
-    $q1 = "UPDATE fee_requests SET fee_request_status='paid' ";
-    $q1 .= "WHERE fee_request_id=$id";
-    $rs = query($q1);
-    if ($rs) {
-        $student_id = $_POST['student_id'];
-        $year = $_POST['year'];
-        $month = $_POST['month'];
-        $dues = $_POST['dues'];
-        $q2 = "INSERT INTO student_fee (fk_student_id, fk_fee_request_id, year, month, fee_status, pending_dues) ";
-        $q2 .= "VALUES ('$student_id', '$id', '$year', '$month', 'dues', '$dues')";
-        $rs1 = query($q2);
-        if ($rs1) {
-            redirect("./pending-fee-requests.php");
+    $dues = $_POST['dues'];
+    $q2 = "UPDATE student_fee SET fee_status='dues', pending_dues='$dues' ";
+    $q2 .= "WHERE fee_id='$id'";
+    $rs1 = query($q2);
+    if ($rs1) {
+        $date = date('Y-m-d', time());
+        $name = $_POST['student_name'];
+        $reg = $_POST['roll_no'];
+        $fee = $_POST['monthly_fee'];
+        $paid = (int) $fee - (int) $dues;
+        $comment = "Student $name, reg# $reg paid fee amount Rs.$paid with pending dues Rs.$dues (Monthly Fee)";
+        $qer = "INSERT INTO expense_receiving (comment, expense, receiving, date) ";
+        $qer .= "VALUES ('$comment', '0', '$paid', '$date')";
+        $res = query($qer);
+        if ($res) {
+            redirect("./fee-requests.php");
         }
     }
 } elseif (isset($_POST['due']) && empty($_POST['dues'])) {
@@ -60,18 +64,20 @@ if (isset($_POST['due']) && !empty($_POST['dues'])) {
 // the fee is totally paid
 if (isset($_POST['paid'])) {
     $id = $_POST['id'];
-    $q1 = "UPDATE fee_requests SET fee_request_status='paid' ";
-    $q1 .= "WHERE fee_request_id=$id";
-    $rs = query($q1);
-    if ($rs) {
-        $student_id = $_POST['student_id'];
-        $year = $_POST['year'];
-        $month = $_POST['month'];
-        $q2 = "INSERT INTO student_fee (fk_student_id, fk_fee_request_id, year, month, fee_status) ";
-        $q2 .= "VALUES ('$student_id', '$id', '$year', '$month', 'paid')";
-        $rs1 = query($q2);
-        if ($rs1) {
-            redirect("./pending-fee-requests.php");
+    $q2 = "UPDATE student_fee SET fee_status='paid' ";
+    $q2 .= "WHERE fee_id='$id'";
+    $rs1 = query($q2);
+    if ($rs1) {
+        $date = date('Y-m-d', time());
+        $name = $_POST['student_name'];
+        $reg = $_POST['roll_no'];
+        $fee = $_POST['monthly_fee'];
+        $comment = "Student $name, reg# $reg paid full fee amount Rs.$fee (Monthly Fee)";
+        $qer = "INSERT INTO expense_receiving (comment, expense, receiving, date) ";
+        $qer .= "VALUES ('$comment', '0', '$fee', '$date')";
+        $res = query($qer);
+        if ($res) {
+            redirect("./fee-requests.php");
         }
     }
 }
@@ -109,10 +115,10 @@ if (isset($_POST['paid'])) {
                         </ul>
                         <?php
                         // get student info
-                        $fee_request_id = $_GET['id'];
-                        $query = "SELECT * FROM fee_requests INNER JOIN ";
-                        $query .= "student_profile ON fee_requests.fk_student_id=student_profile.student_id ";
-                        $query .= "WHERE fee_request_id='$fee_request_id'";
+                        $fee_id = $_GET['id'];
+                        $query = "SELECT * FROM student_fee INNER JOIN ";
+                        $query .= "student_profile ON student_fee.fk_student_id=student_profile.student_id ";
+                        $query .= "WHERE fee_id='$fee_id'";
                         $result = query($query);
                         $rows = mysqli_fetch_assoc($result);
                         ?>
@@ -123,8 +129,9 @@ if (isset($_POST['paid'])) {
                                         <tr>
                                             <th scope="col">Reg no#</th>
                                             <th scope="col">Name</th>
-                                            <th scope="col">Total Fee (Rs)</th>
-                                            <th scope="col">Fee Month</th>
+                                            <th scope="col">Monthly Fee (Rs)</th>
+                                            <th scope="col">Month</th>
+                                            <th scope="col">Payment Date</th>
                                             <th scope="col">Fee Method</th>
                                         </tr>
                                     </thead>
@@ -132,15 +139,28 @@ if (isset($_POST['paid'])) {
                                         <tr>
                                             <td><?php echo $rows['roll_no']; ?></td>
                                             <td><?php echo $rows['name']; ?></td>
-                                            <td>Rs. <?php echo $rows['fee_amount']; ?></td>
+                                            <td>Rs. <?php echo $rows['monthly_fee']; ?></td>
                                             <td><?php echo $rows['year'] . ', ' . $rows['month']; ?></td>
+                                            <td><?php echo $rows['payment_date']; ?></td>
                                             <td><?php echo $rows['fee_method']; ?></td>
                                         </tr>
                                     </tbody>
                                 </table>
                                 <form method="post" action="" enctype="multipart/form-data">
+                                    <?php
+                                    if (!empty($rows['receipt_image'])) {
+                                    ?>
+                                        <!-- <input type="text" name="receipt_image" value="<?php //echo $rows['receipt_image']; 
+                                                                                            ?>"> -->
+                                    <?php
+                                    }
+
+                                    ?>
                                     <input type="hidden" name="id" value="<?php echo $id; ?>" id="">
                                     <input type="hidden" name="student_id" value="<?php echo $rows['student_id']; ?>" id="">
+                                    <input type="hidden" name="student_name" value="<?php echo $rows['name']; ?>" id="">
+                                    <input type="hidden" name="roll_no" value="<?php echo $rows['roll_no']; ?>" id="">
+                                    <input type="hidden" name="monthly_fee" value="<?php echo $rows['monthly_fee']; ?>" id="">
                                     <input type="hidden" name="year" value="<?php echo $rows['year']; ?>" id="">
                                     <input type="hidden" name="month" value="<?php echo $rows['month']; ?>" id="">
                                     <div class="row mb-3">
@@ -176,7 +196,7 @@ if (isset($_POST['paid'])) {
                         $img = "image-by-cash-default-admin.jpg";
                         echo "<img src='uploads/fees/$img' alt='no-img'>";
                     } else {
-                        $img = $row['image'];
+                        $img = $rows['receipt_image'];
                         echo "<img src='uploads/fees/$img' alt='no-img'>";
                     }
                     ?>
@@ -186,7 +206,7 @@ if (isset($_POST['paid'])) {
                             if (str_contains(strtolower($rows['fee_method']), 'cash')) {
                                 echo "Paid by Cash";
                             } else {
-                                $img = $rows['image'];
+                                $img = $rows['receipt_image'];
                                 echo "Payment Receipt";
                             }
                             ?>
@@ -200,4 +220,4 @@ if (isset($_POST['paid'])) {
 </main><!-- End #main -->
 
 <!-- ======= Footer ======= -->
-<?php include_once("includes/footer.php"); ?> 
+<?php include_once("includes/footer.php"); ?>

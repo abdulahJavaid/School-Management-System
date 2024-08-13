@@ -106,7 +106,7 @@
             </a>
           </li>
           <li>
-            <a href="">
+            <a href="fee-paid.php">
               <i class="bi bi-arrow-right"></i><span>Students - fee paid</span>
             </a>
           </li>

@@ -6,7 +6,9 @@
 <?php
 // checking session for appropriate access
 if ($_SESSION['login_access'] == 'developer' || $_SESSION['login_access'] == 'accountant' || $_SESSION['login_access'] == 'super') {
-    redirect("./");
+  
+}else{
+  redirect("./");
 }
 ?>
 

@@ -19,6 +19,7 @@
     // 15. Log/activity missing on most of the sections
     // 16. Add paid_fee (amount) in receivings
     // 17. Add received_amount column in (student_fee) table
+    // 18. Add code for unique registration number (php)
 ?>
 
 
