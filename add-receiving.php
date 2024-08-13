@@ -3,6 +3,13 @@
 <!-- ======= Sidebar ======= -->
 <?php require_once("includes/sidebar.php"); ?>
 
+<?php
+// checking session for appropriate access
+if ($_SESSION['login_access'] == 'developer' || $_SESSION['login_access'] == 'accountant' || $_SESSION['login_access'] == 'super') {
+    redirect("./");
+}
+?>
+
 <main id="main" class="main">
 
     <div class="pagetitle">

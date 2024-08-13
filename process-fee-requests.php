@@ -4,6 +4,13 @@
 <?php require_once("includes/sidebar.php"); ?>
 
 <?php
+// checking session for appropriate access
+if ($_SESSION['login_access'] == 'developer' || $_SESSION['login_access'] == 'accountant' || $_SESSION['login_access'] == 'super') {
+    redirect("./");
+}
+?>
+
+<?php
 // if get request is valid
 if (!isset($_GET['id'])) {
     redirect("./pending-fee-requests.php");
@@ -11,7 +18,7 @@ if (!isset($_GET['id'])) {
 ?>
 
 <?php
-    $id = $_GET['id'];
+$id = $_GET['id'];
 // rejected fees
 if (isset($_POST['rejected']) && !empty($_POST['rejection_reason'])) {
     // echo $_GET['id'];
@@ -21,10 +28,10 @@ if (isset($_POST['rejected']) && !empty($_POST['rejection_reason'])) {
     $q = "UPDATE fee_requests SET fee_method='', fee_request_status='rejected', rejection_reason='$rejection_reason' ";
     $q .= "WHERE fee_request_id=$id";
     $result = query($q);
-    if($result){
+    if ($result) {
         redirect("./pending-fee-requests.php");
     }
-}elseif(isset($_POST['rejected']) && empty($_POST['rejection_reason'])){
+} elseif (isset($_POST['rejected']) && empty($_POST['rejection_reason'])) {
     $message = "Please add fee rejection reason!";
 }
 
@@ -34,7 +41,7 @@ if (isset($_POST['due']) && !empty($_POST['dues'])) {
     $q1 = "UPDATE fee_requests SET fee_request_status='paid' ";
     $q1 .= "WHERE fee_request_id=$id";
     $rs = query($q1);
-    if($rs){
+    if ($rs) {
         $student_id = $_POST['student_id'];
         $year = $_POST['year'];
         $month = $_POST['month'];
@@ -42,32 +49,31 @@ if (isset($_POST['due']) && !empty($_POST['dues'])) {
         $q2 = "INSERT INTO student_fee (fk_student_id, fk_fee_request_id, year, month, fee_status, pending_dues) ";
         $q2 .= "VALUES ('$student_id', '$id', '$year', '$month', 'dues', '$dues')";
         $rs1 = query($q2);
-        if($rs1){
+        if ($rs1) {
             redirect("./pending-fee-requests.php");
         }
     }
-}elseif(isset($_POST['due']) && empty($_POST['dues'])){
+} elseif (isset($_POST['due']) && empty($_POST['dues'])) {
     $message = "Please add the remaining dues of the student!";
 }
 
 // the fee is totally paid
-if(isset($_POST['paid'])){
+if (isset($_POST['paid'])) {
     $id = $_POST['id'];
     $q1 = "UPDATE fee_requests SET fee_request_status='paid' ";
     $q1 .= "WHERE fee_request_id=$id";
     $rs = query($q1);
-    if($rs){
+    if ($rs) {
         $student_id = $_POST['student_id'];
         $year = $_POST['year'];
         $month = $_POST['month'];
         $q2 = "INSERT INTO student_fee (fk_student_id, fk_fee_request_id, year, month, fee_status) ";
         $q2 .= "VALUES ('$student_id', '$id', '$year', '$month', 'paid')";
         $rs1 = query($q2);
-        if($rs1){
+        if ($rs1) {
             redirect("./pending-fee-requests.php");
         }
     }
-
 }
 ?>
 
@@ -80,15 +86,15 @@ if(isset($_POST['paid'])){
             </ol>
         </nav>
     </div><!-- End Page Title -->
-    <?php if(isset($message)){ ?>
-    <div class="row">
-        <div class="col-xl-8">
-                    <div class="alert alert-danger">
-                        <?php echo $message; ?>
-                    </div>
+    <?php if (isset($message)) { ?>
+        <div class="row">
+            <div class="col-xl-8">
+                <div class="alert alert-danger">
+                    <?php echo $message; ?>
                 </div>
-                    </div>
-                    <?php } ?>
+            </div>
+        </div>
+    <?php } ?>
 
     <section class="section profile">
         <div class="row">
@@ -149,8 +155,8 @@ if(isset($_POST['paid'])){
                                     </div>
 
                                     <div class="text-center">
-                                    <button type="submit" name="paid" class="btn btn-sm btn-success">Mark Paid</button>
-                                    <button type="submit" name="due" class="btn btn-sm btn-primary">Add dues</button>
+                                        <button type="submit" name="paid" class="btn btn-sm btn-success">Mark Paid</button>
+                                        <button type="submit" name="due" class="btn btn-sm btn-primary">Add dues</button>
                                         <button type="submit" name="rejected" class="btn btn-sm btn-danger">Rejected</button>
                                     </div>
                                 </form><!-- End Profile Edit Form -->
@@ -194,16 +200,4 @@ if(isset($_POST['paid'])){
 </main><!-- End #main -->
 
 <!-- ======= Footer ======= -->
-<?php include_once("includes/footer.php"); ?>
-
-
-
-
-
-Fatal error: Uncaught mysqli_sql_exception: You have an error in your SQL syntax; check the manual that 
-corresponds to your MariaDB server version for the right syntax to use near 'WHERE fee_request_id='4'' 
-at line 1 in C:\xampp\htdocs\myschool\includes\functions.php:38 Stack trace: 
-    #0 C:\xampp\htdocs\myschool\includes\functions.php(38): mysqli_query(Object(mysqli), 
-    'WHERE fee_reque...') 
-#1 C:\xampp\htdocs\myschool\process-fee-requests.php(19): query('WHERE fee_reque...') #2 
-{main} thrown in C:\xampp\htdocs\myschool\includes\functions.php on line 38
+<?php include_once("includes/footer.php"); ?> 
