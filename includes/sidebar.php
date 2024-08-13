@@ -82,7 +82,10 @@
     </li>
 
 
-
+    <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#components-nav" href="student-migration.php"> <!-- data-bs-toggle="collapse" -->
+        <i class=""><img src="images/schoolprofile1.jpeg" width="30px" height="30px" alt=""></i><span>Student Migration</span>
+      </a>
 
 
 
@@ -184,7 +187,7 @@
 
     <li class="nav-item">
       <a class="nav-link collapsed" data-bs-target="#tables-nav" href="add-student-reports.php">
-        <i class=><img src="images/reporttracking.jpg" width="30px" height="30px" alt=""></i><span>Student Reports/Tracking</span>
+        <i class=><img src="images/reporttracking.jpg" width="30px" height="30px" alt=""></i><span>Progress Reports</span>
         <!-- <i class="bi bi-chevron-down ms-auto"></i> -->
       </a>
       <!-- <ul id="tables-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">

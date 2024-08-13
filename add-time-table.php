@@ -6,7 +6,7 @@
 <main id="main" class="main">
 
   <div class="pagetitle">
-    <h1>Add/View/Update Timetable</h1>
+    <h1>Timetable</h1>
     <nav>
       <ol class="breadcrumb">
         <!-- <li class="breadcrumb-item"><a href="index.html">Home</a></li>
@@ -93,7 +93,7 @@
   <!-- end view timetable -->
 
   <!-- update timetable -->
-  <div class="container-fluid">
+  <!-- <div class="container-fluid">
     <div class="row">
       <div class="col-md-3">
         <form method="post" action="">
@@ -103,22 +103,22 @@
               <option selected>Class</option>
               <?php
               // fetching all the classes 
-              $result = sql_select_all("all_classes");
-              while ($row = mysqli_fetch_assoc($result)) {
+              // $result = sql_select_all("all_classes");
+              // while ($row = mysqli_fetch_assoc($result)) {
 
               ?>
                 <optgroup label="Class: <?php echo $row['class_name']; ?>">
                   <?php
                   // fetching the related sections
-                  $result1 = sql_where("class_sections", "fk_class_id", $row['class_id']);
-                  while ($row1 = mysqli_fetch_assoc($result1)) {
+                  // $result1 = sql_where("class_sections", "fk_class_id", $row['class_id']);
+                  // while ($row1 = mysqli_fetch_assoc($result1)) {
                   ?>
                     <option value="<?php echo $row['class_id'] . " " . $row1['section_id']; ?>"><?php echo $row['class_name'] . " " . $row1['section_name']; ?></option>
                   <?php
-                  }
-                  ?>
+                  // }
+                  // ?>
                 </optgroup>
-              <?php } ?>
+              <?php  ?>
             </select>
           </div>
       </div>
@@ -127,7 +127,7 @@
       </div>
       </form>
     </div>
-  </div>
+  </div> -->
   <!-- end update timetable -->
 
 
@@ -156,15 +156,54 @@
           $row1 = mysqli_fetch_assoc($result1);
 
         ?>
-          <!-- start of card -->
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">Class: <?php echo $row['class_name'] . " " . $row1['section_name']; ?></h5>
-              <p><code><u>Instructions:</u></code>
-                <br><code>1. Don't leave time empty or the relevand records will not be added</code>
-                <br><code>2. If you want to add break, tick the break box</code>
-                <br><code>3. If Saturday is a holiday, don't add periods on Saturday</code>
-              </p>
+         <div class="card">
+    <div class="card-body">
+        <div class="container-fluid">
+            <div class="row align-items-center">
+                <div class="col-md-4">
+                    <h5 class="card-title">Class: <?php echo $row['class_name'] . " " . $row1['section_name']; ?></h5>
+                </div>
+                <div class="col-md-4">
+                    <form method="post" action="">
+                        <div class="input-group">
+                            <select id="inputState" name="select" class="form-select">
+                                <option selected>Class</option>
+                                <?php
+                                // fetching all the classes 
+                                $result = sql_select_all("all_classes");
+                                while ($row = mysqli_fetch_assoc($result)) {
+                                ?>
+                                    <optgroup label="Class: <?php echo $row['class_name']; ?>">
+                                        <?php
+                                        // fetching the related sections
+                                        $result1 = sql_where("class_sections", "fk_class_id", $row['class_id']);
+                                        while ($row1 = mysqli_fetch_assoc($result1)) {
+                                        ?>
+                                            <option value="<?php echo $row['class_id'] . " " . $row1['section_id']; ?>"><?php echo $row['class_name'] . " " . $row1['section_name']; ?></option>
+                                        <?php
+                                        }
+                                        ?>
+                                    </optgroup>
+                                <?php } ?>
+                            </select>
+                            <button class="btn btn-primary" type="button">Select</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-md-4">
+                    <form method="post" action="">
+                        <button class="btn btn-md btn-primary" name="add" type="submit">Add Timetable</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <p><code><u>Instructions:</u></code>
+            <br><code>1. Don't leave time empty or the relevant records will not be added</code>
+            <br><code>2. If you want to add a break, tick the break box</code>
+            <br><code>3. If Saturday is a holiday, don't add periods on Saturday</code>
+        </p>
+    </div>
+</div>
 
               <!-- Primary Color Bordered Table -->
               <form action="./backend/back-add-timetable.php" method="post">
@@ -306,6 +345,10 @@
 
             </div>
           </div>
+
+
+
+
           <!-- end of card -->
 
       </div>
