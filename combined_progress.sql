@@ -24,15 +24,14 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `homework_diary`
+-- Table structure for table `combined_progress`
 --
 
-CREATE TABLE `homework_diary` (
-  `homework_id` int(11) NOT NULL,
-  `fk_section_id` int(11) NOT NULL,
-  `subject` varchar(255) NOT NULL,
-  `subject_diary` text NOT NULL,
-  `date` date NOT NULL
+CREATE TABLE `combined_progress` (
+  `combined_progress_id` int(11) NOT NULL,
+  `fk_student_id` varchar(10) NOT NULL,
+  `combined_grade` varchar(10) NOT NULL,
+  `date` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -40,31 +39,20 @@ CREATE TABLE `homework_diary` (
 --
 
 --
--- Indexes for table `homework_diary`
+-- Indexes for table `combined_progress`
 --
-ALTER TABLE `homework_diary`
-  ADD PRIMARY KEY (`homework_id`),
-  ADD KEY `fk_section_homework_id` (`fk_section_id`);
+ALTER TABLE `combined_progress`
+  ADD PRIMARY KEY (`combined_progress_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT for table `homework_diary`
+-- AUTO_INCREMENT for table `combined_progress`
 --
-ALTER TABLE `homework_diary`
-  MODIFY `homework_id` int(11) NOT NULL AUTO_INCREMENT;
-
---
--- Constraints for dumped tables
---
-
---
--- Constraints for table `homework_diary`
---
-ALTER TABLE `homework_diary`
-  ADD CONSTRAINT `fk_section_homework_id` FOREIGN KEY (`fk_section_id`) REFERENCES `class_sections` (`section_id`);
+ALTER TABLE `combined_progress`
+  MODIFY `combined_progress_id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
