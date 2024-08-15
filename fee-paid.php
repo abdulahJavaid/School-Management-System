@@ -74,8 +74,10 @@ if ($_SESSION['login_access'] == 'developer' || $_SESSION['login_access'] == 'ac
                                             <?php echo $row['pending_dues']; ?>
                                         </td>
                                         <td>
-                                            <form action=""></form>
-                                            <a href="process-fee-requests.php?id=<?php echo $row['fee_id']; ?>" class="btn btn-sm btn-info button">Download Receipt</a>
+                                            <!-- <form action="generate-pdf.php">
+                                                input
+                                            </form> -->
+                                            <a href="generate-pdf.php?generate=on">Generate</a>
                                         </td>
                                     </tr>
                                 <?php

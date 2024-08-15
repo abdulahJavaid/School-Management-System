@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 13, 2024 at 01:30 PM
+-- Generation Time: Aug 15, 2024 at 11:32 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -284,7 +284,57 @@ INSERT INTO `expense_receiving` (`er_id`, `image`, `comment`, `expense`, `receiv
 (15, 'images-20.jpg', 'new receiving', '0', '12000', '2024-08-08'),
 (16, 'images-32.jpg', 'ecpence', '120000', '0', '2024-08-08'),
 (17, 'images-33.jpg', 'the cost', '30000', '0', '2024-08-08'),
-(18, 'images-43.jpg', 'the cost 2', '70000', '0', '2024-08-08');
+(18, 'images-43.jpg', 'the cost 2', '70000', '0', '2024-08-08'),
+(19, '', 'Student Ali Abdullah, reg# 233 - paid: Rs. 500 with pending dues: Rs. 1000', '0', '500', '2024-08-13'),
+(20, '', 'Student: Shahid Afridi, reg# 269 paid full fee amount Rs.7000 (Monthly Fee)', '0', '7000', '2024-08-13'),
+(21, '', 'Student Musa Butt, reg# 244 paid fee amount Rs.2000 with pending dues Rs.1000 (Monthly Fee)', '0', '2000', '2024-08-13'),
+(22, '', 'Student Abdul Razzaq, reg# 272 paid full fee amount Rs.7000 (Monthly Fee)', '0', '7000', '2024-08-13'),
+(23, '', 'Student Abdul Rasheed, reg# 271 paid fee amount Rs.6500 with pending dues Rs.500 (Monthly Fee)', '0', '6500', '2024-08-13'),
+(24, '', 'Student Ibrar Ali, reg# 239 paid fee amount Rs.1800 with pending dues Rs.200 (Monthly Fee)', '0', '1800', '2024-08-13'),
+(25, '', 'Student Ali Raza, reg# 255 paid fee amount Rs.4000 with pending dues Rs.1000 (Monthly Fee)', '0', '4000', '2024-08-13'),
+(26, '', 'Student Ali Hassan, reg# 242 paid full fee amount Rs.3000 (Monthly Fee)', '0', '3000', '2024-08-13'),
+(27, '', 'Student Gheyas Elahi, reg# 241 paid full fee amount Rs.3000 (Monthly Fee)', '0', '3000', '2024-08-13'),
+(28, '', 'Student Rana Hassan, reg# 236 paid full fee amount Rs.1500 (Monthly Fee)', '0', '1500', '2024-08-13'),
+(29, '', 'Student Abdullah Cheema, reg# 234 paid fee amount Rs.1450 with pending dues Rs.50 (Monthly Fee)', '0', '1450', '2024-08-13'),
+(30, '', 'Student Rizwan Malik, reg# 258 paid fee amount Rs.5000 with pending dues Rs.500 (Monthly Fee)', '0', '5000', '2024-08-13'),
+(31, '', 'Student Talha Zahid, reg# 240 paid full fee amount Rs.2000 (Monthly Fee)', '0', '2000', '2024-08-13'),
+(32, '', 'Student Rafay Saeed, reg# 238 paid full fee amount Rs.2000 (Monthly Fee)', '0', '2000', '2024-08-13'),
+(33, '', 'Student Usman Shafique, reg# 246 paid full fee amount Rs.4000 (Monthly Fee)', '0', '4000', '2024-08-13'),
+(34, '', 'Student Ahmad Talal, reg# 247 paid fee amount Rs.1000 with pending dues Rs.3000 (Monthly Fee)', '0', '1000', '2024-08-13'),
+(35, '', 'Student Wahab Riaz, reg# 264 paid fee amount Rs.5000 with pending dues Rs.1000 (Monthly Fee)', '0', '5000', '2024-08-13'),
+(36, '', 'Student Haider Niazi, reg# 251 paid full fee amount Rs.4500 (Monthly Fee)', '0', '4500', '2024-08-13'),
+(37, '', 'Student Saqib Mehmood, reg# 249 paid full fee amount Rs.4500 (Monthly Fee)', '0', '4500', '2024-08-13'),
+(38, '', 'Student Masood Faridi, reg# 250 paid fee amount Rs.4200 with pending dues Rs.300 (Monthly Fee)', '0', '4200', '2024-08-13'),
+(39, '', 'Student Tayyab Awan, reg# 235 paid full fee amount Rs.1500 (Monthly Fee)', '0', '1500', '2024-08-13'),
+(40, '', 'Student Ali Zahid, reg# 253 paid fee amount Rs.4000 with pending dues Rs.1000 (Monthly Fee)', '0', '4000', '2024-08-13'),
+(41, '', 'Student Ali Abdullah, reg# 233 paid full fee amount Rs.1500 (Monthly Fee)', '0', '1500', '2024-08-13'),
+(42, '', 'Student Humayun, reg# 237 paid full fee amount Rs.2000 (Monthly Fee)', '0', '2000', '2024-08-13'),
+(43, '', 'Student Aqib Jutt, reg# 245 paid fee amount Rs.3500 with pending dues Rs.500 (Monthly Fee)', '0', '3500', '2024-08-13'),
+(44, '', 'Student Mujhtaba Abid, reg# 248 paid fee amount Rs.3400 with pending dues Rs.600 (Monthly Fee)', '0', '3400', '2024-08-13'),
+(45, '', 'Student Haroon Butt, reg# 254 paid full fee amount Rs.5000 (Monthly Fee)', '0', '5000', '2024-08-13'),
+(46, '', 'Student Mehrose Niazi, reg# 252 paid full fee amount Rs.4500 (Monthly Fee)', '0', '4500', '2024-08-13'),
+(47, '', 'Student Khurram Shehzad, reg# 256 paid fee amount Rs.4000 with pending dues Rs.1000 (Monthly Fee)', '0', '4000', '2024-08-13'),
+(48, '', 'Student Babar Azam, reg# 257 paid fee amount Rs.5400 with pending dues Rs.100 (Monthly Fee)', '0', '5400', '2024-08-13'),
+(49, '', 'Student Shaheen Afridi, reg# 259 paid fee amount Rs.5300 with pending dues Rs.200 (Monthly Fee)', '0', '5300', '2024-08-13'),
+(50, '', 'Student Haris Rouf, reg# 260 paid fee amount Rs.5000 with pending dues Rs.500 (Monthly Fee)', '0', '5000', '2024-08-13'),
+(51, '', 'Student Misbah, reg# 261 paid full fee amount Rs.6000 (Monthly Fee)', '0', '6000', '2024-08-13'),
+(52, '', 'Student Mateen Malik, reg# 262 paid full fee amount Rs.6000 (Monthly Fee)', '0', '6000', '2024-08-13'),
+(53, '', 'Student Wahab Gujjar, reg# 263 paid fee amount Rs.5300 with pending dues Rs.700 (Monthly Fee)', '0', '5300', '2024-08-13'),
+(54, '', 'Student Muhammad Amir, reg# 265 paid fee amount Rs.5600 with pending dues Rs.400 (Monthly Fee)', '0', '5600', '2024-08-13');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `homework_diary`
+--
+
+CREATE TABLE `homework_diary` (
+  `homework_id` int(11) NOT NULL,
+  `fk_section_id` int(11) NOT NULL,
+  `subject` varchar(255) NOT NULL,
+  `subject_diary` text NOT NULL,
+  `date` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -556,13 +606,60 @@ CREATE TABLE `student_fee` (
   `year` varchar(20) NOT NULL,
   `month` varchar(20) NOT NULL,
   `fee_method` varchar(255) NOT NULL,
-  `image` varchar(255) NOT NULL,
+  `receipt_image` varchar(255) NOT NULL,
   `monthly_fee` varchar(255) NOT NULL,
   `due_date` date NOT NULL,
-  `fee_status` varchar(20) NOT NULL,
+  `payment_date` date NOT NULL,
+  `fee_status` varchar(50) NOT NULL DEFAULT 'unpaid',
   `pending_dues` int(10) NOT NULL DEFAULT 0,
   `admin_remarks` varchar(500) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `student_fee`
+--
+
+INSERT INTO `student_fee` (`fee_id`, `fk_student_id`, `year`, `month`, `fee_method`, `receipt_image`, `monthly_fee`, `due_date`, `payment_date`, `fee_status`, `pending_dues`, `admin_remarks`) VALUES
+(12, 11, '2024', 'August', 'online', 'my-img23543.jpg', '3000', '2024-08-20', '2024-08-20', 'in_process', 0, ''),
+(13, 12, '2024', 'August', 'cash', '', '3000', '2024-08-20', '2024-08-20', 'dues', 1000, ''),
+(14, 17, '2024', 'August', 'cash', '', '4500', '2024-08-20', '2024-08-14', 'paid', 0, ''),
+(15, 18, '2024', 'August', 'cash', '', '4500', '2024-08-20', '2024-08-20', 'dues', 300, ''),
+(16, 21, '2024', 'August', 'cash', '', '5000', '2024-08-20', '2024-08-20', 'dues', 1000, ''),
+(17, 23, '2024', 'August', 'cash', '', '5000', '2024-08-20', '2024-08-20', 'dues', 1000, ''),
+(18, 26, '2024', 'August', 'cash', '', '5500', '2024-08-20', '2024-08-20', 'dues', 500, ''),
+(19, 37, '2024', 'August', 'cash', '', '7000', '2024-08-20', '2024-08-20', 'paid', 0, ''),
+(20, 1, '2024', 'August', 'cash', '', '1500', '2024-08-20', '2024-08-14', 'paid', 0, ''),
+(21, 2, '2024', 'August', 'cash', '', '1500', '2024-08-20', '2024-08-12', 'dues', 50, ''),
+(22, 3, '2024', 'August', 'cash', '', '1500', '2024-08-20', '2024-08-15', 'paid', 0, ''),
+(23, 4, '2024', 'August', 'cash', '', '1500', '2024-08-20', '2024-08-11', 'paid', 0, ''),
+(24, 5, '2024', 'August', 'cash', '', '2000', '2024-08-20', '2024-08-10', 'paid', 0, ''),
+(25, 6, '2024', 'August', 'cash', '', '2000', '2024-08-20', '2024-08-09', 'paid', 0, ''),
+(26, 7, '2024', 'August', 'cash', '', '2000', '2024-08-20', '2024-08-16', 'dues', 200, ''),
+(27, 8, '2024', 'August', 'cash', '', '2000', '2024-08-20', '2024-08-06', 'paid', 0, ''),
+(28, 9, '2024', 'August', 'cash', '', '3000', '2024-08-20', '2024-08-02', 'paid', 0, ''),
+(29, 10, '2024', 'August', 'cash', '', '3000', '2024-08-20', '2024-08-19', 'paid', 0, ''),
+(30, 13, '2024', 'August', 'cash', '', '4000', '2024-08-20', '2024-08-07', 'dues', 500, ''),
+(31, 14, '2024', 'August', 'cash', '', '4000', '2024-08-20', '2024-08-14', 'paid', 0, ''),
+(32, 15, '2024', 'August', 'cash', '', '4000', '2024-08-20', '2024-08-11', 'dues', 3000, ''),
+(33, 16, '2024', 'August', 'cash', '', '4000', '2024-08-20', '2024-08-13', 'dues', 600, ''),
+(34, 19, '2024', 'August', 'cash', '', '4500', '2024-08-20', '2024-08-15', 'paid', 0, ''),
+(35, 20, '2024', 'August', 'cash', '', '4500', '2024-08-20', '2024-08-04', 'paid', 0, ''),
+(36, 22, '2024', 'August', 'cash', '', '5000', '2024-08-20', '2024-08-01', 'paid', 0, ''),
+(37, 24, '2024', 'August', 'cash', '', '5000', '2024-08-20', '2024-08-06', 'dues', 1000, ''),
+(38, 25, '2024', 'August', 'cash', '', '5500', '2024-08-20', '2024-08-08', 'dues', 100, ''),
+(39, 27, '2024', 'August', 'cash', '', '5500', '2024-08-20', '2024-08-15', 'dues', 200, ''),
+(40, 28, '2024', 'August', 'cash', '', '5500', '2024-08-20', '2024-08-15', 'dues', 500, ''),
+(41, 29, '2024', 'August', 'cash', '', '6000', '2024-08-20', '2024-08-03', 'paid', 0, ''),
+(42, 30, '2024', 'August', 'cash', '', '6000', '2024-08-20', '2024-08-07', 'paid', 0, ''),
+(43, 31, '2024', 'August', 'cash', '', '6000', '2024-08-20', '2024-08-09', 'dues', 700, ''),
+(44, 32, '2024', 'August', 'cash', '', '6000', '2024-08-20', '2024-08-15', 'dues', 1000, ''),
+(45, 33, '2024', 'August', 'cash', '', '6000', '2024-08-20', '2024-08-16', 'dues', 400, ''),
+(46, 34, '2024', 'August', 'cash', '', '6000', '2024-08-20', '2024-08-19', 'in_process', 0, ''),
+(47, 35, '2024', 'August', 'cash', '', '6000', '2024-08-20', '2024-08-14', 'in_process', 0, ''),
+(48, 36, '2024', 'August', 'cash', '', '6000', '2024-08-20', '2024-08-18', 'in_process', 0, ''),
+(49, 38, '2024', 'August', 'cash', '', '7000', '2024-08-20', '2024-08-12', 'in_process', 0, ''),
+(50, 39, '2024', 'August', 'cash', '', '7000', '2024-08-20', '2024-08-14', 'dues', 500, ''),
+(51, 40, '2024', 'August', 'cash', '', '7000', '2024-08-20', '2024-08-09', 'paid', 0, '');
 
 -- --------------------------------------------------------
 
@@ -752,6 +849,13 @@ ALTER TABLE `expense_receiving`
   ADD PRIMARY KEY (`er_id`);
 
 --
+-- Indexes for table `homework_diary`
+--
+ALTER TABLE `homework_diary`
+  ADD PRIMARY KEY (`homework_id`),
+  ADD KEY `fk_section_homework_id` (`fk_section_id`);
+
+--
 -- Indexes for table `notices`
 --
 ALTER TABLE `notices`
@@ -863,7 +967,13 @@ ALTER TABLE `exam_schedule`
 -- AUTO_INCREMENT for table `expense_receiving`
 --
 ALTER TABLE `expense_receiving`
-  MODIFY `er_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `er_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
+
+--
+-- AUTO_INCREMENT for table `homework_diary`
+--
+ALTER TABLE `homework_diary`
+  MODIFY `homework_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `notices`
@@ -899,7 +1009,7 @@ ALTER TABLE `student_class`
 -- AUTO_INCREMENT for table `student_fee`
 --
 ALTER TABLE `student_fee`
-  MODIFY `fee_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `fee_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
 -- AUTO_INCREMENT for table `student_profile`
@@ -948,6 +1058,12 @@ ALTER TABLE `class_sections`
 --
 ALTER TABLE `exam_schedule`
   ADD CONSTRAINT `fk_section_exam_id` FOREIGN KEY (`fk_section_id`) REFERENCES `class_sections` (`section_id`);
+
+--
+-- Constraints for table `homework_diary`
+--
+ALTER TABLE `homework_diary`
+  ADD CONSTRAINT `fk_section_homework_id` FOREIGN KEY (`fk_section_id`) REFERENCES `class_sections` (`section_id`);
 
 --
 -- Constraints for table `periods`
