@@ -24,33 +24,168 @@ if ($_SESSION['login_access'] == 'developer' || $_SESSION['login_access'] == 'ac
         </nav>
     </div><!-- End Page Title -->
 
+    <!-- generate pdf button -->
+    <div class="row">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-auto">
+                    <div class="input-group">
+                        <?php
+                        // pdf with username
+                        if (isset($_POST['view_name'])) {
+                            $view_name = $_POST['name'];
+                        ?>
+
+                            <form action="generate-pdf.php" method="post">
+                                <input type="hidden" name="name" value="<?php echo $_POST['name']; ?>">
+                                <button name="generate_name" class="btn btn-sm btn-primary button" type="submit" id="button-addon1">
+                                    Generate Pdf
+                                </button>
+                            </form>
+                        <?php
+                        } elseif (isset($_POST['view_reg'])) {
+                        ?>
+
+                            <form action="generate-pdf.php" method="post">
+                                <input type="hidden" name="roll_no">
+                                <button name="generate_reg" class="btn btn-sm btn-primary button" type="submit" id="button-addon1">
+                                    Generate Pdf
+                                </button>
+                            </form>
+                        <?php
+                        } elseif (isset($_POST['view_month'])) {
+                        ?>
+
+                            <form action="generate-pdf.php" method="post">
+                                <input type="hidden" name="month">
+                                <button name="generate_month" class="btn btn-sm btn-primary button" type="submit" id="button-addon1">
+                                    Generate Pdf
+                                </button>
+                            </form>
+                        <?php
+                        } else {
+                        ?>
+
+                            <form action="generate-pdf.php" method="post">
+                                <input type="hidden" name="current" value="not-empty">
+                                <button name="current_month" class="btn btn-sm btn-primary button" type="submit" id="button-addon1">
+                                    Generate Pdf
+                                </button>
+                            </form>
+                        <?php
+                        }
+                        ?>
+
+                    </div>
+                    <!-- </form> -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <p><code>The pdf will be generated for the selected option.</br>If no option is selected, current month record will be generated,</code></p>
+    <!-- <br> -->
+
+    <!-- the table with the data -->
     <section class="section profile">
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Students who paid fees</h5>
-                        <!-- <p>Add <code>.table-bordered</code> for borders on all sides of the table and cells.</p> -->
-                        <div class="d-flex justify-content-end">
-    <div class="input-group w-auto">
-        <!-- <select name="" id="" class="form-select" 
-        aria-describedby="button-addon1">
-            <option value=""><?php // echo date('Y') .', ' . date('F') ?></option>
-        </select> -->
-        <input
-          type="month"
-          size="4"
-          class="form-control"
-          value="<?php echo date('Y') .'-' . date('m') ?>"
-          placeholder="Example input"
-          aria-label="Example input"
-          aria-describedby="button-addon1"
-        />
-        <button data-mdb-button-init data-mdb-ripple-init class="btn btn-sm btn-primary button" type="submit" id="button-addon1" data-mdb-ripple-color="dark">
-            View
-        </button>
-    </div>
-</div>
+                        <div class="row">
+                            <div class="container">
+                                <div class="row align-items-center">
+                                    <!-- Name Button on the Left -->
+
+                                    <div class="col-auto">
+                                        <form action="" method="post">
+                                            <div class="input-group">
+                                                <input
+                                                    name="name"
+                                                    type="text"
+                                                    size="6"
+                                                    class="form-control"
+                                                    value="<?php
+                                                            if (isset($_POST['view_name'])) {
+                                                                echo $_POST['name'];
+                                                            } else {
+                                                                echo "";
+                                                            }
+                                                            ?>"
+                                                    placeholder="By name"
+                                                    aria-label="Example input"
+                                                    aria-describedby="button-addon2" required />
+                                                <button name="view_name" class="btn btn-sm btn-primary button" type="submit" id="button-addon2">
+                                                    View
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+
+
+                                    <!-- button position second -->
+
+                                    <div class="col-auto">
+                                        <form action="" method="post">
+                                            <div class="input-group">
+                                                <input
+                                                    name="reg"
+                                                    type="text"
+                                                    size="6"
+                                                    class="form-control"
+                                                    value="<?php
+                                                            if (isset($_POST['view_reg'])) {
+                                                                echo $_POST['reg'];
+                                                            } else {
+                                                                echo "";
+                                                            }
+                                                            ?>"
+                                                    placeholder="By reg#"
+                                                    aria-label="Example input"
+                                                    aria-describedby="button-addon3" required />
+                                                <button name="view_reg" class="btn btn-sm btn-primary button" type="submit" id="button-addon3">
+                                                    View
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+
+
+
+                                    <!-- Month Input and View Button on the Right -->
+
+                                    <div class="col-auto ms-auto">
+                                        <form action="" method="post">
+                                            <div class="input-group">
+                                                <input
+                                                    name="month"
+                                                    type="month"
+                                                    size="4"
+                                                    class="form-control"
+                                                    value="<?php if (isset($_POST['view_month'])) {
+                                                                echo $_POST['month'];
+                                                            } elseif (isset($_POST['view_name']) || isset($_POST['view_reg']) || isset($_POST['view_class'])) {
+                                                                echo "";
+                                                            } else {
+                                                                echo date('Y') . '-' . date('m');
+                                                            } ?>"
+                                                    placeholder="Example input"
+                                                    aria-label="Example input"
+                                                    aria-describedby="button-addon1" required />
+                                                <button name="view_month" class="btn btn-sm btn-primary button" type="submit" id="button-addon1">
+                                                    View
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- </br> -->
+
                         <br>
                         <!-- Primary Color Bordered Table -->
                         <table class="table table-bordered border-primary">
@@ -62,17 +197,35 @@ if ($_SESSION['login_access'] == 'developer' || $_SESSION['login_access'] == 'ac
                                     <th scope="col">Month</th>
                                     <th scope="col">Paid Amount</th>
                                     <th scope="col">Dues</th>
-                                    <th scope="col">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
                                 // the students who have paid fee
-                                $year = date('Y');
-                                $month = date('F');
-                                $query = "SELECT * FROM student_fee INNER JOIN student_profile ON ";
-                                $query .= "student_fee.fk_student_id=student_profile.student_id ";
-                                $query .= "WHERE fee_status='paid' AND year='$year' AND month='$month'";
+                                if (isset($_POST['view_month'])) {
+                                    $date = $_POST['month'] . '-01';
+                                    $year = date('Y', strtotime($date));
+                                    $month = date('F', strtotime($date));
+                                    $query = "SELECT * FROM student_fee INNER JOIN student_profile ON ";
+                                    $query .= "student_fee.fk_student_id=student_profile.student_id ";
+                                    $query .= "WHERE fee_status='paid' AND year='$year' AND month='$month'";
+                                } elseif (isset($_POST['view_name'])) {
+                                    $name = $_POST['name'];
+                                    $query = "SELECT * FROM student_fee INNER JOIN student_profile ON ";
+                                    $query .= "student_fee.fk_student_id=student_profile.student_id ";
+                                    $query .= "WHERE name LIKE '%$name%' AND fee_status='paid' ORDER BY fee_id DESC";
+                                } elseif (isset($_POST['view_reg'])) {
+                                    $roll_no = $_POST['reg'];
+                                    $query = "SELECT * FROM student_fee INNER JOIN student_profile ON ";
+                                    $query .= "student_fee.fk_student_id=student_profile.student_id ";
+                                    $query .= "WHERE roll_no='$roll_no' AND fee_status='paid' ORDER BY fee_id DESC";
+                                } else {
+                                    $year = date('Y');
+                                    $month = date('F');
+                                    $query = "SELECT * FROM student_fee INNER JOIN student_profile ON ";
+                                    $query .= "student_fee.fk_student_id=student_profile.student_id ";
+                                    $query .= "WHERE fee_status='paid' AND year='$year' AND month='$month'";
+                                }
                                 $result = query($query);
                                 while ($row = mysqli_fetch_assoc($result)) {
                                 ?>
@@ -94,12 +247,6 @@ if ($_SESSION['login_access'] == 'developer' || $_SESSION['login_access'] == 'ac
                                         </td>
                                         <td>
                                             <?php echo $row['pending_dues']; ?>
-                                        </td>
-                                        <td>
-                                            <!-- <form action="generate-pdf.php">
-                                                input
-                                            </form> -->
-                                            <a href="generate-pdf.php?generate=on">Generate</a>
                                         </td>
                                     </tr>
                                 <?php
