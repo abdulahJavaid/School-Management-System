@@ -31,7 +31,27 @@ if ($_SESSION['login_access'] == 'developer' || $_SESSION['login_access'] == 'ac
                     <div class="card-body">
                         <h5 class="card-title">Students who paid fees</h5>
                         <!-- <p>Add <code>.table-bordered</code> for borders on all sides of the table and cells.</p> -->
-
+                        <div class="d-flex justify-content-end">
+    <div class="input-group w-auto">
+        <!-- <select name="" id="" class="form-select" 
+        aria-describedby="button-addon1">
+            <option value=""><?php // echo date('Y') .', ' . date('F') ?></option>
+        </select> -->
+        <input
+          type="month"
+          size="4"
+          class="form-control"
+          value="<?php echo date('Y') .'-' . date('m') ?>"
+          placeholder="Example input"
+          aria-label="Example input"
+          aria-describedby="button-addon1"
+        />
+        <button data-mdb-button-init data-mdb-ripple-init class="btn btn-sm btn-primary button" type="submit" id="button-addon1" data-mdb-ripple-color="dark">
+            View
+        </button>
+    </div>
+</div>
+                        <br>
                         <!-- Primary Color Bordered Table -->
                         <table class="table table-bordered border-primary">
                             <thead>
@@ -48,9 +68,11 @@ if ($_SESSION['login_access'] == 'developer' || $_SESSION['login_access'] == 'ac
                             <tbody>
                                 <?php
                                 // the students who have paid fee
+                                $year = date('Y');
+                                $month = date('F');
                                 $query = "SELECT * FROM student_fee INNER JOIN student_profile ON ";
                                 $query .= "student_fee.fk_student_id=student_profile.student_id ";
-                                $query .= "WHERE fee_status='paid' OR fee_status='dues'";
+                                $query .= "WHERE fee_status='paid' AND year='$year' AND month='$month'";
                                 $result = query($query);
                                 while ($row = mysqli_fetch_assoc($result)) {
                                 ?>

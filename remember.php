@@ -43,42 +43,7 @@
 // echo $exp;
 // echo ' '.$rec;
 
-
-
-
-?>
-
-
-
-
-
-
-<?php
-// 
-    $class1 = "10";
-    $class2 = "9";
-    $name1 = "Hamza";
-    $name2 = "Ali";
-    $address1 = "Gujranwala";
-    $address2 = "Lahore";
-
-
-
-    if($class2 == "8"){
-        if($name2 == "Ali"){
-            if($address2 = "Lahore"){
-                echo "<h1>Welcome " . $name2 . "</h1>";
-            }
-        }
-
-    }elseif($class1 == "10"){
-        if($name1 == "Hamza"){
-            if($address1 = "Gujranwala"){
-                echo "<h1>Welcome " . $name1 . "</h1>";
-            }
-        }
-
-    }
+echo $month = date('F');
 
 
 ?>
