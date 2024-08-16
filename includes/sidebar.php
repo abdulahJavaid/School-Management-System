@@ -11,7 +11,8 @@
 
     <li class="nav-item">
       <a class="nav-link collapsed" data-bs-target="#components-nav" href="school-profile.php"> <!-- data-bs-toggle="collapse" -->
-        <i class=""><img src="images/schoolprofile1.jpeg" width="30px" height="30px" alt=""></i><span>School Profile</span>
+        <i class=""><img src="images/schoolprofile1.jpeg" width="30px" height="30px" alt=""></i>
+        <span>School Profile</span>
         <!-- <i class="bi bi-chevron-down ms-auto"></i> -->
       </a>
     </li><!-- End School Profile Sidebar -->
@@ -21,8 +22,16 @@
     ?>
 
       <li class="nav-item">
+        <a class="nav-link" data-bs-target="#component," href="./student-migration.php"> <!-- data-bs-toggle="collapse" -->
+          <i class=""><img src="images/schoolprofile1.jpeg" width="30px" height="30px" alt=""></i>
+          <span>Student Migration</span>
+        </a>
+      </li><!-- End student migration tab -->
+
+      <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#profiling" data-bs-toggle="collapse" href="#">
-          <i class=""><img src="images/profile.jpeg" width="30px" height="30px" alt=""></i><span>Profiles</span>
+          <i class=""><img src="images/profile.jpeg" width="30px" height="30px" alt=""></i>
+          <span>Profiles</span>
           <i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="profiling" class="nav-content collapse " data-bs-parent="#sidebar-nav">
@@ -37,13 +46,6 @@
             </a>
         </ul>
       </li><!-- End student and staff profiles -->
-
-
-      <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#components-nav" href="student-migration.php"> <!-- data-bs-toggle="collapse" -->
-          <i class=""><img src="images/schoolprofile1.jpeg" width="30px" height="30px" alt=""></i><span>Student Migration</span>
-        </a>
-      </li><!-- End student migration tab -->
 
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#chart-nav" data-bs-toggle="collapse" href="#">
@@ -111,7 +113,7 @@
             </a>
           </li>
           <li>
-            <a href="">
+            <a href="fee-dues.php">
               <i class="bi bi-arrow-right"></i><span>Students - pending dues</span>
             </a>
           </li>
