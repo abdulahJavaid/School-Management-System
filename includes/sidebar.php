@@ -21,6 +21,13 @@
     if ($_SESSION['login_access'] == 'developer' || $_SESSION['login_access'] == 'profiler' || $_SESSION['login_access'] == 'super') {
     ?>
 
+<li class="nav-item">
+        <a class="nav-link" data-bs-target="#component," href="./add-subjects.php"> <!-- data-bs-toggle="collapse" -->
+          <i class=""><img src="images/schoolprofile1.jpeg" width="30px" height="30px" alt=""></i>
+          <span>Add subjects</span>
+        </a>
+      </li>
+
       <li class="nav-item">
         <a class="nav-link" data-bs-target="#component," href="./student-migration.php"> <!-- data-bs-toggle="collapse" -->
           <i class=""><img src="images/schoolprofile1.jpeg" width="30px" height="30px" alt=""></i>
@@ -48,7 +55,7 @@
       </li><!-- End student and staff profiles -->
 
       <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#chart-nav" data-bs-toggle="collapse" href="#">
+        <a class="nav-link collapsed" data-bs-target="#chart-nav" data-bs-toggle="collapse" href="">
           <i class=><img src="images/timeable.png" width="30px" height="30px" alt=""></i><span>Time Table/Schedules</span>
           <i class="bi bi-chevron-down ms-auto"></i>
         </a>
