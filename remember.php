@@ -43,7 +43,33 @@
 // echo $exp;
 // echo ' '.$rec;
 
-echo $month = date('F');
+// echo $month = date('F');
+
+if(isset($_POST['view_month'])){
+    $date = $_POST['view'] . '-01';
+    echo date('Y', strtotime($date));
+
+}
 
 
 ?>
+
+
+<form action="" method="post">
+                        <div class="d-flex justify-content-end">
+                            <div class="input-group w-auto">
+                                <input
+                                    name="view"
+                                    type="month"
+                                    size="4"
+                                    class="form-control"
+                                    value="<?php echo date('Y') . '-' . date('m') ?>"
+                                    placeholder="Example input"
+                                    aria-label="Example input"
+                                    aria-describedby="button-addon1" />
+                                <button name="view_month" data-mdb-button-init data-mdb-ripple-init class="btn btn-sm btn-primary button" type="submit" id="button-addon1" data-mdb-ripple-color="dark">
+                                    View
+                                </button>
+                            </div>
+                        </div>
+                        </form>

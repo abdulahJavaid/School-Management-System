@@ -37,8 +37,8 @@ if ($_SESSION['login_access'] == 'developer' || $_SESSION['login_access'] == 'ac
                         ?>
 
                             <form action="generate-pdf.php" method="post">
-                                <input type="hidden" name="name" value="<?php echo $_POST['name']; ?>">
-                                <button name="generate_name" class="btn btn-sm btn-primary button" type="submit" id="button-addon1">
+                                <input type="hidden" name="due_name" value="<?php echo $_POST['name']; ?>">
+                                <button name="dues_name" class="btn btn-sm btn-primary button" type="submit" id="button-addon1">
                                     Generate Pdf
                                 </button>
                             </form>
@@ -47,18 +47,19 @@ if ($_SESSION['login_access'] == 'developer' || $_SESSION['login_access'] == 'ac
                         ?>
 
                             <form action="generate-pdf.php" method="post">
-                                <input type="hidden" name="roll_no" value="<?php echo $_POST['reg']; ?>">
-                                <button name="generate_reg" class="btn btn-sm btn-primary button" type="submit" id="button-addon1">
+                                <input type="hidden" name="due_roll_no" value="<?php echo $_POST['reg']; ?>">
+                                <button name="dues_reg" class="btn btn-sm btn-primary button" type="submit" id="button-addon1">
                                     Generate Pdf
                                 </button>
                             </form>
                         <?php
                         } elseif (isset($_POST['view_month'])) {
+                            $date = $_POST['month'] . '-01';
                         ?>
 
                             <form action="generate-pdf.php" method="post">
-                                <input type="hidden" name="month">
-                                <button name="generate_month" class="btn btn-sm btn-primary button" type="submit" id="button-addon1">
+                                <input type="hidden" name="due_month" value="<?php echo $date; ?>">
+                                <button name="dues_month" class="btn btn-sm btn-primary button" type="submit" id="button-addon1">
                                     Generate Pdf
                                 </button>
                             </form>
@@ -67,8 +68,8 @@ if ($_SESSION['login_access'] == 'developer' || $_SESSION['login_access'] == 'ac
                         ?>
 
                             <form action="generate-pdf.php" method="post">
-                                <input type="hidden" name="current" value="not-empty">
-                                <button name="current_month" class="btn btn-sm btn-primary button" type="submit" id="button-addon1">
+                                <input type="hidden" name="due_current" value="not-empty">
+                                <button name="dues_current_month" class="btn btn-sm btn-primary button" type="submit" id="button-addon1">
                                     Generate Pdf
                                 </button>
                             </form>
@@ -92,7 +93,7 @@ if ($_SESSION['login_access'] == 'developer' || $_SESSION['login_access'] == 'ac
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Students who paid fees</h5>
+                        <h5 class="card-title">Students with pending dues</h5>
                         <div class="row">
                             <div class="container">
                                 <div class="row align-items-center">
@@ -151,6 +152,8 @@ if ($_SESSION['login_access'] == 'developer' || $_SESSION['login_access'] == 'ac
                                         </form>
                                     </div>
 
+
+
                                     <!-- Month Input and View Button on the Right -->
 
                                     <div class="col-auto ms-auto">
@@ -206,23 +209,23 @@ if ($_SESSION['login_access'] == 'developer' || $_SESSION['login_access'] == 'ac
                                     $month = date('F', strtotime($date));
                                     $query = "SELECT * FROM student_fee INNER JOIN student_profile ON ";
                                     $query .= "student_fee.fk_student_id=student_profile.student_id ";
-                                    $query .= "WHERE fee_status='paid' AND year='$year' AND month='$month'";
+                                    $query .= "WHERE fee_status='dues' AND year='$year' AND month='$month'";
                                 } elseif (isset($_POST['view_name'])) {
                                     $name = $_POST['name'];
                                     $query = "SELECT * FROM student_fee INNER JOIN student_profile ON ";
                                     $query .= "student_fee.fk_student_id=student_profile.student_id ";
-                                    $query .= "WHERE name LIKE '%$name%' AND fee_status='paid' ORDER BY fee_id DESC";
+                                    $query .= "WHERE name LIKE '%$name%' AND fee_status='dues' ORDER BY fee_id DESC";
                                 } elseif (isset($_POST['view_reg'])) {
                                     $roll_no = $_POST['reg'];
                                     $query = "SELECT * FROM student_fee INNER JOIN student_profile ON ";
                                     $query .= "student_fee.fk_student_id=student_profile.student_id ";
-                                    $query .= "WHERE roll_no='$roll_no' AND fee_status='paid' ORDER BY fee_id DESC";
+                                    $query .= "WHERE roll_no='$roll_no' AND fee_status='dues' ORDER BY fee_id DESC";
                                 } else {
                                     $year = date('Y');
                                     $month = date('F');
                                     $query = "SELECT * FROM student_fee INNER JOIN student_profile ON ";
                                     $query .= "student_fee.fk_student_id=student_profile.student_id ";
-                                    $query .= "WHERE fee_status='paid' AND year='$year' AND month='$month'";
+                                    $query .= "WHERE fee_status='dues' AND year='$year' AND month='$month'";
                                 }
                                 $result = query($query);
                                 while ($row = mysqli_fetch_assoc($result)) {
