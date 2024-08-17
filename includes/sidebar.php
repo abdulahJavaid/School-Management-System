@@ -21,19 +21,20 @@
     if ($_SESSION['login_access'] == 'developer' || $_SESSION['login_access'] == 'profiler' || $_SESSION['login_access'] == 'super') {
     ?>
 
-<li class="nav-item">
-        <a class="nav-link" data-bs-target="#component," href="./add-subjects.php"> <!-- data-bs-toggle="collapse" -->
+<!-- <li class="nav-item">
+        <a class="nav-link" data-bs-target="#component," href="./add-subjects.php"> data-bs-toggle="collapse"
           <i class=""><img src="images/schoolprofile1.jpeg" width="30px" height="30px" alt=""></i>
           <span>Add subjects</span>
         </a>
       </li>
 
       <li class="nav-item">
-        <a class="nav-link" data-bs-target="#component," href="./student-migration.php"> <!-- data-bs-toggle="collapse" -->
+        <a class="nav-link" data-bs-target="#component," href="./student-migration.php"> data-bs-toggle="collapse"
           <i class=""><img src="images/schoolprofile1.jpeg" width="30px" height="30px" alt=""></i>
           <span>Student Migration</span>
         </a>
-      </li><!-- End student migration tab -->
+      </li> -->
+      <!-- End student migration tab -->
 
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#profiling" data-bs-toggle="collapse" href="#">

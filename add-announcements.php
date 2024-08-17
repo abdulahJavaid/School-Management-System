@@ -18,7 +18,8 @@
 <?php
 if(isset($_POST['submit'])){
     $notice_description= $_POST['notice_description'];
-    $query="INSERT INTO notices(notice_description) VALUES('$notice_description')";
+    $t_date = date('Y-m-d', time());
+    $query="INSERT INTO notices(notice_description, notice_date) VALUES('$notice_description', '$t_date')";
     $result = mysqli_query($conn,$query);
     if ($result){
         echo "data has been successfully inserted";

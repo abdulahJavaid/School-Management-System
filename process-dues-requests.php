@@ -39,10 +39,10 @@ if (isset($_POST['reject']) && !empty($_POST['rejection_reason'])) {
     $message = "Please add dues rejection reason!";
 }
 
-// fee with dues
+// process dues
 if (isset($_POST['clear_dues']) && !empty($_POST['dues_amount'])) {
     $total_paid = (int) $_POST['dues_amount'];
-    $paid_amount = $total_dues;
+    $paid_amount = $_POST['dues_amount'];
     $std_id = $_POST['student_id'];
     $query = "SELECT * FROM student_fee WHERE fk_student_id='$std_id' ";
     $query .= "AND fee_status LIKE '%due%'";
@@ -64,18 +64,16 @@ if (isset($_POST['clear_dues']) && !empty($_POST['dues_amount'])) {
         $result = query($q);
     }
     // if ($rs1) {
-    //     $date = date('Y-m-d', time());
-    //     $name = $_POST['student_name'];
-    //     $reg = $_POST['roll_no'];
-    //     $fee = $_POST['monthly_fee'];
-    //     $paid = (int) $fee - (int) $dues;
-    //     $comment = "Student $name, reg# $reg paid fee amount Rs.$paid with pending dues Rs.$dues (Monthly Fee)";
-    //     $qer = "INSERT INTO expense_receiving (comment, expense, receiving, date) ";
-    //     $qer .= "VALUES ('$comment', '0', '$paid', '$date')";
-    //     $res = query($qer);
-    //     if ($res) {
+        $date = date('Y-m-d', time());
+        $name = $_POST['name'];
+        $reg = $_POST['roll_no'];
+        $comment = "Student $name, reg# $reg paid dues amount Rs.$paid_amount (Pending Dues)";
+        $qer = "INSERT INTO expense_receiving (comment, expense, receiving, date) ";
+        $qer .= "VALUES ('$comment', '0', '$paid_amount', '$date')";
+        $res = query($qer);
+        if ($res) {
             redirect("./dues-requests.php");
-    //     }
+        }
     // }
 } elseif (isset($_POST['clear_dues']) && empty($_POST['dues_amount'])) {
     $message = "Please add the amount (Rs.) that student paid";
@@ -169,9 +167,9 @@ if (isset($_POST['clear_dues']) && !empty($_POST['dues_amount'])) {
                                     <input type="hidden" name="due_request_id" value="<?php echo $rows['fee_id']; ?>">
                                     <input type="hidden" name="student_id" value="<?php echo $row['student_id']; ?>">
                                     <input type="hidden" name="total_dues" value="<?php echo $total_dues; ?>">
-                                    <!-- <input type="hidden" name="roll_no" value="<?php //echo $rows['roll_no']; 
-                                                                                ?>" id="">
-                                    <input type="hidden" name="monthly_fee" value="<?php //echo $rows['monthly_fee']; 
+                                    <input type="hidden" name="roll_no" value="<?php echo $row['roll_no']; ?>">
+                                    <input type="hidden" name="name" value="<?php echo $row['name']; ?>">
+                                    <!-- <input type="hidden" name="monthly_fee" value="<?php //echo $rows['monthly_fee']; 
                                                                                     ?>" id="">
                                     <input type="hidden" name="year" value="<?php //echo $rows['year']; 
                                                                             ?>" id="">

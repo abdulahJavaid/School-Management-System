@@ -461,7 +461,7 @@ h6 {
   list-style: none;
 }
 
-.header-nav>ul {
+.header-nav > ul {
   margin: 0;
   padding: 0;
 }
@@ -630,7 +630,6 @@ h6 {
 }
 
 @media (min-width: 1200px) {
-
   #main,
   #footer {
     margin-left: 300px;
@@ -644,7 +643,6 @@ h6 {
 }
 
 @media (min-width: 1200px) {
-
   .toggle-sidebar #main,
   .toggle-sidebar #footer {
     margin-left: 0;
@@ -883,7 +881,7 @@ h6 {
 }
 
 /* News & Updates */
-.dashboard .news .post-item+.post-item {
+.dashboard .news .post-item + .post-item {
   margin-top: 15px;
 }
 
@@ -1149,7 +1147,7 @@ h6 {
   padding: 12px 15px;
 }
 
-.contact .php-email-form button[type=submit] {
+.contact .php-email-form button[type="submit"] {
   background: #4154f1;
   border: 0;
   padding: 10px 30px;
@@ -1158,7 +1156,7 @@ h6 {
   border-radius: 4px;
 }
 
-.contact .php-email-form button[type=submit]:hover {
+.contact .php-email-form button[type="submit"]:hover {
   background: #5969f3;
 }
 
@@ -1266,29 +1264,138 @@ h6 {
   color: white;
 }
 
-.button{
-	background: #2193b0;
-	color: white;
-	/* border-radius: 10px; */
-	border-color: #2193b0;
-	
+.button {
+  background: #2193b0;
+  color: white;
+  /* border-radius: 10px; */
+  border-color: #2193b0;
 }
 .msg {
-  background: #6dd5ed!important;
+  background: #6dd5ed !important;
   border-radius: 20%;
 }
 .inpt {
-  background-color: #cadcfc!important;
+  background-color: #cadcfc !important;
 }
 .inpt-1 {
-  background-color: #e2ecfd!important;
+  background-color: #e2ecfd !important;
+}
+
+/* 
+CSS for the progress report page
+*/
+/* Global Page Background */
+.pro-bg-gradient {
+  background: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
+  min-height: 100vh;
+  padding: 20px;
+}
+
+/* Custom Card Styling */
+.pro-card {
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  border-radius: 20px;
+  border: none;
+  background: white;
+  overflow: hidden;
+}
+.pro-card:hover {
+  transform: translateY(-12px);
+  box-shadow: 0 15px 25px rgba(0, 0, 0, 0.2);
+}
+
+/* Glow Effect on Hover */
+.pro-card:hover .pro-glow {
+  box-shadow: 0 0 15px rgba(0, 123, 255, 0.5);
+}
+
+/* Gradient Background for Headers */
+.pro-card-header {
+  /* background: linear-gradient(135deg, #6dd5ed, #2193b0); */
+  background: linear-gradient(135deg, #9fa6b2, #332d2d);
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  border-radius: 20px 20px 0 0;
+}
+
+/* Card Header Icon */
+.pro-header-icon {
+  font-size: 24px;
+  margin-right: 10px;
+}
+
+/* Custom Icon Styling */
+.pro-icon {
+  transition: color 0.4s ease;
+}
+.pro-card:hover .pro-icon {
+  color: #9fa6b2;
+}
+
+/* Progress Bar Styling */
+.pro-progress {
+  background-color: #e9ecef;
+  border-radius: 15px;
+}
+.pro-progress-bar {
+  border-radius: 15px;
+  animation: loadProgress 2s ease-out forwards;
+}
+
+/* Keyframe for Progress Bar Animation */
+@keyframes loadProgress {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+/* Custom Text Styling */
+.pro-text-shadow {
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+  color: #333;
+}
+
+/* Button Styling */
+.pro-card-button {
+  background-color: #00c851;
+  color: white;
+  transition: background-color 0.3s ease;
+  border: none;
+  border-radius: 50px;
+  padding: 10px 20px;
+  font-weight: bold;
+}
+.pro-card-button:hover {
+  background-color: #007bff;
+}
+
+/* Subtle Border and Text Shadows */
+.pro-card,
+.pro-card-header {
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive Text Sizes */
+@media (max-width: 768px) {
+  .pro-card-header h5 {
+    font-size: 1.25rem;
+  }
+  .pro-card-body h6 {
+    font-size: 1rem;
+  }
 }
 
 /* 
 Code for showing radio buttons as nice checkbox buttons
 */
 
-.raadio_c[type="radio"]{
+.raadio_c[type="radio"] {
   appearance: none;
   border: 1px solid #d3d3d3;
   width: 30px;
@@ -1300,18 +1407,18 @@ Code for showing radio buttons as nice checkbox buttons
 }
 
 .raadio_c[type="radio"]:checked {
- appearance: none;
- outline: none;
- padding: 0;
- content: none;
- border: none;
+  appearance: none;
+  outline: none;
+  padding: 0;
+  content: none;
+  border: none;
 }
 
-.raadio_c[type="radio"]:checked::before{
- position: absolute;
- color: green !important;
- content: "\00A0\2713\00A0" !important;
- border: 1px solid #d3d3d3;
- font-weight: bolder;
- font-size: 21px;
+.raadio_c[type="radio"]:checked::before {
+  position: absolute;
+  color: green !important;
+  content: "\00A0\2713\00A0" !important;
+  border: 1px solid #d3d3d3;
+  font-weight: bolder;
+  font-size: 21px;
 }

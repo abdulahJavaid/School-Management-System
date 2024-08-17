@@ -34,9 +34,10 @@
   <link href="assets/vendor/quill/quill.bubble.css" rel="stylesheet">
   <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
   <link href="assets/vendor/simple-datatables/style.css" rel="stylesheet">
-
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<!-- 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> -->
 
 
 
@@ -226,14 +227,14 @@
 
         <li class="nav-item dropdown pe-3">
 
-          <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown" >  <!-- includes/logout.php?get=yes-->
+          <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-target="#profile-drop" data-bs-toggle="dropdown" >  <!-- includes/logout.php?get=yes-->
             <img src="assets/img/school-profile-image.jpg" alt="Profile" class="rounded-circle">
             <!-- <i class="bi bi-box-arrow-right"></i> -->
             <span class="d-none d-md-block ps-2">Profile&nbsp;</span>
             <i class="bi bi-chevron-down"></i>
           </a><!-- End Profile Iamge Icon -->
 
-          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+          <ul id="profile-drop" class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
               <h6>Allied School</h6>
               <span></span>
@@ -286,33 +287,3 @@
     </nav><!-- End Icons Navigation -->
 
   </header><!-- End Header -->
-
-<?php
-
-//     for($i = 8; $i < 13; $i++){
-//       for($j = 0; $j < 5; $j++){
-//         for($l = 1; $l < 31; $l++){
-//           $arr = ['A', 'B', 'C', 'D', 'E'];
-//     $name = 'name ' . $l;
-//     $cnic = 'cnic ' . $l;
-//     $f_name = 'f_name ' . $l;
-//     $phone_no = 'phone_no ' . $l;
-//     $class = $i;
-//     $section =  $arr[$j];
-//     $dob = date(time());
-//     $address = 'address ' . $l;
-//     $issue_code = 'issue_code ' . $l;
-//     $password = 'password ' . $l;
-
-//     $query = "INSERT INTO student_profile(name, cnic, f_name, phone_no, class, section, dob, address, issue_code, password) 
-// VALUES('$name', '$cnic', '$f_name', '$phone_no', '$class', '$section', '$dob', '$address', '$issue_code', '$password')";
-//     $result = mysqli_query($conn, $query);
-//     if ($result) {
-//         echo "data has been successfully inserted";
-//     } else {
-//         echo "Error: " . mysqli_error($conn);
-//     }
-//   }
-//   }
-//   }
-    ?>

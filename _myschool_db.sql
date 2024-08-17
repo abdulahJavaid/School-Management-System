@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 17, 2024 at 12:45 PM
+-- Generation Time: Aug 17, 2024 at 07:20 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -333,7 +333,11 @@ INSERT INTO `expense_receiving` (`er_id`, `image`, `comment`, `expense`, `receiv
 (51, '', 'Student Misbah, reg# 261 paid full fee amount Rs.6000 (Monthly Fee)', '0', '6000', '2024-08-13'),
 (52, '', 'Student Mateen Malik, reg# 262 paid full fee amount Rs.6000 (Monthly Fee)', '0', '6000', '2024-08-13'),
 (53, '', 'Student Wahab Gujjar, reg# 263 paid fee amount Rs.5300 with pending dues Rs.700 (Monthly Fee)', '0', '5300', '2024-08-13'),
-(54, '', 'Student Muhammad Amir, reg# 265 paid fee amount Rs.5600 with pending dues Rs.400 (Monthly Fee)', '0', '5600', '2024-08-13');
+(54, '', 'Student Muhammad Amir, reg# 265 paid fee amount Rs.5600 with pending dues Rs.400 (Monthly Fee)', '0', '5600', '2024-08-13'),
+(56, '', 'Student Aqib Jutt, reg# 245 paid dues amount Rs.200 (Pending Dues)', '0', '200', '2024-08-17'),
+(57, '', 'Student Asif Butt, reg# 266 paid full fee amount Rs.6000 (Monthly Fee)', '0', '6000', '2024-08-17'),
+(58, '', 'Student Rizwan Malik, reg# 258 paid dues amount Rs.1500 (Pending Dues)', '0', '1500', '2024-08-17'),
+(59, '', 'Student Rizwan Malik, reg# 258 paid dues amount Rs.2000 (Pending Dues)', '0', '2000', '2024-08-17');
 
 -- --------------------------------------------------------
 
@@ -348,6 +352,18 @@ CREATE TABLE `homework_diary` (
   `subject_diary` text NOT NULL,
   `date` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `homework_diary`
+--
+
+INSERT INTO `homework_diary` (`homework_id`, `fk_section_id`, `subject`, `subject_diary`, `date`) VALUES
+(1, 16, 'English', 'Read Chapter 2 - tomorrow will be a dictation test.', '2024-08-16'),
+(2, 16, 'Math', 'Do all the remaining questions of Exercise#4.2', '2024-08-16'),
+(3, 16, 'Islamiat', 'Learn the first 3 Surahs of chapter#3', '2024-08-16'),
+(4, 16, 'Urdu', 'Test of chapter 5', '2024-08-16'),
+(5, 16, 'History', 'Search and write an essay on British India', '2024-08-16'),
+(6, 16, 'Science', 'Write Exercise of Chapter#4', '2024-08-16');
 
 -- --------------------------------------------------------
 
@@ -369,7 +385,8 @@ CREATE TABLE `notices` (
 --
 
 INSERT INTO `notices` (`notice_id`, `fk_student_id`, `notice_description`, `notice_status`, `notice_date`, `mark_read`) VALUES
-(1, 0, 'This is notice', 'glob', '2024-08-15', 0);
+(2, 0, 'this is notice', 'school', '0000-00-00', 0),
+(3, 0, 'This is ugly Faizan', 'school', '2024-08-17', 0);
 
 -- --------------------------------------------------------
 
@@ -518,12 +535,18 @@ CREATE TABLE `progress_report` (
 --
 
 INSERT INTO `progress_report` (`progress_id`, `fk_student_id`, `subject`, `progress_grade`, `date`) VALUES
-(5, 1, '', 'A stu', '2024-08-06'),
-(6, 2, '', 'A stu', '2024-08-06'),
-(7, 1, '', 'A stu', '2024-08-06'),
-(8, 2, '', 'A stu', '2024-08-06'),
-(9, 4, '', 'A stu', '2024-08-02'),
-(10, 4, '', 'A stu', '2024-08-02');
+(1, 15, 'Math', 'A', '2024-08-02'),
+(2, 15, 'English', 'B', '2024-08-05'),
+(3, 15, 'History', 'C', '2024-08-07'),
+(4, 15, 'Urdu', 'A', '2024-08-06'),
+(5, 15, 'Islamiat', 'B', '2024-08-07'),
+(6, 15, 'Science', 'C', '2024-08-04'),
+(7, 15, 'Math', 'A', '2024-08-13'),
+(8, 15, 'English', 'B', '2024-08-12'),
+(9, 15, 'History', 'B', '2024-08-10'),
+(10, 15, 'Urdu', 'B', '2024-08-12'),
+(11, 15, 'Islamiat', 'C', '2024-08-13'),
+(12, 15, 'Science', 'B', '2024-08-14');
 
 -- --------------------------------------------------------
 
@@ -653,7 +676,7 @@ INSERT INTO `student_fee` (`fee_id`, `fk_student_id`, `year`, `month`, `fee_meth
 (15, 18, '2024', 'August', '', '', '4500', '2024-08-20', '0000-00-00', 'dues', 300, 'hehe'),
 (16, 21, '2024', 'August', '', '', '5000', '2024-08-20', '0000-00-00', 'dues', 1000, 'hehe'),
 (17, 23, '2024', 'August', '', '', '5000', '2024-08-20', '0000-00-00', 'dues', 1000, 'hehe'),
-(18, 26, '2024', 'August', '', '', '5500', '2024-08-20', '0000-00-00', 'dues', 500, 'hehe'),
+(18, 26, '2024', 'August', '', '', '5500', '2024-08-20', '0000-00-00', 'paid', 0, 'hehe'),
 (19, 37, '2024', 'August', 'cash', '', '7000', '2024-08-20', '2024-08-20', 'paid', 0, ''),
 (20, 1, '2024', 'August', 'cash', '', '1500', '2024-08-20', '2024-08-14', 'paid', 0, ''),
 (21, 2, '2024', 'August', '', '', '1500', '2024-08-20', '0000-00-00', 'dues', 50, 'hehe'),
@@ -681,7 +704,7 @@ INSERT INTO `student_fee` (`fee_id`, `fk_student_id`, `year`, `month`, `fee_meth
 (43, 31, '2024', 'August', '', '', '6000', '2024-08-20', '0000-00-00', 'dues', 700, 'hehe'),
 (44, 32, '2024', 'August', '', '', '6000', '2024-08-20', '0000-00-00', 'dues', 1000, 'hehe'),
 (45, 33, '2024', 'August', '', '', '6000', '2024-08-20', '0000-00-00', 'dues', 400, 'hehe'),
-(46, 34, '2024', 'August', 'cash', '', '6000', '2024-08-20', '2024-08-19', 'fee_request', 0, ''),
+(46, 34, '2024', 'August', 'cash', '', '6000', '2024-08-20', '2024-08-19', 'paid', 0, ''),
 (47, 35, '2024', 'August', 'cash', '', '6000', '2024-08-20', '2024-08-14', 'fee_request', 0, ''),
 (48, 36, '2024', 'August', 'cash', '', '6000', '2024-08-20', '2024-08-18', 'fee_request', 0, ''),
 (49, 38, '2024', 'August', 'cash', '', '7000', '2024-08-20', '2024-08-12', 'fee_request', 0, ''),
@@ -696,10 +719,10 @@ INSERT INTO `student_fee` (`fee_id`, `fk_student_id`, `year`, `month`, `fee_meth
 (58, 39, '2024', 'June', '', '', '7000', '2024-06-20', '0000-00-00', 'dues', 3000, 'hehe'),
 (59, 39, '2024', 'May', '', '', '7000', '2024-05-20', '0000-00-00', 'dues', 5000, 'hehe'),
 (60, 39, '2024', 'April', '', '', '7000', '2024-04-20', '0000-00-00', 'dues', 2000, 'hehe'),
-(61, 26, '2024', 'July', '', '', '5500', '2024-07-20', '0000-00-00', 'dues', 2500, 'hehe'),
-(62, 26, '2024', 'June', '', '', '5500', '2024-06-20', '0000-00-00', 'dues', 4000, 'hehe'),
-(63, 13, '2024', 'July', 'cash', '', '4000', '2024-07-20', '2024-08-06', 'paid', 0, 'hoooha'),
-(64, 13, '2024', 'June', '', '', '4000', '2024-06-20', '0000-00-00', 'paid', 0, 'hoooha');
+(61, 26, '2024', 'July', 'cash', '', '5500', '2024-07-20', '2024-08-07', 'paid', 0, 'hehe'),
+(62, 26, '2024', 'June', '', '', '5500', '2024-06-20', '0000-00-00', 'dues', 3500, 'hehe'),
+(63, 13, '2024', 'July', 'cash', '', '4000', '2024-07-20', '2024-08-06', 'dues', 800, 'hoooha'),
+(64, 13, '2024', 'June', '', '', '4000', '2024-06-20', '0000-00-00', 'dues', 2500, 'hoooha');
 
 -- --------------------------------------------------------
 
@@ -1019,19 +1042,19 @@ ALTER TABLE `exam_schedule`
 -- AUTO_INCREMENT for table `expense_receiving`
 --
 ALTER TABLE `expense_receiving`
-  MODIFY `er_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=55;
+  MODIFY `er_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
 
 --
 -- AUTO_INCREMENT for table `homework_diary`
 --
 ALTER TABLE `homework_diary`
-  MODIFY `homework_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `homework_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `notices`
 --
 ALTER TABLE `notices`
-  MODIFY `notice_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `notice_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `periods`
@@ -1043,7 +1066,7 @@ ALTER TABLE `periods`
 -- AUTO_INCREMENT for table `progress_report`
 --
 ALTER TABLE `progress_report`
-  MODIFY `progress_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `progress_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `school_profile_`

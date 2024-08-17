@@ -76,3 +76,10 @@
         </div>
     </section>
 
+
+    
+</main><!-- End #main -->
+
+<!-- ======= Footer ======= -->
+<?php include_once("includes/footer.php"); ?>
+
