@@ -6,114 +6,87 @@
 <main id="main" class="main">
 
     <div class="pagetitle">
-        <h1>School Profile</h1>
+        <h1>Progress Reports</h1>
         <nav>
             <ol class="breadcrumb">
-                <!-- <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-      <li class="breadcrumb-item">Users</li> -->
                 <li class="breadcrumb-item active">School name here</li>
             </ol>
         </nav>
     </div><!-- End Page Title -->
 
     <div class="row">
-                            <div class="container">
-                                <div class="row align-items-center">
-                                    <!-- Name Button on the Left -->
-
-                                    <div class="col-auto">
-                                        <form action="" method="post">
-                                            <div class="input-group">
-                                                <input
-                                                    name="name"
-                                                    type="text"
-                                                    size="6"
-                                                    class="form-control"
-                                                    value="<?php
-                                                            if (isset($_POST['view_name'])) {
-                                                                echo $_POST['name'];
-                                                            } else {
-                                                                echo "";
-                                                            }
-                                                            ?>"
-                                                    placeholder="By name"
-                                                    aria-label="Example input"
-                                                    aria-describedby="button-addon2" required />
-                                                <button name="view_name" class="btn btn-sm btn-primary button" type="submit" id="button-addon2">
-                                                    View
-                                                </button>
-                                            </div>
-                                        </form>
-                                    </div>
-
-                                    
-
-
-                                    <!-- button position second -->
-
-                                    <div class="col-auto">
-                                        <form action="" method="post">
-                                            <div class="input-group">
-                                                <input
-                                                    name="reg"
-                                                    type="text"
-                                                    size="6"
-                                                    class="form-control"
-                                                    value="<?php
-                                                            if (isset($_POST['view_reg'])) {
-                                                                echo $_POST['reg'];
-                                                            } else {
-                                                                echo "";
-                                                            }
-                                                            ?>"
-                                                    placeholder="By reg#"
-                                                    aria-label="Example input"
-                                                    aria-describedby="button-addon3" required />
-                                                <button name="view_reg" class="btn btn-sm btn-primary button" type="submit" id="button-addon3">
-                                                    View
-                                                </button>
-                                            </div>
-                                        </form>
-                                    </div>
-
-                                    <!-- Month Input and View Button on the Right -->
-
-  <div class="col-auto">
-                                        <form action="" method="post">
-                                            <div class="input-group">
-                                                <input
-                                                    name="name"
-                                                    type="text"
-                                                    size="6"
-                                                    class="form-control"
-                                                    value="<?php
-                                                            if (isset($_POST['view_name'])) {
-                                                                echo $_POST['name'];
-                                                            } else {
-                                                                echo "";
-                                                            }
-                                                            ?>"
-                                                    placeholder="By name"
-                                                    aria-label="Example input"
-                                                    aria-describedby="button-addon2" required />
-                                                <button name="view_name" class="btn btn-sm btn-primary button" type="submit" id="button-addon2">
-                                                    View
-                                                </button>
-                                            </div>
-                                        </form>
-                                    </div>
-
-
-
-
-
-
-                                </div>
-                            </div>
-
+        <div class="container">
+            <!-- Row for Name and Reg# Inputs -->
+            <div class="row align-items-center">
+                <!-- Name Input and View Button -->
+                <div class="col-auto">
+                    <form action="" method="post">
+                        <div class="input-group mb-2">
+                            <input
+                                name="name"
+                                type="text"
+                                size="20"
+                                class="form-control"
+                                value="<?php echo isset($_POST['view_name']) ? $_POST['name'] : ''; ?>"
+                                placeholder="By name"
+                                aria-label="By name"
+                                aria-describedby="button-addon2"
+                                required />
+                            <button name="view_name" class="btn btn-sm btn-primary button" type="submit" id="button-addon2">
+                                View
+                            </button>
                         </div>
+                    </form>
+                </div>
 
-   
+                <!-- Reg# Input and View Button -->
+                <div class="col-auto">
+                    <form action="" method="post">
+                        <div class="input-group mb-2">
+                            <input
+                                name="reg"
+                                type="text"
+                                size="20"
+                                class="form-control"
+                                value="<?php echo isset($_POST['view_reg']) ? $_POST['reg'] : ''; ?>"
+                                placeholder="By reg#"
+                                aria-label="By reg#"
+                                aria-describedby="button-addon3"
+                                required />
+                            <button name="view_reg" class="btn btn-sm btn-primary button" type="submit" id="button-addon3">
+                                View
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Row for Date Input -->
+             <br>
+            <div class="row align-items-center">
+                <div class="col-auto">
+                    <form action="" method="post">
+                        <div class="input-group mb-2">
+                            <input
+                                name="date"
+                                type="text"
+                                size="20"
+                                class="form-control"
+                                value="<?php echo isset($_POST['view_date']) ? $_POST['date'] : ''; ?>"
+                                placeholder="By date"
+                                aria-label="By date"
+                                aria-describedby="button-addon4"
+                                required />
+                            <!-- <button name="view_date" class="btn btn-sm btn-primary button" type="submit" id="button-addon4">
+                                View
+                            </button> -->
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
 
 </main><!-- End #main -->
 
