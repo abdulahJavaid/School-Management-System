@@ -18,10 +18,6 @@
     <!-- class and sections -->
     <div class="pagetitle">
         <div class="row">
-            <?php
-            // $color = filter_input(INPUT_POST, 'color', FILTER_SANITIZE_STRING);
-
-            ?>
             <form action="" method="post">
                 <div class="col-md-4">
                     <select id="inputState" name="select" class="form-select">
@@ -56,7 +52,7 @@
                 </div>
             </form>
         </div>
-    </div><!-- End Page Title -->
+    </div><!-- End Select Student and add Student -->
 
     <section class="section profile">
         <div class="row">
@@ -97,56 +93,13 @@
                                     $section = (int) $section;
                                     $class = (int) $class;
 
-                                    // to fetch all related students
-                                    // $que = "SELECT * FROM student_class WHERE fk_section_id = $section AND fk_class_id = $class";
-                                    // $pass_que = mysqli_query($conn, $que);
-                                    // $res = mysqli_fetch_assoc($pass_que);
-                                    // $sec = $res['fk_section_id'];
-                                    // $clas = $res['fk_class_id'];
-
-                                    // $que2 = "SELECT section_name FROM class_sections WHERE section_id = $section";
-                                    // $pass_que2 = mysqli_query($conn, $que2);
-                                    // $res2 = mysqli_fetch_assoc($pass_que2);
-                                    // $_section = $res2['section_name'];
-                                    // $que3 = "SELECT class_name FROM all_classes WHERE class_id = $class";
-                                    // $pass_que3 = mysqli_query($conn, $que3);
-                                    // $res3 = mysqli_fetch_assoc($pass_que3);
-                                    // $_class = $res3['class_name'];
-
                                     $que = "SELECT * FROM all_classes ";
                                     $que .= "INNER JOIN class_sections ON all_classes.class_id = class_sections.fk_class_id ";
                                     $que .= "INNER JOIN student_class ON class_sections.section_id = student_class.fk_section_id ";
                                     $que .= "INNER JOIN student_profile ON student_class.fk_student_id = student_profile.student_id ";
                                     $que .= "WHERE class_id = '$class' AND section_id = '$section' AND status='1' AND student_status='1'";
-                                    // $que .= "student_class.fk_section_id = class_sections.section_id INNER JOIN all_classes ";
-                                    // $que .= "ON class_sections.fk_class_id = all_classes.class_id INNER JOIN student_profile ON ";
-                                    // $que .= "student_class.fk_student_id = student_profile.student_id";
-
-
-
-                                    // $table = 'student_profile';
-                                    // $val1 = $_POST['class'];
-                                    // $val2 = (string) $_POST['section'];
-                                    // $op1 = 'class';
-                                    // $op2 = 'section';
                                     $result = mysqli_query($conn, $que);
                                     while ($row = mysqli_fetch_assoc($result)) {
-                                        //     // to fetch student data
-                                        // $std = $row['fk_student_id'];
-                                        // $que1 = "SELECT * FROM student_profile WHERE student_id = $std";
-                                        // $pass_que1 = mysqli_query($conn, $que1);
-                                        // $res1 = mysqli_fetch_assoc($pass_que1);
-                                        // // getting the class
-                                        // $que2 = "SELECT * FROM all_classes WHERE class_id = $class";
-                                        // $pass_que2 = mysqli_query($conn, $que2);
-                                        // $res2 = mysqli_fetch_assoc($pass_que2);
-                                        // $class = $res2['class_name'];
-                                        // // getting the section
-                                        // $que3 = "SELECT * FROM class_sections WHERE section_id = $section";
-                                        // $pass_que3 = mysqli_query($conn, $que3);
-                                        // $res3 = mysqli_fetch_assoc($pass_que3);
-                                        // $section = $res3['section_name'];
-
                                 ?>
                                         <tr>
                                             <td><?php echo $row['roll_no']; ?></td><!--scope="row" -->
@@ -159,7 +112,8 @@
                                             <td><a href="edit-student.php?id=<?php echo $row['student_id']; ?>">Edit profile</a></td>
                                         </tr>
 
-                                    <?php }
+                                    <?php
+                                    }
                                 } else {
                                     // Selecting all student records from database
                                     $queri = "SELECT * FROM student_profile INNER JOIN student_class ";

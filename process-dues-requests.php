@@ -41,7 +41,7 @@ if (isset($_POST['reject']) && !empty($_POST['rejection_reason'])) {
 
 // fee with dues
 if (isset($_POST['clear_dues']) && !empty($_POST['dues_amount'])) {
-    $total_paid = $_POST['dues_amount'];
+    $total_paid = (int) $_POST['dues_amount'];
     $paid_amount = $total_dues;
     $std_id = $_POST['student_id'];
     $query = "SELECT * FROM student_fee WHERE fk_student_id='$std_id' ";
@@ -49,12 +49,12 @@ if (isset($_POST['clear_dues']) && !empty($_POST['dues_amount'])) {
     $res = query($query);
     while($row = mysqli_fetch_assoc($res)){
         $fee_id = $row['fee_id'];
-        $dues = $row['pending_dues'];
+        $dues = (int) $row['pending_dues'];
 
         if($total_paid > $dues){
             $q = "UPDATE student_fee SET fee_status='paid', pending_dues='0' ";
             $q .= "WHERE fee_id='$fee_id'";
-            $total_dues -= $dues;
+            $total_paid -= $dues;
         }elseif($total_paid < $dues){
             $dues = $dues - $total_paid;
             $q = "UPDATE student_fee SET fee_status='dues', pending_dues='$dues' ";
