@@ -1,7 +1,7 @@
 <?php
 // paid fee for the current month
 
-if (isset($_POST['due_current'])) {
+if (isset($_POST['npaid_current'])) {
 
   $query = "SELECT * FROM school_profile_ ORDER BY id DESC LIMIT 1";
   $result = mysqli_query($conn, $query);
@@ -173,7 +173,7 @@ if (isset($_POST['due_current'])) {
           <h1>$name</h1>
           <div id='company' class='clearfix'>
             <div><span>Fee Report:</span> $year, $month</div>
-            <div><span>Report Type:</span> Fee Records - Pending dues</div>
+            <div><span>Report Type:</span> Not-paid Fee Records</div>
             <div><span>Report Data:</span> All school students</div>
           </div>
           <div id='project'>
@@ -190,28 +190,26 @@ if (isset($_POST['due_current'])) {
                 <th class='desc'><h3>Name</h3></th>
                 <th><h3>Monthly Fee</h3></th>
                 <th><h3>Amount Paid</h3></th>
-                <th><h3>Dues</h3></th>
               </tr>
             </thead>
             <tbody>";
 
   $query = "SELECT * FROM student_fee INNER JOIN student_profile ON ";
   $query .= "student_fee.fk_student_id=student_profile.student_id ";
-  $query .= "WHERE fee_status='dues' OR fee_status='due_request' OR fee_status='dues_request' AND year='$year' AND month='$month'";
+  $query .= "WHERE fee_status='unpaid' AND year='$year' AND month='$month'";
 
   $result = query($query);
   while ($row = mysqli_fetch_assoc($result)) {
     $roll_no = $row['roll_no'];
     $s_name = $row['name'];
     $fee = $row['monthly_fee'];
-    $paid = $row['monthly_fee'] - $row['pending_dues'];
+    $paid = $row['monthly_fee'];
     $dues = $row['pending_dues'];
     $html .= "<tr>
                 <td class='service'>$roll_no</td>
                 <td class='desc'>$s_name</td>
                 <td class='unit'>Rs. $fee</td>
-                <td class='qty'>Rs. $paid</td>
-                <td class='total'>Rs. $dues</td>
+                <td class='qty'>Rs. 0</td>
               </tr>";
   }
   //   $html .= "<tr>
@@ -243,4 +241,3 @@ if (isset($_POST['due_current'])) {
     </html>
     ";
 }
-?>

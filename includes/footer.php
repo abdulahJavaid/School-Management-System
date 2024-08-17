@@ -1,3 +1,15 @@
+<!-- google translate -->
+<!-- <script type="text/javascript">
+// function googleTranslateElementInit() {
+//  new google.translate.TranslateElement({pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
+// }
+// function googleTranslateElementInit() {
+//   new google.translate.TranslateElement({
+//     pageLanguage: 'en', includedLanguages: 'en,ur', autoDisplay: false,
+//     layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+//   }, 'google_translate_element');
+// }
+</script> -->
 <footer id="footer" class="footer">
     <div class="copyright">
       &copy;  <strong><span>My School</span></strong>. All Rights Reserved
@@ -25,6 +37,11 @@
 
   <!-- Template Main JS File -->
   <script src="assets/js/main.js"></script>
+
+
+
+  <!-- google translate -->
+  <!-- <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script> -->
 
 </body>
 

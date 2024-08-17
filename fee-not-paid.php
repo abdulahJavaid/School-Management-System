@@ -37,8 +37,8 @@ if ($_SESSION['login_access'] == 'developer' || $_SESSION['login_access'] == 'ac
                         ?>
 
                             <form action="generate-pdf.php" method="post">
-                                <input type="hidden" name="due_name" value="<?php echo $_POST['name']; ?>">
-                                <button name="dues_name" class="btn btn-sm btn-primary button" type="submit" id="button-addon1">
+                                <input type="hidden" name="npaid_name" value="<?php echo $_POST['name']; ?>">
+                                <button name="notpaid_name" class="btn btn-sm btn-primary button" type="submit" id="button-addon1">
                                     Generate Pdf
                                 </button>
                             </form>
@@ -47,19 +47,20 @@ if ($_SESSION['login_access'] == 'developer' || $_SESSION['login_access'] == 'ac
                         ?>
 
                             <form action="generate-pdf.php" method="post">
-                                <input type="hidden" name="due_roll_no" value="<?php echo $_POST['reg']; ?>">
-                                <button name="dues_reg" class="btn btn-sm btn-primary button" type="submit" id="button-addon1">
+                                <input type="hidden" name="npaid_roll_no" value="<?php echo $_POST['reg']; ?>">
+                                <button name="notpaid_reg" class="btn btn-sm btn-primary button" type="submit" id="button-addon1">
                                     Generate Pdf
                                 </button>
                             </form>
                         <?php
+                        // this eleseif() will never be executed on this page
                         } elseif (isset($_POST['view_month'])) {
                             $date = $_POST['month'] . '-01';
                         ?>
 
                             <form action="generate-pdf.php" method="post">
-                                <input type="hidden" name="due_month" value="<?php echo $date; ?>">
-                                <button name="dues_month" class="btn btn-sm btn-primary button" type="submit" id="button-addon1">
+                                <input type="hidden" name="npaid_month" value="<?php echo $date; ?>">
+                                <button name="notpaid_month" class="btn btn-sm btn-primary button" type="submit" id="button-addon1">
                                     Generate Pdf
                                 </button>
                             </form>
@@ -68,8 +69,8 @@ if ($_SESSION['login_access'] == 'developer' || $_SESSION['login_access'] == 'ac
                         ?>
 
                             <form action="generate-pdf.php" method="post">
-                                <input type="hidden" name="due_current" value="not-empty">
-                                <button name="dues_current_month" class="btn btn-sm btn-primary button" type="submit" id="button-addon1">
+                                <input type="hidden" name="npaid_current" value="not-empty">
+                                <button name="notpaid_current_month" class="btn btn-sm btn-primary button" type="submit" id="button-addon1">
                                     Generate Pdf
                                 </button>
                             </form>
@@ -173,9 +174,9 @@ if ($_SESSION['login_access'] == 'developer' || $_SESSION['login_access'] == 'ac
                                                             } ?>"
                                                     placeholder="Example input"
                                                     aria-label="Example input"
-                                                    aria-describedby="button-addon1" required />
-                                                <button name="view_month" class="btn btn-sm btn-primary button" type="submit" id="button-addon1">
-                                                    View
+                                                    aria-describedby="button-addon1" required readonly/>
+                                                <button name="view_month" class="btn btn-sm btn-primary button" type="button" id="button-addon1">
+                                                    data
                                                 </button>
                                             </div>
                                         </form>
@@ -197,7 +198,7 @@ if ($_SESSION['login_access'] == 'developer' || $_SESSION['login_access'] == 'ac
                                     <th scope="col">Monthly Fee (Rs)</th>
                                     <th scope="col">Month</th>
                                     <th scope="col">Paid Amount</th>
-                                    <th scope="col">Dues</th>
+                                    <!-- <th scope="col">Dues</th> -->
                                 </tr>
                             </thead>
                             <tbody>
@@ -209,23 +210,23 @@ if ($_SESSION['login_access'] == 'developer' || $_SESSION['login_access'] == 'ac
                                     $month = date('F', strtotime($date));
                                     $query = "SELECT * FROM student_fee INNER JOIN student_profile ON ";
                                     $query .= "student_fee.fk_student_id=student_profile.student_id ";
-                                    $query .= "WHERE fee_status='dues' OR fee_status='due_request' OR fee_status='dues_request' AND year='$year' AND month='$month'";
+                                    $query .= "WHERE fee_status='unpaid' AND year='$year' AND month='$month'";
                                 } elseif (isset($_POST['view_name'])) {
                                     $name = $_POST['name'];
                                     $query = "SELECT * FROM student_fee INNER JOIN student_profile ON ";
                                     $query .= "student_fee.fk_student_id=student_profile.student_id ";
-                                    $query .= "WHERE name LIKE '%$name%' AND fee_status='dues' OR fee_status='due_request' OR fee_status='dues_request' ORDER BY fee_id DESC";
+                                    $query .= "WHERE name LIKE '%$name%' AND fee_status='unpaid' ORDER BY fee_id DESC";
                                 } elseif (isset($_POST['view_reg'])) {
                                     $roll_no = $_POST['reg'];
                                     $query = "SELECT * FROM student_fee INNER JOIN student_profile ON ";
                                     $query .= "student_fee.fk_student_id=student_profile.student_id ";
-                                    $query .= "WHERE roll_no='$roll_no' AND fee_status='dues' OR fee_status='due_request' OR fee_status='dues_request' ORDER BY fee_id DESC";
+                                    $query .= "WHERE roll_no='$roll_no' AND fee_status='unpaid' ORDER BY fee_id DESC";
                                 } else {
                                     $year = date('Y');
                                     $month = date('F');
                                     $query = "SELECT * FROM student_fee INNER JOIN student_profile ON ";
                                     $query .= "student_fee.fk_student_id=student_profile.student_id ";
-                                    $query .= "WHERE fee_status='dues' OR fee_status='due_request' OR fee_status='dues_request' AND year='$year' AND month='$month'";
+                                    $query .= "WHERE fee_status='unpaid' AND year='$year' AND month='$month'";
                                 }
                                 $result = query($query);
                                 while ($row = mysqli_fetch_assoc($result)) {
@@ -237,18 +238,18 @@ if ($_SESSION['login_access'] == 'developer' || $_SESSION['login_access'] == 'ac
                                         <td><?php echo $row['year'] . ', ' . $row['month']; ?></td>
                                         <td>
                                             <?php
-                                            if ($row['fee_status'] == 'paid') {
-                                                echo $row['monthly_fee'];
+                                            if ($row['fee_status'] == 'unpaid') {
+                                                echo 0;
                                             } else {
                                                 $dues = (int) $row['pending_dues'];
                                                 $paid = (int) $row['monthly_fee'] - $dues;
-                                                echo 'Rs.' . $paid;
+                                                echo $paid;
                                             }
                                             ?>
                                         </td>
-                                        <td>
-                                            <?php echo 'Rs.' . $row['pending_dues']; ?>
-                                        </td>
+                                        <!-- <td>
+                                            <?php //echo $row['monthly_fee']; ?>
+                                        </td> -->
                                     </tr>
                                 <?php
                                 }

@@ -115,6 +115,11 @@
             </a>
           </li>
           <li>
+            <a href="dues-requests.php">
+              <i class="bi bi-arrow-right"></i><span>Dues paid requests</span>
+            </a>
+          </li>
+          <li>
             <a href="fee-paid.php">
               <i class="bi bi-arrow-right"></i><span>Students - fee paid</span>
             </a>
@@ -125,7 +130,7 @@
             </a>
           </li>
           <li>
-            <a href="">
+            <a href="fee-not-paid.php">
               <i class="bi bi-arrow-right"></i><span>Students - fee not-paid</span>
             </a>
           </li>

@@ -52,7 +52,7 @@ if ($_SESSION['login_access'] == 'developer' || $_SESSION['login_access'] == 'ac
                 // the students who have paid fee
                 $query = "SELECT * FROM student_fee INNER JOIN student_profile ON ";
                 $query .= "student_fee.fk_student_id=student_profile.student_id ";
-                $query .= "WHERE fee_status='in_process'";
+                $query .= "WHERE fee_status='fee_request'";
                 $result = query($query);
                 while ($row = mysqli_fetch_assoc($result)) {
                 ?>

@@ -1,20 +1,19 @@
 <?php
-// paid fee for the current month
+if (isset($_POST['npaid_roll_no'])) {
+    $get_roll = $_POST['npaid_roll_no'];
 
-if (isset($_POST['due_current'])) {
+    $query = "SELECT * FROM school_profile_ ORDER BY id DESC LIMIT 1";
+    $result = mysqli_query($conn, $query);
+    $row = mysqli_fetch_assoc($result);
 
-  $query = "SELECT * FROM school_profile_ ORDER BY id DESC LIMIT 1";
-  $result = mysqli_query($conn, $query);
-  $row = mysqli_fetch_assoc($result);
-
-  $name = $row['name'];
-  $address = $row['address'];
-  $contact = $row['contact'];
-  $email = $row['email'];
-  $image = $row['image'];
-  $month = date('F');
-  $year = date('Y');
-  $html = "
+    $name = $row['name'];
+    $address = $row['address'];
+    $contact = $row['contact'];
+    $email = $row['email'];
+    $image = $row['image'];
+    $month = date('F');
+    $year = date('Y');
+    $html = "
     <!DOCTYPE html>
     <html lang='en'>
       <head>
@@ -163,18 +162,18 @@ if (isset($_POST['due_current'])) {
         <header class='clearfix'>
           <div id='logo'>
             <img src='uploads/school-profile-uploads/";
-  if (empty($image)) {
-    $html .= "no-image.png";
-  } else {
-    $html .= "$image";
-  }
-  $html .= "'>
+    if (empty($image)) {
+        $html .= "no-image.png";
+    } else {
+        $html .= "$image";
+    }
+    $html .= "'>
           </div>
           <h1>$name</h1>
           <div id='company' class='clearfix'>
             <div><span>Fee Report:</span> $year, $month</div>
-            <div><span>Report Type:</span> Fee Records - Pending dues</div>
-            <div><span>Report Data:</span> All school students</div>
+            <div><span>Report Type:</span> Not-paid Fee Records</div>
+            <div><span>Report Data:</span> Registration number { $get_roll }</div>
           </div>
           <div id='project'>
             <div>$contact</div>
@@ -190,37 +189,38 @@ if (isset($_POST['due_current'])) {
                 <th class='desc'><h3>Name</h3></th>
                 <th><h3>Monthly Fee</h3></th>
                 <th><h3>Amount Paid</h3></th>
-                <th><h3>Dues</h3></th>
               </tr>
             </thead>
             <tbody>";
 
-  $query = "SELECT * FROM student_fee INNER JOIN student_profile ON ";
-  $query .= "student_fee.fk_student_id=student_profile.student_id ";
-  $query .= "WHERE fee_status='dues' OR fee_status='due_request' OR fee_status='dues_request' AND year='$year' AND month='$month'";
+    // $query = "SELECT * FROM student_fee INNER JOIN student_profile ON ";
+    // $query .= "student_fee.fk_student_id=student_profile.student_id ";
+    // $query .= "WHERE fee_status='paid' AND year='$year' AND month='$month'";
+    $query = "SELECT * FROM student_fee INNER JOIN student_profile ON ";
+    $query .= "student_fee.fk_student_id=student_profile.student_id ";
+    $query .= "WHERE roll_no='$get_roll' AND fee_status='unpaid' ORDER BY fee_id DESC";
 
-  $result = query($query);
-  while ($row = mysqli_fetch_assoc($result)) {
-    $roll_no = $row['roll_no'];
-    $s_name = $row['name'];
-    $fee = $row['monthly_fee'];
-    $paid = $row['monthly_fee'] - $row['pending_dues'];
-    $dues = $row['pending_dues'];
-    $html .= "<tr>
+    $result = query($query);
+    while ($row = mysqli_fetch_assoc($result)) {
+        $roll_no = $row['roll_no'];
+        $s_name = $row['name'];
+        $fee = $row['monthly_fee'];
+        $paid = $row['monthly_fee'] - $row['pending_dues'];
+        $dues = $row['pending_dues'];
+        $html .= "<tr>
                 <td class='service'>$roll_no</td>
                 <td class='desc'>$s_name</td>
                 <td class='unit'>Rs. $fee</td>
-                <td class='qty'>Rs. $paid</td>
-                <td class='total'>Rs. $dues</td>
+                <td class='qty'>Rs. 0</td>
               </tr>";
-  }
-  //   $html .= "<tr>
-  //     <td colspan='4' class='grand total'>GRAND TOTAL</td>
-  //     <td class='grand total'>$6,500.00</td>
-  //   </tr>";
-  $html .= "</tbody>
+    }
+    //   $html .= "<tr>
+    //     <td colspan='4' class='grand total'>GRAND TOTAL</td>
+    //     <td class='grand total'>$6,500.00</td>
+    //   </tr>";
+    $html .= "</tbody>
           </table>";
-  $html .= "<br><br><br>
+    $html .= "<br><br><br>
           <strong>Owner Signature:</strong> <u><span style='width:100px'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></u>
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           <strong>Accountant Signature:</strong> <u><span style='width:100px'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></u>
@@ -231,15 +231,15 @@ if (isset($_POST['due_current'])) {
           ";
 
 
-  // $html .= "<div id='notices'>
-  //     <div>NOTICE:</div>
-  //     <div class='notice'>A finance charge of 1.5% will be made on unpaid balances after 30 days.</div>
-  //   </div>";
-  $html .= "</main>";
-  // $html .= "<footer>
-  //   Invoice was created on a computer and is valid without the signature and seal.
-  // </footer>";
-  $html .= "</body>
+    // $html .= "<div id='notices'>
+    //     <div>NOTICE:</div>
+    //     <div class='notice'>A finance charge of 1.5% will be made on unpaid balances after 30 days.</div>
+    //   </div>";
+    $html .= "</main>";
+    // $html .= "<footer>
+    //   Invoice was created on a computer and is valid without the signature and seal.
+    // </footer>";
+    $html .= "</body>
     </html>
     ";
 }

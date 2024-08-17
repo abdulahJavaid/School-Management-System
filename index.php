@@ -14,6 +14,8 @@
         </ol>
       </nav>
     </div><!-- End Page Title -->
+    <!-- google translate -->
+    <!-- <div id="google_translate_element"></div> -->
 
     <section class="section dashboard">
       <div class="row">
