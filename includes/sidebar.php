@@ -141,11 +141,20 @@
     }
     ?>
     <li class="nav-item">
-      <a class="nav-link collapsed" data-bs-target="#tables-nav" href="add-student-reports.php">
+      <a class="nav-link collapsed" data-bs-target="#tables-nav" href="progress-reports.php">
         <i class=><img src="images/reporttracking.jpg" width="30px" height="30px" alt=""></i><span>Progress Reports</span>
         <!-- <i class="bi bi-chevron-down ms-auto"></i> -->
       </a>
     </li><!-- End Student Progress Report -->
+
+    <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#tables-nav" href="homework-diary.php">
+        <i class=><img src="images/reporttracking.jpg" width="30px" height="30px" alt=""></i><span>Home Work Diary</span>
+        <!-- <i class="bi bi-chevron-down ms-auto"></i> -->
+      </a>
+    </li><!-- End Student Progress Report -->
+
+
 
     <li class="nav-item">
       <a class="nav-link collapsed" href="add-announcements.php">
