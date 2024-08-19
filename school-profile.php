@@ -49,7 +49,7 @@ $conn->close();
   <div class="row">
     <div class="col-xl-4">
 
-      <div class="card">
+      <div class="school-card">
         <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
         <img src="uploads/school-profile-uploads/<?php echo $img; ?>" alt="Profile" class="rounded-circle" style="width: 300px; height: 150px;">
@@ -68,7 +68,7 @@ $conn->close();
     </div>
 
     <div class="col-xl-8">
-
+      <div class="school-profile">
       <div class="card">
         <div class="card-body pt-3">
           <!-- Bordered Tabs -->
@@ -277,6 +277,7 @@ $conn->close();
           </div><!-- End Bordered Tabs -->
 
         </div>
+      </div>
       </div>
 
     </div>
