@@ -4,7 +4,7 @@
 <?php require_once("includes/sidebar.php"); ?>
 <?php
 // if the get request is not set
-if(!isset($_GET['id'])){
+if (!isset($_GET['id'])) {
   redirect('./students.php');
 }
 ?>
@@ -35,7 +35,7 @@ if(!isset($_GET['id'])){
   <section class="section profile">
     <div class="row">
       <div class="col-xl-4">
-        <div class="custom-card">
+        <div class="card custom-card">
           <div class="card-body profile-card d-flex flex-column align-items-center">
             <img src="images/profile.jpeg" alt="Profile">
             <h2><?php echo $row['name']; ?></h2>
@@ -51,60 +51,60 @@ if(!isset($_GET['id'])){
       </div>
 
       <div class="col-xl-8">
-        <div class="student-profile">
-        <div class="card">
-  <div class="card-body pt-3">
-    <ul class="nav nav-tabs nav-tabs-bordered">
-      <li class="nav-item">
-        <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">Student Profile</button>
-      </li>
-    </ul>
-    <div class="tab-content pt-2">
-      <div class="tab-pane fade show active profile-overview" id="profile-overview">
-        <h5 class="card-title">Details</h5>
-        <div class="row">
-          <div class="col-lg-3 col-md-4 label">Name</div>
-          <div class="col-lg-9 col-md-8"><?php echo $row['name']; ?></div>
+        <div class="custom-profile">
+          <div class="card">
+            <div class="card-body pt-3">
+              <ul class="nav nav-tabs nav-tabs-bordered">
+                <li class="nav-item">
+                  <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">Student Profile</button>
+                </li>
+              </ul>
+              <div class="tab-content pt-2">
+                <div class="tab-pane fade show active profile-overview" id="profile-overview">
+                  <h5 class="card-title">Details</h5>
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">Name</div>
+                    <div class="col-lg-9 col-md-8"><?php echo $row['name']; ?></div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">Registration#</div>
+                    <div class="col-lg-9 col-md-8"><?php echo $row['roll_no']; ?></div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">Class</div>
+                    <div class="col-lg-9 col-md-8"><?php echo $row['class_name']; ?></div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">Section</div>
+                    <div class="col-lg-9 col-md-8"><?php echo $row['section_name']; ?></div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">Cnic/B-form</div>
+                    <div class="col-lg-9 col-md-8"><?php echo $row['cnic']; ?></div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">Date of Birth</div>
+                    <div class="col-lg-9 col-md-8"><?php echo $row['dob']; ?></div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">Address</div>
+                    <div class="col-lg-9 col-md-8"><?php echo $row['address']; ?></div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">Mobile#</div>
+                    <div class="col-lg-9 col-md-8"><?php echo $row['mobile_no']; ?></div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label">E-mail</div>
+                    <div class="col-lg-9 col-md-8"><?php echo $row['email']; ?></div>
+                  </div>
+                </div>
+              </div><!-- End Bordered Tabs -->
+            </div>
+          </div>
         </div>
-        <div class="row">
-          <div class="col-lg-3 col-md-4 label">Registration#</div>
-          <div class="col-lg-9 col-md-8"><?php echo $row['roll_no']; ?></div>
-        </div>
-        <div class="row">
-          <div class="col-lg-3 col-md-4 label">Class</div>
-          <div class="col-lg-9 col-md-8"><?php echo $row['class_name']; ?></div>
-        </div>
-        <div class="row">
-          <div class="col-lg-3 col-md-4 label">Section</div>
-          <div class="col-lg-9 col-md-8"><?php echo $row['section_name']; ?></div>
-        </div>
-        <div class="row">
-          <div class="col-lg-3 col-md-4 label">Cnic/B-form</div>
-          <div class="col-lg-9 col-md-8"><?php echo $row['cnic']; ?></div>
-        </div>
-        <div class="row">
-          <div class="col-lg-3 col-md-4 label">Date of Birth</div>
-          <div class="col-lg-9 col-md-8"><?php echo $row['dob']; ?></div>
-        </div>
-        <div class="row">
-          <div class="col-lg-3 col-md-4 label">Address</div>
-          <div class="col-lg-9 col-md-8"><?php echo $row['address']; ?></div>
-        </div>
-        <div class="row">
-          <div class="col-lg-3 col-md-4 label">Mobile#</div>
-          <div class="col-lg-9 col-md-8"><?php echo $row['mobile_no']; ?></div>
-        </div>
-        <div class="row">
-          <div class="col-lg-3 col-md-4 label">E-mail</div>
-          <div class="col-lg-9 col-md-8"><?php echo $row['email']; ?></div>
-        </div>
-      </div>
-    </div><!-- End Bordered Tabs -->
-  </div>
-</div>
-</div>
 
-    </div>
+      </div>
   </section>
 
 </main><!-- End #main -->
