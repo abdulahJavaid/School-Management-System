@@ -21,7 +21,7 @@
     if ($_SESSION['login_access'] == 'developer' || $_SESSION['login_access'] == 'profiler' || $_SESSION['login_access'] == 'super') {
     ?>
 
-<li class="nav-item">
+<!-- <li class="nav-item">
         <a class="nav-link" data-bs-target="#component," href="./add-subjects.php">
           <i class=""><img src="images/schoolprofile1.jpeg" width="30px" height="30px" alt=""></i>
           <span>Add subjects</span>
@@ -29,11 +29,11 @@
       </li>
 
       <li class="nav-item">
-        <a class="nav-link" data-bs-target="#component," href="./student-migration.php">
+        <a class="nav-link" data-bs-target="#component," href="./student-migration.php"> data-bs-toggle="collapse"
           <i class=""><img src="images/schoolprofile1.jpeg" width="30px" height="30px" alt=""></i>
           <span>Student Migration</span>
         </a>
-      </li>
+      </li> -->
       <!-- End student migration tab -->
 
       <li class="nav-item">
