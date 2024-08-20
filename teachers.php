@@ -88,7 +88,7 @@
                                     <th scope="col">Date of Birth</th>
                                     <th scope="col">Address</th>
                                     <th scope="col">Email</th>
-                                    <th scope="col">Assign Classes</th>
+                                    <!-- <th scope="col">Assign Classes</th> -->
                                     <th scope="col">See Profile</th>
                                     <th scope="col">Edit Profile</th>
 
@@ -144,7 +144,7 @@
                                     <td><?php echo $row['dob']; ?></td>
                                     <td><?php echo $row['address']; ?></td>
                                     <td><?php echo $row['email']; ?></td>
-                                    <td><a href="assign-classes.php?id=<?php echo $row['teacher_id']; ?>">Assign</a></td>
+                                    <!-- <td><a href="assign-classes.php?id=<?php //echo $row['teacher_id']; ?>">Assign</a></td> -->
                                     <td><a href="view-teacher.php?id=<?php echo $row['teacher_id']; ?>">View profile</a></td>
                                     <td><a href="edit-teacher.php?id=<?php echo $row['teacher_id']; ?>">Edit profile</a></td>
 

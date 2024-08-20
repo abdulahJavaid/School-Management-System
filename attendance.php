@@ -19,7 +19,7 @@
     <div class="pagetitle">
         <div class="row">
             <form action="" method="post">
-                <div class="col-lg-3">
+                <div class="col-lg-4">
                     <select id="inputState" name="select" class="form-select">
                         <option selected value="choose_class">Choose Class</option>
                         <?php
@@ -51,8 +51,8 @@
                                 placeholder="By name"
                                 aria-label="Example input"
                                 aria-describedby="button-addon2" required />
-                            <button name="view_diary" class="btn btn-sm btn-primary button" type="submit" id="button-addon2">
-                                View Diary
+                            <button name="view_attendance" class="btn btn-sm btn-success" type="submit" id="button-addon2">
+                                View Attendance
                             </button>
                         </div>
                     </div>
@@ -63,7 +63,7 @@
     <?php
     // checking if the admin has selected the class
     if (isset($_POST['view_diary']) && $_POST['select'] == 'choose_class') {
-        $message = "Please select a class to view diary!";
+        $message = "Please select a class to view the attendance!";
     }
     ?>
     <?php if (isset($message)) { ?>
@@ -89,7 +89,7 @@
 
     <?php
     // show the diary for the selected date
-    if (isset($_POST['view_diary']) && $_POST['select'] != 'choose_class') {
+    if (isset($_POST['view_attendance']) && $_POST['select'] != 'choose_class') {
         // separating the section and class {id} from POST data
         $fetch = $_POST['select'];
         $length = strlen($fetch);
@@ -113,12 +113,16 @@
         $rows = mysqli_fetch_assoc($res);
 
 
-        $get = sql_where_and('homework_diary', 'fk_section_id', "$section", 'date', "$date");
+        $qu = "SELECT * FROM student_class INNER JOIN student_profile ON ";
+        $qu .= "student_class.fk_student_id=student_profile.student_id INNER JOIN attendance ON ";
+        $qu .= "student_profile.student_id=attendance.fk_student_id ";
+        $qu .= "WHERE fk_section_id='$section'";
+        $get = query($qu);
     ?>
         <div class="container my-5">
-            <h1 class="text-center mb-4">Homework Diary</h1>
+            <h1 class="text-center mb-4">Class Attendance</h1>
 
-            <!-- Homework Diary Card -->
+            <!-- Class attendance Card -->
             <div class="card">
                 <div class="card-header bg-secondary text-white">
                     <h5 class="mb-0">Class: <?php echo $rows['class_name'] . " " . $rows['section_name']; ?> / <?php echo date("jS \of F Y", strtotime($date)); ?></h5>
@@ -126,16 +130,52 @@
 
                 <?php
                 if (mysqli_num_rows($get)) {
-                    while ($row = mysqli_fetch_assoc($get)) {
                 ?>
-                        <div class="row mb-3 ps-3">
-                            <div class="col-sm-3 fw-bold border-end"><?php echo $row['subject']; ?></div>
-                            <div class="col-sm-9"><?php echo $row['subject_diary']; ?></div>
-                        </div>
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th scope="col">Registration#</th>
+                                <th scope="col">Name</th>
+                                <th scope="col">Present</th>
+                                <th scope="col">Absent</th>
+                                <th scope="col">Leave</th>
+                            </tr>
+                        </thead>
 
-                    <?php
-                    }
-                    ?>
+
+                        <tbody>
+                            <?php
+                            while ($row = mysqli_fetch_assoc($get)) {
+                            ?>
+                                <tr>
+                                    <td><?php echo $row['roll_no']; ?></td>
+                                    <td><?php echo $row['name']; ?></td>
+                                    <?php
+                                    if ($row['attendance'] == 'present') {
+                                    ?>
+                                        <td><input class="raadio_c" type="radio" value="present" name="attendance<?php echo $row['student_id']; ?>" checked></td>
+                                        <td><input class="raadio_c" type="radio" value="absent" name="attendance<?php echo $row['student_id']; ?>" disabled></td>
+                                        <td><input class="raadio_c" type="radio" value="leave" name="attendance<?php echo $row['student_id']; ?>" disabled></td>
+                                    <?php } elseif ($row['attendance'] == 'absent') {
+                                    ?>
+                                        <td><input class="raadio_c" type="radio" value="present" name="attendance<?php echo $row['student_id']; ?>" disabled></td>
+                                        <td><input class="raadio_c" type="radio" value="absent" name="attendance<?php echo $row['student_id']; ?>" checked></td>
+                                        <td><input class="raadio_c" type="radio" value="leave" name="attendance<?php echo $row['student_id']; ?>" disabled></td>
+                                    <?php } elseif ($row['attendance'] == 'absent') {
+                                    ?>
+                                        <td><input class="raadio_c" type="radio" value="present" name="attendance<?php echo $row['student_id']; ?>" disabled></td>
+                                        <td><input class="raadio_c" type="radio" value="absent" name="attendance<?php echo $row['student_id']; ?>" disabled></td>
+                                        <td><input class="raadio_c" type="radio" value="leave" name="attendance<?php echo $row['student_id']; ?>" checked></td>
+                                    <?php }
+                                    ?>
+
+                                </tr>
+
+                            <?php
+                            }
+                            ?>
+                        </tbody>
+                    </table>
             </div>
         </div>
     <?php
@@ -146,7 +186,7 @@
             <div class="col-sm-12">
                 <div class="alert alert-danger">
                     <!-- <strong> -->
-                    There was no diary added on this day for class <?php echo $rows['class_name'] . "-" . $rows['section_name']; ?>!
+                    There was no attendance added on this day for Class <?php echo $rows['class_name'] . "-" . $rows['section_name']; ?>!
                     <!-- </strong> -->
                 </div>
             </div>

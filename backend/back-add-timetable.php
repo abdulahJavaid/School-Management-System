@@ -36,20 +36,23 @@ if (isset($_POST['submit'])) {
                     $period = $_POST[$var];
                     $teacher = $_POST[$var1];
                     if (empty($teacher) && empty($period)) {
-                        $period = "---";
+                        $period = "!";
+                        $teacher = "!";
                     } elseif (empty($period)) {
-                        $period = "subject not-assigned - " . $teacher . "";
+                        $period = "!";
                     } elseif (empty($teacher)) {
-                        $period .= " - teacher not-assigned";
+                        $teacher = "!";
                     } else {
-                        $period .= ' - ' . $teacher . '';
+                        $period = $period;
+                        $teacher = $teacher;
                     }
                     if (isset($_POST[$var3])) {
                         $period = 'break';
+                        $teacher = '!';
                     }
 
-                    $query = "INSERT INTO periods (fk_section_id, fk_timetable_id, period_name, time)";
-                    $query .= "VALUES ('$section_id', '$tb_id', '$period', '$time')";
+                    $query = "INSERT INTO periods (fk_section_id, fk_timetable_id, period_name, teacher_name, time)";
+                    $query .= "VALUES ('$section_id', '$tb_id', '$period', '$teacher', '$time')";
 
                     $results = query($query);
                     $j++;
@@ -89,20 +92,23 @@ if (isset($_POST['submit'])) {
                     $period = $_POST[$var];
                     $teacher = $_POST[$var1];
                     if (empty($teacher) && empty($period)) {
-                        $period = "---";
+                        $period = "!";
+                        $teacher = "!";
                     } elseif (empty($period)) {
-                        $period = "subject not-assigned - " . $teacher . "";
+                        $period = "!";
                     } elseif (empty($teacher)) {
-                        $period .= " - teacher not-assigned";
+                        $teacher = "!";
                     } else {
-                        $period .= ' - ' . $teacher . '';
+                        $period = $period;
+                        $teacher = $teacher;
                     }
                     if (isset($_POST[$var3])) {
                         $period = 'break';
+                        $teacher = '!';
                     }
 
-                    $query = "INSERT INTO periods (fk_section_id, fk_timetable_id, period_name, time)";
-                    $query .= "VALUES ('$section_id', '$tb_id', '$period', '$time')";
+                    $query = "INSERT INTO periods (fk_section_id, fk_timetable_id, period_name, teacher_name, time)";
+                    $query .= "VALUES ('$section_id', '$tb_id', '$period', '$teacher', '$time')";
 
                     $results = query($query);
                     $j++;

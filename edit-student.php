@@ -81,7 +81,7 @@ $row = mysqli_fetch_assoc($pass);
             <h2><?php echo $row['name']; ?></h2>
             <h3>Class: <?php echo $row['class_name'] . ' ' . $row['section_name']; ?></h3>
 
-            <div class="dropdown">
+            <!-- <div class="dropdown">
               <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown">
                 Action
               </button>
@@ -90,7 +90,7 @@ $row = mysqli_fetch_assoc($pass);
                 <li><a class="dropdown-item" href="#">Link 2</a></li>
                 <li><a class="dropdown-item" href="#">Link 3</a></li>
               </ul>
-            </div>
+            </div> -->
 
 
             <div class="social-links mt-2">

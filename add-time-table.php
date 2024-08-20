@@ -16,119 +16,72 @@
     </nav>
   </div><!-- End Page Title -->
 
-  <!-- add timetable -->
-  <div class="container-fluid">
+  <!-- start of the form -->
+  <form method="post" action="">
     <div class="row">
-      <div class="col-md-3">
-        <form method="post" action="">
-          <div class="input-group mb-3">
-            <button class="btn btn-primary mt-3" type="button">Select</button>
-            <select id="inputState" name="select" class="form-select mt-3">
-              <option selected>Class</option>
-              <?php
-              // fetching all the classes 
-              $result = sql_select_all("all_classes");
-              while ($row = mysqli_fetch_assoc($result)) {
+      <div class="container-fluid">
+        <div class="row align-items-center">
+          <!-- Add timetable select option -->
+          <div class="col-auto">
+            <div class="input-group">
+              <select id="inputState" name="select1" class="form-select mt-3" aria-label="Example input" aria-describedby="button-addon2">
+                <option selected value="empty">Class</option>
+                <?php
+                // fetching all the classes 
+                $result = sql_select_all("all_classes");
+                while ($row = mysqli_fetch_assoc($result)) {
 
-              ?>
-                <optgroup label="Class: <?php echo $row['class_name']; ?>">
-                  <?php
-                  // fetching the related sections
-                  $result1 = sql_where("class_sections", "fk_class_id", $row['class_id']);
-                  while ($row1 = mysqli_fetch_assoc($result1)) {
-                  ?>
-                    <option value="<?php echo $row['class_id'] . " " . $row1['section_id']; ?>"><?php echo $row['class_name'] . " " . $row1['section_name']; ?></option>
-                  <?php
-                  }
-                  ?>
-                </optgroup>
-              <?php } ?>
-            </select>
+                ?>
+                  <optgroup label="Class: <?php echo $row['class_name']; ?>">
+                    <?php
+                    // fetching the related sections
+                    $result1 = sql_where("class_sections", "fk_class_id", $row['class_id']);
+                    while ($row1 = mysqli_fetch_assoc($result1)) {
+                    ?>
+                      <option value="<?php echo $row['class_id'] . " " . $row1['section_id']; ?>"><?php echo $row['class_name'] . " " . $row1['section_name']; ?></option>
+                    <?php
+                    }
+                    ?>
+                  </optgroup>
+                <?php } ?>
+              </select>
+              <button class="btn btn-sm btn-success mt-3 ml-3" name="add" type="submit" id="button-addon2">Add Timetable</button>
+            </div>
           </div>
-      </div>
-      <div class="col-md-4">
-        <button class="btn btn-md btn-primary mt-3 ml-3" name="add" type="submit">Add Timetable</button>
-      </div>
-      </form>
-    </div>
-  </div>
-  <!-- end add timetable -->
 
-  <!-- view timetable -->
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col-md-3">
-        <form method="post" action="">
-          <div class="input-group mb-3">
-            <button class="btn btn-primary mt-3" type="button">Select</button>
-            <select id="inputState" name="select" class="form-select mt-3">
-              <option selected>Class</option>
-              <?php
-              // fetching all the classes 
-              $result = sql_select_all("all_classes");
-              while ($row = mysqli_fetch_assoc($result)) {
+          <!-- View timetable select option -->
+          <div class="col-auto">
+            <div class="input-group">
+              <select id="inputState" name="select" class="form-select mt-3" aria-label="Example input" aria-describedby="button-addon3">
+                <option selected value="empty">Class</option>
+                <?php
+                // fetching all the classes 
+                $result = sql_select_all("all_classes");
+                while ($row = mysqli_fetch_assoc($result)) {
 
-              ?>
-                <optgroup label="Class: <?php echo $row['class_name']; ?>">
-                  <?php
-                  // fetching the related sections
-                  $result1 = sql_where("class_sections", "fk_class_id", $row['class_id']);
-                  while ($row1 = mysqli_fetch_assoc($result1)) {
-                  ?>
-                    <option value="<?php echo $row['class_id'] . " " . $row1['section_id']; ?>"><?php echo $row['class_name'] . " " . $row1['section_name']; ?></option>
-                  <?php
-                  }
-                  ?>
-                </optgroup>
-              <?php } ?>
-            </select>
+                ?>
+                  <optgroup label="Class: <?php echo $row['class_name']; ?>">
+                    <?php
+                    // fetching the related sections
+                    $result1 = sql_where("class_sections", "fk_class_id", $row['class_id']);
+                    while ($row1 = mysqli_fetch_assoc($result1)) {
+                    ?>
+                      <option value="<?php echo $row['class_id'] . " " . $row1['section_id']; ?>"><?php echo $row['class_name'] . " " . $row1['section_name']; ?></option>
+                    <?php
+                    }
+                    ?>
+                  </optgroup>
+                <?php } ?>
+              </select>
+              <button class="btn btn-sm btn-success mt-3 ml-3" name="view" type="submit" id="button-addon3">View Timetable</button>
+            </div>
           </div>
+        </div>
       </div>
-      <div class="col-md-4">
-        <button class="btn btn-md btn-primary mt-3 ml-3" name="view" type="submit">View Timetable</button>
-      </div>
-      </form>
     </div>
-  </div>
-  <!-- end view timetable -->
-
-  <!-- update timetable -->
-  <!-- <div class="container-fluid">
-    <div class="row">
-      <div class="col-md-3">
-        <form method="post" action="">
-          <div class="input-group mb-3">
-            <button class="btn btn-primary mt-3" type="button">Select</button>
-            <select id="inputState" name="select" class="form-select mt-3">
-              <option selected>Class</option>
-              <?php
-              // fetching all the classes 
-              // $result = sql_select_all("all_classes");
-              // while ($row = mysqli_fetch_assoc($result)) {
-
-              ?>
-                <optgroup label="Class: <?php echo $row['class_name']; ?>">
-                  <?php
-                  // fetching the related sections
-                  // $result1 = sql_where("class_sections", "fk_class_id", $row['class_id']);
-                  // while ($row1 = mysqli_fetch_assoc($result1)) {
-                  ?>
-                    <option value="<?php echo $row['class_id'] . " " . $row1['section_id']; ?>"><?php echo $row['class_name'] . " " . $row1['section_name']; ?></option>
-                  <?php
-                  // }
-                  // ?>
-                </optgroup>
-              <?php  ?>
-            </select>
-          </div>
-      </div>
-      <div class="col-md-4">
-        <button class="btn btn-md btn-primary mt-3 ml-3" name="update" type="submit">Update Timetable</button>
-      </div>
-      </form>
-    </div>
-  </div> -->
-  <!-- end update timetable -->
+  </form>
+  <!-- end of the form -->
+  <br>
 
 
   <!-- to add the timetable -->
@@ -137,8 +90,8 @@
       <div class="col-md-12">
         <?php
         // if add timetable request is submitted
-        if (isset($_POST['add'])) {
-          $fetch = $_POST['select'];
+        if (isset($_POST['add']) && $_POST['select1'] != 'empty') {
+          $fetch = $_POST['select1'];
           $length = strlen($fetch);
           $find = strpos($fetch, ' ');
           $number = $find + 1;
@@ -156,54 +109,15 @@
           $row1 = mysqli_fetch_assoc($result1);
 
         ?>
-         <div class="card">
-    <div class="card-body">
-        <div class="container-fluid">
-            <div class="row align-items-center">
-                <div class="col-md-4">
-                    <h5 class="card-title">Class: <?php echo $row['class_name'] . " " . $row1['section_name']; ?></h5>
-                </div>
-                <div class="col-md-4">
-                    <form method="post" action="">
-                        <div class="input-group">
-                            <select id="inputState" name="select" class="form-select">
-                                <option selected>Class</option>
-                                <?php
-                                // fetching all the classes 
-                                $result = sql_select_all("all_classes");
-                                while ($row = mysqli_fetch_assoc($result)) {
-                                ?>
-                                    <optgroup label="Class: <?php echo $row['class_name']; ?>">
-                                        <?php
-                                        // fetching the related sections
-                                        $result1 = sql_where("class_sections", "fk_class_id", $row['class_id']);
-                                        while ($row1 = mysqli_fetch_assoc($result1)) {
-                                        ?>
-                                            <option value="<?php echo $row['class_id'] . " " . $row1['section_id']; ?>"><?php echo $row['class_name'] . " " . $row1['section_name']; ?></option>
-                                        <?php
-                                        }
-                                        ?>
-                                    </optgroup>
-                                <?php } ?>
-                            </select>
-                            <button class="btn btn-primary" type="button">Select</button>
-                        </div>
-                    </form>
-                </div>
-                <div class="col-md-4">
-                    <form method="post" action="">
-                        <button class="btn btn-md btn-primary" name="add" type="submit">Add Timetable</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-        <p><code><u>Instructions:</u></code>
-            <br><code>1. Don't leave time empty or the relevant records will not be added</code>
-            <br><code>2. If you want to add a break, tick the break box</code>
-            <br><code>3. If Saturday is a holiday, don't add periods on Saturday</code>
-        </p>
-    </div>
-</div>
+          <div class="card">
+            <div class="card-body">
+
+              <h5 class="card-title">Class: <?php echo $row['class_name'] . ' ' . $row1['section_name']; ?></h5>
+              <p><code><u>Instructions:</u></code>
+                <br><code>1. Don't leave time empty or the relevant records will not be added</code>
+                <br><code>2. If you want to add a break, tick the break box</code>
+                <br><code>3. If Saturday is a holiday, don't add periods on Saturday</code>
+              </p>
 
               <!-- Primary Color Bordered Table -->
               <form action="./backend/back-add-timetable.php" method="post">
@@ -334,35 +248,21 @@
                   </tbody>
                 </table>
                 <div class="d-flex justify-content-end">
-                  <button type="submit" name="submit" class="btn btn-primary button">Submit timetable</button>
+                  <button type="submit" name="submit" class="btn btn-success">Submit timetable</button>
                 </div>
               </form>
-            <?php
-            // end of if statement
-          }
-            ?>
-            <!-- End Primary Color Bordered Table -->
-
             </div>
           </div>
-
-
-
-
-          <!-- end of card -->
-
-      </div>
-    </div>
-  </section>
-  <!-- end add timetable -->
-
-  <!-- to view the timetable -->
-  <section class="section profile">
-    <div class="row">
-      <div class="col-md-12">
         <?php
-        // if add timetable request is submitted
-        if (isset($_POST['view'])) {
+          // end of if statement to add timetable
+        }
+        ?>
+        <!-- End Primary Color Bordered Table -->
+        <!-- End add the timetable -->
+
+        <?php
+        // to view the timetable
+        if (isset($_POST['view']) && $_POST['select'] != 'empty') {
           $fetch = $_POST['select'];
           $length = strlen($fetch);
           $find = strpos($fetch, ' ');
@@ -388,6 +288,14 @@
               <h5 class="card-title">Class: <?php echo $row['class_name'] . " " . $row1['section_name']; ?></h5>
               <p><code><u>Timetable:</u></code></p>
 
+
+              <div class="d-flex justify-content-end">
+                <form action="" method="post">
+                  <input type="hidden" name="section_id" value="<?php echo $section; ?>">
+                  <input type="hidden" name="class_id" value="<?php echo $class; ?>">
+                  <button type="submit" name="update" class="btn btn-sm btn-success">Update timetable</button>
+                </form>
+              </div><br>
               <!-- Primary Color Bordered Table -->
               <table class="table table-bordered border-primary">
                 <thead>
@@ -408,58 +316,293 @@
                 </thead>
                 <tbody>
 
+                  <?php
+                  // to fetch all the periods
+                  $query = "SELECT * FROM periods WHERE fk_section_id='$sid'";
+                  $ge = query($query);
+                  $arr = array(0, 6, 12, 18, 24, 30, 36, 42, 48, 54, 60);
+                  $arr1 = array(5, 11, 17, 23, 29, 35, 41, 47, 53, 59, 65);
+                  $va = 0;
+                  while ($ro = mysqli_fetch_assoc($ge)) {
+                    if (in_array($va, $arr)) {
+
+                  ?>
+                      <tr>
+                        <td><?php echo $ro['time']; ?></td>
+                        <?php if ($ro['period_name'] == 'break') { ?>
+                          <td><?php echo $ro['period_name']; ?></td>
+                        <?php } else { ?>
+                          <td><?php echo $ro['period_name'] . ' - ' . $ro['teacher_name']; ?></td>
+                        <?php } ?>
+                      <?php
+                    } else {
+                      ?>
+                        <?php if ($ro['period_name'] == 'break') { ?>
+                          <td><?php echo $ro['period_name']; ?></td>
+                        <?php } else { ?>
+                          <td><?php echo $ro['period_name'] . ' - ' . $ro['teacher_name']; ?></td>
+                        <?php } ?>
+
                     <?php
-                      // to fetch all the periods
-                      $query = "SELECT * FROM periods WHERE fk_section_id='$sid'";
-                      // $query = "ON periods.fk_section_id=timetable.fk_section_id";
-                      $ge = query($query);
-                      $arr = array(0, 6, 12, 18, 24, 30, 36, 42, 48, 54, 60);
-                      $arr1 = array(5, 11, 17, 23, 29, 35, 41, 47, 53, 59, 65);
-                      $va = 0;
-                      while($ro = mysqli_fetch_assoc($ge)){
-                        if(in_array($va, $arr)){
-
-                          ?>
-                          <tr>
-                          <td><?php echo $ro['time']; ?></td>
-                          <td><?php echo $ro['period_name']; ?></td>
-                          <?php
-                        }else{
-                          ?>
-                          <td><?php echo $ro['period_name']; ?></td>
-
-                          <?php
-                          if(in_array($va, $arr1)){
-                            echo "</tr>";
-                          }
-                        }
-                        $va++;
+                      if (in_array($va, $arr1)) {
+                        echo "</tr>";
                       }
+                    }
+                    $va++;
+                  }
                     ?>
-                    <!-- start tr -->
-                    
-                      
-                 
-
+                    <!-- end tr -->
                 </tbody>
               </table>
-              <div class="d-flex justify-content-end">
-                <button type="submit" name="submit" class="btn btn-primary button">Submit timetable</button>
-              </div>
-            <?php
-            // end of if statement
-          }
-            ?>
-            <!-- End Primary Color Bordered Table -->
-
             </div>
           </div>
-          <!-- end of card -->
+        <?php
+          // end of if statement to view timetable
+        }
+        ?>
+        <!-- End Primary Color Bordered Table -->
+        <!-- end view timetable -->
+        <!-- end of card -->
+
+        <?php
+        // to update the timetable
+        if (isset($_POST['update'])) {
+          // $fetch = $_POST['select'];
+          // $length = strlen($fetch);
+          // $find = strpos($fetch, ' ');
+          // $number = $find + 1;
+          // $useable = $length - $number;
+          // $useable1 = $find;
+
+          // $section = substr($fetch, -$useable);
+          // $class = substr($fetch, 0, $find);
+          $section = $_POST['section_id'];
+          $class = $_POST['class_id'];
+
+          $result = sql_where('all_classes', 'class_id', $class);
+          $row = mysqli_fetch_assoc($result);
+          $result1 = sql_where_and('class_sections', 'section_id', $section, 'fk_class_id', $class);
+          $row1 = mysqli_fetch_assoc($result1);
+          $sid = $row1['section_id'];
+
+        ?>
+          <div class="card">
+            <div class="card-body">
+
+              <h5 class="card-title">Class: <?php echo $row['class_name'] . ' ' . $row1['section_name']; ?></h5>
+              <p><code><u>Instructions:</u></code>
+                <br><code>1. Don't leave time empty or the relevant records will not be added</code>
+                <br><code>2. If you want to add a break, tick the break box</code>
+                <br><code>3. If Saturday is a holiday, don't add periods on Saturday</code>
+              </p>
+
+              <!-- Primary Color Bordered Table -->
+              <form action="./backend/back-add-timetable.php" method="post">
+                <table class="table table-bordered border-primary">
+                  <thead>
+                    <tr>
+                      <th scope="col"><input type="hidden" name="section_id" value="<?php echo $row1['section_id']; ?>">#</th>
+                      <th scope="col"><input type="hidden" name="monday" value="Monday">Monday</th>
+                      <th scope="col"><input type="hidden" name="tuesday" value="Tuesday">Tuesday</th>
+                      <th scope="col"><input type="hidden" name="wednesday" value="Wednesday">Wednesday</th>
+                      <th scope="col"><input type="hidden" name="thursday" value="Thursday">Thursday</th>
+                      <th scope="col"><input type="hidden" name="friday" value="Friday">Friday</th>
+                      <th scope="col"><input type="hidden" name="saturday" value="Saturday">Saturday</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+
+                    <?php
+                    // to fetch all the periods
+                    $query = "SELECT * FROM periods WHERE fk_section_id='$sid'";
+                    $ge = query($query);
+                    $arr = array(0, 6, 12, 18, 24, 30, 36, 42, 48, 54, 60);
+                    $arr1 = array(5, 11, 17, 23, 29, 35, 41, 47, 53, 59, 65);
+                    $d = ['dm', 'dt', 'dw', 'dth', 'df', 'ds'];
+                    $t = ['tm', 'tt', 'tw', 'tth', 'tf', 'ts'];
+                    $b = ['bm', 'bt', 'bw', 'bth', 'bf', 'bs'];
+                    $va = 0;
+                    $i = 1;
+                    $j = 0;
+                    while ($ro = mysqli_fetch_assoc($ge)) {
+                      $slct = 0;
+                      if (in_array($va, $arr)) {
+
+                    ?>
+
+                        <tr>
+                          <td><input type="text" name="time<?php echo $i; ?>" class="form-control inpt" value="<?php echo $ro['time']; ?>" placeholder="time" size="5"></td>
+                          <!-- if there is break -->
+                          <?php if ($ro['period_name'] == 'break') { ?>
+                            <td>
+                              <input type="text" name="<?php echo $d[$j] . $i; ?>" class="form-control inpt-1" size="3" placeholder="Subject">
+                              <select id="inputState" name="<?php echo $t[$j] . $i; ?>" class="form-select mt-1 inpt-1">
+                                <option value="">Teacher</option>
+                                <?php
+                                // select the teacher
+                                $result2 = sql_select_all('teacher_profile');
+                                while ($r = mysqli_fetch_assoc($result2)) {
+                                ?>
+                                  <option value="<?php echo $r['name']; ?>"><?php echo $r['name']; ?></option>
+                                <?php
+                                }
+                                ?>
+                              </select>
+                              <input type="checkbox" name="<?php echo $b[$j] . $i; ?>" checked> Break
+                            </td>
+                            <!-- if there is no break -->
+                          <?php } else { ?>
+                            <td>
+                              <input type="text" name="<?php echo $d[$j] . $i; ?>" value="<?php echo $ro['period_name']; ?>" class="form-control inpt-1" size="3" placeholder="Subject">
+                              <select id="inputState" name="<?php echo $t[$j] . $i; ?>" class="<?php echo $t[$j] . $i; ?> form-select mt-1 inpt-1">
+                                <?php
+                                $tch = $ro['period_id'];
+                                $query = "SELECT * FROM periods WHERE period_id='$tch'";
+                                $res = query($query);
+                                $rws = mysqli_fetch_assoc($res);
+                                if ($rws['teacher_name'] == '!') {
+                                ?>
+                                  <option value="">Teacher</option>
+                                <?php
+                                } else {
+                                ?>
+                                  <option selected value="<?php echo $rws['teacher_name']; ?>"><?php echo $rws['teacher_name']; ?></option>
+                                <?php
+                                }
+                                // select the teacher
+                                $tch_name = $rws['teacher_name'];
+                                $tch = $ro['period_id'];
+                                $query = "SELECT * FROM teacher_profile WHERE NOT name='$tch_name'";
+                                $result2 = query($query);
+                                while ($r = mysqli_fetch_assoc($result2)) {
+                                  // if($r['name'] == $ro['teacher_name']){
+                                  //   $cls = $t[$j].$i;
+                                  //   echo "<script type='text/javascript'>select_opt({$cls}, {$slct});</script>";
+                                  // }
+                                ?>
+                                  <option value="<?php echo $r['name']; ?>"><?php echo $r['name']; ?></option>
+                                  <?
+                                  // }else{
+                                  ?>
+                                  <!-- <option value="<?php //echo $r['name']; 
+                                                      ?>"><?php //echo $r['name']; 
+                                                                                    ?></option> -->
+                                <?php
+                                  // }
+                                  // $slct++;
+                                }
+                                ?>
+                              </select>
+                              <input type="checkbox" name="<?php echo $b[$j] . $i; ?>"> Break
+                            </td>
+                          <?php } ?>
+                        <?php
+                      } else {
+                        ?>
+                          <?php if ($ro['period_name'] == 'break') { ?>
+                            <td>
+                              <input type="text" name="<?php echo $d[$j] . $i; ?>" class="form-control inpt-1" size="3" placeholder="Subject">
+                              <select id="inputState" name="<?php echo $t[$j] . $i; ?>" class="form-select mt-1 inpt-1">
+                                <option value="">Teacher</option>
+                                <?php
+
+                                // select the teacher
+                                $result2 = sql_select_all('teacher_profile');
+                                while ($r = mysqli_fetch_assoc($result2)) {
+                                ?>
+                                  <option value="<?php echo $r['name']; ?>"><?php echo $r['name']; ?></option>
+                                <?php
+                                }
+                                ?>
+                              </select>
+                              <input type="checkbox" name="<?php echo $b[$j] . $i; ?>" checked> Break
+                            </td>
+                          <?php } else { ?>
+                            <td>
+                              <input type="text" name="<?php echo $d[$j] . $i; ?>" value="<?php echo $ro['period_name']; ?>" class="form-control inpt-1" size="3" placeholder="Subject">
+                              <select id="inputState" name="<?php echo $t[$j] . $i; ?>" class="form-select mt-1 inpt-1">
+                                <?php
+                                $tch = $ro['period_id'];
+                                $query = "SELECT * FROM periods WHERE period_id='$tch'";
+                                $res = query($query);
+                                $rws = mysqli_fetch_assoc($res);
+                                if ($rws['teacher_name'] == '!') {
+                                ?>
+                                  <option value="">Teacher</option>
+                                <?php
+                                } else {
+                                ?>
+                                  <option selected value="<?php echo $rws['teacher_name']; ?>"><?php echo $rws['teacher_name']; ?></option>
+                                <?php
+                                }
+                                // select the teacher
+                                $tch_name = $rws['teacher_name'];
+                                $tch = $ro['period_id'];
+                                $query = "SELECT * FROM teacher_profile WHERE NOT name='$tch_name'";
+                                $result2 = query($query);
+                                while ($r = mysqli_fetch_assoc($result2)) {
+                                  // if($r['name'] == $ro['teacher_name']){
+                                  //   $cls = $t[$j].$i;
+                                  //   echo "<script src=assets/js/main.js' type='text/javascript'>select_opt({$cls}, {$slct});</script>";
+                                  // }
+                                ?>
+                                  <option value="<?php echo $r['name']; ?>"><?php echo $r['name']; ?></option>
+                                  <?
+                                  // }else{
+                                  ?>
+                                  <!-- <option value="<?php //echo $r['name']; 
+                                                      ?>"><?php //echo $r['name']; 
+                                                                                    ?></option> -->
+                                <?php
+                                  // }
+                                  // $slct++;
+                                }
+                                ?>
+                              </select>
+                              <input type="checkbox" name="<?php echo $b[$j] . $i; ?>"> Break
+                            </td>
+                          <?php } ?>
+
+                      <?php
+                        if (in_array($va, $arr1)) {
+                          echo "</tr>";
+                        }
+                      }
+                      if (in_array($va, $arr1)) {
+                        $i++;
+                        $j = 0;
+                      } else {
+                        $j++;
+                      }
+                      $va++;
+                    }
+                      ?>
+                      <!-- end tr -->
+
+
+
+
+                  </tbody>
+                </table>
+                <div class="d-flex justify-content-end">
+                  <button type="submit" name="submit" class="btn btn-success">Submit timetable</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        <?php
+          // end of if statement to update timetable
+        }
+        ?>
+        <!-- End Primary Color Bordered Table -->
+        <!-- end update timetable -->
+        <!-- end of card -->
+
+
 
       </div>
     </div>
   </section>
-  <!-- end view timetable -->
 
 </main><!-- End #main -->
 

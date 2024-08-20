@@ -21,19 +21,19 @@
     if ($_SESSION['login_access'] == 'developer' || $_SESSION['login_access'] == 'profiler' || $_SESSION['login_access'] == 'super') {
     ?>
 
-<!-- <li class="nav-item">
-        <a class="nav-link" data-bs-target="#component," href="./add-subjects.php"> data-bs-toggle="collapse"
+<li class="nav-item">
+        <a class="nav-link" data-bs-target="#component," href="./add-subjects.php">
           <i class=""><img src="images/schoolprofile1.jpeg" width="30px" height="30px" alt=""></i>
           <span>Add subjects</span>
         </a>
       </li>
 
       <li class="nav-item">
-        <a class="nav-link" data-bs-target="#component," href="./student-migration.php"> data-bs-toggle="collapse"
+        <a class="nav-link" data-bs-target="#component," href="./student-migration.php">
           <i class=""><img src="images/schoolprofile1.jpeg" width="30px" height="30px" alt=""></i>
           <span>Student Migration</span>
         </a>
-      </li> -->
+      </li>
       <!-- End student migration tab -->
 
       <li class="nav-item">
@@ -45,7 +45,7 @@
         <ul id="profiling" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
             <a href="teachers.php">
-              <i class="bi bi-arrow-right"></i><span>Staff Profiles</span>
+              <i class="bi bi-arrow-right"></i><span>Teacher Profiles</span>
             </a>
           </li>
           <li>
@@ -153,9 +153,14 @@
         <i class=><img src="images/reporttracking.jpg" width="30px" height="30px" alt=""></i><span>Home Work Diary</span>
         <!-- <i class="bi bi-chevron-down ms-auto"></i> -->
       </a>
-    </li><!-- End Student Progress Report -->
+    </li><!-- End Homework Diary -->
 
-
+    <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#tables-nav" href="attendance.php">
+        <i class=><img src="images/reporttracking.jpg" width="30px" height="30px" alt=""></i><span>Attendance</span>
+        <!-- <i class="bi bi-chevron-down ms-auto"></i> -->
+      </a>
+    </li><!-- End Student Attendance -->
 
     <li class="nav-item">
       <a class="nav-link collapsed" href="add-announcements.php">
