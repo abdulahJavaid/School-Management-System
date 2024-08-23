@@ -1,15 +1,15 @@
 <!-- google translate -->
-<!-- <script type="text/javascript">
-// function googleTranslateElementInit() {
+ <!-- <script type="text/javascript"> -->
+<!-- // function googleTranslateElementInit() {
 //  new google.translate.TranslateElement({pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
 // }
-// function googleTranslateElementInit() {
-//   new google.translate.TranslateElement({
-//     pageLanguage: 'en', includedLanguages: 'en,ur', autoDisplay: false,
-//     layout: google.translate.TranslateElement.InlineLayout.SIMPLE
-//   }, 'google_translate_element');
-// }
-</script> -->
+//  function googleTranslateElementInit() {
+//    new google.translate.TranslateElement({
+//      pageLanguage: 'en', includedLanguages: 'en,ur', autoDisplay: false,
+//      layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+//    }, 'google_translate_element');
+//  } -->
+<!-- </script>  -->
 <footer id="footer" class="footer">
     <div class="copyright">
       &copy;  <strong><span>My School</span></strong>. All Rights Reserved

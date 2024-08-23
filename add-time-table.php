@@ -365,17 +365,8 @@
         <!-- end of card -->
 
         <?php
-        // to update the timetable
+        // if POST request is submitted to update the timetable
         if (isset($_POST['update'])) {
-          // $fetch = $_POST['select'];
-          // $length = strlen($fetch);
-          // $find = strpos($fetch, ' ');
-          // $number = $find + 1;
-          // $useable = $length - $number;
-          // $useable1 = $find;
-
-          // $section = substr($fetch, -$useable);
-          // $class = substr($fetch, 0, $find);
           $section = $_POST['section_id'];
           $class = $_POST['class_id'];
 
@@ -413,26 +404,32 @@
                   <tbody>
 
                     <?php
-                    // to fetch all the periods
+                    // to fetch all the periods of the selected section to update
                     $query = "SELECT * FROM periods WHERE fk_section_id='$sid'";
                     $ge = query($query);
+                    // array to check the start of a row <tr>
                     $arr = array(0, 6, 12, 18, 24, 30, 36, 42, 48, 54, 60);
+                    // array to check the end of a row </tr>
                     $arr1 = array(5, 11, 17, 23, 29, 35, 41, 47, 53, 59, 65);
+                    // array for unique input<->name generation for subject
                     $d = ['dm', 'dt', 'dw', 'dth', 'df', 'ds'];
+                    // array for unique input<->name generation for teacher
                     $t = ['tm', 'tt', 'tw', 'tth', 'tf', 'ts'];
+                    // array for unique input<->name generation for break
                     $b = ['bm', 'bt', 'bw', 'bth', 'bf', 'bs'];
+                    // variable to check and control inclusion of <tr>&</tr> where necessary
                     $va = 0;
+                    // variable to increment after a complete <tr></tr>
                     $i = 1;
+                    // variable to go through above defined arrays and reset after complete <tr></tr>
                     $j = 0;
                     while ($ro = mysqli_fetch_assoc($ge)) {
-                      $slct = 0;
+                      // $slct = 0;
                       if (in_array($va, $arr)) {
-
+                        // if the loop rotation is first for each table row
                     ?>
-
                         <tr>
                           <td><input type="text" name="time<?php echo $i; ?>" class="form-control inpt" value="<?php echo $ro['time']; ?>" placeholder="time" size="5"></td>
-                          <!-- if there is break -->
                           <?php if ($ro['period_name'] == 'break') { ?>
                             <td>
                               <input type="text" name="<?php echo $d[$j] . $i; ?>" class="form-control inpt-1" size="3" placeholder="Subject">
@@ -450,26 +447,30 @@
                               </select>
                               <input type="checkbox" name="<?php echo $b[$j] . $i; ?>" checked> Break
                             </td>
-                            <!-- if there is no break -->
-                          <?php } else { ?>
+                          <?php } else {
+                            // {elese} if the period_name != break
+                            ?>
                             <td>
                               <input type="text" name="<?php echo $d[$j] . $i; ?>" value="<?php echo $ro['period_name']; ?>" class="form-control inpt-1" size="3" placeholder="Subject">
                               <select id="inputState" name="<?php echo $t[$j] . $i; ?>" class="<?php echo $t[$j] . $i; ?> form-select mt-1 inpt-1">
                                 <?php
+                                // getting teacher_name value for the period
                                 $tch = $ro['period_id'];
                                 $query = "SELECT * FROM periods WHERE period_id='$tch'";
                                 $res = query($query);
                                 $rws = mysqli_fetch_assoc($res);
                                 if ($rws['teacher_name'] == '!') {
+                                  // if there was no teacher previously assigned
                                 ?>
                                   <option value="">Teacher</option>
                                 <?php
                                 } else {
+                                  // the teacher which was previously assigned
                                 ?>
                                   <option selected value="<?php echo $rws['teacher_name']; ?>"><?php echo $rws['teacher_name']; ?></option>
                                 <?php
                                 }
-                                // select the teacher
+                                // selecting and showing other teachers which were not previously assigned
                                 $tch_name = $rws['teacher_name'];
                                 $tch = $ro['period_id'];
                                 $query = "SELECT * FROM teacher_profile WHERE NOT name='$tch_name'";
@@ -481,12 +482,6 @@
                                   // }
                                 ?>
                                   <option value="<?php echo $r['name']; ?>"><?php echo $r['name']; ?></option>
-                                  <?
-                                  // }else{
-                                  ?>
-                                  <!-- <option value="<?php //echo $r['name']; 
-                                                      ?>"><?php //echo $r['name']; 
-                                                                                    ?></option> -->
                                 <?php
                                   // }
                                   // $slct++;
@@ -497,16 +492,19 @@
                             </td>
                           <?php } ?>
                         <?php
-                      } else {
+                      } else { 
+                        // {else} if the loop rotation is not 1st for each table row
                         ?>
-                          <?php if ($ro['period_name'] == 'break') { ?>
+                          <?php if ($ro['period_name'] == 'break') {
+                            // if the period_name == break
+                            ?>
                             <td>
                               <input type="text" name="<?php echo $d[$j] . $i; ?>" class="form-control inpt-1" size="3" placeholder="Subject">
                               <select id="inputState" name="<?php echo $t[$j] . $i; ?>" class="form-select mt-1 inpt-1">
                                 <option value="">Teacher</option>
                                 <?php
 
-                                // select the teacher
+                                // select all the teachers
                                 $result2 = sql_select_all('teacher_profile');
                                 while ($r = mysqli_fetch_assoc($result2)) {
                                 ?>
@@ -515,27 +513,33 @@
                                 }
                                 ?>
                               </select>
+                              <!-- The period_name was equal to break -->
                               <input type="checkbox" name="<?php echo $b[$j] . $i; ?>" checked> Break
                             </td>
-                          <?php } else { ?>
+                          <?php } else { 
+                            // {else} if the period_name was not break
+                            ?>
                             <td>
                               <input type="text" name="<?php echo $d[$j] . $i; ?>" value="<?php echo $ro['period_name']; ?>" class="form-control inpt-1" size="3" placeholder="Subject">
                               <select id="inputState" name="<?php echo $t[$j] . $i; ?>" class="form-select mt-1 inpt-1">
                                 <?php
+                                // getting the teacher_name value from period
                                 $tch = $ro['period_id'];
                                 $query = "SELECT * FROM periods WHERE period_id='$tch'";
                                 $res = query($query);
                                 $rws = mysqli_fetch_assoc($res);
                                 if ($rws['teacher_name'] == '!') {
+                                  // if there was no teacher assigned previously
                                 ?>
                                   <option value="">Teacher</option>
                                 <?php
                                 } else {
+                                  // if there was a teacher assigned previously
                                 ?>
                                   <option selected value="<?php echo $rws['teacher_name']; ?>"><?php echo $rws['teacher_name']; ?></option>
                                 <?php
                                 }
-                                // select the teacher
+                                // selecting and showing other teachers which were not previously assigned to class
                                 $tch_name = $rws['teacher_name'];
                                 $tch = $ro['period_id'];
                                 $query = "SELECT * FROM teacher_profile WHERE NOT name='$tch_name'";
@@ -547,12 +551,6 @@
                                   // }
                                 ?>
                                   <option value="<?php echo $r['name']; ?>"><?php echo $r['name']; ?></option>
-                                  <?
-                                  // }else{
-                                  ?>
-                                  <!-- <option value="<?php //echo $r['name']; 
-                                                      ?>"><?php //echo $r['name']; 
-                                                                                    ?></option> -->
                                 <?php
                                   // }
                                   // $slct++;
@@ -565,23 +563,23 @@
 
                       <?php
                         if (in_array($va, $arr1)) {
+                          // after 6 rotations, including closing </tr>
                           echo "</tr>";
                         }
                       }
                       if (in_array($va, $arr1)) {
+                        // after every 6 rotations, incrementing and resetting the variable
                         $i++;
                         $j = 0;
                       } else {
+                        // variab to add days names to input forms
                         $j++;
                       }
+                      // variable to check when to display time field
                       $va++;
                     }
                       ?>
-                      <!-- end tr -->
-
-
-
-
+                      <!-- end of code to update timetable -->
                   </tbody>
                 </table>
                 <div class="d-flex justify-content-end">

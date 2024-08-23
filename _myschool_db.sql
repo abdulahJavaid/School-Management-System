@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 20, 2024 at 12:46 PM
+-- Generation Time: Aug 23, 2024 at 11:13 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -345,7 +345,9 @@ INSERT INTO `expense_receiving` (`er_id`, `image`, `comment`, `expense`, `receiv
 (56, '', 'Student Aqib Jutt, reg# 245 paid dues amount Rs.200 (Pending Dues)', '0', '200', '2024-08-17'),
 (57, '', 'Student Asif Butt, reg# 266 paid full fee amount Rs.6000 (Monthly Fee)', '0', '6000', '2024-08-17'),
 (58, '', 'Student Rizwan Malik, reg# 258 paid dues amount Rs.1500 (Pending Dues)', '0', '1500', '2024-08-17'),
-(59, '', 'Student Rizwan Malik, reg# 258 paid dues amount Rs.2000 (Pending Dues)', '0', '2000', '2024-08-17');
+(59, '', 'Student Rizwan Malik, reg# 258 paid dues amount Rs.2000 (Pending Dues)', '0', '2000', '2024-08-17'),
+(60, 'images-36.jpg', 'the receiving', '0', '12000', '2024-08-22'),
+(61, 'images-39.jpg', 'the comment', '120000', '0', '2024-08-22');
 
 -- --------------------------------------------------------
 
@@ -601,7 +603,7 @@ INSERT INTO `student_fee` (`fee_id`, `fk_student_id`, `year`, `month`, `fee_meth
 (33, 16, '2024', 'August', '', '', '4000', '2024-08-20', '0000-00-00', 'dues', 600, 'hehe'),
 (34, 19, '2024', 'August', 'cash', '', '4500', '2024-08-20', '2024-08-15', 'paid', 0, ''),
 (35, 20, '2024', 'August', 'cash', '', '4500', '2024-08-20', '2024-08-04', 'paid', 0, ''),
-(36, 22, '2024', 'August', 'cash', '', '5000', '2024-08-20', '2024-08-01', 'paid', 0, ''),
+(36, 22, '2024', 'August', 'cash', '', '5000', '2024-08-20', '2024-08-01', 'dues', 4999, ''),
 (37, 24, '2024', 'August', '', '', '5000', '2024-08-20', '0000-00-00', 'dues', 1000, 'hehe'),
 (38, 25, '2024', 'August', '', '', '5500', '2024-08-20', '0000-00-00', 'dues', 100, 'hehe'),
 (39, 27, '2024', 'August', '', '', '5500', '2024-08-20', '0000-00-00', 'dues', 200, 'hehe'),
@@ -943,7 +945,7 @@ ALTER TABLE `exam_schedule`
 -- AUTO_INCREMENT for table `expense_receiving`
 --
 ALTER TABLE `expense_receiving`
-  MODIFY `er_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=60;
+  MODIFY `er_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
 
 --
 -- AUTO_INCREMENT for table `homework_diary`

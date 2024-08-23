@@ -14,77 +14,155 @@
     </nav>
   </div><!-- End Page Title -->
 
-  <div class="container-fluid">
+  <!-- start of the form -->
+  <form method="post" action="">
     <div class="row">
-      <div class="col-md-3">
-        <form method="post" action="">
-          <div class="input-group mb-3">
-            <button class="btn btn-primary mt-3" type="button" id="selectButton">Select Class</button>
-            <select id="classSelect" name="select" class="form-select mt-3">
-              <option selected disabled>Choose Class</option>
-              <?php
-              // Fetching all the classes 
-              $result = sql_select_all("all_classes");
-              while ($row = mysqli_fetch_assoc($result)) {
-              ?>
-                <optgroup label="Class: <?php echo $row['class_name']; ?>">
+      <div class="container-fluid">
+        <div class="row align-items-center">
+          <!-- Add timetable select option -->
+          <div class="col-auto">
+            <div class="input-group">
+              <select id="inputState" name="select1" class="form-select mt-3" aria-label="Example input" aria-describedby="button-addon2">
+                <option selected value="empty">Class</option>
+                <?php
+                // fetching all the classes 
+                $result = sql_select_all("all_classes");
+                while ($row = mysqli_fetch_assoc($result)) {
+
+                ?>
+                  <optgroup label="Class: <?php echo $row['class_name']; ?>">
+                    <?php
+                    // fetching the related sections
+                    $result1 = sql_where("class_sections", "fk_class_id", $row['class_id']);
+                    while ($row1 = mysqli_fetch_assoc($result1)) {
+                    ?>
+                      <option value="<?php echo $row['class_id'] . " " . $row1['section_id']; ?>"><?php echo $row['class_name'] . " " . $row1['section_name']; ?></option>
+                    <?php
+                    }
+                    ?>
+                  </optgroup>
+                <?php } ?>
+              </select>
+              <button class="btn btn-sm btn-success mt-3 ml-3" name="add" type="submit" id="button-addon2">
+                Add Exam Schedule
+              </button>
+            </div>
+          </div>
+
+          <!-- View timetable select option -->
+          <div class="col-auto">
+            <div class="input-group">
+              <select id="inputState" name="select" class="form-select mt-3" aria-label="Example input" aria-describedby="button-addon3">
+                <option selected value="empty">Class</option>
+                <?php
+                // fetching all the classes 
+                $result = sql_select_all("all_classes");
+                while ($row = mysqli_fetch_assoc($result)) {
+
+                ?>
+                  <optgroup label="Class: <?php echo $row['class_name']; ?>">
+                    <?php
+                    // fetching the related sections
+                    $result1 = sql_where("class_sections", "fk_class_id", $row['class_id']);
+                    while ($row1 = mysqli_fetch_assoc($result1)) {
+                    ?>
+                      <option value="<?php echo $row['class_id'] . " " . $row1['section_id']; ?>"><?php echo $row['class_name'] . " " . $row1['section_name']; ?></option>
+                    <?php
+                    }
+                    ?>
+                  </optgroup>
+                <?php } ?>
+              </select>
+              <button class="btn btn-sm btn-success mt-3 ml-3" name="view" type="submit" id="button-addon3">
+                View Exam Schedule
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+  <br>
+  <!-- end of the form -->
+
+  <!-- Exam Schedule Form, hidden by default -->
+  <section class="section profile" id="examScheduleForm">
+    <div class="row">
+      <div class="col-md-8">
+        <?php
+        // if add exam schedule request is submitted
+        if (isset($_POST['add']) && $_POST['select1'] != 'empty') {
+          $fetch = $_POST['select1'];
+          $length = strlen($fetch);
+          $find = strpos($fetch, ' ');
+          $number = $find + 1;
+          $useable = $length - $number;
+          $useable1 = $find;
+
+          $section = substr($fetch, -$useable);
+          $class = substr($fetch, 0, $find);
+          $section = (int) $section;
+          $class = (int) $class;
+
+          $result = sql_where('all_classes', 'class_id', $class);
+          $row = mysqli_fetch_assoc($result);
+          $result1 = sql_where_and('class_sections', 'section_id', $section, 'fk_class_id', $class);
+          $row1 = mysqli_fetch_assoc($result1);
+        ?>
+        <div class="card">
+          <div class="card-body pt-3">
+
+            <h5 class="card-title">Class: <?php echo $row['class_name'] . ' ' . $row1['section_name']; ?></h5>
+            <p><code><u>Instructions:</u></code>
+              <br><code>1. Don't leave time/subject/date empty or the relevant record will not be added</code>
+            </p>
+            <!-- Bordered Tabs -->
+            <ul class="nav nav-tabs nav-tabs-bordered">
+              <li class="nav-item">
+                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Add Exam Schedule</button>
+              </li>
+            </ul>
+            <div class="tab-content pt-2">
+              <div class="tab-pane fade show active profile-edit pt-3" id="profile-edit">
+                <form method="post" action="backend/back-add-exam.php" enctype="multipart/form-data">
                   <?php
-                  // Fetching the related sections
-                  $result1 = sql_where("class_sections", "fk_class_id", $row['class_id']);
-                  while ($row1 = mysqli_fetch_assoc($result1)) {
+                  // looping to get 9 form fields
+                  for ($i = 1; $i < 10; $i++) {
                   ?>
-                    <option value="<?php echo $row['class_id'] . " " . $row1['section_id']; ?>"><?php echo $row['class_name'] . " " . $row1['section_name']; ?></option>
+                    <div class="row mb-3">
+                      <div class="row align-items-center">
+                        <div class="col-auto">
+                          <div class="input-group">
+                            <label for="name" class="col-md-4 col-lg-3 col-form-label">Paper <?php echo $i; ?></label>
+                            <!-- <div class="col-md-6"> -->
+                            <input name="time" type="text" class="form-control" value="" placeholder="time">
+                            &nbsp;&nbsp;
+                            <input name="subject" type="text" class="form-control" value="" placeholder="subject">
+                            &nbsp;&nbsp;
+                            <input name="date" type="date" class="form-control" value="" placeholder="date">
+                            <!-- </div> -->
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   <?php
                   }
                   ?>
-                </optgroup>
-              <?php } ?>
-            </select>
-          </div>
-      </div>
-      <div class="col-md-4">
-        <button class="btn btn-md btn-primary mt-3 ml-3" id="addScheduleButton" type="button">Add Exam Schedule</button>
-      </div>
-      </form>
-    </div>
-  </div>
+                  <input type="hidden" name="section_id" value="<?php echo $row1['section_id']; ?>">
+                  <div class="d-flex justify-content-end">
+                    <button type="submit" name="submit" class="btn btn-md btn-success">Submit schedule</button>
+                  </div>
+                </form><!-- End Add timetable Form -->
 
-  <!-- Exam Schedule Form, hidden by default -->
-  <section class="section profile" id="examScheduleForm" style="display: none;">
-    <div class="row">
-      <div class="col-md-12">
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title">Class: </h5>
-            <p>Add the exam schedule</p>
-
-            <!-- Form for adding exam schedule -->
-            <form action="./backend/back-exam.php" method="post" enctype="multipart/form-data">
-            
-            <?php 
-              for($i = 1; $i <= 9; $i++){
-            ?>        
-                 
-            <div class="row mb-3">
-              <label class="col-md-3 col-lg-3 col-form-label">Paper <?php echo $i; ?>:</label>
-              <div class="col-md-9 col-lg-9">
-                <input name="date<?php echo $i; ?>" type="date" class="form-control d-inline-block w-auto mb-2 mr-sm-2" placeholder="Enter Date">
-                &nbsp;&nbsp;&nbsp;&nbsp;<input name="subject<?php echo $i; ?>" type="text" class="form-control d-inline-block w-auto mb-2 mr-sm-2" placeholder="Enter Subject">
-                &nbsp;&nbsp;&nbsp;&nbsp;<input name="time<?php echo $i; ?>" type="text" class="form-control d-inline-block w-auto mb-2" placeholder="Enter Time">
               </div>
-            </div>
-            <?php
-              }
-            ?>
 
-            <div class="d-flex justify-content-center">
-                <button type="submit" class="btn btn-primary" name="submit">Submit</button>
             </div>
 
-            </form><!-- End Exam Schedule Form -->
-            
           </div>
         </div>
+        <?php
+          } // end of if to add exam schedule
+        ?>
       </div>
     </div>
   </section>
@@ -93,15 +171,3 @@
 
 <!-- ======= Footer ======= -->
 <?php include_once("includes/footer.php"); ?>
-
-<!-- JavaScript to handle form visibility -->
-<script>
-  document.getElementById('addScheduleButton').addEventListener('click', function() {
-    var classSelect = document.getElementById('classSelect');
-    if (classSelect.value !== "Choose Class" && classSelect.value !== "") {
-      document.getElementById('examScheduleForm').style.display = 'block';
-    } else {
-      alert("Please select a class first.");
-    }
-  });
-</script>
