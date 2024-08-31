@@ -1436,7 +1436,7 @@ end Code for showing radio buttons as nice checkbox buttons
   border-radius: 5px;
   padding: 30px;
   text-align: center;
-  background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+  background: linear-gradient(135deg, #2193b0 0%, #6dd5ed 100%);
   color: #fff;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -1495,7 +1495,7 @@ end Code for showing radio buttons as nice checkbox buttons
 }
 
 .nav-tabs .nav-link.active {
-  background-color: #6020d2;
+  background-color: #2193b0;
   color: #fff;
 }
 /* start school,teacher,student profile hover */
