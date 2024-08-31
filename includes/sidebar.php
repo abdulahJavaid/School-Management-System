@@ -4,14 +4,14 @@
 
     <li class="nav-item">
       <a class="nav-link " href="index.php">
-        <i class=""><img src="images/dashboard.jpeg" width="30px" height="30px" alt=""></i>
+        <i class=""><img src="images/dashboard.gif" width="30px" height="30px" alt=""></i>
         <span>Dashboard</span>
       </a>
     </li><!-- End Dashboard Sidebar -->
 
     <li class="nav-item">
       <a class="nav-link collapsed" data-bs-target="#components-nav" href="school-profile.php"> <!-- data-bs-toggle="collapse" -->
-        <i class=""><img src="images/schoolprofile1.jpeg" width="30px" height="30px" alt=""></i>
+        <i class=""><img src="images/school.gif" width="30px" height="30px" alt=""></i>
         <span>School Profile</span>
         <!-- <i class="bi bi-chevron-down ms-auto"></i> -->
       </a>
@@ -59,7 +59,7 @@
       <!-- testing code -->
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#profiling" data-bs-toggle="collapse" href="#">
-          <i class=""><img src="images/profile.jpeg" width="30px" height="30px" alt=""></i>
+          <i class=""><img src="images/profile.gif" width="30px" height="30px" alt=""></i>
           <span>Profiles</span>
           <i class="bi bi-chevron-down ms-auto"></i>
         </a>
@@ -82,7 +82,7 @@
 
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#chart-nav" data-bs-toggle="collapse" href="">
-          <i class=><img src="images/timeable.png" width="30px" height="30px" alt=""></i><span>Time Table/Schedules</span>
+          <i class=><img src="images/calendar.gif" width="30px" height="30px" alt=""></i><span>Time Table/Schedules</span>
           <i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="chart-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
@@ -108,7 +108,7 @@
     ?>
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
-          <i class=""><img src="images/dailyexpness.jpg" width="30px" height="30px" alt=""></i><span>Finance Management</span>
+          <i class=""><img src="images/asset-management.gif" width="30px" height="30px" alt=""></i><span>Finance Management</span>
           <i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="forms-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
@@ -131,7 +131,7 @@
 
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
-          <i class=><img src="images/fee.jpg" width="30px" height="30px" alt=""></i><span>Student Fee</span>
+          <i class=><img src="images/feee.gif" width="30px" height="30px" alt=""></i><span>Student Fee</span>
           <i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
@@ -168,41 +168,41 @@
     ?>
     <li class="nav-item">
       <a class="nav-link collapsed" data-bs-target="#tables-nav" href="fee-vouchers.php">
-        <i class=><img src="images/reporttracking.jpg" width="30px" height="30px" alt=""></i><span>Fee Vouchers</span>
+        <i class=><img src="images/voucher.gif" width="30px" height="30px" alt=""></i><span>Fee Vouchers</span>
         <!-- <i class="bi bi-chevron-down ms-auto"></i> -->
       </a>
     </li><!-- End Student Fee Vouchers -->
     <li class="nav-item">
       <a class="nav-link collapsed" data-bs-target="#tables-nav" href="progress-reports.php">
-        <i class=><img src="images/reporttracking.jpg" width="30px" height="30px" alt=""></i><span>Progress Reports</span>
+        <i class=><img src="images/analytics.gif" width="30px" height="30px" alt=""></i><span>Progress Reports</span>
         <!-- <i class="bi bi-chevron-down ms-auto"></i> -->
       </a>
     </li><!-- End Student Progress Report -->
 
     <li class="nav-item">
       <a class="nav-link collapsed" data-bs-target="#tables-nav" href="homework-diary.php">
-        <i class=><img src="images/reporttracking.jpg" width="30px" height="30px" alt=""></i><span>Home Work Diary</span>
+        <i class=><img src="images/diary.gif" width="30px" height="30px" alt=""></i><span>Home Work Diary</span>
         <!-- <i class="bi bi-chevron-down ms-auto"></i> -->
       </a>
     </li><!-- End Homework Diary -->
 
     <li class="nav-item">
       <a class="nav-link collapsed" data-bs-target="#tables-nav" href="attendance.php">
-        <i class=><img src="images/reporttracking.jpg" width="30px" height="30px" alt=""></i><span>Attendance</span>
+        <i class=><img src="images/face.gif" width="30px" height="30px" alt=""></i><span>Attendance</span>
         <!-- <i class="bi bi-chevron-down ms-auto"></i> -->
       </a>
     </li><!-- End Student Attendance -->
 
     <li class="nav-item">
       <a class="nav-link collapsed" href="add-announcements.php">
-        <i class=><img src="images/announcments.jpg" width="30px" height="30px" alt=""></i>
+        <i class=><img src="images/promote.gif" width="30px" height="30px" alt=""></i>
         <span>Add Announcements</span>
       </a>
     </li><!-- End Announcements tab -->
 
     <li class="nav-item">
       <a class="nav-link collapsed" href="#">
-        <i class=><img src="images/morereports.jpg" width="30px" height="30px" alt=""></i>
+        <i class=><img src="images/more.gif" width="30px" height="30px" alt=""></i>
         <span>More Reports</span>
       </a>
     </li><!-- Undefined functionality -->

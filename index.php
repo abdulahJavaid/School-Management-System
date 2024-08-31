@@ -16,8 +16,89 @@
     </div><!-- End Page Title -->
     <!-- google translate -->
     <!-- <div id="google_translate_element"></div> -->
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bootstrap Slider</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+    .carousel {
+        background-color: #000; /* Set background color of the carousel */
+    }
+    .carousel-item img {
+        width: 100%;
+        height: 350px; /* Reduced height */
+        object-fit: cover;
+    }
+    .carousel-caption {
+        background-color: rgba(0, 0, 0, 0.5);
+        padding: 10px;
+        border-radius: 10px;
+    }
+    .carousel-item {
+        transition: transform 0.0s ease-in-out; /* Faster transition */
+    }
+    
+  
+</style>
 
-    <section class="section dashboard">
+</head>
+<body>
+
+    <!-- Slider Start -->
+    <div id="mySlider" class="carousel slide" data-ride="carousel">
+        <ol class="carousel-indicators">
+            <li data-target="#mySlider" data-slide-to="0" class="active"></li>
+            <li data-target="#mySlider" data-slide-to="1"></li>
+            <li data-target="#mySlider" data-slide-to="2"></li>
+        </ol>
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="images/slider1.jpeg" class="d-block w-100" alt="First Slide">
+                <div class="carousel-caption">
+                    <h5>Empowering Minds, Shaping Futures</h5>
+                    <p>we nurture academic growth and personal development, preparing students for success and positive contributions to society</p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="images/slider2.jpeg" class="d-block w-100" alt="Second Slide">
+                <div class="carousel-caption">
+                    <h5>Learning Today, Leading Tomorrow</h5>
+                    <p>we inspire students to achieve excellence and become future leaders. Our focus is on holistic education that fosters intellectual growth and character development.</p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="images/slider3.jpeg" class="d-block w-100" alt="Third Slide">
+                <div class="carousel-caption">
+                    <h5>Where Potential Meets Purpose</h5>
+                    <p>empowers students to discover their strengths and pursue their passions. We are dedicated to providing a supportive environment that shapes confident, capable individuals</p>
+                </div>
+            </div>
+        </div>
+        <a class="carousel-control-prev" href="#mySlider" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#mySlider" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+    <!-- Slider End -->
+
+    <!-- Bootstrap JS and dependencies -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
+
+
+  
+    <section class="section dashboard mt-2">
       <div class="row">
 
         <!-- Left side columns -->
