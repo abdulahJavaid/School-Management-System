@@ -6,7 +6,7 @@
 <main id="main" class="main">
 
     <div class="pagetitle">
-        <h1>School Diary</h1>
+        <h1>Fee Vouchers</h1>
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item active"><?php echo $_SESSION['school_name']; ?></li>
@@ -15,158 +15,153 @@
 
     </div><!-- End Page Title -->
 
+    <?php
+    // issue fees to whole school
+    if (isset($_POST['issued_fees'])) {
+        $due_date = escape($_POST['last_date']);
+        $month = date('F');
+        $year = date('Y');
+        $fee_status = 'unpaid';
+
+        $query = "SELECT student_id, fee_amount FROM student_profile WHERE student_status='1'";
+        $results = mysqli_query($conn, $query);
+        while ($row = mysqli_fetch_array($results)) {
+            $student_id = $row['student_id'];
+            $monthly_fee = $row['fee_amount'];
+
+            $query = "INSERT INTO student_fee(fk_student_id, year, month, monthly_fee, due_date, fee_status) ";
+            $query .= "VALUES('$student_id', '$year', '$month', '$monthly_fee', '$due_date', '$fee_status')";
+            $resultss = query($query);
+        }
+        redirect("./fee-vouchers.php");
+    }
+    ?>
+
     <!-- class and sections -->
     <div class="pagetitle">
         <div class="row">
-            <form action="" method="post">
-                <div class="col-lg-3">
-                    <select id="inputState" name="select" class="form-select">
-                        <option selected value="choose_class">Choose Class</option>
-                        <?php
-                        // fetching all the classes 
-                        $result = sql_select_all("all_classes");
-                        while ($row = mysqli_fetch_assoc($result)) {
 
-                        ?>
-                            <optgroup label="Class: <?php echo $row['class_name']; ?>">
-                                <?php
-                                // fetching the related sections
-                                $result1 = sql_where("class_sections", "fk_class_id", $row['class_id']);
-                                while ($row1 = mysqli_fetch_assoc($result1)) {
-                                ?>
-                                    <option value="<?php echo $row['class_id'] . " " . $row1['section_id']; ?>"><?php echo $row['class_name'] . " " . $row1['section_name']; ?></option>
-                                <?php
-                                }
-                                ?>
-                            </optgroup>
-                        <?php } ?>
-                    </select>
-                    </br>
-                    <div class="col-auto">
-                        <div class="input-group">
-                            <input
-                                name="date"
-                                type="date"
-                                class="form-control"
-                                placeholder="By name"
-                                aria-label="Example input"
-                                aria-describedby="button-addon2" required />
-                            <button name="view_diary" class="btn btn-sm btn-success" type="submit" id="button-addon2">
-                                View Diary
-                            </button>
-                        </div>
+            <?php
+            // issue fees
+            if (!isset($_POST['issue_fees'])) {
+            ?>
+                <div class="row mb-3">
+                    <div class="col-md-3 mb-3">
+                        <form action="" method="post">
+                            <button type="submit" name="issue_fees" class="btn btn-sm btn-success w-100">Issue Fees</button>
+                        </form>
                     </div>
                 </div>
-            </form>
+            <?php
+            }
+            if (isset($_POST['issue_fees'])) {
+            ?>
+                <form action="" method="post">
+                    <div class="row mb-3">
+                        <p><code>Fee will be issued to whole school for </code><?php echo date('Y') . ', ' . date('F'); ?></p>
+                        <div class="col-sm-4">
+                            <label for="due-date" class="form-label"><strong>Fees Last date</strong> <code>*</code></label>
+
+                            <div class="col-auto">
+                                <div class="input-group">
+                                    <input
+                                        name="last_date"
+                                        type="date"
+                                        class="form-control"
+                                        aria-label="Example input"
+                                        aria-describedby="button-addon2" required />
+
+                                    <button type="submit" name="issued_fees" id="button-addon2" class="btn btn-sm btn-success">
+                                        Issue Fees
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="col-lg-3 h-100">
+                            <div class="d-flex align-items-end">
+                            </div>
+                        </div> -->
+                    </div>
+                </form>
+            <?php
+            }
+            ?>
+            <?php
+            // download vouchers
+            if (!isset($_POST['download_vouchers'])) {
+            ?>
+                <div class="row mb-3">
+                    <div class="col-md-3 mb-3">
+                        <form action="" method="post">
+                            <button type="submit" name="download_vouchers" class="btn btn-sm btn-success w-100">Download vouchers</button>
+                        </form>
+                    </div>
+                </div>
+            <?php
+            }
+            if (isset($_POST['download_vouchers'])) {
+            ?>
+                <div class="row mb-3">
+                    <form action="generate-pdf.php" method="post">
+                        <div class="col-sm-4">
+                            <label for="due-date" class="form-label"><strong>Select Class</strong> <code>*</code></label>
+                            <div class="col-auto">
+                                <div class="input-group">
+                                    <select id="inputState" name="select" aria-label="Example input" aria-describedby="button-addon3" class="form-select">
+                                        <option selected value="choose_class">Class</option>
+                                        <?php
+                                        // fetching all the classes 
+                                        $result = sql_select_all("all_classes");
+                                        while ($row = mysqli_fetch_assoc($result)) {
+
+                                        ?>
+                                            <optgroup label="Class: <?php echo $row['class_name']; ?>">
+                                                <?php
+                                                // fetching the related sections
+                                                $result1 = sql_where("class_sections", "fk_class_id", $row['class_id']);
+                                                while ($row1 = mysqli_fetch_assoc($result1)) {
+                                                ?>
+                                                    <option value="<?php echo $row['class_id'] . " " . $row1['section_id']; ?>"><?php echo $row['class_name'] . " " . $row1['section_name']; ?></option>
+                                                <?php
+                                                }
+                                                ?>
+                                            </optgroup>
+                                        <?php } ?>
+                                    </select>
+                                    <button type="submit" name="download_class_vouchers" id="button-addon3" class="btn btn-sm btn-success">
+                                        Download Vouchers
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    <form action="generate-pdf.php" method="post">
+                        <div class="col-sm-4">
+                            <label for="due-date" class="form-label"><strong>For School</strong> <code>*</code></label>
+                            <div class="col-auto">
+                                <div class="input-group">
+                                    <input
+                                        name="all_students"
+                                        type="text"
+                                        class="form-control"
+                                        aria-label="Example input"
+                                        value="All students"
+                                        aria-describedby="button-addon2" readonly required />
+                                    <button type="submit" name="download_school_vouchers" id="button-addon3" class="btn btn-sm btn-success">
+                                        Download Vouchers
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            <?php
+            }
+            ?>
+
         </div>
     </div><!-- End Select Student and add Student -->
-    <?php
-    // checking if the admin has selected the class
-    if (isset($_POST['view_diary']) && $_POST['select'] == 'choose_class') {
-        $message = "Please select a class to view diary!";
-    }
-    ?>
-    <?php if (isset($message)) { ?>
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="alert alert-danger"><strong>
-                        <?php echo $message; ?>
-                    </strong></div>
-            </div>
-        </div>
-    <?php } ?>
 
-    <!-- <section class="section profile">
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Student Details</h5>
-                        <p>Student Details of All the registered students of <code>School Name</code>.</p> -->
-    <!--  -->
-    <!--  -->
-    <!--  -->
-
-    <?php
-    // show the diary for the selected date
-    if (isset($_POST['view_diary']) && $_POST['select'] != 'choose_class') {
-        // separating the section and class {id} from POST data
-        $fetch = $_POST['select'];
-        $length = strlen($fetch);
-        $find = strpos($fetch, ' ');
-        $number = $find + 1;
-        $useable = $length - $number;
-        $useable1 = $find;
-
-        $section = substr($fetch, -$useable);
-        $class = substr($fetch, 0, $find);
-        $section = (int) $section;
-        $class = (int) $class;
-
-        $date = $_POST['date'];
-
-        // getting class and section names
-        $q = "SELECT * FROM class_sections INNER JOIN all_classes ON ";
-        $q .= "class_sections.fk_class_id=all_classes.class_id ";
-        $q .= "WHERE section_id='$section'";
-        $res = query($q);
-        $rows = mysqli_fetch_assoc($res);
-
-
-        $get = sql_where_and('homework_diary', 'fk_section_id', "$section", 'date', "$date");
-    ?>
-        <div class="container my-5">
-            <h1 class="text-center mb-4">Homework Diary</h1>
-
-            <!-- Homework Diary Card -->
-            <div class="card">
-                <div class="card-header bg-secondary text-white">
-                    <h5 class="mb-0">Class: <?php echo $rows['class_name'] . " " . $rows['section_name']; ?> / <?php echo date("jS \of F Y", strtotime($date)); ?></h5>
-                </div>
-
-                <?php
-                if (mysqli_num_rows($get)) {
-                    while ($row = mysqli_fetch_assoc($get)) {
-                ?>
-                        <div class="row mb-3 ps-3">
-                            <div class="col-sm-3 fw-bold border-end"><?php echo $row['subject']; ?></div>
-                            <div class="col-sm-9"><?php echo $row['subject_diary']; ?></div>
-                        </div>
-
-                    <?php
-                    }
-                    ?>
-            </div>
-        </div>
-    <?php
-                } elseif (mysqli_num_rows($get) == 0 || !$get) { // end of inner if - start else
-
-    ?>
-        <div class="row ps-5 pe-5 pt-2">
-            <div class="col-sm-12">
-                <div class="alert alert-danger">
-                    <!-- <strong> -->
-                    There was no diary added on this day for class <?php echo $rows['class_name'] . "-" . $rows['section_name']; ?>!
-                    <!-- </strong> -->
-                </div>
-            </div>
-        </div>
-        </div>
-        </div>
-<?php
-
-                } // inside else code
-            } // main if
-?>
-
-<!--  -->
-<!--  -->
-<!--  -->
-<!-- </div>
-                </div>
-            </div>
-        </div>
-    </section> -->
 
 </main><!-- End #main -->
 

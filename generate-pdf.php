@@ -6,7 +6,7 @@ require_once('./db_connection/configs.php');
 require_once('./db_connection/connection.php');
 require_once('./includes/functions.php');
 
-if (!isset($_POST['generate']) && !isset($_POST['current_month']) && !isset($_POST['generate_name']) && !isset($_POST['generate_reg']) && !isset($_POST['dues_current_month']) && !isset($_POST['dues_name']) && !isset($_POST['dues_reg']) && !isset($_POST['notpaid_current_month']) && !isset($_POST['notpaid_name']) && !isset($_POST['notpaid_reg'])) {
+if (!isset($_POST['generate']) && !isset($_POST['current_month']) && !isset($_POST['generate_name']) && !isset($_POST['generate_reg']) && !isset($_POST['dues_current_month']) && !isset($_POST['dues_name']) && !isset($_POST['dues_reg']) && !isset($_POST['notpaid_current_month']) && !isset($_POST['notpaid_name']) && !isset($_POST['notpaid_reg']) && !isset($_POST['download_school_vouchers']) && !isset($_POST['download_class_vouchers'])) {
     redirect("./");
 }
 // if ( !isset($_POST['dues_name']) && !isset($_POST['dues_reg'])) {
@@ -29,7 +29,8 @@ include "pdf/notpaid-current-month.php";
 include "pdf/notpaid-by-name.php";
 include "pdf/notpaid-by-rollno.php";
 include "pdf/expense-receiving.php";
-
+include "pdf/vouchers-school.php";
+include "pdf/vouchers-class.php";
 
 
 // using the Dompdf namespace

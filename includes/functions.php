@@ -36,7 +36,8 @@
     function query($query) {
         global $conn;
         $result = mysqli_query($conn, $query);
-        return ($result) ? $result : false;
+        // return ($result) ? $result : false;
+        return $result;
     }
 
     // escape the string

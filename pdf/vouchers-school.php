@@ -1,0 +1,215 @@
+<?php
+// paid fee for the current month
+
+if (isset($_POST['all_students'])) {
+
+    $query = "SELECT * FROM school_profile_ ORDER BY id DESC LIMIT 1";
+    $result = mysqli_query($conn, $query);
+    $row = mysqli_fetch_assoc($result);
+
+    $name = $row['name'];
+    $address = $row['address'];
+    $contact = $row['contact'];
+    $email = $row['email'];
+    $image = $row['image'];
+    $month = date('F');
+    $year = date('Y');
+
+    $query = "SELECT * FROM student_fee INNER JOIN ";
+    $query .= "student_profile ON student_fee.fk_student_id=student_profile.student_id INNER JOIN ";
+    $query .= "student_class ON student_profile.student_id=student_class.fk_student_id INNER JOIN ";
+    $query .= "class_sections ON student_class.fk_section_id=class_sections.section_id INNER JOIN ";
+    $query .= "all_classes ON class_sections.fk_class_id=all_classes.class_id ";
+    $query .= "WHERE year='$year' AND month='$month' AND fee_status='unpaid'";
+
+    $pass = mysqli_query($conn, $query);
+
+    $html = "
+  <!DOCTYPE html>
+<html lang='en'>
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <title>Fee Voucher</title>
+    <style>
+body {
+    font-family: Arial, sans-serif;
+    color: #000;
+    margin: 0;
+    padding: 0;
+}
+
+.vouchers {
+    display: table;
+    width: 100%;
+    margin: 0 auto;
+    border-spacing: 10px; /* Space between the two vouchers */
+}
+
+.voucher-container {
+    display: table-cell;
+    width: 48%; /* Each voucher takes up nearly half the page */
+    padding: 20px;
+    border: 1px solid #000;
+    box-sizing: border-box;
+    vertical-align: top;
+}
+
+.school-name {
+    font-size: 1.2em;
+    text-align: left;
+    margin: 0;
+    padding: 5px 0;
+}
+
+.voucher-title {
+    font-size: 1.1em;
+    text-align: left;
+    margin: 0;
+    padding: 5px 0;
+}
+
+.voucher-details, .payment-info, .footer {
+    margin: 15px 0;
+    font-size: 0.9em;
+}
+
+.fee-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 15px 0;
+}
+
+.fee-table th, .fee-table td {
+    border: 1px solid #000;
+    padding: 8px;
+    text-align: left;
+    font-size: 0.9em;
+}
+
+.fee-table th {
+    background-color: #f0f0f0;
+}
+
+.footer {
+    text-align: center;
+    font-size: 0.8em;
+}
+
+.voucher-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.voucher-type {
+    font-weight: bold;
+    font-size: 0.9em;
+}
+
+@media print {
+    .vouchers {
+        page-break-after: always;
+    }
+    
+    .voucher-container {
+        height: 100%; /* Ensure full height for each voucher container */
+        page-break-inside: avoid;
+    }
+}
+
+    </style>
+</head>
+<body>";
+while($rows = mysqli_fetch_assoc($pass)){
+    $student_name = $rows['name'];
+    $roll_no = $rows['roll_no'];
+    $class = $rows['class_name'];
+    $section = $rows['section_name'];
+    $fee = $rows['monthly_fee'];
+    $last_date = $rows['due_date'];
+
+    // $html .= "1";
+    $html .= "<div class='vouchers'>
+        <div class='voucher-container'>
+            <div class='voucher-header'>
+            <span class='voucher-type'>Student Copy</span><br>
+                <h3 class='school-name'>$name</h3>
+            </div>
+            <h2 class='voucher-title'>Fee Voucher</h2>
+            
+            <div class='voucher-details'>
+                <p><strong>Student Name:</strong> $student_name</p>
+                <p><strong>Roll Number:</strong> $roll_no</p>
+                <p><strong>Class:</strong> $class $section</p>
+                <p><strong>Month:</strong> $year $month</p>
+            </div>
+            
+            <table class='fee-table'>
+                <thead>
+                    <tr>
+                        <th>Description</th>
+                        <th>Amount (Rs.)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Monthly Fees</td>
+                        <td>$fee</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class='payment-info'>
+                <p><strong>Last Date:</strong> $last_date</p>
+                <p><strong>Payment Method:</strong> Bank Transfer/Cash</p>
+            </div>
+            
+            <div class='footer'>
+                <p><strong>Note:</strong> Please ensure payment is made by the due date to avoid any late fees.</p>
+            </div>
+        </div>
+
+        <div class='voucher-container'>
+            <div class='voucher-header'>
+            <span class='voucher-type'>School Copy</span><br>
+                <h3 class='school-name'>$name</h3>
+            </div>
+            <h2 class='voucher-title'>Fee Voucher</h2>
+            
+            <div class='voucher-details'>
+                <p><strong>Student Name:</strong> $student_name</p>
+                <p><strong>Roll Number:</strong> $roll_no</p>
+                <p><strong>Class:</strong> $class $section</p>
+                <p><strong>Month:</strong> $year $month</p>
+            </div>
+            
+            <table class='fee-table'>
+                <thead>
+                    <tr>
+                        <th>Description</th>
+                        <th>Amount (Rs.)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Monthly Fee</td>
+                        <td>$fee</td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class='payment-info'>
+                <p><strong>Last Date:</strong> $last_date</p>
+                <p><strong>Payment Method:</strong> Bank Transfer/Cash</p>
+            </div>
+            
+            <div class='footer'>
+                <p><strong>Note:</strong> Please ensure payment is made by the due date to avoid any late fees.</p>
+            </div>
+        </div>
+    </div>";
+}
+$html .= "</body>
+</html>
+  ";
+}
