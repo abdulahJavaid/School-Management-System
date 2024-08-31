@@ -167,7 +167,7 @@
     }
     ?>
     <li class="nav-item">
-      <a class="nav-link collapsed" data-bs-target="#tables-nav" href="progress-reports.php">
+      <a class="nav-link collapsed" data-bs-target="#tables-nav" href="fee-vouchers.php">
         <i class=><img src="images/reporttracking.jpg" width="30px" height="30px" alt=""></i><span>Fee Vouchers</span>
         <!-- <i class="bi bi-chevron-down ms-auto"></i> -->
       </a>
