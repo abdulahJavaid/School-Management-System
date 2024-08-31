@@ -14,7 +14,7 @@ if (!isset($_GET['id'])) {
     <h1>View Profile</h1>
     <nav>
       <ol class="breadcrumb">
-        <li class="breadcrumb-item active">School name here</li>
+        <li class="breadcrumb-item active"><?php echo $_SESSION['school_name']; ?></li>
       </ol>
     </nav>
   </div><!-- End Page Title -->
@@ -37,17 +37,38 @@ if (!isset($_GET['id'])) {
       <div class="col-xl-4">
         <div class="card custom-card">
           <div class="card-body profile-card d-flex flex-column align-items-center">
-            <img src="images/profile.jpeg" alt="Profile">
+            <?php
+            // displaying the image
+            if (!empty($row['image'])) {
+            ?>
+              <img src="./uploads/students-profile/<?php echo $row['image']; ?>" alt="Profile">
+            <?php
+            } else {
+            ?>
+              <img src="./uploads/students-profile/student-profile-default-image.jpg" alt="Profile">
+            <?php
+            }
+            ?>
             <h2><?php echo $row['name']; ?></h2>
             <h3>Class: <?php echo $row['class_name'] . ' ' . $row['section_name']; ?></h3>
-            <div class="social-links mt-2">
+            <!-- <div class="social-links mt-2">
               <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
               <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
               <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
               <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
-            </div>
+            </div> -->
           </div>
         </div>
+
+        <div class="d-flex justify-content-between">
+          <div class="justify-content-start">
+            <a href="./student-profile.php" class="btn btn-sm btn-success mb-3">Add new Student</a>
+          </div>
+          <div class="justify-content-end">
+            <a href="./edit-student.php?id=<?php echo $id; ?>" class="btn btn-sm btn-success mb-3">Update this profile</a>
+          </div>
+        </div>
+
       </div>
 
       <div class="col-xl-8">
@@ -63,40 +84,58 @@ if (!isset($_GET['id'])) {
                 <div class="tab-pane fade show active profile-overview" id="profile-overview">
                   <h5 class="card-title">Details</h5>
                   <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Name</div>
+                    <div class="col-lg-3 col-md-4 label"><strong>Name</strong></div>
                     <div class="col-lg-9 col-md-8"><?php echo $row['name']; ?></div>
                   </div>
+
                   <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Registration#</div>
+                    <div class="col-lg-3 col-md-4 label"><strong>Registration#</strong></div>
                     <div class="col-lg-9 col-md-8"><?php echo $row['roll_no']; ?></div>
                   </div>
+
                   <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Class</div>
-                    <div class="col-lg-9 col-md-8"><?php echo $row['class_name']; ?></div>
+                    <div class="col-lg-3 col-md-4 label"><strong>Class</strong></div>
+                    <div class="col-lg-9 col-md-8"><?php echo $row['class_name'] . " " . $row['section_name']; ?></div>
                   </div>
+
                   <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Section</div>
-                    <div class="col-lg-9 col-md-8"><?php echo $row['section_name']; ?></div>
-                  </div>
-                  <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Cnic/B-form</div>
+                    <div class="col-lg-3 col-md-4 label"><strong>Cnic/B-form</strong></div>
                     <div class="col-lg-9 col-md-8"><?php echo $row['cnic']; ?></div>
                   </div>
+
                   <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Date of Birth</div>
+                    <div class="col-lg-3 col-md-4 label"><strong>Date of Birth</strong></div>
                     <div class="col-lg-9 col-md-8"><?php echo $row['dob']; ?></div>
                   </div>
+
                   <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Address</div>
-                    <div class="col-lg-9 col-md-8"><?php echo $row['address']; ?></div>
+                    <div class="col-lg-3 col-md-4 label"><strong>Father Name</strong></div>
+                    <div class="col-lg-9 col-md-8"><?php echo $row['father_name']; ?></div>
                   </div>
+
                   <div class="row">
-                    <div class="col-lg-3 col-md-4 label">Mobile#</div>
+                    <div class="col-lg-3 col-md-4 label"><strong>Father Cnic</strong></div>
+                    <div class="col-lg-9 col-md-8"><?php echo $row['father_cnic']; ?></div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label"><strong>Phone#</strong></div>
                     <div class="col-lg-9 col-md-8"><?php echo $row['mobile_no']; ?></div>
                   </div>
+
                   <div class="row">
-                    <div class="col-lg-3 col-md-4 label">E-mail</div>
+                    <div class="col-lg-3 col-md-4 label"><strong>E-mail</strong></div>
                     <div class="col-lg-9 col-md-8"><?php echo $row['email']; ?></div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label"><strong>Monthly Fee</strong></div>
+                    <div class="col-lg-9 col-md-8">Rs. <?php echo $row['fee_amount']; ?></div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label"><strong>Address</strong></div>
+                    <div class="col-lg-9 col-md-8"><?php echo $row['address']; ?></div>
                   </div>
                 </div>
               </div><!-- End Bordered Tabs -->

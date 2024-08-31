@@ -6,10 +6,10 @@
 <main id="main" class="main">
 
     <div class="pagetitle">
-        <h1>Students</h1>
+        <h1>Class Attendance</h1>
         <nav>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item active">My School System</li>
+                <li class="breadcrumb-item active"><?php echo $_SESSION['school_name']; ?></li>
             </ol>
         </nav>
 
@@ -102,8 +102,10 @@
         $class = substr($fetch, 0, $find);
         $section = (int) $section;
         $class = (int) $class;
+        $section = escape($section);
+        $class = escape($class);
 
-        $date = $_POST['date'];
+        $date = escape($_POST['date']);
 
         // getting class and section names
         $q = "SELECT * FROM class_sections INNER JOIN all_classes ON ";
@@ -116,7 +118,7 @@
         $qu = "SELECT * FROM student_class INNER JOIN student_profile ON ";
         $qu .= "student_class.fk_student_id=student_profile.student_id INNER JOIN attendance ON ";
         $qu .= "student_profile.student_id=attendance.fk_student_id ";
-        $qu .= "WHERE fk_section_id='$section'";
+        $qu .= "WHERE fk_section_id='$section' AND date='$date'";
         $get = query($qu);
     ?>
         <div class="container my-5">

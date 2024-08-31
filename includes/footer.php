@@ -1,3 +1,55 @@
+
+<!-- <script>
+  // dropdown prevent feature
+//     function keepDropdownOpen(event, url) {
+//     event.preventDefault(); // Prevent the link from being followed
+//     event.stopPropagation(); // Prevent the dropdown from closing
+//     window.location.href = url; // Manually navigate to the URL
+// }
+
+// dropdown event feture
+// function keepDropdownOpen(event, url) {
+//     event.preventDefault(); // Prevent the link from being followed
+//     event.stopPropagation(); // Prevent the dropdown from closing
+    
+//     // Delay the navigation to keep the dropdown open briefly
+//     setTimeout(function() {
+//         window.location.href = url;
+//     }, 20000000); // 200 milliseconds delay
+// }
+
+// dropdown prevent code
+// function keepDropdownOpen(event, url) {
+//     event.stopPropagation(); // Prevent the dropdown from closing
+//     window.location.href = url; // Navigate to the URL
+// }
+
+// dropdown prevent code
+// document.addEventListener('DOMContentLoaded', function () {
+//     // Get all links inside your dropdown
+//     let dropdownLinks = document.querySelectorAll('#profiling .dropdown-item');
+
+//     dropdownLinks.forEach(function (link) {
+//         link.addEventListener('click', function (event) {
+//             event.preventDefault(); // Prevent default link behavior
+//             event.stopImmediatePropagation(); // Stop event propagation
+
+//             // Navigate to the URL manually
+//             window.location.href = link.href;
+//         });
+//     });
+    
+//     // Prevent the collapse event for your dropdown specifically
+//     let profilingDropdown = document.getElementById('profiling');
+//     profilingDropdown.addEventListener('hide.bs.collapse', function (event) {
+//         event.preventDefault(); // Prevent the dropdown from collapsing
+//     });
+// });
+
+</script> -->
+
+
+
 <!-- google translate -->
  <!-- <script type="text/javascript"> -->
 <!-- // function googleTranslateElementInit() {

@@ -10,8 +10,8 @@
     <nav>
       <ol class="breadcrumb">
         <!-- <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-      <li class="breadcrumb-item">Users</li> -->
-        <li class="breadcrumb-item active">School name here</li>
+        <li class="breadcrumb-item">Users</li> -->
+        <li class="breadcrumb-item active"><?php echo $_SESSION['school_name']; ?></li>
       </ol>
     </nav>
   </div><!-- End Page Title -->
@@ -102,6 +102,8 @@
           $class = substr($fetch, 0, $find);
           $section = (int) $section;
           $class = (int) $class;
+          $class = escape($class);
+          $section = escape($section);
 
           $result = sql_where('all_classes', 'class_id', $class);
           $row = mysqli_fetch_assoc($result);
@@ -274,12 +276,15 @@
           $class = substr($fetch, 0, $find);
           $section = (int) $section;
           $class = (int) $class;
+          $class = escape($class);
+          $section = escape($section);
 
           $result = sql_where('all_classes', 'class_id', $class);
           $row = mysqli_fetch_assoc($result);
           $result1 = sql_where_and('class_sections', 'section_id', $section, 'fk_class_id', $class);
           $row1 = mysqli_fetch_assoc($result1);
           $sid = $row1['section_id'];
+          $sid = escape($sid);
 
         ?>
           <!-- start of card -->
@@ -369,12 +374,15 @@
         if (isset($_POST['update'])) {
           $section = $_POST['section_id'];
           $class = $_POST['class_id'];
+          $class = escape($class);
+          $section = escape($section);
 
           $result = sql_where('all_classes', 'class_id', $class);
           $row = mysqli_fetch_assoc($result);
           $result1 = sql_where_and('class_sections', 'section_id', $section, 'fk_class_id', $class);
           $row1 = mysqli_fetch_assoc($result1);
           $sid = $row1['section_id'];
+          $sid = escape($sid);
 
         ?>
           <div class="card">
@@ -449,7 +457,7 @@
                             </td>
                           <?php } else {
                             // {elese} if the period_name != break
-                            ?>
+                          ?>
                             <td>
                               <input type="text" name="<?php echo $d[$j] . $i; ?>" value="<?php echo $ro['period_name']; ?>" class="form-control inpt-1" size="3" placeholder="Subject">
                               <select id="inputState" name="<?php echo $t[$j] . $i; ?>" class="<?php echo $t[$j] . $i; ?> form-select mt-1 inpt-1">
@@ -492,12 +500,12 @@
                             </td>
                           <?php } ?>
                         <?php
-                      } else { 
+                      } else {
                         // {else} if the loop rotation is not 1st for each table row
                         ?>
                           <?php if ($ro['period_name'] == 'break') {
                             // if the period_name == break
-                            ?>
+                          ?>
                             <td>
                               <input type="text" name="<?php echo $d[$j] . $i; ?>" class="form-control inpt-1" size="3" placeholder="Subject">
                               <select id="inputState" name="<?php echo $t[$j] . $i; ?>" class="form-select mt-1 inpt-1">
@@ -516,9 +524,9 @@
                               <!-- The period_name was equal to break -->
                               <input type="checkbox" name="<?php echo $b[$j] . $i; ?>" checked> Break
                             </td>
-                          <?php } else { 
+                          <?php } else {
                             // {else} if the period_name was not break
-                            ?>
+                          ?>
                             <td>
                               <input type="text" name="<?php echo $d[$j] . $i; ?>" value="<?php echo $ro['period_name']; ?>" class="form-control inpt-1" size="3" placeholder="Subject">
                               <select id="inputState" name="<?php echo $t[$j] . $i; ?>" class="form-select mt-1 inpt-1">

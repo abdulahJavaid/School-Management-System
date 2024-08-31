@@ -20,7 +20,7 @@ if ($_SESSION['login_access'] == 'developer' || $_SESSION['login_access'] == 'ac
       <ol class="breadcrumb">
         <!-- <li class="breadcrumb-item"><a href="index.html">Home</a></li>
       <li class="breadcrumb-item">Users</li> -->
-        <li class="breadcrumb-item active">School name here</li>
+        <li class="breadcrumb-item active"><?php echo $_SESSION['school_name']; ?></li>
       </ol>
     </nav>
   </div><!-- End Page Title -->

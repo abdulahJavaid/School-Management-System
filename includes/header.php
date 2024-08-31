@@ -59,11 +59,11 @@
   <header id="header" class="header fixed-top d-flex align-items-center">
 
     <div class="d-flex align-items-center justify-content-between">
-      <a href="index.html" class="logo d-flex align-items-center">
+      <a href="./index.php" class="logo d-flex align-items-center">
         <!-- <img src="assets/img/logo.png" alt=""> -->
-        <span class="d-none d-lg-block">My School System</span>
+        <span class="d-none d-lg-block">Insaaf School System</span>
       </a>
-      <i class="bi bi-list toggle-sidebar-btn"></i>
+      <!-- <i class="bi bi-list toggle-sidebar-btn"></i> -->
     </div><!-- End Logo -->
 
     <!-- <div class="search-bar">
@@ -239,7 +239,7 @@
 
           <ul id="profile-drop" class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
             <li class="dropdown-header">
-              <h6>Savy School</h6>
+              <h6><?php echo $_SESSION['school_name']; ?></h6>
               <span></span>
             </li>
             <li>

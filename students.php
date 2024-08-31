@@ -9,7 +9,7 @@
         <h1>Students</h1>
         <nav>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item active">My School System</li>
+                <li class="breadcrumb-item active"><?php echo $_SESSION['school_name']; ?></li>
             </ol>
         </nav>
 
@@ -44,10 +44,10 @@
                 </div>
                 <div class="row">
                     <div class="col-md-2">
-                        <input type="submit" name="submit" class="btn btn-md btn-primary button mx-auto" value="See Class Data">
+                        <input type="submit" name="submit" class="btn btn-success mx-auto" value="See Class Data">
                     </div>
                     <div class="d-flex justify-content-end">
-                        <a class="btn btn-primary button" href="./student-profile.php">Add Student</a>
+                        <a class="btn btn-success" href="./student-profile.php">Add Student</a>
                     </div>
                 </div>
             </form>
@@ -60,7 +60,7 @@
                 <div class="card">
                     <div class="card-body">
                         <h5 class="card-title">Student Details</h5>
-                        <p>Student Details of All the registered students of <code>School Name</code>.</p>
+                        <p>Student Details of All the registered students of <code><?php echo $_SESSION['school_name']; ?></code>.</p>
 
                         <!-- Primary Color Bordered Table -->
                         <table class="table table-bordered border-primary">

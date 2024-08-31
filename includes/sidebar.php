@@ -21,7 +21,7 @@
     if ($_SESSION['login_access'] == 'developer' || $_SESSION['login_access'] == 'profiler' || $_SESSION['login_access'] == 'super') {
     ?>
 
-<!-- <li class="nav-item">
+      <!-- <li class="nav-item">
         <a class="nav-link" data-bs-target="#component," href="./add-subjects.php">
           <i class=""><img src="images/schoolprofile1.jpeg" width="30px" height="30px" alt=""></i>
           <span>Add subjects</span>
@@ -36,7 +36,7 @@
       </li> -->
       <!-- End student migration tab -->
 
-      <li class="nav-item">
+      <!-- <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#profiling" data-bs-toggle="collapse" href="#">
           <i class=""><img src="images/profile.jpeg" width="30px" height="30px" alt=""></i>
           <span>Profiles</span>
@@ -44,7 +44,7 @@
         </a>
         <ul id="profiling" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
-            <a href="teachers.php">
+            <a href="teachers.php" onclick="keepDropdownOpen(event, this.href)">
               <i class="bi bi-arrow-right"></i><span>Teacher Profiles</span>
             </a>
           </li>
@@ -53,7 +53,32 @@
               <i class="bi bi-arrow-right"></i><span>Student Profiles</span>
             </a>
         </ul>
-      </li><!-- End student and staff profiles -->
+      </li> -->
+      <!-- End student and staff profiles -->
+
+      <!-- testing code -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#profiling" data-bs-toggle="collapse" href="#">
+          <i class=""><img src="images/profile.jpeg" width="30px" height="30px" alt=""></i>
+          <span>Profiles</span>
+          <i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="profiling" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="teachers.php" class="dropdown-item">
+              <i class="bi bi-arrow-right"></i><span>Teacher Profiles</span>
+            </a>
+          </li>
+          <li>
+            <a href="students.php" class="dropdown-item">
+              <i class="bi bi-arrow-right"></i><span>Student Profiles</span>
+            </a>
+          </li>
+        </ul>
+      </li>
+
+
+
 
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#chart-nav" data-bs-toggle="collapse" href="">
@@ -141,6 +166,12 @@
       // end of if statement
     }
     ?>
+    <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#tables-nav" href="progress-reports.php">
+        <i class=><img src="images/reporttracking.jpg" width="30px" height="30px" alt=""></i><span>Fee Vouchers</span>
+        <!-- <i class="bi bi-chevron-down ms-auto"></i> -->
+      </a>
+    </li><!-- End Student Fee Vouchers -->
     <li class="nav-item">
       <a class="nav-link collapsed" data-bs-target="#tables-nav" href="progress-reports.php">
         <i class=><img src="images/reporttracking.jpg" width="30px" height="30px" alt=""></i><span>Progress Reports</span>

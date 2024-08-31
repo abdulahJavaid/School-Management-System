@@ -9,7 +9,7 @@
     <h1>Exam Schedule</h1>
     <nav>
       <ol class="breadcrumb">
-        <li class="breadcrumb-item active">Savvy School</li>
+        <li class="breadcrumb-item active"><?php echo $_SESSION['school_name']; ?></li>
       </ol>
     </nav>
   </div><!-- End Page Title -->

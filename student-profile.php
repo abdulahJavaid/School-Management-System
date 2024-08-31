@@ -17,36 +17,41 @@ if (isset($_POST['submit'])) {
     $class = substr($fetch, 0, $useable1);
     $section = (int) $section;
     $class = (int) $class;
-    $name = $_POST['name'];
-    $cnic = $_POST['cnic'];
-    // $f_name = $_POST['f_name'];
-    $mobile_no = $_POST['mobile_no'];
-    // $class = $_POST['class'];
-    // $section = $_POST['section'];
-    $dob = $_POST['dob'];
-    $address = $_POST['address'];
-    $roll_no = $_POST['roll_no'];
-    $email = $_POST['email'];
-    $password = '1234567';
-    $fee_amount = $_POST['fee_amount'];
+    $class = escape($class);
+    $section = escape($section);
+
+    $name = escape($_POST['name']);
+    $cnic = escape($_POST['cnic']);
+    $f_name = escape($_POST['f_name']);
+    $f_cnic = escape($_POST['f_cnic']);
+    $mobile_no = escape($_POST['mobile_no']);
+    $dob = escape($_POST['dob']);
+    $address = escape($_POST['address']);
+    $roll_no = escape($_POST['roll_no']);
+    $email = escape($_POST['email']);
+    $password = escape('12345');
+    $fee_amount = escape($_POST['fee_amount']);
+
+    if (isset($_FILES['std_img'])) {
+        $tmp_img = $_FILES['std_img']['tmp_name'];
+        $img = basename($_FILES['std_img']['name']);
+
+        move_uploaded_file($tmp_img, "./uploads/students-profile/" . $img . "");
+        $new_img = $email . $roll_no . $img;
+        rename("./uploads/students-profile/" . $img . "", "./uploads/students-profile/" . $new_img . "");
+    }
 
     $query = "INSERT INTO student_profile(name, cnic, mobile_no, dob, ";
-    $query .= "address, roll_no, email, password, fee_amount) ";
+    $query .= "address, roll_no, email, password, fee_amount, father_name, father_cnic, image) ";
     $query .= "VALUES('$name', '$cnic', '$mobile_no', '$dob', ";
-    $query .= "'$address', '$roll_no', '$email', '$password', '$fee_amount')";
+    $query .= "'$address', '$roll_no', '$email', '$password', '$fee_amount', '$f_name', '$f_cnic', '$new_img')";
     $pass_query = mysqli_query($conn, $query);
-    
+
     if ($pass_query) {
-        // getting class id
-        // $get = sql_where('all_classes', 'class_name', $class);
-        // $get_r = mysqli_fetch_assoc($get);
-        // $class_id = $get_r['class_id'];
-        // getting section id
-        // $get1 = sql_where_and('class_sections', 'section_name', $section, 'fk_class_id', $class_id);
-        // $get_r1 = mysqli_fetch_assoc($get1);
-        // $section_id = $get_r1['section_id'];
         // getting student id
-        $get2 = sql_where('student_profile', 'name', $name);
+        $gets = "SELECT student_id FROM student_profile WHERE name='$name' AND cnic='$cnic' AND father_name='$f_name' ";
+        $gets .= "AND roll_no='$roll_no'";
+        $get2 = query($gets);
         $get_r2 = mysqli_fetch_assoc($get2);
         $student_id = $get_r2['student_id'];
         // $student_id = mysqli_insert_id($conn);
@@ -57,10 +62,12 @@ if (isset($_POST['submit'])) {
 
         if ($pass_queri) {
             // code to add admin_log into the database
-            $result = sql_where('admin', 'admin_id', $_SESSION['login_id']);
+            $adm_id = escape($_SESSION['login_id']);
+            $result = sql_where('admin', 'admin_id', $adm_id);
             $fetch = mysqli_fetch_assoc($result);
-            $id = $_SESSION['login_id'];
-            $log = "Admin with <strong>ID: $id</strong> added <strong>student: $name</strong> to Database!";
+            $id = escape($_SESSION['login_id']);
+            $admin_name = escape($_SESSION['login_name']);
+            $log = "Admin <strong>id: $id</strong>, <strong>name: $admin_name</strong> added <strong>student: $name</strong> to Database!";
             $time = date('d/m/Y h:i a', time());
             $time = (string) $time;
 
@@ -85,85 +92,115 @@ if (isset($_POST['submit'])) {
         <h1>Add Student</h1>
         <nav>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item active">School name here</li>
+                <li class="breadcrumb-item active"><?php echo $_SESSION['school_name']; ?></li>
             </ol>
         </nav>
     </div><!-- End Page Title -->
 
     <section class="section profile">
         <div class="row">
-            <div class="col-xl-8">
+            <div class="col-xl-9">
                 <div class="card">
                     <div class="card-body pt-3">
                         <!-- Bordered Tabs -->
                         <ul class="nav nav-tabs nav-tabs-bordered">
                             <li class="nav-item">
-                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Add Student</button>
+                                <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-edit">Add Student</button>
                             </li>
                         </ul>
                         <div class="tab-content pt-2">
                             <div class="tab-pane fade show active profile-edit pt-3" id="profile-edit">
                                 <form method="post" action="" enctype="multipart/form-data">
                                     <div class="row mb-3">
-                                        <label for="name" class="col-md-4 col-lg-3 col-form-label">Student Name</label>
+                                        <label for="name" class="col-md-4 col-lg-3 col-form-label"><strong>Upload Photo</strong> </label>
                                         <div class="col-md-8 col-lg-9">
-                                            <input name="name" type="text" class="form-control" id="fullName" value="" placeholder="Full Name">
+                                            <div class="text-center">
+                                                <img id="imagePreview" src="https://via.placeholder.com/100" alt="Image Preview" class="rounded mb-2" style="max-width: 200px;">
+                                            </div>
+                                            <div class="d-flex justify-content-center">
+                                                <input type="file" name="std_img" class="form-control d-none" id="fileInput" required onchange="previewImage(event)">
+                                                <button class="btn btn-sm btn-secondary" type="button" id="uploadButton">
+                                                    <i class="bi bi-upload"></i>
+                                                </button>&nbsp;
+                                                <button class="btn btn-sm btn-danger" type="button" id="deleteButton">
+                                                    <i class="bi bi-trash"></i>
+                                                </button>
+                                            </div>
+                                            <!-- <input name="name" type="text" class="form-control" id="fullName" value="" placeholder="Full Name" required> -->
                                         </div>
                                     </div>
                                     <div class="row mb-3">
-                                        <label for="cnic" class="col-md-4 col-lg-3 col-form-label">CNIC/B-FORM</label>
+                                        <label for="name" class="col-md-4 col-lg-3 col-form-label"><strong>Student Name</strong> <code>*</code></label>
                                         <div class="col-md-8 col-lg-9">
-                                            <input name="cnic" type="text" class="form-control" id="fullName" value="" placeholder="CNIC/Form-B">
+                                            <input name="name" type="text" class="form-control" id="fullName" value="" placeholder="Full name" required>
                                         </div>
                                     </div>
                                     <div class="row mb-3">
-                                        <label for="cnic" class="col-md-4 col-lg-3 col-form-label">Date of Birth</label>
+                                        <label for="cnic" class="col-md-4 col-lg-3 col-form-label"><strong>CNIC/B-FORM</strong> <code>*</code></label>
                                         <div class="col-md-8 col-lg-9">
-                                            <input name="dob" type="date" class="form-control" id="fullName" value="" placeholder="DOB">
+                                            <input name="cnic" type="text" class="form-control" id="fullName" value="" placeholder="CNIC/Form-B" required>
                                         </div>
                                     </div>
                                     <div class="row mb-3">
-                                        <label for="cnic" class="col-md-4 col-lg-3 col-form-label">Address</label>
+                                        <label for="cnic" class="col-md-4 col-lg-3 col-form-label"><strong>Date of Birth</strong> <code>*</code></label>
                                         <div class="col-md-8 col-lg-9">
-                                            <input name="address" type="text" class="form-control" id="fullName" value="" placeholder="Full address">
+                                            <input name="dob" type="date" class="form-control" id="fullName" value="" placeholder="DOB" required>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label for="f_name" class="col-md-4 col-lg-3 col-form-label"><strong>Father Name</strong> <code>*</code></label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="f_name" type="text" class="form-control" id="fullName" value="" placeholder="Father name" required>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label for="f_cnic" class="col-md-4 col-lg-3 col-form-label"><strong>Father CNIC</strong> <code>*</code></label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="f_cnic" type="text" class="form-control" id="fullName" value="" placeholder="Father cnic" required>
+                                        </div>
+                                    </div>
+                                    <div class="row mb-3">
+                                        <label for="address" class="col-md-4 col-lg-3 col-form-label"><strong>Address</strong> <code>*</code></label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="address" type="text" class="form-control" id="fullName" value="" placeholder="Home address" required>
                                         </div>
                                     </div>
 
                                     <div class="row mb-3">
-                                        <label for="phone_no" class="col-md-4 col-lg-3 col-form-label">Phone No.</label>
+                                        <label for="phone_no" class="col-md-4 col-lg-3 col-form-label"><strong>Phone#</strong> <code>*</code></label>
                                         <div class="col-md-8 col-lg-9">
-                                            <input name="mobile_no" type="text" class="form-control" id="Job" value="" placeholder="Contact info">
+                                            <input name="mobile_no" type="text" class="form-control" id="Job" value="" placeholder="Phone number" required>
                                         </div>
                                     </div>
 
                                     <div class="row mb-3">
-                                        <label for="class" class="col-md-4 col-lg-3 col-form-label">Email</label>
+                                        <label for="class" class="col-md-4 col-lg-3 col-form-label"><strong>Email</strong> <code>*</code></label>
                                         <div class="col-md-8 col-lg-9">
-                                            <input name="email" type="email" class="form-control" id="Country" value="" placeholder="Valid email">
+                                            <input name="email" type="email" class="form-control" id="Country" value="" placeholder="Email address" required>
                                         </div>
                                     </div>
                                     <div class="row mb-3">
-                                        <label for="class" class="col-md-4 col-lg-3 col-form-label">Reg no#</label>
+                                        <label for="class" class="col-md-4 col-lg-3 col-form-label"><strong>Reg no#</strong> <code>*</code></label>
                                         <div class="col-md-8 col-lg-9">
-                                            <input name="roll_no" type="text" class="form-control" id="Country" value="" placeholder="Student reg. number">
+                                            <input name="roll_no" type="text" class="form-control" id="Country" value="" placeholder="Student reg. number" required>
                                         </div>
                                     </div>
                                     <div class="row mb-3">
-                                        <label for="class" class="col-md-4 col-lg-3 col-form-label">Monthly Fee</label>
+                                        <label for="class" class="col-md-4 col-lg-3 col-form-label"><strong>Monthly Fee</strong> <code>*</code></label>
                                         <div class="col-md-8 col-lg-9">
-                                            <input name="fee_amount" type="text" class="form-control" id="Country" value="" placeholder="Fees in - (Rs)">
+                                            <input name="fee_amount" type="text" class="form-control" id="Country" value="" placeholder="Fees in - (Rs)" required>
                                         </div>
                                     </div>
                                     <!-- <div class="row mb-3">
-                                        <label for="class" class="col-md-4 col-lg-3 col-form-label">Roll no.</label>
+                                        <label for="class" class="col-md-4 col-lg-3 col-form-label">Roll no. <code>*</code></label>
                                         <div class="col-md-8 col-lg-9">
                                             <input name="roll_no" type="text" class="form-control" id="Country" value="" placeholder="Enter roll number">
                                         </div>
                                     </div> -->
                                     <div class="row mb-3">
-                                        <label for="inputState" class="form-label">Class</label>
+                                        <label for="inputState" class="form-label"><strong>Class</strong> <code>*</code></label>
                                         <div class="col-md-8 col-lg-9 offset-md-3">
-                                            <select id="inputState" name="classnsection" class="form-select">
+                                            <select id="inputState" name="classnsection" class="form-select" required>
                                                 <option selected>Choose class</option>
                                                 <?php
                                                 // fetching all the classes 
@@ -187,11 +224,8 @@ if (isset($_POST['submit'])) {
                                         </div>
                                     </div>
 
-
-
-
-                                    <div class="text-center">
-                                        <button type="submit" name="submit" class="btn btn-primary button">Submit</button>
+                                    <div class="d-flex justify-content-end">
+                                        <button type="submit" name="submit" class="btn btn-sm btn-success">Add Student</button>
                                     </div>
                                 </form><!-- End Profile Edit Form -->
 
@@ -207,6 +241,26 @@ if (isset($_POST['submit'])) {
     </section>
 
 </main><!-- End #main -->
+
+<script>
+    // code to upload and view the image
+    document.getElementById('uploadButton').addEventListener('click', function() {
+        document.getElementById('fileInput').click();
+    });
+    document.getElementById('deleteButton').addEventListener('click', function() {
+        document.getElementById('fileInput').value = '';
+        document.getElementById('imagePreview').src = 'https://via.placeholder.com/100';
+    });
+
+    function previewImage(event) {
+        const reader = new FileReader();
+        reader.onload = function() {
+            const output = document.getElementById('imagePreview');
+            output.src = reader.result;
+        }
+        reader.readAsDataURL(event.target.files[0]);
+    }
+</script>
 
 <!-- ======= Footer ======= -->
 <?php include_once("includes/footer.php"); ?>

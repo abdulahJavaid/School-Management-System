@@ -6,10 +6,10 @@
 <main id="main" class="main">
 
     <div class="pagetitle">
-        <h1>Students</h1>
+        <h1>School Diary</h1>
         <nav>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item active">My School System</li>
+                <li class="breadcrumb-item active"><?php echo $_SESSION['school_name']; ?></li>
             </ol>
         </nav>
 
@@ -51,7 +51,7 @@
                                 placeholder="By name"
                                 aria-label="Example input"
                                 aria-describedby="button-addon2" required />
-                            <button name="view_diary" class="btn btn-sm btn-primary button" type="submit" id="button-addon2">
+                            <button name="view_diary" class="btn btn-sm btn-success" type="submit" id="button-addon2">
                                 View Diary
                             </button>
                         </div>

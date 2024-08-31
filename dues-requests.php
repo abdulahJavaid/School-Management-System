@@ -14,12 +14,12 @@ if ($_SESSION['login_access'] == 'developer' || $_SESSION['login_access'] == 'ac
 <main id="main" class="main">
 
     <div class="pagetitle">
-        <h1>Student Fees</h1>
+        <h1>Student Dues</h1>
         <nav>
             <ol class="breadcrumb">
                 <!-- <li class="breadcrumb-item"><a href="index.html">Home</a></li>
       <li class="breadcrumb-item">Users</li> -->
-                <li class="breadcrumb-item active">School name here</li>
+                <li class="breadcrumb-item active"><?php echo $_SESSION['school_name']; ?></li>
             </ol>
         </nav>
     </div><!-- End Page Title -->
@@ -29,7 +29,7 @@ if ($_SESSION['login_access'] == 'developer' || $_SESSION['login_access'] == 'ac
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">Students Fee Requests</h5>
+                        <h5 class="card-title">Students Due Requests</h5>
                         <!-- <p>Add <code>.table-bordered</code> for borders on all sides of the table and cells.</p> -->
 
                         <!-- Primary Color Bordered Table -->

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 23, 2024 at 11:13 AM
+-- Generation Time: Aug 31, 2024 at 12:45 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -29,6 +29,7 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `admin` (
   `admin_id` int(11) NOT NULL,
+  `admin_name` varchar(50) NOT NULL,
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `role` varchar(100) NOT NULL,
@@ -39,10 +40,10 @@ CREATE TABLE `admin` (
 -- Dumping data for table `admin`
 --
 
-INSERT INTO `admin` (`admin_id`, `email`, `password`, `role`, `status`) VALUES
-(1, 'email@mail.com', 'pass', 'developer', 1),
-(2, 'email@mail.com', 'pass', 'developer', 1),
-(3, 'email@gmail.com', 'pass', 'accountant', 1);
+INSERT INTO `admin` (`admin_id`, `admin_name`, `email`, `password`, `role`, `status`) VALUES
+(1, 'Hamza', 'email@mail.com', 'pass', 'developer', 1),
+(2, 'Ali', 'email@mail.com', 'pass', 'developer', 1),
+(3, 'Talha', 'email@gmail.com', 'pass', 'accountant', 1);
 
 -- --------------------------------------------------------
 
@@ -55,92 +56,6 @@ CREATE TABLE `admin_logs` (
   `log_message` varchar(500) NOT NULL,
   `time` varchar(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `admin_logs`
---
-
-INSERT INTO `admin_logs` (`admin_log_id`, `log_message`, `time`) VALUES
-(1, 'Admin with <strong>ID: 1</strong> added <strong>student: ali</strong> to Database!', '03/08/2024 11:54 am'),
-(2, 'Admin with <strong>ID: 1</strong> added <strong>student: abdullah</strong> to Database!', '03/08/2024 11:55 am'),
-(3, 'Admin with <strong>ID: 1</strong> added <strong>student: mukarram</strong> to Database!', '03/08/2024 11:57 am'),
-(4, 'Admin with <strong>ID: 1</strong> added <strong>student: qQQq</strong> to Database!', '03/08/2024 11:57 am'),
-(5, 'Admin with <strong>ID: 1</strong> added <strong>student: </strong> to Database!', '03/08/2024 11:58 am'),
-(6, 'Admin with <strong>ID: 1</strong> added <strong>student: Cccc</strong> to Database!', '03/08/2024 11:58 am'),
-(7, 'Admin with <strong>ID: 1</strong> added <strong>student: </strong> to Database!', '03/08/2024 11:58 am'),
-(8, 'Admin with <strong>ID: 1</strong> added <strong>student: o</strong> to Database!', '03/08/2024 11:59 am'),
-(9, 'Admin with <strong>ID: 1</strong> added <strong>student: faizan</strong> to Database!', '03/08/2024 11:59 am'),
-(10, 'Admin with <strong>ID: 1</strong> edited profile of <strong>student: new name</strong>!', '03/08/2024 01:22 pm'),
-(11, 'Admin with <strong>ID: 1</strong> edited profile of <strong>student: ali</strong>!', '03/08/2024 01:27 pm'),
-(12, 'Admin with <strong>ID: 1</strong> edited profile of <strong>student: ali</strong>!', '03/08/2024 01:27 pm'),
-(13, 'Admin with <strong>ID: 1</strong> edited profile of <strong>student: ali</strong>!', '03/08/2024 01:27 pm'),
-(14, 'Admin with <strong>ID: 1</strong> edited profile of <strong>student: Abdul Ghafoor</strong>!', '03/08/2024 02:39 pm'),
-(15, 'Admin with <strong>ID: 1</strong> edited profile of <strong>teacher: Moawia</strong>!', '03/08/2024 02:50 pm'),
-(16, 'Admin with <strong>ID: 1</strong> edited profile of <strong>teacher: Moawia</strong>!', '03/08/2024 02:51 pm'),
-(17, 'Admin with <strong>ID: 1</strong> edited profile of <strong>teacher: Moawia</strong>!', '03/08/2024 02:52 pm'),
-(18, 'Admin with <strong>ID: 1</strong> edited profile of <strong>teacher: Abdul Ghafoor</strong>!', '03/08/2024 02:53 pm'),
-(19, 'Admin with <strong>ID: 1</strong> edited profile of <strong>student: new name</strong>!', '03/08/2024 02:54 pm'),
-(20, 'Admin with <strong>ID: 1</strong> edited profile of <strong>student: ali</strong>!', '03/08/2024 02:54 pm'),
-(21, 'Admin with <strong>ID: 1</strong> edited profile of <strong>student: ali</strong>!', '03/08/2024 02:54 pm'),
-(22, 'Admin with <strong>ID: 1</strong> edited profile of <strong>student: ali</strong>!', '03/08/2024 02:54 pm'),
-(23, 'Admin with <strong>ID: 1</strong> edited profile of <strong>teacher: Moawia</strong>!', '03/08/2024 02:55 pm'),
-(24, 'Admin with <strong>ID: 1</strong> edited profile of <strong>teacher: Moawia</strong>!', '03/08/2024 02:59 pm'),
-(25, 'Admin with <strong>ID: 1</strong> edited profile of <strong>teacher: Moaz</strong>!', '03/08/2024 03:07 pm'),
-(26, 'Admin with <strong>ID: 1</strong> edited profile of <strong>teacher: Abdul Ghafoor</strong>!', '03/08/2024 03:09 pm'),
-(27, 'Admin with <strong>ID: 1</strong> edited profile of <strong>teacher: ali</strong>!', '03/08/2024 03:10 pm'),
-(28, 'Admin with <strong>ID: 1</strong> edited profile of <strong>teacher: ali</strong>!', '03/08/2024 03:12 pm'),
-(29, 'Admin with <strong>ID: 1</strong> edited profile of <strong>teacher: addg</strong>!', '03/08/2024 03:12 pm'),
-(30, 'Admin with <strong>ID: 1</strong> edited profile of <strong>teacher: addg</strong>!', '03/08/2024 03:13 pm'),
-(31, 'Admin with <strong>ID: 1</strong> edited profile of <strong>teacher: addg</strong>!', '03/08/2024 03:14 pm'),
-(32, 'Admin with <strong>ID: 1</strong> edited profile of <strong>teacher: Moa</strong>!', '03/08/2024 03:26 pm'),
-(33, 'Admin with <strong>ID: 1</strong> edited profile of <strong>teacher: Mo</strong>!', '03/08/2024 03:26 pm'),
-(34, 'Admin with <strong>ID: 1</strong> added <strong>teacher: Ibrar</strong> to Database!', '03/08/2024 03:30 pm'),
-(35, 'Admin with <strong>ID: 1</strong> edited profile of <strong>student: hamza</strong>!', '03/08/2024 05:05 pm'),
-(36, 'Admin with <strong>ID: 1</strong> added <strong>student: ali</strong> to Database!', '07/08/2024 12:30 pm'),
-(37, 'Admin with <strong>ID: 1</strong> added <strong>student: hamza</strong> to Database!', '07/08/2024 12:31 pm'),
-(38, 'Admin with <strong>ID: 1</strong> added <strong>student: talha</strong> to Database!', '07/08/2024 12:31 pm'),
-(39, 'Admin with <strong>ID: 1</strong> added <strong>student: Butt</strong> to Database!', '07/08/2024 12:32 pm'),
-(40, 'Admin with <strong>ID: 1</strong> added <strong>teacher: mbvdfghj</strong> to Database!', '07/08/2024 01:20 pm'),
-(41, 'Admin with <strong>ID: 1</strong> added <strong>student: Ali Abdullah</strong> to Database!', '12/08/2024 11:58 am'),
-(42, 'Admin with <strong>ID: 1</strong> added <strong>student: Abdullah Cheema</strong> to Database!', '12/08/2024 11:59 am'),
-(43, 'Admin with <strong>ID: 1</strong> added <strong>student: Tayyab Awan</strong> to Database!', '12/08/2024 12:03 pm'),
-(44, 'Admin with <strong>ID: 1</strong> added <strong>student: Rana Hassan</strong> to Database!', '12/08/2024 12:05 pm'),
-(45, 'Admin with <strong>ID: 1</strong> added <strong>student: Humayun</strong> to Database!', '12/08/2024 12:07 pm'),
-(46, 'Admin with <strong>ID: 1</strong> added <strong>student: Rafay Saeed</strong> to Database!', '12/08/2024 12:08 pm'),
-(47, 'Admin with <strong>ID: 1</strong> added <strong>student: Ibrar Ali</strong> to Database!', '12/08/2024 12:09 pm'),
-(48, 'Admin with <strong>ID: 1</strong> added <strong>student: Talha Zahid</strong> to Database!', '12/08/2024 12:10 pm'),
-(49, 'Admin with <strong>ID: 1</strong> added <strong>student: Gheyas Elahi</strong> to Database!', '12/08/2024 12:11 pm'),
-(50, 'Admin with <strong>ID: 1</strong> added <strong>student: Ali Hassan</strong> to Database!', '12/08/2024 12:12 pm'),
-(51, 'Admin with <strong>ID: 1</strong> added <strong>student: Asim Butt</strong> to Database!', '12/08/2024 12:13 pm'),
-(52, 'Admin with <strong>ID: 1</strong> added <strong>student: Musa Butt</strong> to Database!', '12/08/2024 12:14 pm'),
-(53, 'Admin with <strong>ID: 1</strong> added <strong>student: Aqib Jutt</strong> to Database!', '12/08/2024 12:15 pm'),
-(54, 'Admin with <strong>ID: 1</strong> added <strong>student: Usman Shafique</strong> to Database!', '12/08/2024 12:18 pm'),
-(55, 'Admin with <strong>ID: 1</strong> added <strong>student: Ahmad Talal</strong> to Database!', '12/08/2024 12:19 pm'),
-(56, 'Admin with <strong>ID: 1</strong> added <strong>student: Mujhtaba Abid</strong> to Database!', '12/08/2024 12:20 pm'),
-(57, 'Admin with <strong>ID: 1</strong> added <strong>student: Saqib Mehmood</strong> to Database!', '12/08/2024 12:21 pm'),
-(58, 'Admin with <strong>ID: 1</strong> added <strong>student: Masood Faridi</strong> to Database!', '12/08/2024 12:22 pm'),
-(59, 'Admin with <strong>ID: 1</strong> added <strong>student: Haider Niazi</strong> to Database!', '12/08/2024 12:23 pm'),
-(60, 'Admin with <strong>ID: 1</strong> added <strong>student: Mehrose Niazi</strong> to Database!', '12/08/2024 12:24 pm'),
-(61, 'Admin with <strong>ID: 1</strong> added <strong>student: Ali Zahid</strong> to Database!', '12/08/2024 12:25 pm'),
-(62, 'Admin with <strong>ID: 1</strong> added <strong>student: Haroon Butt</strong> to Database!', '12/08/2024 12:30 pm'),
-(63, 'Admin with <strong>ID: 1</strong> added <strong>student: Ali Raza</strong> to Database!', '12/08/2024 12:31 pm'),
-(64, 'Admin with <strong>ID: 1</strong> added <strong>student: Khurram Shehzad</strong> to Database!', '12/08/2024 12:32 pm'),
-(65, 'Admin with <strong>ID: 1</strong> added <strong>student: Babar Azam</strong> to Database!', '12/08/2024 12:33 pm'),
-(66, 'Admin with <strong>ID: 1</strong> added <strong>student: Rizwan Malik</strong> to Database!', '12/08/2024 12:33 pm'),
-(67, 'Admin with <strong>ID: 1</strong> added <strong>student: Shaheen Afridi</strong> to Database!', '12/08/2024 12:34 pm'),
-(68, 'Admin with <strong>ID: 1</strong> added <strong>student: Haris Rouf</strong> to Database!', '12/08/2024 12:35 pm'),
-(69, 'Admin with <strong>ID: 1</strong> added <strong>student: Misbah</strong> to Database!', '12/08/2024 12:37 pm'),
-(70, 'Admin with <strong>ID: 1</strong> added <strong>student: Mateen Malik</strong> to Database!', '12/08/2024 12:38 pm'),
-(71, 'Admin with <strong>ID: 1</strong> added <strong>student: Wahab Gujjar</strong> to Database!', '12/08/2024 12:38 pm'),
-(72, 'Admin with <strong>ID: 1</strong> added <strong>student: Wahab Riaz</strong> to Database!', '12/08/2024 12:39 pm'),
-(73, 'Admin with <strong>ID: 1</strong> added <strong>student: Muhammad Amir</strong> to Database!', '12/08/2024 12:40 pm'),
-(74, 'Admin with <strong>ID: 1</strong> added <strong>student: Asif Butt</strong> to Database!', '12/08/2024 12:41 pm'),
-(75, 'Admin with <strong>ID: 1</strong> added <strong>student: Rustam Virk</strong> to Database!', '12/08/2024 12:43 pm'),
-(76, 'Admin with <strong>ID: 1</strong> added <strong>student: Talha Bajwa</strong> to Database!', '12/08/2024 12:44 pm'),
-(77, 'Admin with <strong>ID: 1</strong> added <strong>student: Shahid Afridi</strong> to Database!', '12/08/2024 12:44 pm'),
-(78, 'Admin with <strong>ID: 1</strong> added <strong>student: Abdullah Javaid</strong> to Database!', '12/08/2024 12:45 pm'),
-(79, 'Admin with <strong>ID: 1</strong> added <strong>student: Abdul Rasheed</strong> to Database!', '12/08/2024 12:46 pm'),
-(80, 'Admin with <strong>ID: 1</strong> added <strong>student: Abdul Razzaq</strong> to Database!', '12/08/2024 12:47 pm');
 
 -- --------------------------------------------------------
 
@@ -347,7 +262,19 @@ INSERT INTO `expense_receiving` (`er_id`, `image`, `comment`, `expense`, `receiv
 (58, '', 'Student Rizwan Malik, reg# 258 paid dues amount Rs.1500 (Pending Dues)', '0', '1500', '2024-08-17'),
 (59, '', 'Student Rizwan Malik, reg# 258 paid dues amount Rs.2000 (Pending Dues)', '0', '2000', '2024-08-17'),
 (60, 'images-36.jpg', 'the receiving', '0', '12000', '2024-08-22'),
-(61, 'images-39.jpg', 'the comment', '120000', '0', '2024-08-22');
+(61, 'images-39.jpg', 'the comment', '120000', '0', '2024-08-22'),
+(62, 'download (3).jpg', 'The expendse', '1200', '0', '2024-08-26'),
+(63, 'download (2).jpg', 'The rec', '0', '2000', '2024-08-26'),
+(64, 'whats_new.jpg', 'tea paert', '2000', '0', '2024-08-28'),
+(65, 'news.jpg', 'funds', '0', '5000', '2024-08-28'),
+(66, 'T2024-08-302300exp_large_image_1.jpg', 'Tea party', '2300', '0', '2024-08-30'),
+(67, 'N41282024-08-302300expimages-5.jpg', 'NO image', '2300', '0', '2024-08-30'),
+(68, '', 'no image', '2000', '0', '2024-08-30'),
+(69, '', 'The receiving', '0', '', '2024-08-30'),
+(70, 't45772024-08-301300exp_large_image_3.jpg', 'the comment', '1300', '0', '2024-08-30'),
+(71, '', 'the receiving', '0', '1300', '2024-08-30'),
+(72, '', 'The receiving', '0', '10000', '2024-08-30'),
+(73, 't273412024-08-301000recimage-1.jpg', 'the technology', '0', '1000', '2024-08-30');
 
 -- --------------------------------------------------------
 
@@ -396,7 +323,8 @@ CREATE TABLE `notices` (
 
 INSERT INTO `notices` (`notice_id`, `fk_student_id`, `notice_description`, `notice_status`, `notice_date`, `mark_read`) VALUES
 (2, 0, 'this is notice', 'school', '0000-00-00', 0),
-(3, 0, 'This is ugly Faizan', 'school', '2024-08-17', 0);
+(3, 0, 'This is ugly Faizan', 'school', '2024-08-17', 0),
+(4, 0, '', 'school', '2024-08-31', 0);
 
 -- --------------------------------------------------------
 
@@ -551,7 +479,9 @@ INSERT INTO `student_class` (`student_class_id`, `fk_student_id`, `fk_class_id`,
 (38, 37, 10, 19, 1),
 (39, 38, 10, 19, 1),
 (40, 39, 10, 20, 1),
-(41, 40, 10, 20, 1);
+(41, 40, 10, 20, 1),
+(42, 41, 10, 20, 1),
+(43, 42, 10, 20, 1);
 
 -- --------------------------------------------------------
 
@@ -644,6 +574,8 @@ CREATE TABLE `student_profile` (
   `name` varchar(100) NOT NULL,
   `cnic` varchar(50) NOT NULL,
   `dob` date NOT NULL,
+  `father_name` varchar(50) NOT NULL,
+  `father_cnic` varchar(50) NOT NULL,
   `address` varchar(500) NOT NULL,
   `mobile_no` varchar(50) NOT NULL,
   `roll_no` varchar(50) NOT NULL,
@@ -658,47 +590,49 @@ CREATE TABLE `student_profile` (
 -- Dumping data for table `student_profile`
 --
 
-INSERT INTO `student_profile` (`student_id`, `name`, `cnic`, `dob`, `address`, `mobile_no`, `roll_no`, `image`, `email`, `fee_amount`, `password`, `student_status`) VALUES
-(1, 'Ali Abdullah', '654676545673', '1997-10-14', 'Gujranwala', '029879283', '233', '', 'email@mail.com', '1500', '1234567', 1),
-(2, 'Abdullah Cheema', '0387389393', '2024-08-12', 'Gujranwala', '9393743', '234', '', 'email@mail.com', '1500', '1234567', 1),
-(3, 'Tayyab Awan', '038837777377', '2024-08-09', 'Gujranwala', '938738903', '235', '', 'email@mail.com', '1500', '1234567', 1),
-(4, 'Rana Hassan', '039883933', '2024-07-29', 'Gujranwala', '087389383', '236', '', 'email@mail.com', '1500', '1234567', 1),
-(5, 'Humayun', '937483738', '2024-08-04', 'Gujranwala', '038737893', '237', '', 'email@mail.com', '2000', '1234567', 1),
-(6, 'Rafay Saeed', '03873678390', '2024-08-06', 'Gujranwala', '0837839393', '238', '', 'email@mail.com', '2000', '1234567', 1),
-(7, 'Ibrar Ali', '039848438743874', '2024-08-05', 'Gujranwala', '0387377377', '239', '', 'email@mail.com', '2000', '1234567', 1),
-(8, 'Talha Zahid', '397393937', '2024-08-12', 'Gujranwala', '0338377773', '240', '', 'email@mail.com', '2000', '1234567', 1),
-(9, 'Gheyas Elahi', '03393383883', '2024-08-06', 'Gujranwala', '033833', '241', '', 'email@mail.com', '3000', '1234567', 1),
-(10, 'Ali Hassan', '0937437773', '2024-08-16', 'Gujranwala', '03739383', '242', '', 'email@mail.com', '3000', '1234567', 1),
-(11, 'Asim Butt', '04347889394', '2024-08-15', 'Gujranwala', '0387637777', '243', '', 'email@mail.com', '3000', '1234567', 1),
-(12, 'Musa Butt', '0943848884', '2024-08-07', 'Gujranwala', '8398938923892', '244', '', 'email@mail.com', '3000', '1234567', 1),
-(13, 'Aqib Jutt', '938873982474', '2024-08-07', 'Gujranwala', '03383988838', '245', '', 'email@mail.com', '4000', '1234567', 1),
-(14, 'Usman Shafique', '93938488848', '2024-08-08', 'Gujranwala', '0943884884', '246', '', 'email@mail.com', '4000', '1234567', 1),
-(15, 'Ahmad Talal', '32934874774', '2024-08-08', 'Gujranwala', '989839843', '247', '', 'emai@mail.com', '4000', '1234567', 1),
-(16, 'Mujhtaba Abid', '3937443743', '2024-08-22', 'Gujranwala', '09238877373', '248', '', 'email@mail.com', '4000', '1234567', 1),
-(17, 'Saqib Mehmood', '8904835', '2024-08-15', 'Gujranwala', '03897387483', '249', '', 'email@mail.com', '4500', '1234567', 1),
-(18, 'Masood Faridi', '38939873498743', '2024-08-16', 'Gujranwala', '90387432', '250', '', 'email@mail.com', '4500', '1234567', 1),
-(19, 'Haider Niazi', '09839890543', '2024-08-24', 'Gujranwala', '9334983498', '251', '', 'email@mail.com', '4500', '1234567', 1),
-(20, 'Mehrose Niazi', '93983984798', '2024-08-08', 'Gujranwla', '98734983749843', '252', '', 'email@mail.com', '4500', '1234567', 1),
-(21, 'Ali Zahid', '938748', '2024-08-17', 'Gujranwala', '9873497439879843', '253', '', 'email@mail.com', '5000', '1234567', 1),
-(22, 'Haroon Butt', '5987498743985', '2024-08-13', 'Gujranwala', '983374843', '254', '', 'email@mail.com', '5000', '1234567', 1),
-(23, 'Ali Raza', '83490843290', '2024-08-15', 'Gujranwala', '8943798427984', '255', '', 'email@mail.com', '5000', '1234567', 1),
-(24, 'Khurram Shehzad', '8927498742398', '2024-08-22', 'Gujranwala', '4398798473', '256', '', 'email@mail.com', '5000', '1234567', 1),
-(25, 'Babar Azam', '98379847', '2024-08-09', 'Gujranwala', '93843487', '257', '', 'email@mail.com', '5500', '1234567', 1),
-(26, 'Rizwan Malik', '9843979847984', '2024-08-21', 'Gujranwala', '984974398', '258', '', 'email@mail.com', '5500', '1234567', 1),
-(27, 'Shaheen Afridi', '74987398749', '2024-08-15', 'email@mail.com', '83479438', '259', '', 'email@mail.com', '5500', '1234567', 1),
-(28, 'Haris Rouf', '9875987539875', '2024-08-22', 'Gujranwala', '098390548', '260', '', 'email@mail.com', '5500', '1234567', 1),
-(29, 'Misbah', '384837438', '2024-08-09', 'Gujranwala', '98734974398', '261', '', 'email@mail.com', '6000', '1234567', 1),
-(30, 'Mateen Malik', '938490438', '2024-08-09', 'Gujranwala', '398490384', '262', '', 'email@mail.com', '6000', '1234567', 1),
-(31, 'Wahab Gujjar', '0934809348', '2024-08-29', 'Gujranwala', '3798473', '263', '', 'email@mail.com', '6000', '1234567', 1),
-(32, 'Wahab Riaz', '3749837498', '2024-08-23', 'Gujranwala', '90497394', '264', '', 'email@mail.com', '6000', '1234567', 1),
-(33, 'Muhammad Amir', '98374937943', '2024-08-30', 'Gujranwala', '83477439', '265', '', 'email@mail.com', '6000', '1234567', 1),
-(34, 'Asif Butt', '4794739743987', '2024-08-08', 'Gujranwala', '374983479', '266', '', 'email@mail.com', '6000', '1234567', 1),
-(35, 'Rustam Virk', '734873948', '2024-08-13', 'Gujranwala', '873984743987', '267', '', 'email@mail.com', '6000', '1234567', 1),
-(36, 'Talha Bajwa', '0934890384098243', '2024-08-15', 'Gujranwala', '9034934798', '268', '', 'email@mail.com', '6000', '1234567', 1),
-(37, 'Shahid Afridi', '8397498734', '2024-08-30', 'Gujranwala', '8598734983', '269', '', 'email@mail.com', '7000', '1234567', 1),
-(38, 'Abdullah Javaid', '4398793247', '2024-08-24', 'Gujranwala', '49837985', '270', '', 'email@mail.com', '7000', '1234567', 1),
-(39, 'Abdul Rasheed', '973497439', '2024-08-23', 'Gujranwala', '74398739847', '271', '', 'email@mail.com', '7000', '1234567', 1),
-(40, 'Abdul Razzaq', '983798347', '2024-08-02', 'Gujranwala', '937983749', '272', '', 'email@mail.com', '7000', '1234567', 1);
+INSERT INTO `student_profile` (`student_id`, `name`, `cnic`, `dob`, `father_name`, `father_cnic`, `address`, `mobile_no`, `roll_no`, `image`, `email`, `fee_amount`, `password`, `student_status`) VALUES
+(1, 'Ali Abdullah', '654676545673', '1997-10-14', 'Hana', '928379473', 'Gujranwala', '029879283', '233', 'email@mail.com233images-18.jpg', 'email@mail.com', '1500', '1234567', 1),
+(2, 'Abdullah Cheema', '0387389393', '2024-08-12', '', '', 'Gujranwala', '9393743', '234', '', 'email@mail.com', '1500', '1234567', 1),
+(3, 'Tayyab Awan', '038837777377', '2024-08-09', '', '', 'Gujranwala', '938738903', '235', '', 'email@mail.com', '1500', '1234567', 1),
+(4, 'Rana Hassan', '039883933', '2024-07-29', '', '', 'Gujranwala', '087389383', '236', '', 'email@mail.com', '1500', '1234567', 1),
+(5, 'Humayun', '937483738', '2024-08-04', '', '', 'Gujranwala', '038737893', '237', '', 'email@mail.com', '2000', '1234567', 1),
+(6, 'Rafay Saeed', '03873678390', '2024-08-06', '', '', 'Gujranwala', '0837839393', '238', '', 'email@mail.com', '2000', '1234567', 1),
+(7, 'Ibrar Ali', '039848438743874', '2024-08-05', '', '', 'Gujranwala', '0387377377', '239', '', 'email@mail.com', '2000', '1234567', 1),
+(8, 'Talha Zahid', '397393937', '2024-08-12', '', '', 'Gujranwala', '0338377773', '240', '', 'email@mail.com', '2000', '1234567', 1),
+(9, 'Gheyas Elahi', '03393383883', '2024-08-06', '', '', 'Gujranwala', '033833', '241', '', 'email@mail.com', '3000', '1234567', 1),
+(10, 'Ali Hassan', '0937437773', '2024-08-16', '', '', 'Gujranwala', '03739383', '242', '', 'email@mail.com', '3000', '1234567', 1),
+(11, 'Asim Butt', '04347889394', '2024-08-15', '', '', 'Gujranwala', '0387637777', '243', '', 'email@mail.com', '3000', '1234567', 1),
+(12, 'Musa Butt', '0943848884', '2024-08-07', '', '', 'Gujranwala', '8398938923892', '244', '', 'email@mail.com', '3000', '1234567', 1),
+(13, 'Aqib Jutt', '938873982474', '2024-08-07', '', '', 'Gujranwala', '03383988838', '245', '', 'email@mail.com', '4000', '1234567', 1),
+(14, 'Usman Shafique', '93938488848', '2024-08-08', '', '', 'Gujranwala', '0943884884', '246', '', 'email@mail.com', '4000', '1234567', 1),
+(15, 'Ahmad Talal', '32934874774', '2024-08-08', '', '', 'Gujranwala', '989839843', '247', '', 'emai@mail.com', '4000', '1234567', 1),
+(16, 'Mujhtaba Abid', '3937443743', '2024-08-22', '', '', 'Gujranwala', '09238877373', '248', '', 'email@mail.com', '4000', '1234567', 1),
+(17, 'Saqib Mehmood', '8904835', '2024-08-15', '', '', 'Gujranwala', '03897387483', '249', '', 'email@mail.com', '4500', '1234567', 1),
+(18, 'Masood Faridi', '38939873498743', '2024-08-16', '', '', 'Gujranwala', '90387432', '250', '', 'email@mail.com', '4500', '1234567', 1),
+(19, 'Haider Niazi', '09839890543', '2024-08-24', '', '', 'Gujranwala', '9334983498', '251', '', 'email@mail.com', '4500', '1234567', 1),
+(20, 'Mehrose Niazi', '93983984798', '2024-08-08', '', '', 'Gujranwla', '98734983749843', '252', '', 'email@mail.com', '4500', '1234567', 1),
+(21, 'Ali Zahid', '938748', '2024-08-17', '', '', 'Gujranwala', '9873497439879843', '253', '', 'email@mail.com', '5000', '1234567', 1),
+(22, 'Haroon Butt', '5987498743985', '2024-08-13', '', '', 'Gujranwala', '983374843', '254', '', 'email@mail.com', '5000', '1234567', 1),
+(23, 'Ali Raza', '83490843290', '2024-08-15', '', '', 'Gujranwala', '8943798427984', '255', '', 'email@mail.com', '5000', '1234567', 1),
+(24, 'Khurram Shehzad', '8927498742398', '2024-08-22', '', '', 'Gujranwala', '4398798473', '256', '', 'email@mail.com', '5000', '1234567', 1),
+(25, 'Babar Azam', '98379847', '2024-08-09', '', '', 'Gujranwala', '93843487', '257', '', 'email@mail.com', '5500', '1234567', 1),
+(26, 'Rizwan Malik', '9843979847984', '2024-08-21', '', '', 'Gujranwala', '984974398', '258', '', 'email@mail.com', '5500', '1234567', 1),
+(27, 'Shaheen Afridi', '74987398749', '2024-08-15', '', '', 'email@mail.com', '83479438', '259', '', 'email@mail.com', '5500', '1234567', 1),
+(28, 'Haris Rouf', '9875987539875', '2024-08-22', '', '', 'Gujranwala', '098390548', '260', '', 'email@mail.com', '5500', '1234567', 1),
+(29, 'Misbah', '384837438', '2024-08-09', '', '', 'Gujranwala', '98734974398', '261', '', 'email@mail.com', '6000', '1234567', 1),
+(30, 'Mateen Malik', '938490438', '2024-08-09', '', '', 'Gujranwala', '398490384', '262', '', 'email@mail.com', '6000', '1234567', 1),
+(31, 'Wahab Gujjar', '0934809348', '2024-08-29', '', '', 'Gujranwala', '3798473', '263', '', 'email@mail.com', '6000', '1234567', 1),
+(32, 'Wahab Riaz', '3749837498', '2024-08-23', '', '', 'Gujranwala', '90497394', '264', '', 'email@mail.com', '6000', '1234567', 1),
+(33, 'Muhammad Amir', '98374937943', '2024-08-30', '', '', 'Gujranwala', '83477439', '265', '', 'email@mail.com', '6000', '1234567', 1),
+(34, 'Asif Butt', '4794739743987', '2024-08-08', '', '', 'Gujranwala', '374983479', '266', '', 'email@mail.com', '6000', '1234567', 1),
+(35, 'Rustam Virk', '734873948', '2024-08-13', '', '', 'Gujranwala', '873984743987', '267', '', 'email@mail.com', '6000', '1234567', 1),
+(36, 'Talha Bajwa', '0934890384098243', '2024-08-15', '', '', 'Gujranwala', '9034934798', '268', '', 'email@mail.com', '6000', '1234567', 1),
+(37, 'Shahid Afridi', '8397498734', '2024-08-30', '', '', 'Gujranwala', '8598734983', '269', '', 'email@mail.com', '7000', '1234567', 1),
+(38, 'Abdullah Javaid', '4398793247', '2024-08-24', '', '', 'Gujranwala', '49837985', '270', '', 'email@mail.com', '7000', '1234567', 1),
+(39, 'Abdul Rasheed', '973497439', '2024-08-23', '', '', 'Gujranwala', '74398739847', '271', '', 'email@mail.com', '7000', '1234567', 1),
+(40, 'Abdul Razzaq', '983798347', '2024-08-02', '', '', 'Gujranwala', '937983749', '272', '', 'email@mail.com', '7000', '1234567', 1),
+(41, 'Gheyas Rustam', '93874972987298347234', '2024-07-31', 'Ali Hamza', '2930749874983274', 'hawshsdkfhsdfhwnfk', '920374898347', '234', '', 'abd@mail.com', '7000', '12345', 1),
+(42, 'Ali Abdullah', '9837937493274', '2024-08-09', 'Ali Moaz', '03984', 'lksdflkjsdfljksdf', '938247i437', '244', 'abdjskjlksjdf@mail.com244_large_image_1.jpg', 'abdjskjlksjdf@mail.com', '7000', '12345', 1);
 
 -- --------------------------------------------------------
 
@@ -718,19 +652,22 @@ CREATE TABLE `teacher_profile` (
   `email` varchar(255) NOT NULL,
   `school_id` varchar(100) NOT NULL,
   `image` varchar(255) NOT NULL,
-  `password` varchar(255) NOT NULL
+  `password` varchar(255) NOT NULL,
+  `teacher_status` int(11) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `teacher_profile`
 --
 
-INSERT INTO `teacher_profile` (`teacher_id`, `name`, `cnic`, `f_name`, `phone_no`, `qualification`, `dob`, `address`, `email`, `school_id`, `image`, `password`) VALUES
-(181, 'Maria', '0938763583373', 'Abdul Ghafoor', '0387389', 'jdk', '0000-00-00', '', 'email@mail.com', '937u3', '', ''),
-(182, 'Ghazanfar', '', '', '', 'k', '0000-00-00', '', '', '', '', ''),
-(183, 'Hammad', '9398763789029', 'ajdl', '09876289373', 'cs', '2024-08-13', 'Gujranwala', 'email@mail.com', '9387484', '', '123'),
-(184, 'Ayesha', '08763563789383', 'Abdul Ghani', '08736673893', 'BS(Botany)', '2024-08-22', 'Gujranwala', 'eamil@mail.com', '93873', '', '123'),
-(185, 'Ali', '', '', '', '', '0000-00-00', '', '', '', '', '');
+INSERT INTO `teacher_profile` (`teacher_id`, `name`, `cnic`, `f_name`, `phone_no`, `qualification`, `dob`, `address`, `email`, `school_id`, `image`, `password`, `teacher_status`) VALUES
+(181, 'Mariya', '0938763583373', 'Abdul Ghafoor', '0387389', 'amer', '2024-08-01', 'Gujranwali', 'email@mail.com', '11', 'email@mail.com11images-6.jpg', '12345', 1),
+(182, 'Ghazanfar', '983765678392324', '', '827367893', 'uk', '2024-08-01', 'Gujranwala', 'email@mail.com', '22', '', '12345', 1),
+(183, 'Hammad', '9398763789029', 'ajdl', '09876289373', 'cs', '2024-08-13', 'Gujranwala', 'email@mail.com', '33', '', '12345', 1),
+(184, 'Ayesha', '08763563789383', 'Abdul Ghani', '08736673893', 'BS(Botany)', '2024-08-22', 'Gujranwala', 'eamil@mail.com', '44', '', '12345', 1),
+(185, 'Ali', '92837947899384', 'Abdul Sattar', '9238479847389', 'Bs (Chemistry)', '2024-08-16', 'Gujranwala', 'email@mails.com', '55', '', '12345', 1),
+(186, 'Hannah', '93874488947', 'Montana', '3255435534', 'MS (SE)', '2024-08-14', 'Ali Pur', 'montana@mail.com', '876', 'montana@mail.com876images-5.jpg', '12345', 1),
+(187, 'Abdullah', '9038737239849', 'Javaid', '9238748773', 'MS (SE)', '2024-08-29', 'Gujranwala', 'abd@mail.com', '001', 'abd@mail.com001images-5.jpg', '12345', 1);
 
 -- --------------------------------------------------------
 
@@ -903,7 +840,7 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `admin_logs`
 --
 ALTER TABLE `admin_logs`
-  MODIFY `admin_log_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=81;
+  MODIFY `admin_log_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
 
 --
 -- AUTO_INCREMENT for table `all_classes`
@@ -945,7 +882,7 @@ ALTER TABLE `exam_schedule`
 -- AUTO_INCREMENT for table `expense_receiving`
 --
 ALTER TABLE `expense_receiving`
-  MODIFY `er_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=62;
+  MODIFY `er_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=74;
 
 --
 -- AUTO_INCREMENT for table `homework_diary`
@@ -957,7 +894,7 @@ ALTER TABLE `homework_diary`
 -- AUTO_INCREMENT for table `notices`
 --
 ALTER TABLE `notices`
-  MODIFY `notice_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `notice_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `periods`
@@ -981,7 +918,7 @@ ALTER TABLE `school_profile_`
 -- AUTO_INCREMENT for table `student_class`
 --
 ALTER TABLE `student_class`
-  MODIFY `student_class_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `student_class_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
 
 --
 -- AUTO_INCREMENT for table `student_fee`
@@ -993,13 +930,13 @@ ALTER TABLE `student_fee`
 -- AUTO_INCREMENT for table `student_profile`
 --
 ALTER TABLE `student_profile`
-  MODIFY `student_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `student_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
 
 --
 -- AUTO_INCREMENT for table `teacher_profile`
 --
 ALTER TABLE `teacher_profile`
-  MODIFY `teacher_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=186;
+  MODIFY `teacher_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=188;
 
 --
 -- AUTO_INCREMENT for table `timetable`

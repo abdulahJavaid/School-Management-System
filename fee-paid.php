@@ -14,12 +14,12 @@ if ($_SESSION['login_access'] == 'developer' || $_SESSION['login_access'] == 'ac
 <main id="main" class="main">
 
     <div class="pagetitle">
-        <h1>Student Fees</h1>
+        <h1>Student Paid Fees</h1>
         <nav>
             <ol class="breadcrumb">
                 <!-- <li class="breadcrumb-item"><a href="index.html">Home</a></li>
       <li class="breadcrumb-item">Users</li> -->
-                <li class="breadcrumb-item active">School name here</li>
+                <li class="breadcrumb-item active"><?php echo $_SESSION['school_name']; ?></li>
             </ol>
         </nav>
     </div><!-- End Page Title -->
@@ -38,7 +38,7 @@ if ($_SESSION['login_access'] == 'developer' || $_SESSION['login_access'] == 'ac
 
                             <form action="generate-pdf.php" method="post">
                                 <input type="hidden" name="name" value="<?php echo $_POST['name']; ?>">
-                                <button name="generate_name" class="btn btn-sm btn-primary button" type="submit" id="button-addon1">
+                                <button name="generate_name" class="btn btn-sm btn-success" type="submit" id="button-addon1">
                                     Generate Pdf
                                 </button>
                             </form>
@@ -48,7 +48,7 @@ if ($_SESSION['login_access'] == 'developer' || $_SESSION['login_access'] == 'ac
 
                             <form action="generate-pdf.php" method="post">
                                 <input type="hidden" name="roll_no" value="<?php echo $_POST['reg']; ?>">
-                                <button name="generate_reg" class="btn btn-sm btn-primary button" type="submit" id="button-addon1">
+                                <button name="generate_reg" class="btn btn-sm btn-success" type="submit" id="button-addon1">
                                     Generate Pdf
                                 </button>
                             </form>
@@ -58,7 +58,7 @@ if ($_SESSION['login_access'] == 'developer' || $_SESSION['login_access'] == 'ac
 
                             <form action="generate-pdf.php" method="post">
                                 <input type="hidden" name="month">
-                                <button name="generate_month" class="btn btn-sm btn-primary button" type="submit" id="button-addon1">
+                                <button name="generate_month" class="btn btn-sm btn-success" type="submit" id="button-addon1">
                                     Generate Pdf
                                 </button>
                             </form>
@@ -68,7 +68,7 @@ if ($_SESSION['login_access'] == 'developer' || $_SESSION['login_access'] == 'ac
 
                             <form action="generate-pdf.php" method="post">
                                 <input type="hidden" name="current" value="not-empty">
-                                <button name="current_month" class="btn btn-sm btn-primary button" type="submit" id="button-addon1">
+                                <button name="current_month" class="btn btn-sm btn-success" type="submit" id="button-addon1">
                                     Generate Pdf
                                 </button>
                             </form>
@@ -116,7 +116,7 @@ if ($_SESSION['login_access'] == 'developer' || $_SESSION['login_access'] == 'ac
                                                     placeholder="By name"
                                                     aria-label="Example input"
                                                     aria-describedby="button-addon2" required />
-                                                <button name="view_name" class="btn btn-sm btn-primary button" type="submit" id="button-addon2">
+                                                <button name="view_name" class="btn btn-sm btn-success" type="submit" id="button-addon2">
                                                     View
                                                 </button>
                                             </div>
@@ -144,7 +144,7 @@ if ($_SESSION['login_access'] == 'developer' || $_SESSION['login_access'] == 'ac
                                                     placeholder="By reg#"
                                                     aria-label="Example input"
                                                     aria-describedby="button-addon3" required />
-                                                <button name="view_reg" class="btn btn-sm btn-primary button" type="submit" id="button-addon3">
+                                                <button name="view_reg" class="btn btn-sm btn-success" type="submit" id="button-addon3">
                                                     View
                                                 </button>
                                             </div>
@@ -171,7 +171,7 @@ if ($_SESSION['login_access'] == 'developer' || $_SESSION['login_access'] == 'ac
                                                     placeholder="Example input"
                                                     aria-label="Example input"
                                                     aria-describedby="button-addon1" required />
-                                                <button name="view_month" class="btn btn-sm btn-primary button" type="submit" id="button-addon1">
+                                                <button name="view_month" class="btn btn-sm btn-success" type="submit" id="button-addon1">
                                                     View
                                                 </button>
                                             </div>

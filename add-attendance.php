@@ -56,7 +56,7 @@
     </div><!-- End Page Title -->
 
     <?php
-    
+
     ?>
 
     <section class="section profile">
@@ -89,7 +89,8 @@
                 ?>
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">Students of class: <?php //echo $row['class_name'] . ' ' . $row['section_name']; ?></h5>
+                            <h5 class="card-title">Students of class: <?php //echo $row['class_name'] . ' ' . $row['section_name']; 
+                                                                        ?></h5>
                             <!-- <p>Add <code>.table-bordered</code> for borders on all sides of the table and cells.</p> -->
 
                             <!-- Primary Color Bordered Table -->
@@ -104,8 +105,6 @@
                                             <th scope="col">Leave</th>
                                         </tr>
                                     </thead>
-
-
                                     <tbody>
                                         <?php
                                         // looop to fetch the class data

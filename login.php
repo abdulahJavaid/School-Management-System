@@ -17,16 +17,23 @@
 
 $message = '';
 if (isset($_POST['submit'])) {
-  $admin_id = $_POST['admin_id'];
-  $password = $_POST['password'];
+  $admin_id = escape($_POST['admin_id']);
+  $password = escape($_POST['password']);
 
   $get_result = sql_where('admin', 'admin_id', $admin_id);
   $result = mysqli_fetch_assoc($get_result);
   if ($result) {
     if ($result['status'] == 1) {
       if ($password == $result['password']) {
+        $_SESSION['login_email'] = $result['email'];
+        $_SESSION['login_name'] = $result['admin_name'];
         $_SESSION['login_access'] = $result['role'];
         $_SESSION['login_id'] = $result['admin_id'];
+        $query = "SELECT * FROM school_profile_ ORDER BY id DESC LIMIT 1";
+        $result = mysqli_query($conn, $query);
+        $rows = mysqli_fetch_assoc($result);
+        $_SESSION['school_id'] = $rows['id'];
+        $_SESSION['school_name'] = $rows['name'];
         redirect('./');
       } else {
         $message = "Your password is not correct!";

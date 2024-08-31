@@ -9,7 +9,7 @@
         <h1>Progress Reports</h1>
         <nav>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item active">School name here</li>
+                <li class="breadcrumb-item active"><?php echo $_SESSION['school_name']; ?></li>
             </ol>
         </nav>
     </div><!-- End Page Title -->
@@ -67,7 +67,7 @@
                     <!-- Button for checking the report -->
                     <div class="col-auto">
                         <div class="input-group mb-2">
-                            <button name="view_progress" class="btn btn-md btn-primary button" type="submit" id="button-addon3">
+                            <button name="view_progress" class="btn btn-sm btn-success" type="submit" id="button-addon3">
                                 View Progress Report
                             </button>
                         </div>
