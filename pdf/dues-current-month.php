@@ -243,4 +243,3 @@ if (isset($_POST['due_current'])) {
     </html>
     ";
 }
-?>

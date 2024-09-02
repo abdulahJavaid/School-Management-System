@@ -21,7 +21,7 @@ if (!isset($_GET['id'])) {
 
   <?php
   // fetching the student data here
-  $id = $_GET['id'];
+  $id = escape($_GET['id']);
   $query = "SELECT * FROM all_classes ";
   $query .= "INNER JOIN class_sections ON all_classes.class_id = class_sections.fk_class_id ";
   $query .= "INNER JOIN student_class ON class_sections.section_id = student_class.fk_section_id ";

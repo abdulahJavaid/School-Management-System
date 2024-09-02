@@ -103,6 +103,8 @@
           $class = substr($fetch, 0, $find);
           $section = (int) $section;
           $class = (int) $class;
+          $section = escape($section);
+          $class = escape($class);
 
           $result = sql_where('all_classes', 'class_id', $class);
           $row = mysqli_fetch_assoc($result);
@@ -117,14 +119,14 @@
               <br><code>1. Don't leave time/subject/date empty or the relevant record will not be added</code>
             </p>
             <!-- Bordered Tabs -->
-            <ul class="nav nav-tabs nav-tabs-bordered">
+            <!-- <ul class="nav nav-tabs nav-tabs-bordered">
               <li class="nav-item">
                 <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Add Exam Schedule</button>
               </li>
-            </ul>
+            </ul> -->
             <div class="tab-content pt-2">
               <div class="tab-pane fade show active profile-edit pt-3" id="profile-edit">
-                <form method="post" action="backend/back-add-exam.php" enctype="multipart/form-data">
+                <form method="post" action="backend/back-add-exam.php">
                   <?php
                   // looping to get 9 form fields
                   for ($i = 1; $i < 10; $i++) {
@@ -133,13 +135,13 @@
                       <div class="row align-items-center">
                         <div class="col-auto">
                           <div class="input-group">
-                            <label for="name" class="col-md-4 col-lg-3 col-form-label">Paper <?php echo $i; ?></label>
+                            <label for="name<?php echo $i; ?>" class="col-md-4 col-lg-3 col-form-label">Paper <?php echo $i; ?></label>
                             <!-- <div class="col-md-6"> -->
-                            <input name="time" type="text" class="form-control" value="" placeholder="time">
+                            <input name="time<?php echo $i; ?>" type="text" class="form-control" value="" placeholder="time">
                             &nbsp;&nbsp;
-                            <input name="subject" type="text" class="form-control" value="" placeholder="subject">
+                            <input name="subject<?php echo $i; ?>" type="text" class="form-control" value="" placeholder="subject">
                             &nbsp;&nbsp;
-                            <input name="date" type="date" class="form-control" value="" placeholder="date">
+                            <input name="date<?php echo $i; ?>" type="date" class="form-control" value="" placeholder="date">
                             <!-- </div> -->
                           </div>
                         </div>
@@ -150,7 +152,7 @@
                   ?>
                   <input type="hidden" name="section_id" value="<?php echo $row1['section_id']; ?>">
                   <div class="d-flex justify-content-end">
-                    <button type="submit" name="submit" class="btn btn-md btn-success">Submit schedule</button>
+                    <button type="submit" name="submit" class="btn btn-sm btn-success">Submit schedule</button>
                   </div>
                 </form><!-- End Add timetable Form -->
 
@@ -162,6 +164,162 @@
         </div>
         <?php
           } // end of if to add exam schedule
+        ?>
+        <?php
+        // if view exam schedule request is submitted
+        if (isset($_POST['view']) && $_POST['select'] != 'empty') {
+          $fetch = $_POST['select'];
+          $length = strlen($fetch);
+          $find = strpos($fetch, ' ');
+          $number = $find + 1;
+          $useable = $length - $number;
+          $useable1 = $find;
+
+          $section = substr($fetch, -$useable);
+          $class = substr($fetch, 0, $find);
+          $section = (int) $section;
+          $class = (int) $class;
+          $section = escape($section);
+          $class = escape($class);
+
+          $result = sql_where('all_classes', 'class_id', $class);
+          $row = mysqli_fetch_assoc($result);
+          $result1 = sql_where_and('class_sections', 'section_id', $section, 'fk_class_id', $class);
+          $row1 = mysqli_fetch_assoc($result1);
+        ?>
+        <div class="card">
+          <div class="card-body pt-3">
+
+            <h5 class="card-title">Class: <?php echo $row['class_name'] . ' ' . $row1['section_name']; ?></h5>
+            <!-- <p><code><u>Instructions:</u></code>
+              <br><code>1. Don't leave time/subject/date empty or the relevant record will not be added</code>
+            </p> -->
+            <!-- Bordered Tabs -->
+            <!-- <ul class="nav nav-tabs nav-tabs-bordered">
+              <li class="nav-item">
+                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Exam Schedule</button>
+              </li>
+            </ul> -->
+            <div class="tab-content pt-0">
+              <div class="tab-pane fade show active profile-edit pt-3" id="profile-edit">
+              <div class="d-flex justify-content-end">
+                <form action="" method="post">
+                  <input type="hidden" name="section_id" value="<?php echo $section; ?>">
+                  <input type="hidden" name="class_id" value="<?php echo $class; ?>">
+                  <button type="submit" name="update" class="btn btn-sm btn-success">Update Schedule</button>
+                </form>
+              </div><br>
+                  <!-- Primary Color Bordered Table -->
+              <table class="table table-bordered border-primary">
+                <thead>
+                  <tr>
+                    <th scope="col"><input type="hidden" name="section_id" value="<?php echo $row1['section_id']; ?>">#</th>
+                    <th scope="col">Time</th>
+                    <th scope="col">Subject</th>
+                    <th scope="col">Date</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php
+                  // show the exam schedule
+                  $query = "SELECT * FROM exam_schedule WHERE fk_section_id='$section'";
+                  $result = query($query);
+                  $i = 1;
+                  while($ro = mysqli_fetch_assoc($result)){
+                  ?>
+                  <tr>
+                    <td>Paper <?php echo $i; ?></td>
+                    <td><?php echo $ro['time']; ?></td>
+                    <td><?php echo $ro['subject']; ?></td>
+                    <td><?php echo $ro['date']; ?></td>
+                  </tr>
+                  <?php
+                  $i++;
+                  }
+                  ?>
+
+                </tbody>
+              </table>
+
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+        <?php
+          } // end of if to view exam schedule
+        ?>
+        <?php
+        // if add exam schedule request is submitted
+        if (isset($_POST['update'])) {
+          $section = (int) $_POST['section_id'];
+          $class = (int) $_POST['class_id'];
+          $section = escape($section);
+          $class = escape($class);
+
+          $result = sql_where('all_classes', 'class_id', $class);
+          $row = mysqli_fetch_assoc($result);
+          $result1 = sql_where_and('class_sections', 'section_id', $section, 'fk_class_id', $class);
+          $row1 = mysqli_fetch_assoc($result1);
+        ?>
+        <div class="card">
+          <div class="card-body pt-3">
+
+            <h5 class="card-title">Class: <?php echo $row['class_name'] . ' ' . $row1['section_name']; ?></h5>
+            <p><code><u>Instructions:</u></code>
+              <br><code>1. Don't leave time/subject/date empty or the relevant record will not be added</code>
+            </p>
+            <!-- Bordered Tabs -->
+            <!-- <ul class="nav nav-tabs nav-tabs-bordered">
+              <li class="nav-item">
+                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Add Exam Schedule</button>
+              </li>
+            </ul> -->
+            <div class="tab-content pt-2">
+              <div class="tab-pane fade show active profile-edit pt-3" id="profile-edit">
+                <form method="post" action="backend/back-add-exam.php">
+                  <?php
+                  // looping to get all exam schedule fields
+                  $query = "SELECT * FROM exam_schedule WHERE fk_section_id='$section'";
+                  $result = query($query);
+                  $i = 1;
+                  while ($row = mysqli_fetch_assoc($result)) {
+                  ?>
+                    <div class="row mb-3">
+                      <div class="row align-items-center">
+                        <div class="col-auto">
+                          <div class="input-group">
+                            <label for="name<?php echo $i; ?>" class="col-md-4 col-lg-3 col-form-label">Paper <?php echo $i; ?></label>
+                            <!-- <div class="col-md-6"> -->
+                            <input name="time<?php echo $i; ?>" type="text" class="form-control" value="<?php echo $row['time']; ?>" placeholder="time">
+                            &nbsp;&nbsp;
+                            <input name="subject<?php echo $i; ?>" type="text" class="form-control" value="<?php echo $row['subject']; ?>" placeholder="subject">
+                            &nbsp;&nbsp;
+                            <input name="date<?php echo $i; ?>" type="date" class="form-control" value="<?php echo $row['date']; ?>" placeholder="date">
+                            <!-- </div> -->
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  <?php
+                  $i++;
+                  }
+                  ?>
+                  <input type="hidden" name="section_id" value="<?php echo $row1['section_id']; ?>">
+                  <div class="d-flex justify-content-end">
+                    <button type="submit" name="submit" class="btn btn-sm btn-success">Submit schedule</button>
+                  </div>
+                </form><!-- End Add timetable Form -->
+
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+        <?php
+          } // end of if to update exam schedule
         ?>
       </div>
     </div>

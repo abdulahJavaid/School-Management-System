@@ -7,7 +7,7 @@ require_once('../includes/functions.php');
 
 if (isset($_POST['submit'])) {
 
-    $section_id = $_POST['section_id'];
+    $section_id = escape($_POST['section_id']);
     $day = array($_POST['monday'], $_POST['tuesday'], $_POST['wednesday'], $_POST['thursday'], $_POST['friday'], $_POST['saturday']);
 
     $query = "SELECT * FROM timetable WHERE fk_section_id='$section_id'";
@@ -15,6 +15,7 @@ if (isset($_POST['submit'])) {
     $count = mysqli_num_rows($result);
     if (!$count) {
         foreach ($day as $d) {
+            $d = escape($d);
             $query = "INSERT INTO timetable (fk_section_id, day) VALUES ('$section_id', '$d')";
             $result = query($query);
         }
@@ -23,18 +24,18 @@ if (isset($_POST['submit'])) {
         $names2 = array('bm', 'bt', 'bw', 'bth', 'bf', 'bs');
         for ($i = 1; $i < 10; $i++) {
             $var2 = 'time' . $i . '';
-            $time = $_POST[$var2];
+            $time = escape($_POST[$var2]);
             if (!empty($time)) {
                 $query = "SELECT * FROM timetable WHERE fk_section_id='$section_id'";
                 $ans = query($query);
                 $j = 0;
                 while ($get = mysqli_fetch_assoc($ans)) {
-                    $tb_id = $get['timetable_id'];
+                    $tb_id = escape($get['timetable_id']);
                     $var = $names[$j] . $i . '';
                     $var1 = $names1[$j] . $i . '';
                     $var3 = $names2[$j] . $i . '';
-                    $period = $_POST[$var];
-                    $teacher = $_POST[$var1];
+                    $period = escape($_POST[$var]);
+                    $teacher = escape($_POST[$var1]);
                     if (empty($teacher) && empty($period)) {
                         $period = "!";
                         $teacher = "!";
@@ -62,6 +63,7 @@ if (isset($_POST['submit'])) {
     } else {
         $num = 0;
         foreach ($day as $d) {
+            $d = escape($d);
             $query = "SELECT * FROM timetable WHERE fk_section_id='$section_id' AND day='$d'";
             $resul = query($query);
             $row = mysqli_fetch_assoc($resul);
@@ -79,18 +81,18 @@ if (isset($_POST['submit'])) {
         $names2 = array('bm', 'bt', 'bw', 'bth', 'bf', 'bs');
         for ($i = 1; $i < 10; $i++) {
             $var2 = 'time' . $i . '';
-            $time = $_POST[$var2];
+            $time = escape($_POST[$var2]);
             if (!empty($time)) {
                 $query = "SELECT * FROM timetable WHERE fk_section_id='$section_id'";
                 $ans = query($query);
                 $j = 0;
                 while ($get = mysqli_fetch_assoc($ans)) {
-                    $tb_id = $get['timetable_id'];
+                    $tb_id = escape($get['timetable_id']);
                     $var = $names[$j] . $i . '';
                     $var1 = $names1[$j] . $i . '';
                     $var3 = $names2[$j] . $i . '';
-                    $period = $_POST[$var];
-                    $teacher = $_POST[$var1];
+                    $period = escape($_POST[$var]);
+                    $teacher = escape($_POST[$var1]);
                     if (empty($teacher) && empty($period)) {
                         $period = "!";
                         $teacher = "!";

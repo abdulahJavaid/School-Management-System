@@ -10,7 +10,7 @@ if (!isset($_GET['id'])) {
 ?>
 <?php
 // fetching the student data here
-$id = $_GET['id'];
+$id = escape($_GET['id']);
 $query = "SELECT * FROM teacher_profile ";
 $query .= "WHERE teacher_id = '$id'";
 $pass = mysqli_query($conn, $query);
@@ -54,6 +54,7 @@ $row = mysqli_fetch_assoc($pass);
         } else {
             $new_img = $row['image'];
         }
+        $new_img = escape($new_img);
 
         $query = "UPDATE teacher_profile SET name='$name', school_id='$school_id', qualification='$qualification', f_name='$f_name', ";
         $query .= "cnic='$cnic', dob='$dob', phone_no='$phone_no', email='$email', address='$address', ";
@@ -63,11 +64,12 @@ $row = mysqli_fetch_assoc($pass);
         $get = query($query);
         if ($get) {
             // code to add admin_log into the database
-            $result = sql_where('admin', 'admin_id', $_SESSION['login_id']);
+            $adm_id = escape($_SESSION['login_id']);
+            $result = sql_where('admin', 'admin_id', $adm_id);
             $fetch = mysqli_fetch_assoc($result);
-            $id = $_SESSION['login_id'];
-            $admin_name = $_SESSION['login_name'];
-            $log = "Admin <strong>id: $id</strong>, <strong>name: $admin_name</strong> updated profile of <strong>teacher: $name</strong>!";
+            $id = escape($_SESSION['login_id']);
+            $admin_name = escape($_SESSION['login_name']);
+            $log = "Admin <strong>$admin_name</strong> updated profile of teacher <strong>$name</strong> !";
             $time = date('d/m/Y h:i a', time());
             $time = (string) $time;
 

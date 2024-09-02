@@ -65,12 +65,12 @@
         </a>
         <ul id="profiling" class="nav-content collapse" data-bs-parent="#sidebar-nav">
           <li>
-            <a href="teachers.php" class="dropdown-item">
+            <a href="teachers.php">
               <i class="bi bi-arrow-right"></i><span>Teacher Profiles</span>
             </a>
           </li>
           <li>
-            <a href="students.php" class="dropdown-item">
+            <a href="students.php">
               <i class="bi bi-arrow-right"></i><span>Student Profiles</span>
             </a>
           </li>

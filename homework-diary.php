@@ -20,7 +20,7 @@
         <div class="row">
             <form action="" method="post">
                 <div class="col-lg-3">
-                    <select id="inputState" name="select" class="form-select">
+                    <select id="inputState" name="select" class="form-select" required>
                         <option selected value="choose_class">Choose Class</option>
                         <?php
                         // fetching all the classes 
@@ -102,8 +102,10 @@
         $class = substr($fetch, 0, $find);
         $section = (int) $section;
         $class = (int) $class;
+        $section = escape($section);
+        $class = escape($class);
 
-        $date = $_POST['date'];
+        $date = escape($_POST['date']);
 
         // getting class and section names
         $q = "SELECT * FROM class_sections INNER JOIN all_classes ON ";

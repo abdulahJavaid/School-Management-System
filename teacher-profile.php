@@ -33,11 +33,12 @@ if (isset($_POST['submit'])) {
     $result = mysqli_query($conn, $query);
     if ($result) {
         // code to add admin_log into the database
-        $result = sql_where('admin', 'admin_id', $_SESSION['login_id']);
+        $adm_id = escape($_SESSION['login_id']);
+        $result = sql_where('admin', 'admin_id', $adm_id);
         $fetch = mysqli_fetch_assoc($result);
-        $id = $_SESSION['login_id'];
-        $admin_name = $_SESSION['login_name'];
-        $log = "Admin <strong>id: $id</strong>, <strong>name: $admin_name</strong> added <strong>teacher: $name</strong> to Database!";
+        $id = escape($_SESSION['login_id']);
+        $admin_name = escape($_SESSION['login_name']);
+        $log = "Admin <strong>$admin_name</strong> added new teacher <strong>$name</strong> !";
         $time = date('d/m/Y h:i a', time());
         $time = (string) $time;
 

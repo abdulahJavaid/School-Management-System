@@ -23,7 +23,7 @@ if (!isset($_GET['id'])) {
 
   <?php
   // fetching the student data here
-  $id = $_GET['id'];
+  $id = escape($_GET['id']);
   $query = "SELECT * FROM teacher_profile WHERE teacher_id='$id'";
   $pass = mysqli_query($conn, $query);
   $row = mysqli_fetch_assoc($pass);

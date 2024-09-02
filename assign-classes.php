@@ -2,6 +2,13 @@
 
 <!-- ======= Sidebar ======= -->
 <?php require_once("includes/sidebar.php"); ?>
+<!--  -->
+<!--  -->
+<!--  -->
+<!-- Page not approved -->
+<!--  -->
+<!--  -->
+<!--  -->
 
 <?php
 // getting teacher name

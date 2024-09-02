@@ -19,13 +19,13 @@ if (!isset($_GET['id'])) {
 ?>
 
 <?php
-$id = $_GET['id'];
+$id = escape($_GET['id']);
 // rejected fees
 if (isset($_POST['rejected']) && !empty($_POST['rejection_reason'])) {
     // echo $_GET['id'];
-    $id = $_POST['id'];
+    $id = escape($_POST['id']);
     // echo $_GET['id'];
-    $rejection_reason = $_POST['rejection_reason'];
+    $rejection_reason = escape($_POST['rejection_reason']);
     $q = "UPDATE student_fee SET fee_method='', payment_date='', fee_status='rejected', admin_remarks='$rejection_reason' ";
     $q .= "WHERE fee_id=$id";
     $result = query($q);
@@ -38,16 +38,16 @@ if (isset($_POST['rejected']) && !empty($_POST['rejection_reason'])) {
 
 // fee with dues
 if (isset($_POST['due']) && !empty($_POST['dues'])) {
-    $id = $_POST['id'];
-    $dues = $_POST['dues'];
+    $id = escape($_POST['id']);
+    $dues = escape($_POST['dues']);
     $q2 = "UPDATE student_fee SET fee_status='dues', pending_dues='$dues' ";
     $q2 .= "WHERE fee_id='$id'";
     $rs1 = query($q2);
     if ($rs1) {
         $date = date('Y-m-d', time());
-        $name = $_POST['student_name'];
-        $reg = $_POST['roll_no'];
-        $fee = $_POST['monthly_fee'];
+        $name = escape($_POST['student_name']);
+        $reg = escape($_POST['roll_no']);
+        $fee = escape($_POST['monthly_fee']);
         $paid = (int) $fee - (int) $dues;
         $comment = "Student $name, reg# $reg paid fee amount Rs.$paid with pending dues Rs.$dues (Monthly Fee)";
         $qer = "INSERT INTO expense_receiving (comment, expense, receiving, date) ";
@@ -63,15 +63,15 @@ if (isset($_POST['due']) && !empty($_POST['dues'])) {
 
 // the fee is totally paid
 if (isset($_POST['paid'])) {
-    $id = $_POST['id'];
+    $id = escape($_POST['id']);
     $q2 = "UPDATE student_fee SET fee_status='paid' ";
     $q2 .= "WHERE fee_id='$id'";
     $rs1 = query($q2);
     if ($rs1) {
         $date = date('Y-m-d', time());
-        $name = $_POST['student_name'];
-        $reg = $_POST['roll_no'];
-        $fee = $_POST['monthly_fee'];
+        $name = escape($_POST['student_name']);
+        $reg = escape($_POST['roll_no']);
+        $fee = escape($_POST['monthly_fee']);
         $comment = "Student $name, reg# $reg paid full fee amount Rs.$fee (Monthly Fee)";
         $qer = "INSERT INTO expense_receiving (comment, expense, receiving, date) ";
         $qer .= "VALUES ('$comment', '0', '$fee', '$date')";
@@ -88,7 +88,7 @@ if (isset($_POST['paid'])) {
         <h1>Process Fee</h1>
         <nav>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item active">School name here</li>
+                <li class="breadcrumb-item active"><?php echo $_SESSION['school_name']; ?></li>
             </ol>
         </nav>
     </div><!-- End Page Title -->
@@ -115,7 +115,7 @@ if (isset($_POST['paid'])) {
                         </ul>
                         <?php
                         // get student info
-                        $fee_id = $_GET['id'];
+                        $fee_id = escape($_GET['id']);
                         $query = "SELECT * FROM student_fee INNER JOIN ";
                         $query .= "student_profile ON student_fee.fk_student_id=student_profile.student_id ";
                         $query .= "WHERE fee_id='$fee_id'";

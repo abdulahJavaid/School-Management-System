@@ -42,20 +42,29 @@
         <div class="row">
 
             <?php
-            // issue fees
-            if (!isset($_POST['issue_fees'])) {
+            // seeing if the fee is already issued
+            $month = date('F');
+            $year = date('Y');
+            $query = "SELECT * FROM student_fee WHERE month='$month' AND year='$year'";
+            $feees = query($query);
+            if (mysqli_num_rows($feees) == 0) {
+                // issue fees
+                if (!isset($_POST['issue_fees'])) {
             ?>
-                <div class="row mb-3">
-                    <div class="col-md-3 mb-3">
-                        <form action="" method="post">
-                            <button type="submit" name="issue_fees" class="btn btn-sm btn-success w-100">Issue Fees</button>
-                        </form>
+                    <div class="row mb-3">
+                        <div class="col-md-3 mb-3">
+                            <form action="" method="post">
+                                <button type="submit" name="issue_fees" class="btn btn-sm btn-success w-100">Issue Fees</button>
+                            </form>
+                        </div>
                     </div>
-                </div>
-            <?php
+                <?php
+                }
+            } else {
+                echo "<code>Fees for this month is already issued</code>";
             }
             if (isset($_POST['issue_fees'])) {
-            ?>
+                ?>
                 <form action="" method="post">
                     <div class="row mb-3">
                         <p><code>Fee will be issued to whole school for </code><?php echo date('Y') . ', ' . date('F'); ?></p>
@@ -95,6 +104,18 @@
                         <form action="" method="post">
                             <button type="submit" name="download_vouchers" class="btn btn-sm btn-success w-100">Download vouchers</button>
                         </form>
+                    </div>
+                </div>
+            <?php
+            }
+            // if admin did not selected the class
+            if (isset($_GET['m'])) {
+            ?>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="alert alert-danger"><strong>
+                                Please Select a class to download vouchers!
+                            </strong></div>
                     </div>
                 </div>
             <?php

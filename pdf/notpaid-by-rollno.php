@@ -1,6 +1,6 @@
 <?php
 if (isset($_POST['npaid_roll_no'])) {
-    $get_roll = $_POST['npaid_roll_no'];
+    $get_roll = escape($_POST['npaid_roll_no']);
 
     $query = "SELECT * FROM school_profile_ ORDER BY id DESC LIMIT 1";
     $result = mysqli_query($conn, $query);

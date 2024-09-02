@@ -463,7 +463,7 @@
                               <select id="inputState" name="<?php echo $t[$j] . $i; ?>" class="<?php echo $t[$j] . $i; ?> form-select mt-1 inpt-1">
                                 <?php
                                 // getting teacher_name value for the period
-                                $tch = $ro['period_id'];
+                                $tch = escape($ro['period_id']);
                                 $query = "SELECT * FROM periods WHERE period_id='$tch'";
                                 $res = query($query);
                                 $rws = mysqli_fetch_assoc($res);
@@ -479,8 +479,8 @@
                                 <?php
                                 }
                                 // selecting and showing other teachers which were not previously assigned
-                                $tch_name = $rws['teacher_name'];
-                                $tch = $ro['period_id'];
+                                $tch_name = escape($rws['teacher_name']);
+                                $tch = escape($ro['period_id']);
                                 $query = "SELECT * FROM teacher_profile WHERE NOT name='$tch_name'";
                                 $result2 = query($query);
                                 while ($r = mysqli_fetch_assoc($result2)) {
@@ -532,7 +532,7 @@
                               <select id="inputState" name="<?php echo $t[$j] . $i; ?>" class="form-select mt-1 inpt-1">
                                 <?php
                                 // getting the teacher_name value from period
-                                $tch = $ro['period_id'];
+                                $tch = escape($ro['period_id']);
                                 $query = "SELECT * FROM periods WHERE period_id='$tch'";
                                 $res = query($query);
                                 $rws = mysqli_fetch_assoc($res);
@@ -548,8 +548,8 @@
                                 <?php
                                 }
                                 // selecting and showing other teachers which were not previously assigned to class
-                                $tch_name = $rws['teacher_name'];
-                                $tch = $ro['period_id'];
+                                $tch_name = escape($rws['teacher_name']);
+                                $tch = escape($ro['period_id']);
                                 $query = "SELECT * FROM teacher_profile WHERE NOT name='$tch_name'";
                                 $result2 = query($query);
                                 while ($r = mysqli_fetch_assoc($result2)) {

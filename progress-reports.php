@@ -78,8 +78,8 @@
             <?php
             // view progeress report of the student
             if (isset($_POST['view_progress'])) {
-                $name = $_POST['name'];
-                $roll_no = $_POST['roll_no'];
+                $name = escape($_POST['name']);
+                $roll_no = escape($_POST['roll_no']);
                 $query = "SELECT student_id FROM student_profile WHERE name='$name' AND roll_no='$roll_no'";
                 $result = query($query);
                 if (mysqli_num_rows($result) != 0) {
@@ -121,23 +121,25 @@
                                     <?php
                                     // week 1 progress report
                                     $date = $_POST['date'] . '-01';
+                                    $date = escape($date);
                                     $date1 = $_POST['date'] . '-07';
+                                    $date1 = escape($date1);
                                     $query = "SELECT * FROM progress_report WHERE fk_student_id='$std_id' AND date BETWEEN '$date' AND '$date1'";
                                     $result = query($query);
-                                    if(mysqli_num_rows($result) != 0){
-                                    while($one = mysqli_fetch_assoc($result)){
+                                    if (mysqli_num_rows($result) != 0) {
+                                        while ($one = mysqli_fetch_assoc($result)) {
                                     ?>
-                                    <div class="mb-4 pt-3">
-                                        <h6 class="fw-bold"><i class="fas fa-calculator pro-icon"></i> <?php echo $one['subject']; ?></h6>
-                                        <!-- <div class="progress pro-progress mb-2" style="height: 20px;"> -->
-                                            <?php echo $one['progress_grade']; ?>
-                                            <!-- <div class="progress-bar pro-progress-bar bg-success" role="progressbar" style="width: 85%;" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100">85%</div> -->
-                                        <!-- </div> -->
-                                    </div>
-                                    <?php 
-                                }
-                                }
-                                 ?>
+                                            <div class="mb-4 pt-3">
+                                                <h6 class="fw-bold"><i class="fas fa-calculator pro-icon"></i> <?php echo $one['subject']; ?></h6>
+                                                <!-- <div class="progress pro-progress mb-2" style="height: 20px;"> -->
+                                                <?php echo $one['progress_grade']; ?>
+                                                <!-- <div class="progress-bar pro-progress-bar bg-success" role="progressbar" style="width: 85%;" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100">85%</div> -->
+                                                <!-- </div> -->
+                                            </div>
+                                    <?php
+                                        }
+                                    }
+                                    ?>
                                     <!-- <div class="mb-4 pt-3">
                                         <h6 class="fw-bold"><i class="fas fa-flask pro-icon"></i> Science</h6>
                                         <div class="progress pro-progress mb-2" style="height: 20px;">
@@ -155,26 +157,28 @@
                                     <h5 class="mb-0">Week 2</h5>
                                 </div>
                                 <div class="card-body">
-                                <?php
+                                    <?php
                                     // week 1 progress report
                                     $date2 = $_POST['date'] . '-08';
+                                    $date2 = escape($date2);
                                     $date3 = $_POST['date'] . '-14';
+                                    $date3 = escape($date3);
                                     $query = "SELECT * FROM progress_report WHERE fk_student_id='$std_id' AND date BETWEEN '$date2' AND '$date3'";
                                     $result = query($query);
-                                    if(mysqli_num_rows($result) != 0){
-                                    while($two = mysqli_fetch_assoc($result)){
+                                    if (mysqli_num_rows($result) != 0) {
+                                        while ($two = mysqli_fetch_assoc($result)) {
                                     ?>
-                                    <div class="mb-4 pt-3">
-                                        <h6 class="fw-bold"><i class="fas fa-calculator pro-icon"></i> <?php echo $two['subject']; ?></h6>
-                                        <!-- <div class="progress pro-progress mb-2" style="height: 20px;"> -->
-                                        <?php echo $two['progress_grade']; ?>
-                                            <!-- <div class="progress-bar pro-progress-bar bg-success" role="progressbar" style="width: 88%;" aria-valuenow="88" aria-valuemin="0" aria-valuemax="100">88%</div> -->
-                                        <!-- </div> -->
-                                    </div>
-                                    <?php 
-                                }
-                                }
-                                 ?>
+                                            <div class="mb-4 pt-3">
+                                                <h6 class="fw-bold"><i class="fas fa-calculator pro-icon"></i> <?php echo $two['subject']; ?></h6>
+                                                <!-- <div class="progress pro-progress mb-2" style="height: 20px;"> -->
+                                                <?php echo $two['progress_grade']; ?>
+                                                <!-- <div class="progress-bar pro-progress-bar bg-success" role="progressbar" style="width: 88%;" aria-valuenow="88" aria-valuemin="0" aria-valuemax="100">88%</div> -->
+                                                <!-- </div> -->
+                                            </div>
+                                    <?php
+                                        }
+                                    }
+                                    ?>
                                     <!-- <div class="mb-4 pt-3">
                                         <h6 class="fw-bold"><i class="fas fa-flask pro-icon"></i> Science</h6>
                                         <div class="progress pro-progress mb-2" style="height: 20px;">
@@ -196,26 +200,28 @@
                                     <h5 class="mb-0">Week 3</h5>
                                 </div>
                                 <div class="card-body">
-                                <?php
+                                    <?php
                                     // week 1 progress report
                                     $date4 = $_POST['date'] . '-15';
+                                    $date4 = escape($date4);
                                     $date5 = $_POST['date'] . '-21';
+                                    $date5 = escape($date5);
                                     $query = "SELECT * FROM progress_report WHERE fk_student_id='$std_id' AND date BETWEEN '$date4' AND '$date5'";
                                     $result = query($query);
-                                    if(mysqli_num_rows($result) != 0){
-                                    while($three = mysqli_fetch_assoc($result)){
+                                    if (mysqli_num_rows($result) != 0) {
+                                        while ($three = mysqli_fetch_assoc($result)) {
                                     ?>
-                                    <div class="mb-4 pt-3">
-                                        <h6 class="fw-bold"><i class="fas fa-calculator pro-icon"></i> <?php echo $three['subject']; ?></h6>
-                                        <!-- <div class="progress pro-progress mb-2" style="height: 20px;"> -->
-                                        <?php echo $three['progress_grade']; ?>
-                                            <!-- <div class="progress-bar pro-progress-bar bg-success" role="progressbar" style="width: 90%;" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100">90%</div> -->
-                                        <!-- </div> -->
-                                    </div>
-                                    <?php 
-                                }
-                                }
-                                 ?>
+                                            <div class="mb-4 pt-3">
+                                                <h6 class="fw-bold"><i class="fas fa-calculator pro-icon"></i> <?php echo $three['subject']; ?></h6>
+                                                <!-- <div class="progress pro-progress mb-2" style="height: 20px;"> -->
+                                                <?php echo $three['progress_grade']; ?>
+                                                <!-- <div class="progress-bar pro-progress-bar bg-success" role="progressbar" style="width: 90%;" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100">90%</div> -->
+                                                <!-- </div> -->
+                                            </div>
+                                    <?php
+                                        }
+                                    }
+                                    ?>
                                     <!-- <div class="mb-4 pt-3">
                                         <h6 class="fw-bold"><i class="fas fa-flask pro-icon"></i> Science</h6>
                                         <div class="progress pro-progress mb-2" style="height: 20px;">
@@ -233,27 +239,29 @@
                                     <h5 class="mb-0">Week 4</h5>
                                 </div>
                                 <div class="card-body">
-                                <?php
+                                    <?php
                                     // week 1 progress report
                                     $date6 = $_POST['date'] . '-22';
+                                    $date6 = escape($date6);
                                     $date7 = $_POST['date'] . '-28';
+                                    $date7 = escape($date7);
                                     $query = "SELECT * FROM progress_report WHERE fk_student_id='$std_id' AND date BETWEEN '$date6' AND '$date7'";
                                     $result = query($query);
-                                    if(mysqli_num_rows($result) != 0){
-                                    while($four = mysqli_fetch_assoc($result)){
+                                    if (mysqli_num_rows($result) != 0) {
+                                        while ($four = mysqli_fetch_assoc($result)) {
                                     ?>
-                                    <div class="mb-4 pt-3">
-                                        <h6 class="fw-bold"><i class="fas fa-calculator pro-icon"></i> <?php echo $three['subject']; ?></h6>
-                                        <!-- <div class="progress pro-progress mb-2" style="height: 20px;"> -->
-                                        <?php echo $three['progress_grade']; ?>
-                                            <!-- <div class="progress-bar pro-progress-bar bg-success" role="progressbar" style="width: 92%;" aria-valuenow="92" aria-valuemin="0" aria-valuemax="100">92%</div> -->
-                                        <!-- </div> -->
-                                    </div>
-                                    
-                                    <?php 
-                                }
-                                }
-                                 ?>
+                                            <div class="mb-4 pt-3">
+                                                <h6 class="fw-bold"><i class="fas fa-calculator pro-icon"></i> <?php echo $three['subject']; ?></h6>
+                                                <!-- <div class="progress pro-progress mb-2" style="height: 20px;"> -->
+                                                <?php echo $three['progress_grade']; ?>
+                                                <!-- <div class="progress-bar pro-progress-bar bg-success" role="progressbar" style="width: 92%;" aria-valuenow="92" aria-valuemin="0" aria-valuemax="100">92%</div> -->
+                                                <!-- </div> -->
+                                            </div>
+
+                                    <?php
+                                        }
+                                    }
+                                    ?>
                                     <!-- <div class="mb-4 pt-3">
                                         <h6 class="fw-bold"><i class="fas fa-flask pro-icon"></i> Science</h6>
                                         <div class="progress pro-progress mb-2" style="height: 20px;">

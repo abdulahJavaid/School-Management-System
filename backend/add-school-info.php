@@ -9,17 +9,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Check if all fields are set
     if (isset($_POST["about"]) && isset($_FILES["image"]) && isset($_POST["school_id"]) && isset($_POST["name"])  && isset($_POST["o_name"])  && isset($_POST["slogan"])  && isset($_POST["private"])  && isset($_POST["address"])  && isset($_POST["city"])  && isset($_POST["contact"])  && isset($_POST["email"])  && isset($_POST["expiry"])) {
         // Get form data
-        $about = $_POST["about"];
-        $school_id = $_POST["school_id"];
-        $name = $_POST["name"];
-        $o_name = $_POST["o_name"];
-        $slogan = $_POST["slogan"];
-        $private = $_POST["private"];
-        $address = $_POST["address"];
-        $city = $_POST["city"];
-        $contact = $_POST["contact"];
-        $email = $_POST["email"];
-        $expiry = $_POST["expiry"];
+        $about = escape($_POST["about"]);
+        $school_id = escape($_POST["school_id"]);
+        $name = escape($_POST["name"]);
+        $o_name = escape($_POST["o_name"]);
+        $slogan = escape($_POST["slogan"]);
+        $private = escape($_POST["private"]);
+        $address = escape($_POST["address"]);
+        $city = escape($_POST["city"]);
+        $contact = escape($_POST["contact"]);
+        $email = escape($_POST["email"]);
+        $expiry = escape($_POST["expiry"]);
         
         // File upload handling
         $target_dir = "../uploads/school-profile-uploads/"; // Directory where the file will be saved
@@ -54,7 +54,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // if everything is ok, try to upload file
             if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
                 // Image uploaded successfully, now insert form data into the database
-
+                $pic = escape($pic);
                 // Insert form data and image path into the database
                 $query = "INSERT INTO school_profile_ (about, image, school_id, name, o_name, slogan, private, address, city, contact, email, expiry) 
                 VALUES ('$about', '$pic', '$school_id', '$name', '$o_name', '$slogan', '$private', '$address', '$city', '$contact', '$email', '$expiry')";

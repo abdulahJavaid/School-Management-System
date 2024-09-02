@@ -92,6 +92,8 @@
                                     $class = substr($fetch, 0, $find);
                                     $section = (int) $section;
                                     $class = (int) $class;
+                                    $section = escape($section);
+                                    $class = escape($class);
 
                                     $que = "SELECT * FROM all_classes ";
                                     $que .= "INNER JOIN class_sections ON all_classes.class_id = class_sections.fk_class_id ";

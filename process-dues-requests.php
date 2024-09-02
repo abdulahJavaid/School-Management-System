@@ -19,22 +19,22 @@ if (!isset($_GET['id'])) {
 ?>
 
 <?php
-$id = $_GET['id'];
+$id = escape($_GET['id']);
 // rejected dues
 if (isset($_POST['reject']) && !empty($_POST['rejection_reason'])) {
     // echo $_GET['id'];
-    $std_id = $_POST['student_id'];
-    $rejection_reason = $_POST['rejection_reason'];
+    $std_id = escape($_POST['student_id']);
+    $rejection_reason = escape($_POST['rejection_reason']);
     $query = "SELECT * FROM student_fee WHERE fk_student_id='$std_id' ";
     $query .= "AND fee_status LIKE '%due%'";
     $res = query($query);
-    while($row = mysqli_fetch_assoc($res)){
-        $fee_id = $row['fee_id'];
+    while ($row = mysqli_fetch_assoc($res)) {
+        $fee_id = escape($row['fee_id']);
         $q = "UPDATE student_fee SET fee_method='', payment_date='', fee_status='dues', admin_remarks='$rejection_reason' ";
         $q .= "WHERE fee_id='$fee_id'";
         $result = query($q);
     }
-        redirect("./dues-requests.php");
+    redirect("./dues-requests.php");
 } elseif (isset($_POST['reject']) && empty($_POST['rejection_reason'])) {
     $message = "Please add dues rejection reason!";
 }
@@ -42,20 +42,20 @@ if (isset($_POST['reject']) && !empty($_POST['rejection_reason'])) {
 // process dues
 if (isset($_POST['clear_dues']) && !empty($_POST['dues_amount'])) {
     $total_paid = (int) $_POST['dues_amount'];
-    $paid_amount = $_POST['dues_amount'];
-    $std_id = $_POST['student_id'];
+    $paid_amount = escape($_POST['dues_amount']);
+    $std_id = escape($_POST['student_id']);
     $query = "SELECT * FROM student_fee WHERE fk_student_id='$std_id' ";
     $query .= "AND fee_status LIKE '%due%'";
     $res = query($query);
-    while($row = mysqli_fetch_assoc($res)){
-        $fee_id = $row['fee_id'];
+    while ($row = mysqli_fetch_assoc($res)) {
+        $fee_id = escape($row['fee_id']);
         $dues = (int) $row['pending_dues'];
 
-        if($total_paid > $dues){
+        if ($total_paid > $dues) {
             $q = "UPDATE student_fee SET fee_status='paid', pending_dues='0' ";
             $q .= "WHERE fee_id='$fee_id'";
             $total_paid -= $dues;
-        }elseif($total_paid < $dues){
+        } elseif ($total_paid < $dues) {
             $dues = $dues - $total_paid;
             $q = "UPDATE student_fee SET fee_status='dues', pending_dues='$dues' ";
             $q .= "WHERE fee_id='$fee_id'";
@@ -64,16 +64,16 @@ if (isset($_POST['clear_dues']) && !empty($_POST['dues_amount'])) {
         $result = query($q);
     }
     // if ($rs1) {
-        $date = date('Y-m-d', time());
-        $name = $_POST['name'];
-        $reg = $_POST['roll_no'];
-        $comment = "Student $name, reg# $reg paid dues amount Rs.$paid_amount (Pending Dues)";
-        $qer = "INSERT INTO expense_receiving (comment, expense, receiving, date) ";
-        $qer .= "VALUES ('$comment', '0', '$paid_amount', '$date')";
-        $res = query($qer);
-        if ($res) {
-            redirect("./dues-requests.php");
-        }
+    $date = date('Y-m-d', time());
+    $name = escape($_POST['name']);
+    $reg = escape($_POST['roll_no']);
+    $comment = "Student $name, reg# $reg paid dues amount Rs.$paid_amount (Pending Dues)";
+    $qer = "INSERT INTO expense_receiving (comment, expense, receiving, date) ";
+    $qer .= "VALUES ('$comment', '0', '$paid_amount', '$date')";
+    $res = query($qer);
+    if ($res) {
+        redirect("./dues-requests.php");
+    }
     // }
 } elseif (isset($_POST['clear_dues']) && empty($_POST['dues_amount'])) {
     $message = "Please add the amount (Rs.) that student paid";
@@ -86,7 +86,7 @@ if (isset($_POST['clear_dues']) && !empty($_POST['dues_amount'])) {
         <h1>Process Fee</h1>
         <nav>
             <ol class="breadcrumb">
-                <li class="breadcrumb-item active">School name here</li>
+                <li class="breadcrumb-item active"><?php echo $_SESSION['school_name']; ?></li>
             </ol>
         </nav>
     </div><!-- End Page Title -->
@@ -127,7 +127,7 @@ if (isset($_POST['clear_dues']) && !empty($_POST['dues_amount'])) {
                                     <tbody>
                                         <?php
                                         // get student info
-                                        $std_id = $_GET['id'];
+                                        $std_id = escape($_GET['id']);
                                         // $query = "SELECT * FROM student_fee INNER JOIN ";
                                         // $query .= "student_profile ON student_fee.fk_student_id=student_profile.student_id ";
                                         // $query .= "WHERE fee_id='$std_id' AND fee_status='dues_request' OR fee_status='due_request' OR fee_status='dues'";
@@ -170,7 +170,7 @@ if (isset($_POST['clear_dues']) && !empty($_POST['dues_amount'])) {
                                     <input type="hidden" name="roll_no" value="<?php echo $row['roll_no']; ?>">
                                     <input type="hidden" name="name" value="<?php echo $row['name']; ?>">
                                     <!-- <input type="hidden" name="monthly_fee" value="<?php //echo $rows['monthly_fee']; 
-                                                                                    ?>" id="">
+                                                                                        ?>" id="">
                                     <input type="hidden" name="year" value="<?php //echo $rows['year']; 
                                                                             ?>" id="">
                                     <input type="hidden" name="month" value="<?php //echo $rows['month']; 

@@ -53,7 +53,7 @@ if ($_SESSION['login_access'] == 'developer' || $_SESSION['login_access'] == 'ac
                                 </button>
                             </form>
                         <?php
-                        // this eleseif() will never be executed on this page
+                            // this eleseif() will never be executed on this page
                         } elseif (isset($_POST['view_month'])) {
                             $date = $_POST['month'] . '-01';
                         ?>
@@ -174,7 +174,7 @@ if ($_SESSION['login_access'] == 'developer' || $_SESSION['login_access'] == 'ac
                                                             } ?>"
                                                     placeholder="Example input"
                                                     aria-label="Example input"
-                                                    aria-describedby="button-addon1" required readonly/>
+                                                    aria-describedby="button-addon1" required readonly />
                                                 <button name="view_month" class="btn btn-sm btn-success" type="button" id="button-addon1">
                                                     date
                                                 </button>
@@ -207,17 +207,19 @@ if ($_SESSION['login_access'] == 'developer' || $_SESSION['login_access'] == 'ac
                                 if (isset($_POST['view_month'])) {
                                     $date = $_POST['month'] . '-01';
                                     $year = date('Y', strtotime($date));
+                                    $year = escape($year);
                                     $month = date('F', strtotime($date));
+                                    $month = escape($month);
                                     $query = "SELECT * FROM student_fee INNER JOIN student_profile ON ";
                                     $query .= "student_fee.fk_student_id=student_profile.student_id ";
                                     $query .= "WHERE fee_status='unpaid' AND year='$year' AND month='$month'";
                                 } elseif (isset($_POST['view_name'])) {
-                                    $name = $_POST['name'];
+                                    $name = escape($_POST['name']);
                                     $query = "SELECT * FROM student_fee INNER JOIN student_profile ON ";
                                     $query .= "student_fee.fk_student_id=student_profile.student_id ";
                                     $query .= "WHERE name LIKE '%$name%' AND fee_status='unpaid' ORDER BY fee_id DESC";
                                 } elseif (isset($_POST['view_reg'])) {
-                                    $roll_no = $_POST['reg'];
+                                    $roll_no = escape($_POST['reg']);
                                     $query = "SELECT * FROM student_fee INNER JOIN student_profile ON ";
                                     $query .= "student_fee.fk_student_id=student_profile.student_id ";
                                     $query .= "WHERE roll_no='$roll_no' AND fee_status='unpaid' ORDER BY fee_id DESC";
@@ -248,7 +250,8 @@ if ($_SESSION['login_access'] == 'developer' || $_SESSION['login_access'] == 'ac
                                             ?>
                                         </td>
                                         <!-- <td>
-                                            <?php //echo $row['monthly_fee']; ?>
+                                            <?php //echo $row['monthly_fee']; 
+                                            ?>
                                         </td> -->
                                     </tr>
                                 <?php

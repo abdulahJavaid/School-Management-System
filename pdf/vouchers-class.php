@@ -3,6 +3,10 @@
 
 if (isset($_POST['select'])) {
 
+    if($_POST['select'] == 'choose_class') {
+        redirect("./fee-vouchers.php?m=Please Select a class");
+    }
+
     $fetch = $_POST['select'];
     $length = strlen($fetch);
     $find = strpos($fetch, ' ');
@@ -14,6 +18,8 @@ if (isset($_POST['select'])) {
     $class = substr($fetch, 0, $find);
     $section = (int) $section;
     $class = (int) $class;
+    $section = escape($section);
+    $class = escape($class);
 
     $query = "SELECT * FROM school_profile_ ORDER BY id DESC LIMIT 1";
     $result = mysqli_query($conn, $query);

@@ -59,13 +59,13 @@ if (isset($_POST['submit'])) {
     <span class="bg-danger"><?php echo $message; ?></span>
 
     <label for="username">Admin Id</label>
-    <input type="text" placeholder="Admin id" id="username" name="admin_id">
+    <input type="text" placeholder="Admin id" id="username" name="admin_id" required>
 
     <label for="password">Password</label>
-    <input type="password" placeholder="Password" id="password" name="password">
+    <input type="password" placeholder="Password" id="password" name="password" required>
 
     <button name="submit">Log In</button><br><br>
-    <p class="login-link">Reset password? <a href="signup.php">Sign up</a></p>
+    <!-- <p class="login-link">Reset password? <a href="signup.php">Sign up</a></p> -->
     <!-- <div class="social">
           <div class="go"><i class="fab fa-google"></i>  Google</div>
           <div class="fb"><i class="fab fa-facebook"></i>  Facebook</div>

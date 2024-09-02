@@ -1,6 +1,6 @@
 <?php
 if(isset($_POST['npaid_name'])){
-    $get_name = $_POST['npaid_name'];
+    $get_name = escape($_POST['npaid_name']);
   
     $query = "SELECT * FROM school_profile_ ORDER BY id DESC LIMIT 1";
     $result = mysqli_query($conn, $query);

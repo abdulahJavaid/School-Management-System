@@ -55,7 +55,7 @@ if ($_SESSION['login_access'] == 'developer' || $_SESSION['login_access'] == 'ac
                                 $result = query($query);
                                 $dues = 0;
                                 while ($row = mysqli_fetch_assoc($result)) {
-                                    $std_id = $row['student_id'];
+                                    $std_id = escape($row['student_id']);
                                     $query = "Select * FROM student_fee WHERE fk_student_id='$std_id'";
                                     $res = query($query);
                                     while ($rows = mysqli_fetch_assoc($res)) {
@@ -89,7 +89,7 @@ if ($_SESSION['login_access'] == 'developer' || $_SESSION['login_access'] == 'ac
 
 
                                     <?php
-                                        break;
+                                            break;
                                         }
                                     }
                                     ?>

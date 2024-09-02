@@ -120,16 +120,16 @@ body {
     </style>
 </head>
 <body>";
-while($rows = mysqli_fetch_assoc($pass)){
-    $student_name = $rows['name'];
-    $roll_no = $rows['roll_no'];
-    $class = $rows['class_name'];
-    $section = $rows['section_name'];
-    $fee = $rows['monthly_fee'];
-    $last_date = $rows['due_date'];
+    while ($rows = mysqli_fetch_assoc($pass)) {
+        $student_name = $rows['name'];
+        $roll_no = $rows['roll_no'];
+        $class = $rows['class_name'];
+        $section = $rows['section_name'];
+        $fee = $rows['monthly_fee'];
+        $last_date = $rows['due_date'];
 
-    // $html .= "1";
-    $html .= "<div class='vouchers'>
+        // $html .= "1";
+        $html .= "<div class='vouchers'>
         <div class='voucher-container'>
             <div class='voucher-header'>
             <span class='voucher-type'>Student Copy</span><br>
@@ -208,8 +208,8 @@ while($rows = mysqli_fetch_assoc($pass)){
             </div>
         </div>
     </div>";
-}
-$html .= "</body>
+    }
+    $html .= "</body>
 </html>
   ";
 }
