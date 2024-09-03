@@ -108,21 +108,33 @@
                 </div>
             <?php
             }
-            // if admin did not selected the class
-            if (isset($_GET['m'])) {
             ?>
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="alert alert-danger"><strong>
-                                Please Select a class to download vouchers!
-                            </strong></div>
-                    </div>
-                </div>
             <?php
-            }
             if (isset($_POST['download_vouchers'])) {
+                // unset($_GET['ms']);
+                // unset($_GET['m']);
             ?>
                 <div class="row mb-3">
+                <form action="generate-pdf.php" method="post">
+                        <div class="col-sm-4">
+                            <label for="due-date" class="form-label"><strong>Student Reg. no</strong> <code>*</code></label>
+                            <div class="col-auto">
+                                <div class="input-group">
+                                    <input
+                                        name="roll_no_voucher"
+                                        type="text"
+                                        class="form-control"
+                                        aria-label="Example input"
+                                        value=""
+                                        placeholder="reg#"
+                                        aria-describedby="button-addon2" required />
+                                    <button type="submit" name="download_student_voucher" id="button-addon3" class="btn btn-sm btn-success">
+                                        Download Voucher
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                     <form action="generate-pdf.php" method="post">
                         <div class="col-sm-4">
                             <label for="due-date" class="form-label"><strong>Select Class</strong> <code>*</code></label>
@@ -175,6 +187,28 @@
                             </div>
                         </div>
                     </form>
+                </div>
+            <?php
+            }
+            ?>
+            
+            <?php
+            // if admin did not selected the class or reg# is not valid
+            if (isset($_GET['m']) || isset($_GET['ms'])) {
+                // $message = $_GET['m'];
+            ?>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="alert alert-danger"><strong>
+                                <?php
+                                // displaying the messages
+                                if(isset($_GET['m']))
+                                echo "Please slect a class to download vouchers!";
+                                elseif(isset($_GET['ms']))
+                                echo "The registration# is invalid!";
+                                ?>
+                            </strong></div>
+                    </div>
                 </div>
             <?php
             }

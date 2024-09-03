@@ -1,25 +1,15 @@
 <?php
 // paid fee for the current month
 
-if (isset($_POST['select'])) {
+if (isset($_POST['roll_no_voucher'])) {
 
-    if($_POST['select'] == 'choose_class') {
-        redirect("./fee-vouchers.php?m=1");
+    
+    $roll_no = escape($_POST['roll_no_voucher']);
+    $query = "SELECT * FROM student_profile WHERE roll_no='$roll_no'";
+    $data = query($query);
+    if(mysqli_num_rows($data) == 0) {
+        redirect("./fee-vouchers.php?ms=1");
     }
-
-    $fetch = $_POST['select'];
-    $length = strlen($fetch);
-    $find = strpos($fetch, ' ');
-    $number = $find + 1;
-    $useable = $length - $number;
-    $useable1 = $find;
-
-    $section = substr($fetch, -$useable);
-    $class = substr($fetch, 0, $find);
-    $section = (int) $section;
-    $class = (int) $class;
-    $section = escape($section);
-    $class = escape($class);
 
     $query = "SELECT * FROM school_profile_ ORDER BY id DESC LIMIT 1";
     $result = mysqli_query($conn, $query);
@@ -38,7 +28,7 @@ if (isset($_POST['select'])) {
     $query .= "student_class ON student_profile.student_id=student_class.fk_student_id INNER JOIN ";
     $query .= "class_sections ON student_class.fk_section_id=class_sections.section_id INNER JOIN ";
     $query .= "all_classes ON class_sections.fk_class_id=all_classes.class_id ";
-    $query .= "WHERE year='$year' AND month='$month' AND fee_status='unpaid' AND section_id='$section'";
+    $query .= "WHERE year='$year' AND month='$month' AND fee_status='unpaid' AND roll_no='$roll_no'";
 
     $pass = mysqli_query($conn, $query);
 
