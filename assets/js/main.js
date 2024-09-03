@@ -23,21 +23,21 @@ function select_opt(get_class, indx) {
 // custom js code by developers of myschool
 
 // Get elements
-const openPopup = document.getElementById("openPopup");
-const closePopup = document.getElementById("closePopup");
-const popupContainer = new bootstrap.Modal(
-  document.getElementById("popupContainer")
-);
+// const openPopup = document.getElementById("openPopup");
+// const closePopup = document.getElementById("closePopup");
+// const popupContainer = new bootstrap.Modal(
+//   document.getElementById("popupContainer")
+// );
 
 // Open popup
-openPopup.addEventListener("click", () => {
-  popupContainer.show();
-});
+// openPopup.addEventListener("click", () => {
+//   popupContainer.show();
+// });
 
 // Close popup
-closePopup.addEventListener("click", () => {
-  popupContainer.hide();
-});
+// closePopup.addEventListener("click", () => {
+//   popupContainer.hide();
+// });
 
 //
 //
@@ -85,7 +85,7 @@ closePopup.addEventListener("click", () => {
     on("click", ".toggle-sidebar-btn", function (e) {
       select("body").classList.toggle("toggle-sidebar");
     });
-  }
+  } 
 
   /**
    * Search bar toggle

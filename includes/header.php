@@ -63,7 +63,7 @@
         <!-- <img src="assets/img/logo.png" alt=""> -->
         <span class="d-none d-lg-block" style="color: white;">Insaaf School System</span>
       </a>
-      <!-- <i class="bi bi-list toggle-sidebar-btn"></i> -->
+      <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
 
     <!-- <div class="search-bar">
