@@ -286,7 +286,7 @@ if ($_SESSION['login_access'] == 'developer' || $_SESSION['login_access'] == 'ac
               <tr>
                 <td>---</td>
                 <td>---</td>
-                <td colspan="2"><strong>Total: </strong>Rs. <?php echo $rec - $exp; ?></td>
+                <td colspan="2"><strong>In Hand Balance: </strong>Rs. <?php echo $rec - $exp; ?></td>
                 <!-- <td><strong>Total: </strong></td> -->
                 <td>---</td>
               </tr>

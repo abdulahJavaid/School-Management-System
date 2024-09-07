@@ -33,12 +33,29 @@ $row = mysqli_fetch_assoc($pass);
     </nav>
   </div><!-- End Page Title -->
   <?php
+  // when there is no form submission, for form values
+  $message = '';
+  $cid = '';
+  $name = '';
+  $roll_no = '';
+  $gender = '';
+  $cnic = '';
+  $dob = '';
+  $address = '';
+  $mobile_no = '';
+  $email = '';
+  $f_name = '';
+  $f_cnic = '';
+  $fee_amount = '';
+
+
   // updating student
   if (isset($_POST['submit'])) {
     $cid = escape($_GET['id']);
     $name = escape($_POST['name']);
     $roll_no = escape($_POST['roll_no']);
     $cnic = escape($_POST['cnic']);
+    $gender = escape($_POST['student_gender']);
     $dob = escape($_POST['dob']);
     $address = escape($_POST['address']);
     $mobile_no = escape($_POST['mobile_no']);
@@ -47,54 +64,108 @@ $row = mysqli_fetch_assoc($pass);
     $f_cnic = escape($_POST['f_cnic']);
     $fee_amount = escape($_POST['fee_amount']);
 
-    if (isset($_FILES['std_img']) && !empty($_FILES['std_img']['tmp_name'])) {
-      $tmp_img = $_FILES['std_img']['tmp_name'];
-      $img = basename($_FILES['std_img']['name']);
+    // checking if the roll number is not assigned to another student
+    $query = "SELECT * FROM student_profile WHERE roll_no='$roll_no' AND NOT student_id='$cid'";
+    $find_roll = query($query);
+    if (mysqli_num_rows($find_roll) == 0) {
+      // checking if the cnic/b-form is already assosiated to another student
+      $query = "SELECT * FROM student_profile WHERE cnic='$cnic' AND NOT student_id='$cid'";
+      $find_cnic = query($query);
+      if (mysqli_num_rows($find_cnic) == 0) {
+        // checking if the image is not empty and making it unique
+        if (isset($_FILES['std_img']) && !empty($_FILES['std_img']['tmp_name'])) {
+          $tmp_img = $_FILES['std_img']['tmp_name'];
+          $img = basename($_FILES['std_img']['name']);
 
-      unlink("./uploads/students-profile/" . $row['image'] . "");
-      move_uploaded_file($tmp_img, "./uploads/students-profile/" . $img . "");
-      $new_img = $email . $roll_no . $img;
-      rename("./uploads/students-profile/" . $img . "", "./uploads/students-profile/" . $new_img . "");
-    } else {
-      $new_img = $row['image'];
-    }
+          unlink("./uploads/students-profile/" . $row['image'] . "");
+          move_uploaded_file($tmp_img, "./uploads/students-profile/" . $img . "");
+          if (empty($cnic)) {
+            $new_img = $f_cnic . $roll_no . $img;
+          } else {
+            $new_img = $cnic . $roll_no . $img;
+          }
+          rename("./uploads/students-profile/" . $img . "", "./uploads/students-profile/" . $new_img . "");
+        } else {
+          $new_img = $row['image'];
+        }
 
-    $query = "UPDATE student_profile SET name='$name', roll_no='$roll_no', cnic='$cnic', dob='$dob', ";
-    $query .= "address='$address', email='$email', mobile_no='$mobile_no', father_name='$f_name', ";
-    $query .= "father_cnic='$f_cnic', fee_amount='$fee_amount', image='$new_img' ";
-    $query .= "WHERE student_id='$cid'";
-    $get = query($query);
+        $query = "UPDATE student_profile SET name='$name', roll_no='$roll_no', cnic='$cnic', dob='$dob', ";
+        $query .= "address='$address', email='$email', mobile_no='$mobile_no', father_name='$f_name', ";
+        $query .= "father_cnic='$f_cnic', fee_amount='$fee_amount', image='$new_img', student_gender='$gender' ";
+        $query .= "WHERE student_id='$cid'";
+        $get = query($query);
 
-    if ($get) {
-      // code to add admin_log into the database
-      $adm_id = escape($_SESSION['login_id']);
-      $result = sql_where('admin', 'admin_id', $adm_id);
-      $fetch = mysqli_fetch_assoc($result);
-      $id = escape($_SESSION['login_id']);
-      $admin_name = escape($_SESSION['login_name']);
-      $log = "Admin <strong>$admin_name</strong> updated profile of student <strong>$name</strong> !";
-      $time = date('d/m/Y h:i a', time());
-      $time = (string) $time;
+        if ($get) {
+          // code to add admin_log into the database
+          $adm_id = escape($_SESSION['login_id']);
+          $result = sql_where('admin', 'admin_id', $adm_id);
+          $fetch = mysqli_fetch_assoc($result);
+          $id = escape($_SESSION['login_id']);
+          $admin_name = escape($_SESSION['login_name']);
+          $log = "Admin <strong>$admin_name</strong> updated profile of student <strong>$name</strong> !";
+          $time = date('d/m/Y h:i a', time());
+          $time = (string) $time;
 
-      $query = "INSERT INTO admin_logs(log_message, time) VALUES('$log', '$time')";
-      $pass_query2 = mysqli_query($conn, $query);
-      if (!$pass_query2) {
-        echo "Error: " . mysqli_error($conn);
+          $query = "INSERT INTO admin_logs(log_message, time) VALUES('$log', '$time')";
+          $pass_query2 = mysqli_query($conn, $query);
+          if (!$pass_query2) {
+            echo "Error: " . mysqli_error($conn);
+          }
+          redirect("./edit-student.php?id=$cid");
+        }
+      } else { // else if the cnic is already assosiated to another student
+        $message = "CNIC '$cnic' is already associated to another student.";
+        $cnic = '';
+        $name = escape($_POST['name']);
+        $roll_no = escape($_POST['roll_no']);
+        $gender = escape($_POST['student_gender']);
+        $dob = escape($_POST['dob']);
+        $address = escape($_POST['address']);
+        $mobile_no = escape($_POST['mobile_no']);
+        $email = escape($_POST['email']);
+        $f_name = escape($_POST['f_name']);
+        $f_cnic = escape($_POST['f_cnic']);
+        $fee_amount = escape($_POST['fee_amount']);
       }
-      redirect("./edit-student.php?id=$cid");
+    } else { // else if roll no is already assigned to another student
+      $message = "Registration# '$roll_no' is already assigned to another student.";
+      $roll_no = '';
+      $name = escape($_POST['name']);
+      $cnic = escape($_POST['cnic']);
+      $gender = escape($_POST['student_gender']);
+      $dob = escape($_POST['dob']);
+      $address = escape($_POST['address']);
+      $mobile_no = escape($_POST['mobile_no']);
+      $email = escape($_POST['email']);
+      $f_name = escape($_POST['f_name']);
+      $f_cnic = escape($_POST['f_cnic']);
+      $fee_amount = escape($_POST['fee_amount']);
     }
   }
-
-
   ?>
 
-  <!-- <div class="d-flex justify-content-end">
-    <a href="./student-profile.php" class="btn btn-sm btn-success mb-3">Add Student</a>
-  </div> -->
 
   <section class="section profile">
     <div class="row">
-      <div class="col-xl-4">
+      <?php
+      // if there is a message
+      if ($message != '') {
+      ?>
+        <div class="col-sm-12">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="alert alert-danger"><strong>
+                  <?php echo $message; ?>
+                </strong></div>
+            </div>
+          </div>
+        </div>
+      <?php
+      }
+      ?>
+    </div>
+    <div class="row">
+      <div class="col-lg-4">
 
         <div class="card">
           <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
@@ -144,7 +215,7 @@ $row = mysqli_fetch_assoc($pass);
 
       </div>
 
-      <div class="col-xl-8">
+      <div class="col-lg-8">
 
         <div class="card">
           <div class="card-body pt-3">
@@ -163,16 +234,6 @@ $row = mysqli_fetch_assoc($pass);
             <div class="tab-pane fade active show profile-edit pt-3" id="profile-edit">
               <!-- Profile Edit Form -->
               <form action="" method="post" enctype="multipart/form-data">
-                <!-- <div class="row mb-3">
-                  <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
-                  <div class="col-md-8 col-lg-9">
-                    <img src="uploads/students-profile/aaron.jpg" alt="Profile">
-                    <div class="pt-2">
-                      <a href="#" class="btn btn-primary btn-sm" title="Upload new profile image"><i class="bi bi-upload"></i></a>
-                      <a href="#" class="btn btn-danger btn-sm" title="Remove my profile image"><i class="bi bi-trash"></i></a>
-                    </div>
-                  </div>
-                </div> -->
                 <div class="row mb-3">
                   <label for="name" class="col-md-4 col-lg-3 col-form-label"><strong>Student Photo</strong> </label>
                   <div class="col-md-8 col-lg-9">
@@ -195,14 +256,14 @@ $row = mysqli_fetch_assoc($pass);
                 <div class="row mb-3">
                   <label for="fullName" class="col-md-4 col-lg-3 col-form-label"><strong>Student Name</strong></label>
                   <div class="col-md-8 col-lg-9">
-                    <input name="name" type="text" class="form-control" id="fullName" value="<?php echo $row['name']; ?>">
+                    <input name="name" type="text" class="form-control" id="fullName" value="<?php echo ($name == '') ? $row['name'] : $name; ?>" required>
                   </div>
                 </div>
 
                 <div class="row mb-3">
                   <label for="fullName" class="col-md-4 col-lg-3 col-form-label"><strong>Registration#</strong></label>
                   <div class="col-md-8 col-lg-9">
-                    <input name="roll_no" type="text" class="form-control" id="fullName" value="<?php echo $row['roll_no']; ?>">
+                    <input name="roll_no" type="text" class="form-control" id="fullName" value="<?php echo ($roll_no == '') ? $row['roll_no'] : $roll_no; ?>" required>
                   </div>
                 </div>
 
@@ -214,58 +275,64 @@ $row = mysqli_fetch_assoc($pass);
                 </div> -->
 
                 <div class="row mb-3">
-                  <label for="Job" class="col-md-4 col-lg-3 col-form-label"><strong>Cnic/B-form</strong></label>
+                  <label for="cnic" class="col-md-4 col-lg-3 col-form-label"><strong>Cnic/B-form</strong></label>
                   <div class="col-md-8 col-lg-9">
-                    <input name="cnic" type="text" class="form-control" id="Job" value="<?php echo $row['cnic']; ?>">
+                    <input name="cnic" type="text" class="form-control" id="Job" value="<?php echo ($cnic == '') ? $row['cnic'] : $cnic; ?>">
+                  </div>
+                </div>
+                <div class="row mb-3">
+                  <label for="student_gender" class="col-md-4 col-lg-3 col-form-label"><strong>Gender</strong></label>
+                  <div class="col-md-8 col-lg-9">
+                    <input name="student_gender" type="text" class="form-control" id="Job" value="<?php echo ($gender == '') ? $row['student_gender'] : $gender; ?>">
                   </div>
                 </div>
 
                 <div class="row mb-3">
                   <label for="Country" class="col-md-4 col-lg-3 col-form-label"><strong>Date of Birth</strong></label>
                   <div class="col-md-8 col-lg-9">
-                    <input name="dob" type="date" class="form-control" id="Country" value="<?php echo $row['dob']; ?>">
+                    <input name="dob" type="date" class="form-control" id="Country" value="<?php echo ($dob == '') ? $row['dob'] : $dob; ?>">
                   </div>
                 </div>
 
                 <div class="row mb-3">
                   <label for="fullName" class="col-md-4 col-lg-3 col-form-label"><strong>Father Name</strong></label>
                   <div class="col-md-8 col-lg-9">
-                    <input name="f_name" type="text" class="form-control" id="fullName" value="<?php echo $row['father_name']; ?>">
+                    <input name="f_name" type="text" class="form-control" id="fullName" value="<?php echo ($f_name == '') ? $row['father_name'] : $f_name; ?>" required>
                   </div>
                 </div>
 
                 <div class="row mb-3">
                   <label for="fullName" class="col-md-4 col-lg-3 col-form-label"><strong>Father Cnic</strong></label>
                   <div class="col-md-8 col-lg-9">
-                    <input name="f_cnic" type="text" class="form-control" id="fullName" value="<?php echo $row['father_cnic']; ?>">
+                    <input name="f_cnic" type="text" class="form-control" id="fullName" value="<?php echo ($f_cnic == '') ? $row['father_cnic'] : $f_cnic; ?>">
                   </div>
                 </div>
 
                 <div class="row mb-3">
                   <label for="Address" class="col-md-4 col-lg-3 col-form-label"><strong>Address</strong></label>
                   <div class="col-md-8 col-lg-9">
-                    <input name="address" type="text" class="form-control" id="Address" value="<?php echo $row['address']; ?>">
+                    <input name="address" type="text" class="form-control" id="Address" value="<?php echo ($address == '') ? $row['address'] : $address; ?>">
                   </div>
                 </div>
 
                 <div class="row mb-3">
                   <label for="Phone" class="col-md-4 col-lg-3 col-form-label"><strong>Phone#</strong></label>
                   <div class="col-md-8 col-lg-9">
-                    <input name="mobile_no" type="text" class="form-control" id="Phone" value="<?php echo $row['mobile_no']; ?>">
+                    <input name="mobile_no" type="text" class="form-control" id="Phone" value="<?php echo ($mobile_no == '') ? $row['mobile_no'] : $mobile_no; ?>" required>
                   </div>
                 </div>
 
                 <div class="row mb-3">
                   <label for="Email" class="col-md-4 col-lg-3 col-form-label"><strong>Email</strong></label>
                   <div class="col-md-8 col-lg-9">
-                    <input name="email" type="email" class="form-control" id="Email" value="<?php echo $row['email']; ?>">
+                    <input name="email" type="email" class="form-control" id="Email" value="<?php echo ($email == '') ? $row['email'] : $email; ?>">
                   </div>
                 </div>
 
                 <div class="row mb-3">
                   <label for="Phone" class="col-md-4 col-lg-3 col-form-label"><strong>Monthly Fee</strong></label>
                   <div class="col-md-8 col-lg-9">
-                    <input name="fee_amount" type="text" class="form-control" id="Phone" value="<?php echo $row['fee_amount']; ?>">
+                    <input name="fee_amount" type="text" class="form-control" id="Phone" value="<?php echo ($fee_amount == '') ? $row['fee_amount'] : $fee_amount; ?>" required>
                   </div>
                 </div>
 

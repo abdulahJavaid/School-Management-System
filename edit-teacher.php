@@ -46,7 +46,7 @@ $row = mysqli_fetch_assoc($pass);
         if (isset($_FILES['tch_img']) && !empty($_FILES['tch_img']['tmp_name'])) {
             $tmp_img = $_FILES['tch_img']['tmp_name'];
             $img = basename($_FILES['tch_img']['name']);
-            
+
             unlink("./uploads/teachers-profile/" . $row['image'] . "");
             move_uploaded_file($tmp_img, "./uploads/teachers-profile/" . $img . "");
             $new_img = $email . $school_id . $img;
@@ -151,19 +151,8 @@ $row = mysqli_fetch_assoc($pass);
 
                         <div class="tab-pane fade active show profile-edit pt-3" id="profile-edit">
 
-                            <!-- Profile Edit Form -->
+                          <!-- Profile Edit Form -->
                             <form action="" method="post" enctype="multipart/form-data">
-
-                                <!-- <div class="row mb-3">
-                                    <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
-                                    <div class="col-md-8 col-lg-9">
-                                        <img src="images/school-profile.svg" alt="Profile">
-                                        <div class="pt-2">
-                                            <a href="#" class="btn btn-primary btn-sm" title="Upload new profile image"><i class="bi bi-upload"></i></a>
-                                            <a href="#" class="btn btn-danger btn-sm" title="Remove my profile image"><i class="bi bi-trash"></i></a>
-                                        </div>
-                                    </div>
-                                </div> -->
                                 <div class="row mb-3">
                                     <label for="name" class="col-md-4 col-lg-3 col-form-label"><strong>Teacher Photo</strong> </label>
                                     <div class="col-md-8 col-lg-9">
@@ -278,23 +267,23 @@ $row = mysqli_fetch_assoc($pass);
 </main><!-- End #main -->
 
 <script>
-  // code to upload and view the image
-  document.getElementById('uploadButton').addEventListener('click', function() {
-    document.getElementById('fileInput').click();
-  });
-  document.getElementById('deleteButton').addEventListener('click', function() {
-    document.getElementById('fileInput').value = '';
-    document.getElementById('imagePreview').src = 'https://via.placeholder.com/100';
-  });
+    // code to upload and view the image
+    document.getElementById('uploadButton').addEventListener('click', function() {
+        document.getElementById('fileInput').click();
+    });
+    document.getElementById('deleteButton').addEventListener('click', function() {
+        document.getElementById('fileInput').value = '';
+        document.getElementById('imagePreview').src = 'https://via.placeholder.com/100';
+    });
 
-  function previewImage(event) {
-    const reader = new FileReader();
-    reader.onload = function() {
-      const output = document.getElementById('imagePreview');
-      output.src = reader.result;
+    function previewImage(event) {
+        const reader = new FileReader();
+        reader.onload = function() {
+            const output = document.getElementById('imagePreview');
+            output.src = reader.result;
+        }
+        reader.readAsDataURL(event.target.files[0]);
     }
-    reader.readAsDataURL(event.target.files[0]);
-  }
 </script>
 
 <!-- ======= Footer ======= -->
