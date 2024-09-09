@@ -123,6 +123,11 @@ if (!isset($_GET['id'])) {
                   </div>
 
                   <div class="row">
+                    <div class="col-lg-3 col-md-4 label "><strong>Gender</strong></div>
+                    <div class="col-lg-9 col-md-8"><?php echo $row['teacher_gender']; ?></div>
+                  </div>
+
+                  <div class="row">
                     <div class="col-lg-3 col-md-4 label "><strong>Qualification</strong></div>
                     <div class="col-lg-9 col-md-8"><?php echo $row['qualification']; ?></div>
                   </div>
@@ -140,6 +145,11 @@ if (!isset($_GET['id'])) {
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label"><strong>Email</strong></div>
                     <div class="col-lg-9 col-md-8"><?php echo $row['email']; ?></div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label"><strong>Salary</strong></div>
+                    <div class="col-lg-9 col-md-8">Rs.<?php echo $row['teacher_salary']; ?></div>
                   </div>
 
                   <div class="row">

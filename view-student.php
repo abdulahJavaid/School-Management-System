@@ -135,7 +135,7 @@ if (!isset($_GET['id'])) {
 
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label"><strong>Monthly Fee</strong></div>
-                    <div class="col-lg-9 col-md-8">Rs. <?php echo $row['fee_amount']; ?></div>
+                    <div class="col-lg-9 col-md-8">Rs.<?php echo $row['fee_amount']; ?></div>
                   </div>
 
                   <div class="row">

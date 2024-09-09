@@ -30,7 +30,21 @@ $row = mysqli_fetch_assoc($pass);
         </nav>
     </div><!-- End Page Title -->
     <?php
-    // updating student
+    // setting values empty when the form is not submitted
+    $message = '';
+    $name = '';
+    $school_id = '';
+    $qualification = '';
+    $f_name = '';
+    $cnic = '';
+    $dob = '';
+    $phone_no = '';
+    $email = '';
+    $address = '';
+    $gender = '';
+    $salary = '';
+
+    // updating teacher profile
     if (isset($_POST['submit'])) {
         $cid = escape($_GET['id']);
         $name = escape($_POST['name']);
@@ -42,43 +56,123 @@ $row = mysqli_fetch_assoc($pass);
         $phone_no = escape($_POST['phone_no']);
         $email = escape($_POST['email']);
         $address = escape($_POST['address']);
+        $gender = escape($_POST['teacher_gender']);
+        $salary = escape($_POST['teacher_salary']);
 
-        if (isset($_FILES['tch_img']) && !empty($_FILES['tch_img']['tmp_name'])) {
-            $tmp_img = $_FILES['tch_img']['tmp_name'];
-            $img = basename($_FILES['tch_img']['name']);
 
-            unlink("./uploads/teachers-profile/" . $row['image'] . "");
-            move_uploaded_file($tmp_img, "./uploads/teachers-profile/" . $img . "");
-            $new_img = $email . $school_id . $img;
-            rename("./uploads/teachers-profile/" . $img . "", "./uploads/teachers-profile/" . $new_img . "");
-        } else {
-            $new_img = $row['image'];
-        }
-        $new_img = escape($new_img);
+        // checking if the cnic is already associated to another teacher
+        $query = "SELECT * FROM teacher_profile WHERE cnic='$cnic' AND NOT teacher_id='$cid'";
+        $check_cnic = query($query);
+        if (mysqli_num_rows($check_cnic) == 0) {
+            // checking if the phone number is already associated to another teacher
+            $query = "SELECT * FROM teacher_profile WHERE phone_no='$phone_no' AND NOT teacher_id='$cid'";
+            $check_phone_no = query($query);
+            if (mysqli_num_rows($check_phone_no) == 0) {
+                // checking if the email is already associated to another teacher
+                $query = "SELECT * FROM teacher_profile WHERE email='$email' AND NOT teacher_id='$cid'";
+                $check_email = query($query);
+                if (mysqli_num_rows($check_email) == 0) {
+                    // checking if the teacher id(scholl_id) is already associated to another teacher
+                    $query = "SELECT * FROM teacher_profile WHERE school_id='$school_id' AND NOT teacher_id='$cid'";
+                    $check_id = query($query);
+                    if (mysqli_num_rows($check_id) == 0) {
 
-        $query = "UPDATE teacher_profile SET name='$name', school_id='$school_id', qualification='$qualification', f_name='$f_name', ";
-        $query .= "cnic='$cnic', dob='$dob', phone_no='$phone_no', email='$email', address='$address', ";
-        $query .= "image='$new_img'";
-        $query .= "WHERE teacher_id='$cid'";
+                        // if all the checks are clear
+                        // reaming the iamge and moving it to the folder
+                        if (isset($_FILES['tch_img']) && !empty($_FILES['tch_img']['tmp_name'])) {
+                            $tmp_img = $_FILES['tch_img']['tmp_name'];
+                            $img = basename($_FILES['tch_img']['name']);
 
-        $get = query($query);
-        if ($get) {
-            // code to add admin_log into the database
-            $adm_id = escape($_SESSION['login_id']);
-            $result = sql_where('admin', 'admin_id', $adm_id);
-            $fetch = mysqli_fetch_assoc($result);
-            $id = escape($_SESSION['login_id']);
-            $admin_name = escape($_SESSION['login_name']);
-            $log = "Admin <strong>$admin_name</strong> updated profile of teacher <strong>$name</strong> !";
-            $time = date('d/m/Y h:i a', time());
-            $time = (string) $time;
+                            unlink("./uploads/teachers-profile/" . $row['image'] . "");
+                            move_uploaded_file($tmp_img, "./uploads/teachers-profile/" . $img . "");
+                            $new_img = $cnic . $school_id . $img;
+                            rename("./uploads/teachers-profile/" . $img . "", "./uploads/teachers-profile/" . $new_img . "");
+                        } else {
+                            $new_img = $row['image'];
+                        }
+                        $new_img = escape($new_img);
 
-            $query = "INSERT INTO admin_logs(log_message, time) VALUES('$log', '$time')";
-            $pass_query2 = mysqli_query($conn, $query);
-            if (!$pass_query2) {
-                echo "Error: " . mysqli_error($conn);
+                        $query = "UPDATE teacher_profile SET name='$name', school_id='$school_id', ";
+                        $query .= "qualification='$qualification', f_name='$f_name', ";
+                        $query .= "cnic='$cnic', dob='$dob', phone_no='$phone_no', email='$email', ";
+                        $query .= "address='$address', teacher_gender='$gender', teacher_salary='$salary', ";
+                        $query .= "image='$new_img'";
+                        $query .= "WHERE teacher_id='$cid'";
+
+                        $get = query($query);
+                        if ($get) {
+                            // code to add admin_log into the database
+                            $adm_id = escape($_SESSION['login_id']);
+                            $result = sql_where('admin', 'admin_id', $adm_id);
+                            $fetch = mysqli_fetch_assoc($result);
+                            $id = escape($_SESSION['login_id']);
+                            $admin_name = escape($_SESSION['login_name']);
+                            $log = "Admin <strong>$admin_name</strong> updated profile of teacher <strong>$name</strong> !";
+                            $time = date('d/m/Y h:i a', time());
+                            $time = (string) $time;
+
+                            $query = "INSERT INTO admin_logs(log_message, time) VALUES('$log', '$time')";
+                            $pass_query2 = mysqli_query($conn, $query);
+                            if (!$pass_query2) {
+                                echo "Error: " . mysqli_error($conn);
+                            }
+                            redirect("./edit-teacher.php?id=$cid");
+                        }
+                    } else { // if the teacher id(school_id) is already associated to another teacher
+                        $message = "Teacher Id '$school_id' is already assigned to another teacher";
+                        $school_id = '';
+                        $name = escape($_POST['name']);
+                        $qualification = escape($_POST['qualification']);
+                        $f_name = escape($_POST['f_name']);
+                        $cnic = escape($_POST['cnic']);
+                        $dob = escape($_POST['dob']);
+                        $phone_no = escape($_POST['phone_no']);
+                        $email = escape($_POST['email']);
+                        $address = escape($_POST['address']);
+                        $gender = escape($_POST['teacher_gender']);
+                        $salary = escape($_POST['teacher_salary']);
+                    }
+                } else { // if the email is already associated to another teacher
+                    $message = "Email '$email' is already associated to antoher teacher.";
+                    $email = '';
+                    $name = escape($_POST['name']);
+                    $school_id = escape($_POST['school_id']);
+                    $qualification = escape($_POST['qualification']);
+                    $f_name = escape($_POST['f_name']);
+                    $cnic = escape($_POST['cnic']);
+                    $dob = escape($_POST['dob']);
+                    $phone_no = escape($_POST['phone_no']);
+                    $address = escape($_POST['address']);
+                    $gender = escape($_POST['teacher_gender']);
+                    $salary = escape($_POST['teacher_salary']);
+                }
+            } else { // if the phone_no already exists in the database
+                $message = "Phone# '$phone_no' is already associated to another teacher.";
+                $phone_no = '';
+                $name = escape($_POST['name']);
+                $school_id = escape($_POST['school_id']);
+                $qualification = escape($_POST['qualification']);
+                $f_name = escape($_POST['f_name']);
+                $cnic = escape($_POST['cnic']);
+                $dob = escape($_POST['dob']);
+                $email = escape($_POST['email']);
+                $address = escape($_POST['address']);
+                $gender = escape($_POST['teacher_gender']);
+                $salary = escape($_POST['teacher_salary']);
             }
-            redirect("./edit-teacher.php?id=$cid");
+        } else { // if the cnic already exists in the database
+            $message = "Cnic '$cnic' is already associated to another teacher.";
+            $cnic = '';
+            $name = escape($_POST['name']);
+            $school_id = escape($_POST['school_id']);
+            $qualification = escape($_POST['qualification']);
+            $f_name = escape($_POST['f_name']);
+            $dob = escape($_POST['dob']);
+            $phone_no = escape($_POST['phone_no']);
+            $email = escape($_POST['email']);
+            $address = escape($_POST['address']);
+            $gender = escape($_POST['teacher_gender']);
+            $salary = escape($_POST['teacher_salary']);
         }
     }
 
@@ -86,6 +180,24 @@ $row = mysqli_fetch_assoc($pass);
     ?>
 
     <section class="section profile">
+        <div class="row">
+            <?php
+            // if there is a message
+            if ($message != '') {
+            ?>
+                <div class="col-sm-12">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="alert alert-danger"><strong>
+                                    <?php echo $message; ?>
+                                </strong></div>
+                        </div>
+                    </div>
+                </div>
+            <?php
+            }
+            ?>
+        </div>
         <div class="row">
             <div class="col-xl-4">
                 <div class="card">
@@ -151,7 +263,7 @@ $row = mysqli_fetch_assoc($pass);
 
                         <div class="tab-pane fade active show profile-edit pt-3" id="profile-edit">
 
-                          <!-- Profile Edit Form -->
+                            <!-- Profile Edit Form -->
                             <form action="" method="post" enctype="multipart/form-data">
                                 <div class="row mb-3">
                                     <label for="name" class="col-md-4 col-lg-3 col-form-label"><strong>Teacher Photo</strong> </label>
@@ -173,29 +285,36 @@ $row = mysqli_fetch_assoc($pass);
                                 </div>
 
                                 <div class="row mb-3">
-                                    <label for="fullName" class="col-md-4 col-lg-3 col-form-label"><strong>Name</strong></label>
+                                    <label for="name" class="col-md-4 col-lg-3 col-form-label"><strong>Name</strong></label>
                                     <div class="col-md-8 col-lg-9">
-                                        <input name="name" type="text" class="form-control" id="fullName" value="<?php echo $row['name']; ?>">
+                                        <input name="name" type="text" class="form-control" id="fullName" value="<?php echo ($name == '') ? $row['name'] : $name; ?>" required>
                                     </div>
                                 </div>
                                 <div class="row mb-3">
-                                    <label for="fullName" class="col-md-4 col-lg-3 col-form-label"><strong>Teacher Id</strong></label>
+                                    <label for="school_id" class="col-md-4 col-lg-3 col-form-label"><strong>Teacher Id</strong></label>
                                     <div class="col-md-8 col-lg-9">
-                                        <input name="school_id" type="text" class="form-control" id="fullName" value="<?php echo $row['school_id']; ?>">
-                                    </div>
-                                </div>
-
-                                <div class="row mb-3">
-                                    <label for="Address" class="col-md-4 col-lg-3 col-form-label"><strong>CNIC</strong></label>
-                                    <div class="col-md-8 col-lg-9">
-                                        <input name="cnic" type="text" class="form-control" id="Address" value="<?php echo $row['cnic']; ?>">
+                                        <input name="school_id" type="text" class="form-control" id="fullName" value="<?php echo ($school_id == '') ? $row['school_id'] : $school_id; ?>" required>
                                     </div>
                                 </div>
 
                                 <div class="row mb-3">
-                                    <label for="Phone" class="col-md-4 col-lg-3 col-form-label"><strong>Date of Birth</strong></label>
+                                    <label for="cnic" class="col-md-4 col-lg-3 col-form-label"><strong>CNIC</strong></label>
                                     <div class="col-md-8 col-lg-9">
-                                        <input name="dob" type="date" class="form-control" id="Phone" value="<?php echo $row['dob']; ?>">
+                                        <input name="cnic" type="text" class="form-control" id="Address" value="<?php echo ($cnic == '') ? $row['cnic'] : $cnic; ?>" required>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label for="teacher_gender" class="col-md-4 col-lg-3 col-form-label"><strong>Gender</strong></label>
+                                    <div class="col-md-8 col-lg-9">
+                                        <input name="teacher_gender" type="text" class="form-control" id="Address" value="<?php echo ($gender == '') ? $row['teacher_gender'] : $gender; ?>" required>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label for="dob" class="col-md-4 col-lg-3 col-form-label"><strong>Date of Birth</strong></label>
+                                    <div class="col-md-8 col-lg-9">
+                                        <input name="dob" type="date" class="form-control" id="Phone" value="<?php echo ($dob == '') ? $row['dob'] : $dob; ?>" required>
                                     </div>
                                 </div>
 
@@ -207,37 +326,44 @@ $row = mysqli_fetch_assoc($pass);
                                 </div> -->
 
                                 <div class="row mb-3">
-                                    <label for="Job" class="col-md-4 col-lg-3 col-form-label"><strong>Qualification</strong></label>
+                                    <label for="qualification" class="col-md-4 col-lg-3 col-form-label"><strong>Qualification</strong></label>
                                     <div class="col-md-8 col-lg-9">
-                                        <input name="qualification" type="text" class="form-control" id="Job" value="<?php echo $row['qualification']; ?>">
+                                        <input name="qualification" type="text" class="form-control" id="Job" value="<?php echo ($qualification == '') ? $row['qualification'] : $qualification; ?>" required>
                                     </div>
                                 </div>
 
                                 <div class="row mb-3">
-                                    <label for="Country" class="col-md-4 col-lg-3 col-form-label"><strong>Father Name</strong></label>
+                                    <label for="f_name" class="col-md-4 col-lg-3 col-form-label"><strong>Father Name</strong></label>
                                     <div class="col-md-8 col-lg-9">
-                                        <input name="f_name" type="text" class="form-control" id="Country" value="<?php echo $row['f_name']; ?>">
+                                        <input name="f_name" type="text" class="form-control" id="Country" value="<?php echo ($f_name == '') ? $row['f_name'] : $f_name; ?>" required>
                                     </div>
                                 </div>
 
                                 <div class="row mb-3">
-                                    <label for="Email" class="col-md-4 col-lg-3 col-form-label"><strong>Phone#</strong></label>
+                                    <label for="phone_no" class="col-md-4 col-lg-3 col-form-label"><strong>Phone#</strong></label>
                                     <div class="col-md-8 col-lg-9">
-                                        <input name="phone_no" type="text" class="form-control" id="Email" value="<?php echo $row['phone_no']; ?>">
+                                        <input name="phone_no" type="text" class="form-control" id="Email" value="<?php echo ($phone_no == '') ? $row['phone_no'] : $phone_no; ?>" required>
                                     </div>
                                 </div>
 
                                 <div class="row mb-3">
-                                    <label for="Email" class="col-md-4 col-lg-3 col-form-label"><strong>Email</strong></label>
+                                    <label for="email" class="col-md-4 col-lg-3 col-form-label"><strong>Email</strong></label>
                                     <div class="col-md-8 col-lg-9">
-                                        <input name="email" type="email" class="form-control" id="Email" value="<?php echo $row['email']; ?>">
+                                        <input name="email" type="email" class="form-control" id="Email" value="<?php echo ($email == '') ? $row['email'] : $email; ?>" required>
                                     </div>
                                 </div>
 
                                 <div class="row mb-3">
-                                    <label for="Email" class="col-md-4 col-lg-3 col-form-label"><strong>Address</strong></label>
+                                    <label for="address" class="col-md-4 col-lg-3 col-form-label"><strong>Address</strong></label>
                                     <div class="col-md-8 col-lg-9">
-                                        <input name="address" type="text" class="form-control" id="Email" value="<?php echo $row['address']; ?>">
+                                        <input name="address" type="text" class="form-control" id="Email" value="<?php echo ($address == '') ? $row['address'] : $address; ?>" required>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-3">
+                                    <label for="teacher_salary" class="col-md-4 col-lg-3 col-form-label"><strong>Salary</strong></label>
+                                    <div class="col-md-8 col-lg-9">
+                                        <input name="teacher_salary" type="text" class="form-control" id="Email" value="<?php echo ($salary == '') ? $row['teacher_salary'] : $salary; ?>" required>
                                     </div>
                                 </div>
 

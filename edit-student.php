@@ -304,7 +304,7 @@ $row = mysqli_fetch_assoc($pass);
                 <div class="row mb-3">
                   <label for="fullName" class="col-md-4 col-lg-3 col-form-label"><strong>Father Cnic</strong></label>
                   <div class="col-md-8 col-lg-9">
-                    <input name="f_cnic" type="text" class="form-control" id="fullName" value="<?php echo ($f_cnic == '') ? $row['father_cnic'] : $f_cnic; ?>">
+                    <input name="f_cnic" type="text" class="form-control" id="fullName" value="<?php echo ($f_cnic == '') ? $row['father_cnic'] : $f_cnic; ?>" required>
                   </div>
                 </div>
 

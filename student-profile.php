@@ -243,7 +243,7 @@ if (isset($_POST['submit'])) {
                                         </div>
                                     </div>
                                     <div class="row mb-3">
-                                        <label for="cnic" class="col-md-4 col-lg-3 col-form-label"><strong>CNIC/B-FORM</strong> <code>*</code></label>
+                                        <label for="cnic" class="col-md-4 col-lg-3 col-form-label"><strong>CNIC/B-FORM</strong> </label>
                                         <div class="col-md-8 col-lg-9">
                                             <input name="cnic" type="text" class="form-control" id="fullName" value="<?php echo ($cnic == '') ? '' : $cnic; ?>" placeholder="CNIC/Form-B">
                                         </div>
