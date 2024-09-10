@@ -88,6 +88,7 @@ $row = mysqli_fetch_assoc($pass);
         } else {
           $new_img = $row['image'];
         }
+        $new_img = escape($new_img);
 
         $query = "UPDATE student_profile SET name='$name', roll_no='$roll_no', cnic='$cnic', dob='$dob', ";
         $query .= "address='$address', email='$email', mobile_no='$mobile_no', father_name='$f_name', ";

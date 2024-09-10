@@ -63,15 +63,29 @@ if (isset($_POST['submit'])) {
                         $new_img = '';
                     }
                     $new_img = escape($new_img);
+                    $enc_password = $password;
 
+                    // query to add teacher profile data
                     $query = "INSERT INTO teacher_profile(name, cnic, f_name, phone_no, qualification, dob, ";
                     $query .= "address, email, school_id, image, password, teacher_gender, ";
                     $query .= "teacher_salary) ";
                     $query .= "VALUES('$name', '$cnic', '$f_name', '$phone_no', '$qualification', ";
-                    $query .= "'$dob', '$address', '$email', '$school_id', '$new_img', '$password', '$gender', ";
+                    $query .= "'$dob', '$address', '$email', '$school_id', '$new_img', '$enc_password', '$gender', ";
                     $query .= "'$salary')";
                     $result = mysqli_query($conn, $query);
+
                     if ($result) {
+                        // getting the teacher id
+                        $query = "SELECT * FROM teacher_profile WHERE name='$name' AND cnic='$cnic' AND phone_no='$phone_no'";
+                        $get_result = query($query);
+                        $fetch = mysqli_fetch_assoc($get_result);
+                        $fk_tch_id = $fetch['teacher_id'];
+
+                        // storing the teacher passwords into the database
+                        $query = "INSERT INTO teacher_passwords(fk_teacher_id, teacher_password) ";
+                        $query .= "VALUES('$fk_tch_id', '$password')";
+                        $pass_query = query($query);
+
                         // code to add admin_log into the database
                         $adm_id = escape($_SESSION['login_id']);
                         $result = sql_where('admin', 'admin_id', $adm_id);

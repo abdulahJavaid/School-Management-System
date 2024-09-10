@@ -63,7 +63,7 @@
                         <p>Student Details of All the registered students of <code><?php echo $_SESSION['school_name']; ?></code>.</p>
 
                         <!-- Primary Color Bordered Table -->
-                        <table class="table table-bordered border-primary">
+                        <table class="table table-bordered border-primary table-hover">
                             <thead>
                                 <tr>
                                     <th scope="col">Reg no#</th>

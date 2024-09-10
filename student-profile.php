@@ -74,7 +74,7 @@ if (isset($_POST['submit'])) {
                 } else {
                     $new_img = '';
                 }
-
+                $new_img = escape($new_img);
                 $enc_password = $password;
 
                 // query to add student
