@@ -51,7 +51,7 @@ if (isset($_POST['clear_dues']) && !empty($_POST['dues_amount'])) {
         $fee_id = escape($row['fee_id']);
         $dues = (int) $row['pending_dues'];
 
-        if ($total_paid > $dues) {
+        if ($total_paid >= $dues) {
             $q = "UPDATE student_fee SET fee_status='paid', pending_dues='0' ";
             $q .= "WHERE fee_id='$fee_id'";
             $total_paid -= $dues;
@@ -108,7 +108,7 @@ if (isset($_POST['clear_dues']) && !empty($_POST['dues_amount'])) {
                         <!-- Bordered Tabs -->
                         <ul class="nav nav-tabs nav-tabs-bordered">
                             <li class="nav-item">
-                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Student Fee</button>
+                                <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-edit">Student Dues</button>
                             </li>
                         </ul>
                         <?php

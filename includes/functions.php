@@ -12,7 +12,7 @@ function employee_salary()
     $check_record = query($query);
     if (mysqli_num_rows($check_record) == 0) {
         $date = date('d', time());
-        if ($date == '28') {
+        if ($date == '10') {
             $query = "SELECT * FROM teacher_profile WHERE teacher_status='1'";
             $result = mysqli_query($conn, $query);
             while ($row = mysqli_fetch_assoc($result)) {
@@ -20,8 +20,8 @@ function employee_salary()
                 $month = date('F', time());
                 $teacher_id = $row['teacher_id'];
                 $teacher_salary = $row['teacher_salary'];
-                $query = "INSERT INTO employee_salary(fk_teacher_id, year, month, ";
-                $query .= "salary_amount) VALUES('$teacher_id', '$year', '$month', ";
+                $query = "INSERT INTO employee_salary(fk_teacher_id, fk_staff_id, year, month, ";
+                $query .= "salary_amount) VALUES('$teacher_id', '0', '$year', '$month', ";
                 $query .= "'$teacher_salary')";
                 $issue_salary = query($query);
             }

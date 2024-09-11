@@ -1234,18 +1234,22 @@ h6 {
 # Custom Css
 --------------------------------------------------------------*/
 .sidebar {
+  /* #2193b0 */
   background-color: #2193b0 !important;
   scrollbar-color: #6dd5ed !important;
 }
 .sidebar-nav .nav-link {
+  /* #6dd5ed */
   background: #6dd5ed !important;
   color: black !important;
 }
 .sidebar-nav .nav-link:hover {
   /* background: #6dd5ed !important; */
+  opacity: 0.8;
   color: white !important;
 }
 .header {
+  /* #2193b0 */
   background-color: #2193b0 !important;
 }
 .logo span {

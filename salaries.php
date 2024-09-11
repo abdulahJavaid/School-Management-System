@@ -84,7 +84,7 @@ if ($_SESSION['login_access'] == 'developer' || $_SESSION['login_access'] == 'ac
               <th scope="col">Name</th>
               <th scope="col">Designation</th>
               <th scope="col">Salary</th>
-              <th scope="col">Date</th>
+              <th scope="col">Month</th>
               <th scope="col">Payment</th>
             </tr>
           </thead>
@@ -100,13 +100,14 @@ if ($_SESSION['login_access'] == 'developer' || $_SESSION['login_access'] == 'ac
             $query .= "salary_status='unpaid'";
             $result = query($query);
             while ($row = mysqli_fetch_assoc($result)) {
+              $sal_id = $row['salary_id'];
             ?>
               <tr>
                 <td><?php echo $row['name']; ?></td>
-                <td>teacher</td>
+                <td>Teacher</td>
                 <td>Rs.<?php echo $row['salary_amount']; ?></td>
                 <td><?php echo $row['month'] . ', ' . $row['year']; ?></td>
-                <td><a href="#" class="btn btn-sm btn-success">Process</a></td>
+                <td><a href="./process-salaries.php?id=<?php echo $sal_id; ?>" class="btn btn-sm btn-success">Process</a></td>
                 <!-- <td><a href="./image.php?image=<?php //echo $image; ?>"><img src="uploads/expense-receiving/<?php //echo $row['image']; ?>" width="30px" height="30px" alt="img"></a></td> -->
               </tr>
             <?php

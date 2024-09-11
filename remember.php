@@ -44,11 +44,20 @@
 // echo ' '.$rec;
 
 // echo $month = date('F');
-echo date('d', time());
-echo "<br>";
- echo $year = date('Y');
- echo "<br>";
- echo                $month = date('F', time());
+// echo date('d', time());
+// echo "<br>";
+//  echo $year = date('Y');
+//  echo "<br>";
+//  echo                $month = date('F', time());
+
+
+$total_salary = "Rs.50000";
+    $length = strlen($total_salary);
+    echo $salary = substr($total_salary, 3, $length);
+    // echo $salary = escape($salary);
+
+
+
 ?>
 <?php
 // if (isset($_POST['view_month'])) {
