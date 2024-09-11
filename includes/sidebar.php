@@ -70,6 +70,11 @@
             </a>
           </li>
           <li>
+            <a href="staff.php">
+              <i class="bi bi-arrow-right"></i><span>Staff Profiles</span>
+            </a>
+          </li>
+          <li>
             <a href="students.php">
               <i class="bi bi-arrow-right"></i><span>Student Profiles</span>
             </a>
