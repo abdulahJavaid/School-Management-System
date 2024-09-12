@@ -60,14 +60,14 @@
 
 ?>
 <?php
-if (isset($_POST['view_month'])) {
-    $date = $_POST['view'] . '-01';
-    echo date('Y', strtotime($date));
-    echo date('F', strtotime($date));
-}
+// if (isset($_POST['view_month'])) {
+//     $date = $_POST['view'] . '-01';
+//     echo date('Y', strtotime($date));
+//     echo date('F', strtotime($date));
+// }
  ?>
 
- <form action="" method="post">
+ <!-- <form action="" method="post">
      <div class="d-flex justify-content-end">
          <div class="input-group w-auto">
              <input
@@ -84,4 +84,4 @@ if (isset($_POST['view_month'])) {
              </button>
          </div>
      </div>
- </form>
+ </form> -->
