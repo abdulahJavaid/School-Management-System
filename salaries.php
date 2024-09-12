@@ -15,7 +15,7 @@ if ($_SESSION['login_access'] == 'developer' || $_SESSION['login_access'] == 'ac
 <main id="main" class="main">
 
   <div class="pagetitle">
-    <h1>Expense/Receiving</h1>
+    <h1>Staff Salaries</h1>
     <nav>
       <ol class="breadcrumb">
         <li class="breadcrumb-item active"><?php echo $_SESSION['school_name']; ?></li>
@@ -107,6 +107,30 @@ if ($_SESSION['login_access'] == 'developer' || $_SESSION['login_access'] == 'ac
                 <td>Teacher</td>
                 <td>Rs.<?php echo $row['salary_amount']; ?></td>
                 <td><?php echo $row['month'] . ', ' . $row['year']; ?></td>
+                <td><a href="./process-salaries.php?id=<?php echo $sal_id; ?>" class="btn btn-sm btn-success">Process</a></td>
+                <!-- <td><a href="./image.php?image=<?php //echo $image; ?>"><img src="uploads/expense-receiving/<?php //echo $row['image']; ?>" width="30px" height="30px" alt="img"></a></td> -->
+              </tr>
+            <?php
+            }
+            ?>
+            <?php
+            // the current date
+            $date = date('Y-m-d', time());
+            $date = escape($date);
+
+            // select the records from database of today
+            $query = "SELECT * FROM staff_profile INNER JOIN employee_salary ON ";
+            $query .= "staff_profile.staff_id=employee_salary.fk_staff_id WHERE ";
+            $query .= "salary_status='unpaid'";
+            $result = query($query);
+            while ($rows = mysqli_fetch_assoc($result)) {
+              $sal_id = $rows['salary_id'];
+            ?>
+              <tr>
+                <td><?php echo $rows['name']; ?></td>
+                <td><?php echo $rows['staff_designation']; ?></td>
+                <td>Rs.<?php echo $rows['salary_amount']; ?></td>
+                <td><?php echo $rows['month'] . ', ' . $rows['year']; ?></td>
                 <td><a href="./process-salaries.php?id=<?php echo $sal_id; ?>" class="btn btn-sm btn-success">Process</a></td>
                 <!-- <td><a href="./image.php?image=<?php //echo $image; ?>"><img src="uploads/expense-receiving/<?php //echo $row['image']; ?>" width="30px" height="30px" alt="img"></a></td> -->
               </tr>

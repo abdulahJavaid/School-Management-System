@@ -64,114 +64,168 @@ $row = mysqli_fetch_assoc($pass);
         $query = "SELECT * FROM teacher_profile WHERE cnic='$cnic' AND NOT teacher_id='$cid'";
         $check_cnic = query($query);
         if (mysqli_num_rows($check_cnic) == 0) {
-            // checking if the phone number is already associated to another teacher
-            $query = "SELECT * FROM teacher_profile WHERE phone_no='$phone_no' AND NOT teacher_id='$cid'";
-            $check_phone_no = query($query);
-            if (mysqli_num_rows($check_phone_no) == 0) {
-                // checking if the email is already associated to another teacher
-                $query = "SELECT * FROM teacher_profile WHERE email='$email' AND NOT teacher_id='$cid'";
-                $check_email = query($query);
-                if (mysqli_num_rows($check_email) == 0) {
-                    // checking if the teacher id(scholl_id) is already associated to another teacher
-                    $query = "SELECT * FROM teacher_profile WHERE school_id='$school_id' AND NOT teacher_id='$cid'";
-                    $check_id = query($query);
-                    if (mysqli_num_rows($check_id) == 0) {
+            // checking if the cnic is already associated to another staff member
+            $query = "SELECT * FROM staff_profile WHERE cnic='$cnic'";
+            $check_staff_cnic = query($query);
+            if (mysqli_num_rows($check_staff_cnic) == 0) {
+                // checking if the phone number is already associated to another teacher
+                $query = "SELECT * FROM teacher_profile WHERE phone_no='$phone_no' AND NOT teacher_id='$cid'";
+                $check_phone_no = query($query);
+                if (mysqli_num_rows($check_phone_no) == 0) {
+                    // checking if the phone number is already associated to another staff member
+                    $query = "SELECT * FROM staff_profile WHERE phone_no='$phone_no'";
+                    $check_staff_phone = query($query);
+                    if (mysqli_num_rows($check_staff_phone) == 0) {
+                        // checking if the email is already associated to another teacher
+                        $query = "SELECT * FROM teacher_profile WHERE email='$email' AND NOT teacher_id='$cid'";
+                        $check_email = query($query);
+                        if (mysqli_num_rows($check_email) == 0) {
+                            // checking if the teacher id is already associated to another teacher
+                            $query = "SELECT * FROM teacher_profile WHERE school_id='$school_id' AND NOT teacher_id='$cid'";
+                            $check_id = query($query);
+                            if (mysqli_num_rows($check_id) == 0) {
+                                // checking if the teacher id is already associated to another staff member
+                                $query = "SELECT * FROM staff_profile WHERE staff_school_id='$school_id'";
+                                $check_staff_id = query($query);
+                                if (mysqli_num_rows($check_staff_id) == 0) {
 
-                        // if all the checks are clear
-                        // reaming the iamge and moving it to the folder
-                        if (isset($_FILES['tch_img']) && !empty($_FILES['tch_img']['tmp_name'])) {
-                            $tmp_img = $_FILES['tch_img']['tmp_name'];
-                            $img = basename($_FILES['tch_img']['name']);
+                                    // if all the checks are clear
+                                    // reaming the iamge and moving it to the folder
+                                    if (isset($_FILES['tch_img']) && !empty($_FILES['tch_img']['tmp_name'])) {
+                                        $tmp_img = $_FILES['tch_img']['tmp_name'];
+                                        $img = basename($_FILES['tch_img']['name']);
 
-                            unlink("./uploads/teachers-profile/" . $row['image'] . "");
-                            move_uploaded_file($tmp_img, "./uploads/teachers-profile/" . $img . "");
-                            $new_img = $cnic . $school_id . $img;
-                            rename("./uploads/teachers-profile/" . $img . "", "./uploads/teachers-profile/" . $new_img . "");
-                        } else {
-                            $new_img = $row['image'];
-                        }
-                        $new_img = escape($new_img);
+                                        unlink("./uploads/teachers-profile/" . $row['image'] . "");
+                                        move_uploaded_file($tmp_img, "./uploads/teachers-profile/" . $img . "");
+                                        $new_img = $cnic . $school_id . $img;
+                                        rename("./uploads/teachers-profile/" . $img . "", "./uploads/teachers-profile/" . $new_img . "");
+                                    } else {
+                                        $new_img = $row['image'];
+                                    }
+                                    $new_img = escape($new_img);
 
-                        $query = "UPDATE teacher_profile SET name='$name', school_id='$school_id', ";
-                        $query .= "qualification='$qualification', f_name='$f_name', ";
-                        $query .= "cnic='$cnic', dob='$dob', phone_no='$phone_no', email='$email', ";
-                        $query .= "address='$address', teacher_gender='$gender', teacher_salary='$salary', ";
-                        $query .= "image='$new_img'";
-                        $query .= "WHERE teacher_id='$cid'";
+                                    $query = "UPDATE teacher_profile SET name='$name', school_id='$school_id', ";
+                                    $query .= "qualification='$qualification', f_name='$f_name', ";
+                                    $query .= "cnic='$cnic', dob='$dob', phone_no='$phone_no', email='$email', ";
+                                    $query .= "address='$address', teacher_gender='$gender', teacher_salary='$salary', ";
+                                    $query .= "image='$new_img'";
+                                    $query .= "WHERE teacher_id='$cid'";
 
-                        $get = query($query);
-                        if ($get) {
-                            // code to add admin_log into the database
-                            $adm_id = escape($_SESSION['login_id']);
-                            $result = sql_where('admin', 'admin_id', $adm_id);
-                            $fetch = mysqli_fetch_assoc($result);
-                            $id = escape($_SESSION['login_id']);
-                            $admin_name = escape($_SESSION['login_name']);
-                            $log = "Admin <strong>$admin_name</strong> updated profile of teacher <strong>$name</strong> !";
-                            $time = date('d/m/Y h:i a', time());
-                            $time = (string) $time;
+                                    $get = query($query);
+                                    if ($get) {
+                                        // code to add admin_log into the database
+                                        $adm_id = escape($_SESSION['login_id']);
+                                        $result = sql_where('admin', 'admin_id', $adm_id);
+                                        $fetch = mysqli_fetch_assoc($result);
+                                        $id = escape($_SESSION['login_id']);
+                                        $admin_name = escape($_SESSION['login_name']);
+                                        $log = "Admin <strong>$admin_name</strong> updated profile of teacher <strong>$name</strong> !";
+                                        $time = date('d/m/Y h:i a', time());
+                                        $time = (string) $time;
 
-                            $query = "INSERT INTO admin_logs(log_message, time) VALUES('$log', '$time')";
-                            $pass_query2 = mysqli_query($conn, $query);
-                            if (!$pass_query2) {
-                                echo "Error: " . mysqli_error($conn);
+                                        $query = "INSERT INTO admin_logs(log_message, time) VALUES('$log', '$time')";
+                                        $pass_query2 = mysqli_query($conn, $query);
+                                        if (!$pass_query2) {
+                                            echo "Error: " . mysqli_error($conn);
+                                        }
+                                        redirect("./edit-teacher.php?id=$cid");
+                                    }
+                                } else { // if the teacher id is already associated to another staff member
+                                    $message = "Id# '$school_id' is assigned to another staff member.";
+                                    $school_id = '';
+                                    $name = escape($_POST['name']);
+                                    $cnic = escape($_POST['cnic']);
+                                    $gender = escape($_POST['teacher_gender']);
+                                    $f_name = escape($_POST['f_name']);
+                                    $phone_no = escape($_POST['phone_no']);
+                                    $qualification = escape($_POST['qualification']);
+                                    $dob = escape($_POST['dob']);
+                                    $address = escape($_POST['address']);
+                                    $email = escape($_POST['email']);
+                                    $salary = escape($_POST['teacher_salary']);
+                                }
+                            } else { // if the teacher id is already associated to another teacher
+                                $message = "Id# '$school_id' is assigned to another teacher.";
+                                $school_id = '';
+                                $name = escape($_POST['name']);
+                                $cnic = escape($_POST['cnic']);
+                                $gender = escape($_POST['teacher_gender']);
+                                $f_name = escape($_POST['f_name']);
+                                $phone_no = escape($_POST['phone_no']);
+                                $qualification = escape($_POST['qualification']);
+                                $dob = escape($_POST['dob']);
+                                $address = escape($_POST['address']);
+                                $email = escape($_POST['email']);
+                                $salary = escape($_POST['teacher_salary']);
                             }
-                            redirect("./edit-teacher.php?id=$cid");
+                        } else { // if the email is already associated to another teacher
+                            $message = "Email '$email' is already associated to antoher teacher.";
+                            $email = '';
+                            $name = escape($_POST['name']);
+                            $cnic = escape($_POST['cnic']);
+                            $gender = escape($_POST['teacher_gender']);
+                            $f_name = escape($_POST['f_name']);
+                            $phone_no = escape($_POST['phone_no']);
+                            $qualification = escape($_POST['qualification']);
+                            $dob = escape($_POST['dob']);
+                            $address = escape($_POST['address']);
+                            $school_id = escape($_POST['school_id']);
+                            $salary = escape($_POST['teacher_salary']);
                         }
-                    } else { // if the teacher id(school_id) is already associated to another teacher
-                        $message = "Teacher Id '$school_id' is already assigned to another teacher";
-                        $school_id = '';
+                    } else { // if the phone_no already exists in the staff_profile
+                        $message = "Phone# '$phone_no' is already associated to another staff member.";
+                        $phone_no = '';
                         $name = escape($_POST['name']);
-                        $qualification = escape($_POST['qualification']);
-                        $f_name = escape($_POST['f_name']);
                         $cnic = escape($_POST['cnic']);
-                        $dob = escape($_POST['dob']);
-                        $phone_no = escape($_POST['phone_no']);
-                        $email = escape($_POST['email']);
-                        $address = escape($_POST['address']);
                         $gender = escape($_POST['teacher_gender']);
+                        $f_name = escape($_POST['f_name']);
+                        $qualification = escape($_POST['qualification']);
+                        $dob = escape($_POST['dob']);
+                        $address = escape($_POST['address']);
+                        $email = escape($_POST['email']);
+                        $school_id = escape($_POST['school_id']);
                         $salary = escape($_POST['teacher_salary']);
                     }
-                } else { // if the email is already associated to another teacher
-                    $message = "Email '$email' is already associated to antoher teacher.";
-                    $email = '';
+                } else { // if the phone_no already exists in the teacher_profile
+                    $message = "Phone# '$phone_no' is already associated to another teacher.";
+                    $phone_no = '';
                     $name = escape($_POST['name']);
-                    $school_id = escape($_POST['school_id']);
-                    $qualification = escape($_POST['qualification']);
-                    $f_name = escape($_POST['f_name']);
                     $cnic = escape($_POST['cnic']);
-                    $dob = escape($_POST['dob']);
-                    $phone_no = escape($_POST['phone_no']);
-                    $address = escape($_POST['address']);
                     $gender = escape($_POST['teacher_gender']);
+                    $f_name = escape($_POST['f_name']);
+                    $qualification = escape($_POST['qualification']);
+                    $dob = escape($_POST['dob']);
+                    $address = escape($_POST['address']);
+                    $email = escape($_POST['email']);
+                    $school_id = escape($_POST['school_id']);
                     $salary = escape($_POST['teacher_salary']);
                 }
-            } else { // if the phone_no already exists in the database
-                $message = "Phone# '$phone_no' is already associated to another teacher.";
-                $phone_no = '';
+            } else { // if the cnic already exists in the staff_profile
+                $message = "Cnic '$cnic' is already associated to another staff member.";
+                $cnic = '';
                 $name = escape($_POST['name']);
-                $school_id = escape($_POST['school_id']);
-                $qualification = escape($_POST['qualification']);
-                $f_name = escape($_POST['f_name']);
-                $cnic = escape($_POST['cnic']);
-                $dob = escape($_POST['dob']);
-                $email = escape($_POST['email']);
-                $address = escape($_POST['address']);
                 $gender = escape($_POST['teacher_gender']);
+                $f_name = escape($_POST['f_name']);
+                $phone_no = escape($_POST['phone_no']);
+                $qualification = escape($_POST['qualification']);
+                $dob = escape($_POST['dob']);
+                $address = escape($_POST['address']);
+                $email = escape($_POST['email']);
+                $school_id = escape($_POST['school_id']);
                 $salary = escape($_POST['teacher_salary']);
             }
-        } else { // if the cnic already exists in the database
+        } else { // if the cnic already exists in the teacher_profile
             $message = "Cnic '$cnic' is already associated to another teacher.";
             $cnic = '';
             $name = escape($_POST['name']);
-            $school_id = escape($_POST['school_id']);
-            $qualification = escape($_POST['qualification']);
-            $f_name = escape($_POST['f_name']);
-            $dob = escape($_POST['dob']);
-            $phone_no = escape($_POST['phone_no']);
-            $email = escape($_POST['email']);
-            $address = escape($_POST['address']);
             $gender = escape($_POST['teacher_gender']);
+            $f_name = escape($_POST['f_name']);
+            $phone_no = escape($_POST['phone_no']);
+            $qualification = escape($_POST['qualification']);
+            $dob = escape($_POST['dob']);
+            $address = escape($_POST['address']);
+            $email = escape($_POST['email']);
+            $school_id = escape($_POST['school_id']);
             $salary = escape($_POST['teacher_salary']);
         }
     }
@@ -318,13 +372,6 @@ $row = mysqli_fetch_assoc($pass);
                                     </div>
                                 </div>
 
-                                <!-- <div class="row mb-3">
-                                <label for="about" class="col-md-4 col-lg-3 col-form-label">Registration#</label>
-                                <div class="col-md-8 col-lg-9">
-                                    <textarea name="roll_no" class="form-control" id="about" style="height: 100px">Sunt est soluta temporibus accusantium neque nam maiores cumque temporibus. Tempora libero non est unde veniam est qui dolor. Ut sunt iure rerum quae quisquam autem eveniet perspiciatis odit. Fuga sequi sed ea saepe at unde.</textarea>
-                                </div>
-                                </div> -->
-
                                 <div class="row mb-3">
                                     <label for="qualification" class="col-md-4 col-lg-3 col-form-label"><strong>Qualification</strong></label>
                                     <div class="col-md-8 col-lg-9">
@@ -366,13 +413,6 @@ $row = mysqli_fetch_assoc($pass);
                                         <input name="teacher_salary" type="text" class="form-control" id="Email" value="<?php echo ($salary == '') ? $row['teacher_salary'] : $salary; ?>" required>
                                     </div>
                                 </div>
-
-                                <!-- <div class="row mb-3">
-                                    <label for="Linkedin" class="col-md-4 col-lg-3 col-form-label">Linkedin Profile</label>
-                                    <div class="col-md-8 col-lg-9">
-                                        <input name="linkedin" type="text" class="form-control" id="Linkedin" value="https://linkedin.com/#">
-                                    </div>
-                                    </div> -->
 
                                 <div class="text-end">
                                     <button type="submit" name="submit" class="btn btn-sm btn-success">Update Profile</button>

@@ -66,7 +66,7 @@
                     <a class="btn btn-success" href="./teacher-profile.php">Add Teacher</a>
                 </div>
             </div>
-            </form>
+            <!-- </form> -->
         </div>
     </div><!-- End Page Title -->
 
@@ -82,7 +82,7 @@
                         <table class="table table-bordered border-primary table-hover">
                             <thead>
                                 <tr>
-                                    <th scope="col">School Id</th>
+                                    <th scope="col">Teacher Id</th>
                                     <th scope="col">Name</th>
                                     <th scope="col">Qualification</th>
                                     <th scope="col">Date of Birth</th>

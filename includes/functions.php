@@ -8,11 +8,13 @@ function employee_salary()
 
     $year = date('Y', time());
     $month = date('F', time());
+    // checking if the salary for the current month is issued
     $query = "SELECT * FROM employee_salary WHERE year='$year' AND month='$month'";
     $check_record = query($query);
     if (mysqli_num_rows($check_record) == 0) {
         $date = date('d', time());
-        if ($date == '10') {
+        if ($date == '11') {
+            // teachers salary
             $query = "SELECT * FROM teacher_profile WHERE teacher_status='1'";
             $result = mysqli_query($conn, $query);
             while ($row = mysqli_fetch_assoc($result)) {
@@ -25,10 +27,23 @@ function employee_salary()
                 $query .= "'$teacher_salary')";
                 $issue_salary = query($query);
             }
+            // staff salary
+            $query = "SELECT * FROM staff_profile WHERE staff_status='1'";
+            $result = mysqli_query($conn, $query);
+            while ($row = mysqli_fetch_assoc($result)) {
+                $year = date('Y', time());
+                $month = date('F', time());
+                $staff_id = $row['staff_id'];
+                $staff_salary = $row['staff_salary'];
+                $query = "INSERT INTO employee_salary(fk_teacher_id, fk_staff_id, year, month, ";
+                $query .= "salary_amount) VALUES('', '$staff_id', '$year', '$month', ";
+                $query .= "'$staff_salary')";
+                $issue_staff_salary = query($query);
+            }
         }
     }
 }
-employee_salary();
+employee_salary(); // calling the function
 
 // for redirections
 function redirect($location)

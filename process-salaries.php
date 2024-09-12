@@ -12,7 +12,7 @@ if (!isset($_GET['id'])) {
 
 <?php
 // if the form is submitted and the employee is teacher
-if (isset($_POST['paid_teacher'])) {
+if (isset($_POST['paid'])) {
 
     $salary_id = escape($_GET['id']);
     $total_salary = $_POST['total_salary'];
@@ -53,8 +53,14 @@ if (isset($_POST['paid_teacher'])) {
 
     // adding the entry into the expense sheet
     $date = date('Y-m-d', time());
-    $name = escape($_POST['tch_name']);
-    $comment = "Salary of teacher $name was paid.";
+    $name = escape($_POST['name']);
+    $type = escape($_POST['type']);
+    if ($type == 'teacher') {
+        $comment = "Salary of teacher $name was paid.";
+    } else {
+        $designation = $_POST['designation'];
+        $comment = "Salary of ". $designation ." ". $name ."was paid.";
+    }
     $qer = "INSERT INTO expense_receiving (comment, expense, receiving, date) ";
     $qer .= "VALUES ('$comment', '$salary', '0', '$date')";
     $res = query($qer);
@@ -106,7 +112,12 @@ if (isset($_POST['paid_teacher'])) {
                             $tch_id = $get_salary['fk_teacher_id'];
                             $query = "SELECT * FROM teacher_profile WHERE teacher_id='$tch_id'";
                             $teacher_record = query($query);
-                            $get_teacher = mysqli_fetch_assoc($teacher_record);
+                            $get_record = mysqli_fetch_assoc($teacher_record);
+                        } else {
+                            $staff_id = $get_salary['fk_staff_id'];
+                            $query = "SELECT * FROM staff_profile WHERE staff_id='$staff_id'";
+                            $staff_record = query($query);
+                            $get_record = mysqli_fetch_assoc($staff_record);
                         }
                         ?>
                         <div class="tab-content pt-2">
@@ -114,26 +125,28 @@ if (isset($_POST['paid_teacher'])) {
                                 <table class="table table-bordered border-primary">
                                     <thead>
                                         <?php
-                                        // if it is the teacher
-                                        if ($get_salary['fk_staff_id'] == 0) {
-                                            $today = date('Y-m-d', time());
-
+                                        $today = date('Y-m-d', time());
                                         ?>
-                                            <tr>
-                                                <th scope="col">Name</th>
-                                                <th scope="col">Designation</th>
-                                                <th scope="col">Salary</th>
-                                                <th scope="col">Month</th>
-                                                <th scope="col">Payment Date</th>
-                                            </tr>
-                                        <?php
-                                        } // end of if {teacher}
-                                        ?>
+                                        <tr>
+                                            <th scope="col">Name</th>
+                                            <th scope="col">Designation</th>
+                                            <th scope="col">Salary</th>
+                                            <th scope="col">Month</th>
+                                            <th scope="col">Payment Date</th>
+                                        </tr>
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td><?php echo $get_teacher['name']; ?></td>
-                                            <td>Teacher</td>
+                                            <td><?php echo $get_record['name']; ?></td>
+                                            <td>
+                                                <?php
+                                                if ($get_salary['fk_staff_id'] == 0) {
+                                                    echo "Teacher";
+                                                } else {
+                                                    echo $get_record['staff_designation'];
+                                                }
+                                                ?>
+                                            </td>
                                             <td>Rs. <?php echo $get_salary['salary_amount']; ?></td>
                                             <td><?php echo $get_salary['month'] . ', ' . $get_salary['year']; ?></td>
                                             <td><?php echo $today; ?></td>
@@ -166,26 +179,26 @@ if (isset($_POST['paid_teacher'])) {
                                         </label>
                                     </div>
                                     <div id="bonus1_i" style="display: none;">
-                                    <div class="row mb-3 d-flex align-items-center">
-                                        <div class="col-sm-4">
-                                            <input
-                                                id="bonus_one_t"
-                                                name="bonus1t"
-                                                type="text"
-                                                class="form-control"
-                                                value=""
-                                                placeholder="Bonus title">
+                                        <div class="row mb-3 d-flex align-items-center">
+                                            <div class="col-sm-4">
+                                                <input
+                                                    id="bonus_one_t"
+                                                    name="bonus1t"
+                                                    type="text"
+                                                    class="form-control"
+                                                    value=""
+                                                    placeholder="Bonus title">
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <input
+                                                    id="bonus_one"
+                                                    name="bonus1"
+                                                    type="text"
+                                                    class="form-control"
+                                                    value=""
+                                                    placeholder="Rs.">
+                                            </div>
                                         </div>
-                                        <div class="col-sm-3">
-                                            <input
-                                                id="bonus_one"
-                                                name="bonus1"
-                                                type="text"
-                                                class="form-control"
-                                                value=""
-                                                placeholder="Rs.">
-                                        </div>
-                                    </div>                                        
                                     </div>
                                     <div class="form-check" id="bonus2">
                                         <input class="form-check-input border-dark" type="checkbox" onclick="partial_payment()" value="" id="bonus2_ch">
@@ -194,26 +207,26 @@ if (isset($_POST['paid_teacher'])) {
                                         </label>
                                     </div>
                                     <div id="bonus2_i" style="display: none;">
-                                    <div class="row mb-3 d-flex align-items-center">
-                                        <div class="col-sm-4">
-                                            <input
-                                                id="bonus_one_t"
-                                                name="bonus2t"
-                                                type="text"
-                                                class="form-control"
-                                                value=""
-                                                placeholder="Bonus title">
+                                        <div class="row mb-3 d-flex align-items-center">
+                                            <div class="col-sm-4">
+                                                <input
+                                                    id="bonus_one_t"
+                                                    name="bonus2t"
+                                                    type="text"
+                                                    class="form-control"
+                                                    value=""
+                                                    placeholder="Bonus title">
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <input
+                                                    id="bonus_two"
+                                                    name="bonus2"
+                                                    type="text"
+                                                    class="form-control"
+                                                    value=""
+                                                    placeholder="Rs.">
+                                            </div>
                                         </div>
-                                        <div class="col-sm-3">
-                                            <input
-                                                id="bonus_two"
-                                                name="bonus2"
-                                                type="text"
-                                                class="form-control"
-                                                value=""
-                                                placeholder="Rs.">
-                                        </div>
-                                    </div>
                                     </div>
                                     <div class="form-check" id="bonus3">
                                         <input class="form-check-input border-dark" type="checkbox" onclick="partial_payment()" value="" id="bonus3_ch">
@@ -222,26 +235,26 @@ if (isset($_POST['paid_teacher'])) {
                                         </label>
                                     </div>
                                     <div id="bonus3_i" style="display: none;">
-                                    <div class="row mb-3 d-flex align-items-center">
-                                        <div class="col-sm-4">
-                                            <input
-                                                id="bonus_one_t"
-                                                name="bonus3t"
-                                                type="text"
-                                                class="form-control"
-                                                value=""
-                                                placeholder="Bonus title">
+                                        <div class="row mb-3 d-flex align-items-center">
+                                            <div class="col-sm-4">
+                                                <input
+                                                    id="bonus_one_t"
+                                                    name="bonus3t"
+                                                    type="text"
+                                                    class="form-control"
+                                                    value=""
+                                                    placeholder="Bonus title">
+                                            </div>
+                                            <div class="col-sm-3">
+                                                <input
+                                                    id="bonus_three"
+                                                    name="bonus3"
+                                                    type="text"
+                                                    class="form-control"
+                                                    value=""
+                                                    placeholder="Rs.">
+                                            </div>
                                         </div>
-                                        <div class="col-sm-3">
-                                            <input
-                                                id="bonus_three"
-                                                name="bonus3"
-                                                type="text"
-                                                class="form-control"
-                                                value=""
-                                                placeholder="Rs.">
-                                        </div>
-                                    </div>
                                     </div>
 
                                     <div class="d-flex justify-content-end mb-4 mt-4">
@@ -260,14 +273,19 @@ if (isset($_POST['paid_teacher'])) {
 
                                     <div class="text-center">
                                         <?php
-                                        // if the salary is of teacher
                                         if ($get_salary['fk_staff_id'] == 0) {
                                         ?>
-                                        <input type="hidden" name="tch_name" value="<?php echo $get_teacher['name']; ?>">
-                                            <button type="submit" name="paid_teacher" class="btn btn-sm btn-success">Mark Paid</button>
+                                            <input type="hidden" name="type" value="teacher">
+                                        <?php
+                                        } else {
+                                        ?>
+                                            <input type="hidden" name="designation" value="<?php echo $get_record['staff_designation']; ?>">
+                                            <input type="hidden" name="type" value="staff">
                                         <?php
                                         }
                                         ?>
+                                        <input type="hidden" name="name" value="<?php echo $get_record['name']; ?>">
+                                        <button type="submit" name="paid" class="btn btn-sm btn-success">Mark Paid</button>
                                     </div>
                                 </form><!-- End Profile Edit Form -->
 
