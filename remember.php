@@ -51,22 +51,23 @@
 //  echo                $month = date('F', time());
 
 
-$total_salary = "Rs.50000";
-    $length = strlen($total_salary);
-    echo $salary = substr($total_salary, 3, $length);
+// $total_salary = "Rs.50000";
+//     $length = strlen($total_salary);
+//     echo $salary = substr($total_salary, 3, $length);
     // echo $salary = escape($salary);
 
 
 
 ?>
 <?php
-// if (isset($_POST['view_month'])) {
-//     $date = $_POST['view'] . '-01';
-//     echo date('Y', strtotime($date));
-// }
+if (isset($_POST['view_month'])) {
+    $date = $_POST['view'] . '-01';
+    echo date('Y', strtotime($date));
+    echo date('F', strtotime($date));
+}
  ?>
 
- <!-- <form action="" method="post">
+ <form action="" method="post">
      <div class="d-flex justify-content-end">
          <div class="input-group w-auto">
              <input
@@ -83,4 +84,4 @@ $total_salary = "Rs.50000";
              </button>
          </div>
      </div>
- </form> -->
+ </form>

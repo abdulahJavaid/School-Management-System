@@ -79,6 +79,7 @@
                         <p>Teacher Details of All the registered Teacher of <code><?php echo $_SESSION['school_name']; ?></code>.</p>
 
                         <!-- Primary Color Bordered Table -->
+                         <div class="table-responsive">
                         <table class="table table-bordered border-primary table-hover">
                             <thead>
                                 <tr>
@@ -157,6 +158,7 @@
                                 ?>
                             </tbody>
                         </table>
+                    </div>
                         <!-- End Primary Color Bordered Table -->
 
                     </div>

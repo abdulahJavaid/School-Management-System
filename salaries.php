@@ -22,49 +22,32 @@ if ($_SESSION['login_access'] == 'developer' || $_SESSION['login_access'] == 'ac
       </ol>
     </nav>
   </div><!-- End Page Title -->
-  <div class="container">
-    <div class="row">
-      <div class="col-md-3">
-        <form method="post" action="generate-pdf.php">
-          <div class="input-group mb-3">
-            <button class="btn btn-sm btn-success mt-3" type="button">From</button>
-            <input type="date" name="one" class="form-control mt-3" required>
-          </div>
-      </div>
-      <div class="col-md-3">
-        <div class="input-group mb-3">
-          <button class="btn btn-sm btn-success mt-3" type="button">To</button>
-          <input type="date" name="two" class="form-control mt-3">
-        </div>
-      </div>
-      <div class="col-md-4">
-        <button class="btn btn-sm btn-success mt-3 ml-3" name="generate" type="submit">Generate PDF</button>
-      </div>
-      </form>
-    </div>
-  </div>
 
-  <div class="container">
-    <div class="row">
-      <div class="col-md-3">
-        <form method="post" action="">
-          <div class="input-group mb-3">
-            <button class="btn btn-sm btn-success mt-3" type="button">From</button>
-            <input type="date" name="one" class="form-control mt-3" required>
-          </div>
-      </div>
-      <div class="col-md-3">
-        <div class="input-group mb-3">
-          <button class="btn btn-sm btn-success mt-3" type="button">To</button>
-          <input type="date" name="two" class="form-control mt-3">
+  <!-- download pdfs -->
+  <div class="row mb-3">
+    <div class="col-md-5 col-sm-6">
+      <form action="./generate-pdf.php" method="post">
+        <div class="input-group">
+          <input
+            name="salary_p_month"
+            type="month"
+            class="form-control"
+            value="<?php if (isset($_POST['view_month'])) {
+                      echo $_POST['month'];
+                    } else {
+                      echo date('Y') . '-' . date('m');
+                    } ?>"
+            placeholder="Example input"
+            aria-label="Example input"
+            aria-describedby="button-addon1" required />
+          <button name="generate_paid_salary" class="btn btn-sm btn-success" type="submit" id="button-addon1">
+            Pdf Paid Salaries
+          </button>
         </div>
-      </div>
-      <div class="col-md-4">
-        <button class="btn btn-sm btn-success mt-3 ml-3" name="view" type="submit">View Data</button>
-      </div>
       </form>
     </div>
   </div>
+  <!-- end download pdfs -->
 
 
 
@@ -78,7 +61,7 @@ if ($_SESSION['login_access'] == 'developer' || $_SESSION['login_access'] == 'ac
         <h5 class="card-title">Staff Salaries</h5>
         <p>Pending salary payments.</p>
 
-        <table class="table table-bordered border-primary tbl">
+        <table class="table table-bordered border-primary table-hover table-responsive">
           <thead>
             <tr>
               <th scope="col">Name</th>
@@ -108,7 +91,9 @@ if ($_SESSION['login_access'] == 'developer' || $_SESSION['login_access'] == 'ac
                 <td>Rs.<?php echo $row['salary_amount']; ?></td>
                 <td><?php echo $row['month'] . ', ' . $row['year']; ?></td>
                 <td><a href="./process-salaries.php?id=<?php echo $sal_id; ?>" class="btn btn-sm btn-success">Process</a></td>
-                <!-- <td><a href="./image.php?image=<?php //echo $image; ?>"><img src="uploads/expense-receiving/<?php //echo $row['image']; ?>" width="30px" height="30px" alt="img"></a></td> -->
+                <!-- <td><a href="./image.php?image=<?php //echo $image; 
+                                                    ?>"><img src="uploads/expense-receiving/<?php //echo $row['image']; 
+                                                                                            ?>" width="30px" height="30px" alt="img"></a></td> -->
               </tr>
             <?php
             }
@@ -132,7 +117,9 @@ if ($_SESSION['login_access'] == 'developer' || $_SESSION['login_access'] == 'ac
                 <td>Rs.<?php echo $rows['salary_amount']; ?></td>
                 <td><?php echo $rows['month'] . ', ' . $rows['year']; ?></td>
                 <td><a href="./process-salaries.php?id=<?php echo $sal_id; ?>" class="btn btn-sm btn-success">Process</a></td>
-                <!-- <td><a href="./image.php?image=<?php //echo $image; ?>"><img src="uploads/expense-receiving/<?php //echo $row['image']; ?>" width="30px" height="30px" alt="img"></a></td> -->
+                <!-- <td><a href="./image.php?image=<?php //echo $image; 
+                                                    ?>"><img src="uploads/expense-receiving/<?php //echo $row['image']; 
+                                                                                            ?>" width="30px" height="30px" alt="img"></a></td> -->
               </tr>
             <?php
             }

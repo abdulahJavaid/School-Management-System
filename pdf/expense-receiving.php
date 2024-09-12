@@ -15,6 +15,49 @@ if (isset($_POST['one'])) {
 
     $html = "<div style='clear:float;'><img style='float:left;' src='images/savy.png' height='155px' width='155px' alt='school-image'>";
     $html .= "<h1>$name</h1><h5>$address</h5><h5>$contact</h5><h5>$email</h5></div><br><h2 style='clear:both;'>Expense and Receiving</h2>";
+
+    // styles
+    
+    $html .= "
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            margin-top: 0px;
+        }
+        .table-container {
+            width: 100%;
+            margin: 0 auto;
+        }
+        table {
+            width: 100%; 
+            border-collapse: collapse;
+            table-layout: fixed;
+        }
+        th, td {
+            border: 1px solid #000;
+            padding: 8px;
+            text-align: left;
+            word-wrap: break-word;
+            white-space: normal;
+        }
+        th {
+            background-color: #f0f0f0;
+        }
+        @media print {
+            body {
+                margin: 0;
+                padding: 0;
+            }
+            table {
+                width: 100%;
+                font-size: 12px;
+            }
+        }
+    </style>
+    ";
+
+
     $html .= "<table border='1' style='border-collapse:collapse'>
 <thead>
 <tr>
@@ -103,7 +146,6 @@ if (isset($_POST['one'])) {
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <strong>Accountant Signature:</strong> <u><span style='width:100px'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></u>
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<strong>Editor Signature:</strong> <u><span style='width:100px'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></u>
 <br><br>
 <strong>Dated:</strong> <u><span style='width:100px'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></u>
 ";
