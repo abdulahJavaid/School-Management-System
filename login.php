@@ -12,24 +12,38 @@
   <link href="assets/css/login.css" rel="stylesheet">
   <!--Stylesheet-->
 
+  <style>
+    input, .bg-danger {
+      color: black;
+    }
+    input:focus {
+      color: black;
+    }
+    button {
+      cursor: pointer;
+    }
+  </style>
+
 </head>
 <?php // to check if the password and id match
 
 $message = '';
 if (isset($_POST['submit'])) {
-  $admin_id = escape($_POST['admin_id']);
+  $admin_email = escape($_POST['admin_email']);
   $password = escape($_POST['password']);
 
-  $get_result = sql_where('admin', 'admin_id', $admin_id);
+  $get_result = sql_where('admin', 'email', "$admin_email");
   $result = mysqli_fetch_assoc($get_result);
   if ($result) {
     if ($result['status'] == 1) {
-      if ($password == $result['password']) {
+      if (md5($password) == $result['password']) {
         $_SESSION['login_email'] = $result['email'];
         $_SESSION['login_name'] = $result['admin_name'];
         $_SESSION['login_access'] = $result['role'];
         $_SESSION['login_id'] = $result['admin_id'];
-        $query = "SELECT * FROM school_profile_ ORDER BY id DESC LIMIT 1";
+        $_SESSION['client_id'] = $result['fk_client_id'];
+        $client = $_SESSION['client_id'];
+        $query = "SELECT * FROM school_profile_ WHERE client_id='$client'";
         $result = mysqli_query($conn, $query);
         $rows = mysqli_fetch_assoc($result);
         $_SESSION['school_id'] = $rows['id'];
@@ -39,14 +53,12 @@ if (isset($_POST['submit'])) {
         $message = "Your password is not correct!";
       }
     } else {
-      $message = "You are an inactive admin!";
+      $message = "Login credentials are no longer valid!";
     }
   } else {
-    $message = "The Admin id is not valid!";
+    $message = "Admin email is not valid!";
   }
 }
-
-
 ?>
 
 <body>
@@ -58,8 +70,8 @@ if (isset($_POST['submit'])) {
     <h3>Login Here</h3>
     <span class="bg-danger"><?php echo $message; ?></span>
 
-    <label for="username">Admin Id</label>
-    <input type="text" placeholder="Admin id" id="username" name="admin_id" required>
+    <label for="username">Admin Email</label>
+    <input type="email" placeholder="example@mail.com" id="username" name="admin_email" required>
 
     <label for="password">Password</label>
     <input type="password" placeholder="Password" id="password" name="password" required>
@@ -67,9 +79,9 @@ if (isset($_POST['submit'])) {
     <button name="submit">Log In</button><br><br>
     <!-- <p class="login-link">Reset password? <a href="signup.php">Sign up</a></p> -->
     <!-- <div class="social">
-          <div class="go"><i class="fab fa-google"></i>  Google</div>
-          <div class="fb"><i class="fab fa-facebook"></i>  Facebook</div>
-        </div> -->
+      <div class="go"><i class="fab fa-google"></i>  Google</div>
+      <div class="fb"><i class="fab fa-facebook"></i>  Facebook</div>
+    </div> -->
   </form>
 
 </body>
