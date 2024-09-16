@@ -21,7 +21,7 @@ if (isset($_POST['select'])) {
     $section = escape($section);
     $class = escape($class);
 
-    $query = "SELECT * FROM school_profile_ ORDER BY id DESC LIMIT 1";
+    $query = "SELECT * FROM school_profile_ WHERE client_id='$client'";
     $result = mysqli_query($conn, $query);
     $row = mysqli_fetch_assoc($result);
 
@@ -38,7 +38,8 @@ if (isset($_POST['select'])) {
     $query .= "student_class ON student_profile.student_id=student_class.fk_student_id INNER JOIN ";
     $query .= "class_sections ON student_class.fk_section_id=class_sections.section_id INNER JOIN ";
     $query .= "all_classes ON class_sections.fk_class_id=all_classes.class_id ";
-    $query .= "WHERE year='$year' AND month='$month' AND fee_status='unpaid' AND section_id='$section'";
+    $query .= "WHERE year='$year' AND month='$month' AND fee_status='unpaid' AND section_id='$section' ";
+    $query .= "AND student_fee.fk_client_id='$client'";
 
     $pass = mysqli_query($conn, $query);
 
@@ -230,4 +231,12 @@ body {
     $html .= "</body>
 </html>
   ";
+  // fetching the admin id and adding the data
+  $admin_name = escape($_SESSION['login_name']);
+  $log = "Admin <strong>$admin_name</strong> generated fee vouchers of class <strong>$class $section</strong> !";
+  $times = date('d/m/Y h:i a', time());
+  $times = (string) $times;
+  // adding activity into the logs
+  $query = "INSERT INTO admin_logs(log_message, time, fk_client_id) VALUES('$log', '$times', '$client')";
+  $pass_query2 = mysqli_query($conn, $query);
 }

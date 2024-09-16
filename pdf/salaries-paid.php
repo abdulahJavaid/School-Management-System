@@ -1,6 +1,7 @@
 <?php
 if (isset($_POST['salary_p_month'])) {
-    $query = "SELECT * FROM school_profile_ ORDER BY id DESC LIMIT 1";  
+
+    $query = "SELECT * FROM school_profile_ WHERE client_id='$client'";  
     $result = mysqli_query($conn, $query);
     $ro = mysqli_fetch_assoc($result);
 
@@ -71,19 +72,31 @@ if (isset($_POST['salary_p_month'])) {
     $date = $_POST['salary_p_month'] . '-01';
     $month = date('F', strtotime($date));
     $year = date('Y', strtotime($date));
-    $query = "SELECT * FROM employee_salary WHERE month='$month' AND year='$year' AND salary_status='paid'";
+
+    // fetching the admin id and adding the data
+    $id = escape($_SESSION['login_id']);
+    $admin_name = escape($_SESSION['login_name']);
+    $log = "Admin <strong>$admin_name</strong> generated paid salary records for <strong>$month, $year</strong> !";
+    $times = date('d/m/Y h:i a', time());
+    $times = (string) $times;
+    // adding activity into the logs
+    $query = "INSERT INTO admin_logs(log_message, time, fk_client_id) VALUES('$log', '$times', '$client')";
+    $pass_query2 = mysqli_query($conn, $query);
+
+
+    $query = "SELECT * FROM employee_salary WHERE month='$month' AND year='$year' AND salary_status='paid' AND fk_client_id='$client'";
     $result = mysqli_query($conn, $query);
 
     $totals = 0;
     while ($row = mysqli_fetch_assoc($result)) {
         if ($row['fk_staff_id'] == '0'){
             $tch_id = $row['fk_teacher_id'];
-            $query = "SELECT * FROM teacher_profile WHERE teacher_id='$tch_id'";
+            $query = "SELECT * FROM teacher_profile WHERE teacher_id='$tch_id' AND fk_client_id='$client'";
             $g_result = mysqli_query($conn, $query);
             $rows = mysqli_fetch_assoc($g_result);
         } else {
             $stf_id = $row['fk_staff_id'];
-            $query = "SELECT * FROM staff_profile WHERE staff_id='$stf_id'";
+            $query = "SELECT * FROM staff_profile WHERE staff_id='$stf_id' AND fk_client_id='$client'";
             $g_result = mysqli_query($conn, $query);
             $rows = mysqli_fetch_assoc($g_result);
         }
@@ -95,7 +108,7 @@ if (isset($_POST['salary_p_month'])) {
         $paid = $row['paid_salary'];
 
         $sal_id = $row['salary_id'];
-        $query = "SELECT * FROM salary_bonus WHERE fk_salary_id='$sal_id'";
+        $query = "SELECT * FROM salary_bonus WHERE fk_salary_id='$sal_id' AND fk_client_id='$client'";
         $g_bonus = mysqli_query($conn, $query);
         
         $bonuses = '';  // Reset bonuses for each row

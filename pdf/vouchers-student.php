@@ -2,16 +2,23 @@
 // paid fee for the current month
 
 if (isset($_POST['roll_no_voucher'])) {
-
-    
     $roll_no = escape($_POST['roll_no_voucher']);
-    $query = "SELECT * FROM student_profile WHERE roll_no='$roll_no'";
+    // fetching the admin id and adding the data
+    $admin_name = escape($_SESSION['login_name']);
+    $log = "Admin <strong>$admin_name</strong> generated fee voucher student with reg# {<strong>$roll_no</strong>} !";
+    $times = date('d/m/Y h:i a', time());
+    $times = (string) $times;
+    // adding activity into the logs
+    $query = "INSERT INTO admin_logs(log_message, time, fk_client_id) VALUES('$log', '$times', '$client')";
+    $pass_query2 = mysqli_query($conn, $query);
+
+    $query = "SELECT * FROM student_profile WHERE roll_no='$roll_no' AND fk_client_id='$client'";
     $data = query($query);
     if(mysqli_num_rows($data) == 0) {
         redirect("./fee-vouchers.php?ms=1");
     }
 
-    $query = "SELECT * FROM school_profile_ ORDER BY id DESC LIMIT 1";
+    $query = "SELECT * FROM school_profile_ WHERE client_id='$client'";
     $result = mysqli_query($conn, $query);
     $row = mysqli_fetch_assoc($result);
 
@@ -28,7 +35,8 @@ if (isset($_POST['roll_no_voucher'])) {
     $query .= "student_class ON student_profile.student_id=student_class.fk_student_id INNER JOIN ";
     $query .= "class_sections ON student_class.fk_section_id=class_sections.section_id INNER JOIN ";
     $query .= "all_classes ON class_sections.fk_class_id=all_classes.class_id ";
-    $query .= "WHERE year='$year' AND month='$month' AND fee_status='unpaid' AND roll_no='$roll_no'";
+    $query .= "WHERE year='$year' AND month='$month' AND fee_status='unpaid' AND roll_no='$roll_no' ";
+    $query .= "AND student_fee.fk_client_id='$client'";
 
     $pass = mysqli_query($conn, $query);
 

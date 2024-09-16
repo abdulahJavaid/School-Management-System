@@ -2,6 +2,12 @@
 
 <!-- ======= Sidebar ======= -->
 <?php require_once("includes/sidebar.php"); ?>
+
+<?php
+// getting the client id
+$client = escape($_SESSION['client_id']);
+?>
+
 <?php
 // if the get request is not set
 if (!isset($_GET['id'])) {
@@ -24,7 +30,7 @@ if (!isset($_GET['id'])) {
   <?php
   // fetching the student data here
   $id = escape($_GET['id']);
-  $query = "SELECT * FROM staff_profile WHERE staff_id='$id'";
+  $query = "SELECT * FROM staff_profile WHERE staff_id='$id' AND fk_client_id='$client'";
   $pass = mysqli_query($conn, $query);
   $row = mysqli_fetch_assoc($pass);
   ?>
@@ -85,14 +91,6 @@ if (!isset($_GET['id'])) {
               <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Edit Profile</button>
             </li> -->
 
-                <!-- <li class="nav-item">
-              <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-settings">Settings</button>
-            </li>
-
-            <li class="nav-item">
-              <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">Change Password</button>
-            </li> -->
-
               </ul>
               <div class="tab-content pt-2">
 
@@ -141,17 +139,6 @@ if (!isset($_GET['id'])) {
                     <div class="col-lg-3 col-md-4 label"><strong>Address</strong></div>
                     <div class="col-lg-9 col-md-8"><?php echo $row['address']; ?></div>
                   </div>
-
-                  <!-- <div class="row">
-                  <div class="col-lg-3 col-md-4 label">E-mail</div>
-                  <div class="col-lg-9 col-md-8"><?php //echo $row['email']; 
-                                                  ?></div>
-                </div> -->
-
-                  <!-- <div class="row">
-                  <div class="col-lg-3 col-md-4 label">Email</div>
-                  <div class="col-lg-9 col-md-8">k.anderson@example.com</div>
-                </div> -->
 
                 </div>
 

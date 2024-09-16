@@ -9,6 +9,10 @@ require_once('./includes/functions.php');
 if (!isset($_POST['generate']) && !isset($_POST['current_month']) && !isset($_POST['generate_name']) && !isset($_POST['generate_reg']) && !isset($_POST['dues_current_month']) && !isset($_POST['dues_name']) && !isset($_POST['dues_reg']) && !isset($_POST['notpaid_current_month']) && !isset($_POST['notpaid_name']) && !isset($_POST['notpaid_reg']) && !isset($_POST['download_school_vouchers']) && !isset($_POST['download_class_vouchers']) && !isset($_POST['download_student_voucher']) && !isset($_POST['generate_paid_salary'])) {
     redirect("./");
 }
+
+// getting the session id
+$client = escape($_SESSION['client_id']);
+
 // if ( !isset($_POST['dues_name']) && !isset($_POST['dues_reg'])) {
 //     redirect("./");
 // }
@@ -45,7 +49,7 @@ $options->setChroot(__DIR__);
 $pdf = new Dompdf($options);
 
 // paper settings
-$pdf->setPaper("A4", "landscape");
+$pdf->setPaper("A4", "portrait");
 
 // the code
 

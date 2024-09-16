@@ -3,6 +3,11 @@
 <!-- ======= Sidebar ======= -->
 <?php require_once("includes/sidebar.php"); ?>
 
+<?php
+// getting the client id
+$client = escape($_SESSION['client_id']);
+?>
+
 <main id="main" class="main">
 
     <div class="pagetitle">
@@ -23,16 +28,32 @@
         $year = date('Y');
         $fee_status = 'unpaid';
 
-        $query = "SELECT student_id, fee_amount FROM student_profile WHERE student_status='1'";
+        $query = "SELECT student_id, fee_amount FROM student_profile WHERE student_status='1' AND fk_client_id='$client'";
         $results = mysqli_query($conn, $query);
         while ($row = mysqli_fetch_array($results)) {
             $student_id = $row['student_id'];
             $monthly_fee = $row['fee_amount'];
 
-            $query = "INSERT INTO student_fee(fk_student_id, year, month, monthly_fee, due_date, fee_status) ";
-            $query .= "VALUES('$student_id', '$year', '$month', '$monthly_fee', '$due_date', '$fee_status')";
+            $query = "INSERT INTO student_fee(fk_student_id, year, month, monthly_fee, due_date, fee_status, fk_client_id) ";
+            $query .= "VALUES('$student_id', '$year', '$month', '$monthly_fee', '$due_date', '$fee_status', '$client')";
             $resultss = query($query);
+
+            // adding the fee notices for the student
+            $today = date('Y-m-d', time());
+            $description = "Your Fees for this month has been issued!";
+            $query = "INSERT INTO notices(fk_student_id, notice_description, notice_status, notice_date, fk_client_id) ";
+            $query .= "VALUES('$student_id', '$description', 'student', '$today', '$client')";
+            $resultsss = query($query);
         }
+        // fetching the admin id and adding the data
+        $admin_name = escape($_SESSION['login_name']);
+        $log = "Admin <strong>$admin_name</strong> issued Fees to all students !";
+        $times = date('d/m/Y h:i a', time());
+        $times = (string) $times;
+        // adding activity into the logs
+        $query = "INSERT INTO admin_logs(log_message, time, fk_client_id) VALUES('$log', '$times', '$client')";
+        $pass_query2 = mysqli_query($conn, $query);
+
         redirect("./fee-vouchers.php");
     }
     ?>
@@ -86,10 +107,6 @@
                                 </div>
                             </div>
                         </div>
-                        <!-- <div class="col-lg-3 h-100">
-                            <div class="d-flex align-items-end">
-                            </div>
-                        </div> -->
                     </div>
                 </form>
             <?php
@@ -115,7 +132,7 @@
                 // unset($_GET['m']);
             ?>
                 <div class="row mb-3">
-                <form action="generate-pdf.php" method="post">
+                    <form action="generate-pdf.php" method="post">
                         <div class="col-sm-4">
                             <label for="due-date" class="form-label"><strong>Student Reg. no</strong> <code>*</code></label>
                             <div class="col-auto">
@@ -144,14 +161,16 @@
                                         <option selected value="choose_class">Class</option>
                                         <?php
                                         // fetching all the classes 
-                                        $result = sql_select_all("all_classes");
+                                        $query = "SELECT * FROM all_classes WHERE fk_client_id='$client'";
+                                        $result = query($query);
                                         while ($row = mysqli_fetch_assoc($result)) {
-
+                                            $clas_id = $row['class_id'];
                                         ?>
                                             <optgroup label="Class: <?php echo $row['class_name']; ?>">
                                                 <?php
                                                 // fetching the related sections
-                                                $result1 = sql_where("class_sections", "fk_class_id", $row['class_id']);
+                                                $query = "SELECT * FROM class_sections WHERE fk_class_id='$clas_id' AND fk_client_id='$client'";
+                                                $result1 = query($query);
                                                 while ($row1 = mysqli_fetch_assoc($result1)) {
                                                 ?>
                                                     <option value="<?php echo $row['class_id'] . " " . $row1['section_id']; ?>"><?php echo $row['class_name'] . " " . $row1['section_name']; ?></option>
@@ -191,7 +210,7 @@
             <?php
             }
             ?>
-            
+
             <?php
             // if admin did not selected the class or reg# is not valid
             if (isset($_GET['m']) || isset($_GET['ms'])) {
@@ -202,10 +221,10 @@
                         <div class="alert alert-danger"><strong>
                                 <?php
                                 // displaying the messages
-                                if(isset($_GET['m']))
-                                echo "Please slect a class to download vouchers!";
-                                elseif(isset($_GET['ms']))
-                                echo "The registration# is invalid!";
+                                if (isset($_GET['m']))
+                                    echo "Please slect a class to download vouchers!";
+                                elseif (isset($_GET['ms']))
+                                    echo "The registration# is invalid!";
                                 ?>
                             </strong></div>
                     </div>

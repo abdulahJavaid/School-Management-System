@@ -15,6 +15,7 @@ if (isset($_GET['get']) && $_GET['get'] == 'yes') { // if the request is valid
     unset($_SESSION['login_name']);
     unset($_SESSION['school_id']);
     unset($_SESSION['school_name']);
+    unset($_SESSION['client_id']);
     redirect('../');
 } else { // if the request is not valid
     redirect('../');

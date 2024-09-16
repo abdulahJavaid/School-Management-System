@@ -2,6 +2,12 @@
 
 <!-- ======= Sidebar ======= -->
 <?php require_once("includes/sidebar.php"); ?>
+
+<?php
+// getting the client id
+$client = escape($_SESSION['client_id']);
+?>
+
 <?php
 // if the get request is not set
 if (!isset($_GET['id'])) {
@@ -15,7 +21,8 @@ $query = "SELECT * FROM all_classes ";
 $query .= "INNER JOIN class_sections ON all_classes.class_id = class_sections.fk_class_id ";
 $query .= "INNER JOIN student_class ON class_sections.section_id = student_class.fk_section_id ";
 $query .= "INNER JOIN student_profile ON student_class.fk_student_id = student_profile.student_id ";
-$query .= "WHERE student_id = '$id' AND student_class.status='1'";
+$query .= "WHERE student_id = '$id' AND student_class.status='1' ";
+$query .= "AND student_profile.fk_client_id='$client'";
 $pass = mysqli_query($conn, $query);
 $row = mysqli_fetch_assoc($pass);
 ?>
@@ -65,11 +72,11 @@ $row = mysqli_fetch_assoc($pass);
     $fee_amount = escape($_POST['fee_amount']);
 
     // checking if the roll number is not assigned to another student
-    $query = "SELECT * FROM student_profile WHERE roll_no='$roll_no' AND NOT student_id='$cid'";
+    $query = "SELECT * FROM student_profile WHERE roll_no='$roll_no' AND fk_client_id='$client' AND NOT student_id='$cid'";
     $find_roll = query($query);
     if (mysqli_num_rows($find_roll) == 0) {
       // checking if the cnic/b-form is already assosiated to another student
-      $query = "SELECT * FROM student_profile WHERE cnic='$cnic' AND NOT student_id='$cid'";
+      $query = "SELECT * FROM student_profile WHERE cnic='$cnic' AND fk_client_id='$client' AND NOT student_id='$cid'";
       $find_cnic = query($query);
       if (mysqli_num_rows($find_cnic) == 0) {
         // checking if the image is not empty and making it unique
@@ -80,9 +87,9 @@ $row = mysqli_fetch_assoc($pass);
           unlink("./uploads/students-profile/" . $row['image'] . "");
           move_uploaded_file($tmp_img, "./uploads/students-profile/" . $img . "");
           if (empty($cnic)) {
-            $new_img = $f_cnic . $roll_no . $img;
+            $new_img = $client . $f_cnic . $roll_no . $img;
           } else {
-            $new_img = $cnic . $roll_no . $img;
+            $new_img = $client . $cnic . $roll_no . $img;
           }
           rename("./uploads/students-profile/" . $img . "", "./uploads/students-profile/" . $new_img . "");
         } else {
@@ -93,7 +100,7 @@ $row = mysqli_fetch_assoc($pass);
         $query = "UPDATE student_profile SET name='$name', roll_no='$roll_no', cnic='$cnic', dob='$dob', ";
         $query .= "address='$address', email='$email', mobile_no='$mobile_no', father_name='$f_name', ";
         $query .= "father_cnic='$f_cnic', fee_amount='$fee_amount', image='$new_img', student_gender='$gender' ";
-        $query .= "WHERE student_id='$cid'";
+        $query .= "WHERE student_id='$cid' AND fk_client_id='$client'";
         $get = query($query);
 
         if ($get) {
@@ -107,7 +114,7 @@ $row = mysqli_fetch_assoc($pass);
           $time = date('d/m/Y h:i a', time());
           $time = (string) $time;
 
-          $query = "INSERT INTO admin_logs(log_message, time) VALUES('$log', '$time')";
+          $query = "INSERT INTO admin_logs(log_message, time, fk_client_id) VALUES('$log', '$time', '$client')";
           $pass_query2 = mysqli_query($conn, $query);
           if (!$pass_query2) {
             echo "Error: " . mysqli_error($conn);

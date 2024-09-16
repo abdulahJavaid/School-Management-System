@@ -5,6 +5,9 @@ require_once('../db_connection/configs.php');
 require_once('../db_connection/connection.php');
 require_once('../includes/functions.php');
 
+// getting the client id
+$client = escape($_SESSION['client_id']);
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Get form data
     $comment = escape($_POST["comment"]);
@@ -39,7 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $num = rand($one, $two);
 
         move_uploaded_file($tmp_pic, $target_file);
-        $new_pic = substr($comment, 0, 1) . $num . $date . $cost . 'rec' . $pic;
+        $new_pic = $client . substr($comment, 0, 1) . $num . $date . $cost . 'rec' . $pic;
         rename($target_file, "../uploads/expense-receiving/" . $new_pic . "");
 
         $new_pic = escape($new_pic);
@@ -49,8 +52,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
     // Insert form data and image path into the database
-    $query = "INSERT INTO expense_receiving (image, comment, expense, receiving, date) VALUES ('$new_pic', '$comment', '0', '$cost', '$date')";
+    $query = "INSERT INTO expense_receiving (image, comment, expense, receiving, date, fk_client_id) VALUES ('$new_pic', '$comment', '0', '$cost', '$date', '$client')";
     $result = mysqli_query($conn, $query);
+
+    // fetching the admin id and adding the data
+    $id = escape($_SESSION['login_id']);
+    $admin_name = escape($_SESSION['login_name']);
+    $log = "Admin <strong>$admin_name</strong> added receivings into the expense/receiving sheet !";
+    $times = date('d/m/Y h:i a', time());
+    $times = (string) $times;
+
+    // adding activity into the logs
+    $query = "INSERT INTO admin_logs(log_message, time, fk_client_id) VALUES('$log', '$times', '$client')";
+    $pass_query2 = mysqli_query($conn, $query);
+
     if ($result) {
         // echo "Data has been successfully inserted.";
         redirect("../add-receiving.php?m=Data has been successfully inserted.");

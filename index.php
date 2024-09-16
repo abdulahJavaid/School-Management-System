@@ -117,7 +117,8 @@
                 </ul>
               </div>
               <?php
-              $query = "SELECT * FROM student_class WHERE status='1'";
+              $client = escape($_SESSION['client_id']);
+              $query = "SELECT * FROM student_profile WHERE student_status='1' AND fk_client_id='$client'";
               $result = mysqli_query($conn, $query);
               $count = mysqli_num_rows($result);
               ?>
@@ -160,7 +161,8 @@
 
               <!-- <div class="card-body"> -->
               <?php
-              $query = "SELECT * FROM teacher_profile WHERE teacher_status='1'";
+              $client = escape($_SESSION['client_id']);
+              $query = "SELECT * FROM teacher_profile WHERE teacher_status='1' AND fk_client_id='$client'";
               $result = mysqli_query($conn, $query);
               $counts = mysqli_num_rows($result);
               ?>
@@ -334,7 +336,8 @@
 
               <?php
               // fetching recent 5 actions
-              $query = "SELECT * FROM admin_logs ORDER BY admin_log_id DESC LIMIT 5";
+              $client = escape($_SESSION['client_id']);
+              $query = "SELECT * FROM admin_logs WHERE fk_client_id='$client' ORDER BY admin_log_id DESC LIMIT 5";
               $result = mysqli_query($conn, $query);
               while ($row = mysqli_fetch_assoc($result)) {
               ?>

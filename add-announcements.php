@@ -3,6 +3,11 @@
 <!-- ======= Sidebar ======= -->
 <?php require_once("includes/sidebar.php"); ?>
 
+<?php
+// getting the client id
+$client = escape($_SESSION['client_id']);
+?>
+
 <main id="main" class="main">
 
     <div class="pagetitle">
@@ -20,7 +25,7 @@
         $notice_description = escape($_POST['notice_description']);
         $t_date = date('Y-m-d', time());
         $t_date = escape($t_date);
-        $query = "INSERT INTO notices(notice_description, notice_date) VALUES('$notice_description', '$t_date')";
+        $query = "INSERT INTO notices(notice_description, notice_date, fk_client_id) VALUES('$notice_description', '$t_date', '$client')";
         $result = mysqli_query($conn, $query);
         if ($result) {
             echo "data has been successfully inserted";

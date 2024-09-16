@@ -4,6 +4,11 @@
 <?php require_once("includes/sidebar.php"); ?>
 
 <?php
+// getting the client id
+$client = escape($_SESSION['client_id']);
+?>
+
+<?php
 // checking session for appropriate access
 if ($_SESSION['login_access'] == 'developer' || $_SESSION['login_access'] == 'accountant' || $_SESSION['login_access'] == 'super') {
 } else {
@@ -85,7 +90,7 @@ if ($_SESSION['login_access'] == 'developer' || $_SESSION['login_access'] == 'ac
         </div>
     </div>
 
-    <p><code>The pdf will be generated for the selected option.</br>If no option is selected, current month record will be generated,</code></p>
+    <p><code>The pdf will be generated for the selected option. If no option is selected, current month record will be generated,</code></p>
     <!-- <br> -->
 
     <!-- the table with the data -->
@@ -190,75 +195,81 @@ if ($_SESSION['login_access'] == 'developer' || $_SESSION['login_access'] == 'ac
 
                         <br>
                         <!-- Primary Color Bordered Table -->
-                        <table class="table table-bordered border-primary">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Reg no#</th>
-                                    <th scope="col">Name</th>
-                                    <th scope="col">Monthly Fee (Rs)</th>
-                                    <th scope="col">Month</th>
-                                    <th scope="col">Paid Amount</th>
-                                    <!-- <th scope="col">Dues</th> -->
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                // the students who have paid fee
-                                if (isset($_POST['view_month'])) {
-                                    $date = $_POST['month'] . '-01';
-                                    $year = date('Y', strtotime($date));
-                                    $year = escape($year);
-                                    $month = date('F', strtotime($date));
-                                    $month = escape($month);
-                                    $query = "SELECT * FROM student_fee INNER JOIN student_profile ON ";
-                                    $query .= "student_fee.fk_student_id=student_profile.student_id ";
-                                    $query .= "WHERE fee_status='unpaid' AND year='$year' AND month='$month'";
-                                } elseif (isset($_POST['view_name'])) {
-                                    $name = escape($_POST['name']);
-                                    $query = "SELECT * FROM student_fee INNER JOIN student_profile ON ";
-                                    $query .= "student_fee.fk_student_id=student_profile.student_id ";
-                                    $query .= "WHERE name LIKE '%$name%' AND fee_status='unpaid' ORDER BY fee_id DESC";
-                                } elseif (isset($_POST['view_reg'])) {
-                                    $roll_no = escape($_POST['reg']);
-                                    $query = "SELECT * FROM student_fee INNER JOIN student_profile ON ";
-                                    $query .= "student_fee.fk_student_id=student_profile.student_id ";
-                                    $query .= "WHERE roll_no='$roll_no' AND fee_status='unpaid' ORDER BY fee_id DESC";
-                                } else {
-                                    $year = date('Y');
-                                    $month = date('F');
-                                    $query = "SELECT * FROM student_fee INNER JOIN student_profile ON ";
-                                    $query .= "student_fee.fk_student_id=student_profile.student_id ";
-                                    $query .= "WHERE fee_status='unpaid' AND year='$year' AND month='$month'";
-                                }
-                                $result = query($query);
-                                while ($row = mysqli_fetch_assoc($result)) {
-                                ?>
+                        <div class="table-responsive">
+                            <table class="table table-bordered border-primary">
+                                <thead>
                                     <tr>
-                                        <td><?php echo $row['roll_no']; ?></td>
-                                        <td><?php echo $row['name']; ?></td>
-                                        <td>Rs. <?php echo $row['monthly_fee']; ?></td>
-                                        <td><?php echo $row['year'] . ', ' . $row['month']; ?></td>
-                                        <td>
-                                            <?php
-                                            if ($row['fee_status'] == 'unpaid') {
-                                                echo 0;
-                                            } else {
-                                                $dues = (int) $row['pending_dues'];
-                                                $paid = (int) $row['monthly_fee'] - $dues;
-                                                echo $paid;
-                                            }
-                                            ?>
-                                        </td>
-                                        <!-- <td>
+                                        <th scope="col">Reg no#</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Monthly Fee (Rs)</th>
+                                        <th scope="col">Month</th>
+                                        <th scope="col">Paid Amount</th>
+                                        <!-- <th scope="col">Dues</th> -->
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    // the students who have paid fee
+                                    if (isset($_POST['view_month'])) {
+                                        $date = $_POST['month'] . '-01';
+                                        $year = date('Y', strtotime($date));
+                                        $year = escape($year);
+                                        $month = date('F', strtotime($date));
+                                        $month = escape($month);
+                                        $query = "SELECT * FROM student_fee INNER JOIN student_profile ON ";
+                                        $query .= "student_fee.fk_student_id=student_profile.student_id ";
+                                        $query .= "WHERE fee_status='unpaid' AND year='$year' AND month='$month' ";
+                                        $query .= "AND student_fee.fk_client_id='$client'";
+                                    } elseif (isset($_POST['view_name'])) {
+                                        $name = escape($_POST['name']);
+                                        $query = "SELECT * FROM student_fee INNER JOIN student_profile ON ";
+                                        $query .= "student_fee.fk_student_id=student_profile.student_id ";
+                                        $query .= "WHERE name LIKE '%$name%' AND fee_status='unpaid' ";
+                                        $query .= "AND student_fee.fk_client_id='$client' ORDER BY fee_id DESC";
+                                    } elseif (isset($_POST['view_reg'])) {
+                                        $roll_no = escape($_POST['reg']);
+                                        $query = "SELECT * FROM student_fee INNER JOIN student_profile ON ";
+                                        $query .= "student_fee.fk_student_id=student_profile.student_id ";
+                                        $query .= "WHERE roll_no='$roll_no' AND fee_status='unpaid' ";
+                                        $query .= "AND student_fee.fk_client_id='$client' ORDER BY fee_id DESC";
+                                    } else {
+                                        $year = date('Y');
+                                        $month = date('F');
+                                        $query = "SELECT * FROM student_fee INNER JOIN student_profile ON ";
+                                        $query .= "student_fee.fk_student_id=student_profile.student_id ";
+                                        $query .= "WHERE fee_status='unpaid' AND year='$year' AND month='$month' ";
+                                        $query .= "AND student_fee.fk_client_id='$client'";
+                                    }
+                                    $result = query($query);
+                                    while ($row = mysqli_fetch_assoc($result)) {
+                                    ?>
+                                        <tr>
+                                            <td><?php echo $row['roll_no']; ?></td>
+                                            <td><?php echo $row['name']; ?></td>
+                                            <td>Rs. <?php echo $row['monthly_fee']; ?></td>
+                                            <td><?php echo $row['year'] . ', ' . $row['month']; ?></td>
+                                            <td>
+                                                <?php
+                                                if ($row['fee_status'] == 'unpaid') {
+                                                    echo 0;
+                                                } else {
+                                                    $dues = (int) $row['pending_dues'];
+                                                    $paid = (int) $row['monthly_fee'] - $dues;
+                                                    echo $paid;
+                                                }
+                                                ?>
+                                            </td>
+                                            <!-- <td>
                                             <?php //echo $row['monthly_fee']; 
                                             ?>
                                         </td> -->
-                                    </tr>
-                                <?php
-                                }
-                                ?>
-                            </tbody>
-                        </table>
+                                        </tr>
+                                    <?php
+                                    }
+                                    ?>
+                                </tbody>
+                            </table>
+                        </div>
                         <!-- End Primary Color Bordered Table -->
 
                     </div>

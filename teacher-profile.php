@@ -4,6 +4,11 @@
 <?php require_once("includes/sidebar.php"); ?>
 
 <?php
+// getting the client id
+$client = escape($_SESSION['client_id']);
+?>
+
+<?php
 // setting the vlaues empty when form is not submitted
 $message = '';
 $name = '';
@@ -31,34 +36,34 @@ if (isset($_POST['submit'])) {
     $email = escape($_POST['email']);
     $school_id = escape($_POST['school_id']);
     $salary = escape($_POST['teacher_salary']);
-    $password = '12345';
+    $password = md5('12345');
 
     // checking if the cnic is already associated to another teacher
-    $query = "SELECT * FROM teacher_profile WHERE cnic='$cnic'";
+    $query = "SELECT * FROM teacher_profile WHERE cnic='$cnic' AND fk_client_id='$client'";
     $check_cnic = query($query);
     if (mysqli_num_rows($check_cnic) == 0) {
         // checking if the cnic is already associated to another staff member
-        $query = "SELECT * FROM staff_profile WHERE cnic='$cnic'";
+        $query = "SELECT * FROM staff_profile WHERE cnic='$cnic' AND fk_client_id='$client'";
         $check_staff_cnic = query($query);
         if (mysqli_num_rows($check_staff_cnic) == 0) {
             // checking if the phone number is already associated to another teacher
-            $query = "SELECT * FROM teacher_profile WHERE phone_no='$phone_no'";
+            $query = "SELECT * FROM teacher_profile WHERE phone_no='$phone_no' AND fk_client_id='$client'";
             $check_phone_no = query($query);
             if (mysqli_num_rows($check_phone_no) == 0) {
                 // checking if the phone number is already associated to another staff member
-                $query = "SELECT * FROM staff_profile WHERE phone_no='$phone_no'";
+                $query = "SELECT * FROM staff_profile WHERE phone_no='$phone_no' AND fk_client_id='$client'";
                 $check_staff_phone = query($query);
                 if (mysqli_num_rows($check_staff_phone) == 0) {
                     // checking if the email is already associated to another teacher
-                    $query = "SELECT * FROM teacher_profile WHERE email='$email'";
+                    $query = "SELECT * FROM teacher_profile WHERE email='$email' AND fk_client_id='$client'";
                     $check_email = query($query);
                     if (mysqli_num_rows($check_email) == 0) {
                         // checking if the teacher id is already associated to another teacher
-                        $query = "SELECT * FROM teacher_profile WHERE school_id='$school_id'";
+                        $query = "SELECT * FROM teacher_profile WHERE school_id='$school_id' AND fk_client_id='$client'";
                         $check_id = query($query);
                         if (mysqli_num_rows($check_id) == 0) {
                             // checking if the teacher id is already associated to another staff member
-                            $query = "SELECT * FROM staff_profile WHERE staff_school_id='$school_id'";
+                            $query = "SELECT * FROM staff_profile WHERE staff_school_id='$school_id' AND fk_client_id='$client'";
                             $check_staff_id = query($query);
                             if (mysqli_num_rows($check_staff_id) == 0) {
 
@@ -69,7 +74,7 @@ if (isset($_POST['submit'])) {
                                     $img = basename($_FILES['tch_img']['name']);
 
                                     move_uploaded_file($tmp_img, "./uploads/teachers-profile/" . $img . "");
-                                    $new_img = $cnic . $school_id . $img;
+                                    $new_img = $client . $cnic . $school_id . $img;
                                     rename("./uploads/teachers-profile/" . $img . "", "./uploads/teachers-profile/" . $new_img . "");
                                 } else {
                                     $new_img = '';
@@ -80,23 +85,23 @@ if (isset($_POST['submit'])) {
                                 // query to add teacher profile data
                                 $query = "INSERT INTO teacher_profile(name, cnic, f_name, phone_no, qualification, dob, ";
                                 $query .= "address, email, school_id, image, password, teacher_gender, ";
-                                $query .= "teacher_salary) ";
+                                $query .= "teacher_salary, fk_client_id) ";
                                 $query .= "VALUES('$name', '$cnic', '$f_name', '$phone_no', '$qualification', ";
                                 $query .= "'$dob', '$address', '$email', '$school_id', '$new_img', '$enc_password', '$gender', ";
-                                $query .= "'$salary')";
+                                $query .= "'$salary', '$client')";
                                 $result = mysqli_query($conn, $query);
 
                                 if ($result) {
-                                    // getting the teacher id
-                                    $query = "SELECT * FROM teacher_profile WHERE name='$name' AND cnic='$cnic' AND phone_no='$phone_no'";
-                                    $get_result = query($query);
-                                    $fetch = mysqli_fetch_assoc($get_result);
-                                    $fk_tch_id = $fetch['teacher_id'];
+                                    // // getting the teacher id
+                                    // $query = "SELECT * FROM teacher_profile WHERE name='$name' AND cnic='$cnic' AND phone_no='$phone_no' AND fk_client_id='$client'";
+                                    // $get_result = query($query);
+                                    // $fetch = mysqli_fetch_assoc($get_result);
+                                    // $fk_tch_id = $fetch['teacher_id'];
 
-                                    // storing the teacher passwords into the database
-                                    $query = "INSERT INTO teacher_passwords(fk_teacher_id, teacher_password) ";
-                                    $query .= "VALUES('$fk_tch_id', '$password')";
-                                    $pass_query = query($query);
+                                    // // storing the teacher passwords into the database
+                                    // $query = "INSERT INTO teacher_passwords(fk_teacher_id, teacher_password, fk_client_id) ";
+                                    // $query .= "VALUES('$fk_tch_id', '$password', '$client')";
+                                    // $pass_query = query($query);
 
                                     // code to add admin_log into the database
                                     $adm_id = escape($_SESSION['login_id']);
@@ -108,7 +113,7 @@ if (isset($_POST['submit'])) {
                                     $time = date('d/m/Y h:i a', time());
                                     $time = (string) $time;
 
-                                    $query = "INSERT INTO admin_logs(log_message, time) VALUES('$log', '$time')";
+                                    $query = "INSERT INTO admin_logs(log_message, time, fk_client_id) VALUES('$log', '$time', '$client')";
                                     $pass_query2 = mysqli_query($conn, $query);
                                     if (!$pass_query2) {
                                         echo "Error: " . mysqli_error($conn);

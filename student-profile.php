@@ -4,6 +4,11 @@
 <?php require_once("includes/sidebar.php"); ?>
 
 <?php
+// getting the client id
+$client = escape($_SESSION['client_id']);
+?>
+
+<?php
 // when there is no form submission, for form values
 $message = '';
 $name = '';
@@ -44,18 +49,18 @@ if (isset($_POST['submit'])) {
     $address = escape($_POST['address']);
     $roll_no = escape($_POST['roll_no']);
     $email = escape($_POST['email']);
-    $password = escape('12345');
+    $password = md5('12345');
     $fee_amount = escape($_POST['fee_amount']);
 
     // checking if the admin has selected the class
     $classnsection = $_POST['classnsection'];
     if ($classnsection != 'choose-class') {
         // checking if the roll number is not assigned to another student
-        $query = "SELECT * FROM student_profile WHERE roll_no='$roll_no'";
+        $query = "SELECT * FROM student_profile WHERE roll_no='$roll_no' AND fk_client_id='$client'";
         $find_roll = query($query);
         if (mysqli_num_rows($find_roll) == 0) {
             // checking if the cnic/b-form is already assosiated to another student
-            $query = "SELECT * FROM student_profile WHERE cnic='$cnic'";
+            $query = "SELECT * FROM student_profile WHERE cnic='$cnic' AND fk_client_id='$client'";
             $find_cnic = query($query);
             if (mysqli_num_rows($find_cnic) == 0) {
                 // channging the picture name and moving to the folder
@@ -66,9 +71,9 @@ if (isset($_POST['submit'])) {
                     move_uploaded_file($tmp_img, "./uploads/students-profile/" . $img . "");
                     // making the picture unique using his/her cnic or his/her father cnic & roll_no
                     if (empty($cnic)) {
-                        $new_img = $f_cnic . $roll_no . $img;
+                        $new_img = $client . $f_cnic . $roll_no . $img;
                     } else {
-                        $new_img = $cnic . $roll_no . $img;
+                        $new_img = $client . $cnic . $roll_no . $img;
                     }
                     rename("./uploads/students-profile/" . $img . "", "./uploads/students-profile/" . $new_img . "");
                 } else {
@@ -80,10 +85,10 @@ if (isset($_POST['submit'])) {
                 // query to add student
                 $query = "INSERT INTO student_profile(name, cnic, mobile_no, dob, ";
                 $query .= "address, roll_no, email, password, fee_amount, ";
-                $query .= "father_name, father_cnic, image, student_gender) ";
+                $query .= "father_name, father_cnic, image, student_gender, fk_client_id) ";
                 $query .= "VALUES('$name', '$cnic', '$mobile_no', '$dob', ";
                 $query .= "'$address', '$roll_no', '$email', '$enc_password', ";
-                $query .= "'$fee_amount', '$f_name', '$f_cnic', '$new_img', '$gender')";
+                $query .= "'$fee_amount', '$f_name', '$f_cnic', '$new_img', '$gender', '$client')";
                 $pass_query = mysqli_query($conn, $query);
 
                 if ($pass_query) {
@@ -95,14 +100,14 @@ if (isset($_POST['submit'])) {
                     $student_id = $get_r2['student_id'];
                     // $student_id = mysqli_insert_id($conn);
 
-                    // storing the student passwords into the database
-                    $query = "INSERT INTO student_passwords(fk_student_id, student_password) ";
-                    $query .= "VALUES('$student_id', '$password')";
-                    $pass_query = query($query);
+                    // // storing the student passwords into the database
+                    // $query = "INSERT INTO student_passwords(fk_student_id, student_password) ";
+                    // $query .= "VALUES('$student_id', '$password')";
+                    // $pass_query = query($query);
 
                     // adding the class and section of the student
-                    $queri = "INSERT INTO student_class(fk_student_id, fk_class_id, fk_section_id) ";
-                    $queri .= "VALUES('$student_id', '$class', '$section')";
+                    $queri = "INSERT INTO student_class(fk_student_id, fk_class_id, fk_section_id, fk_client_id) ";
+                    $queri .= "VALUES('$student_id', '$class', '$section', '$client')";
                     $pass_queri = mysqli_query($conn, $queri);
 
                     if ($pass_queri) {
@@ -117,7 +122,7 @@ if (isset($_POST['submit'])) {
                         $time = (string) $time;
 
                         // adding activity into the logs
-                        $query = "INSERT INTO admin_logs(log_message, time) VALUES('$log', '$time')";
+                        $query = "INSERT INTO admin_logs(log_message, time, fk_client_id) VALUES('$log', '$time', '$client')";
                         $pass_query2 = mysqli_query($conn, $query);
                         if (!$pass_query2) {
                             echo "Error: " . mysqli_error($conn);

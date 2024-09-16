@@ -1,6 +1,6 @@
 <?php
 if (isset($_POST['one'])) {
-    $query = "SELECT * FROM school_profile_ ORDER BY id DESC LIMIT 1";
+    $query = "SELECT * FROM school_profile_ WHERE client_id='$client'";
     $result = mysqli_query($conn, $query);
     $row = mysqli_fetch_assoc($result);
 
@@ -17,7 +17,7 @@ if (isset($_POST['one'])) {
     $html .= "<h1>$name</h1><h5>$address</h5><h5>$contact</h5><h5>$email</h5></div><br><h2 style='clear:both;'>Expense and Receiving</h2>";
 
     // styles
-    
+
     $html .= "
     <style>
         body {
@@ -70,7 +70,18 @@ if (isset($_POST['one'])) {
 <tbody>";
     if (empty($_POST['two']) || $_POST['one'] == $_POST['two']) {
         $date = escape($_POST['one']);
-        $query = "SELECT * FROM expense_receiving WHERE date='$date'";
+        // fetching the admin id and adding the data
+        $id = escape($_SESSION['login_id']);
+        $admin_name = escape($_SESSION['login_name']);
+        $log = "Admin <strong>$admin_name</strong> generated expense/receiving sheet for date <strong>$date</strong> !";
+        $times = date('d/m/Y h:i a', time());
+        $times = (string) $times;
+        // adding activity into the logs
+        $query = "INSERT INTO admin_logs(log_message, time, fk_client_id) VALUES('$log', '$times', '$client')";
+        $pass_querys2 = mysqli_query($conn, $query);
+
+        // fetching expense/receiving records
+        $query = "SELECT * FROM expense_receiving WHERE date='$date' AND fk_client_id='$client'";
         $result = mysqli_query($conn, $query);
 
         $exp = 0;
@@ -100,7 +111,19 @@ if (isset($_POST['one'])) {
     } else {
         $date = escape($_POST['one']);
         $date1 = escape($_POST['two']);
-        $query = "SELECT * FROM expense_receiving WHERE date BETWEEN '$date' AND '$date1'";
+
+        // fetching the admin id and adding the data
+        $id = escape($_SESSION['login_id']);
+        $admin_name = escape($_SESSION['login_name']);
+        $log = "Admin <strong>$admin_name</strong> generated expense/receiving sheet from <strong>$date</strong> to <strong>$date1</strong> !";
+        $times = date('d/m/Y h:i a', time());
+        $times = (string) $times;
+        // adding activity into the logs
+        $query = "INSERT INTO admin_logs(log_message, time, fk_client_id) VALUES('$log', '$times', '$client')";
+        $pass_querys2 = mysqli_query($conn, $query);
+
+        // fetching expense/receiving records
+        $query = "SELECT * FROM expense_receiving WHERE date BETWEEN '$date' AND '$date1' AND fk_client_id='$client'";
         $result = mysqli_query($conn, $query);
 
         $exp = 0;

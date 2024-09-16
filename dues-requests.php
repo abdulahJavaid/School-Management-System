@@ -4,6 +4,11 @@
 <?php require_once("includes/sidebar.php"); ?>
 
 <?php
+// getting the client id
+$client = escape($_SESSION['client_id']);
+?>
+
+<?php
 // checking session for appropriate access
 if ($_SESSION['login_access'] == 'developer' || $_SESSION['login_access'] == 'accountant' || $_SESSION['login_access'] == 'super') {
 } else {
@@ -33,72 +38,75 @@ if ($_SESSION['login_access'] == 'developer' || $_SESSION['login_access'] == 'ac
                         <!-- <p>Add <code>.table-bordered</code> for borders on all sides of the table and cells.</p> -->
 
                         <!-- Primary Color Bordered Table -->
-                        <table class="table table-bordered border-primary">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Reg no#</th>
-                                    <th scope="col">Name</th>
-                                    <th scope="col">Total Dues</th>
-                                    <th scope="col">Payment date</th>
-                                    <th scope="col">Fee Method</th>
-                                    <th scope="col">Image</th>
-                                    <th scope="col">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                // the students who have paid fee
-                                // $query = "SELECT * FROM student_fee INNER JOIN student_profile ON ";
-                                // $query .= "student_fee.fk_student_id=student_profile.student_id ";
-                                // $query .= "WHERE fee_status='due_request'";
-                                $query = "Select * From student_profile";
-                                $result = query($query);
-                                $dues = 0;
-                                while ($row = mysqli_fetch_assoc($result)) {
-                                    $std_id = escape($row['student_id']);
-                                    $query = "Select * FROM student_fee WHERE fk_student_id='$std_id'";
-                                    $res = query($query);
-                                    while ($rows = mysqli_fetch_assoc($res)) {
-                                        if ($rows['fee_status'] == 'due_request' || $rows['fee_status'] == 'dues_request') {
-                                            $query = "Select * FROM student_fee WHERE fk_student_id='$std_id' ";
-                                            $query .= "AND fee_status='dues' OR fee_status='dues_request' OR fee_status='due_request'";
-                                            $rslt = query($query);
-                                            while ($ros = mysqli_fetch_assoc($rslt)) {
-                                                $dues += $ros['pending_dues'];
+                        <div class="table-responsive">
+                            <table class="table table-bordered border-primary">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Reg no#</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Total Dues</th>
+                                        <th scope="col">Payment date</th>
+                                        <th scope="col">Fee Method</th>
+                                        <th scope="col">Image</th>
+                                        <th scope="col">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    // the students who have paid fee
+                                    // $query = "SELECT * FROM student_fee INNER JOIN student_profile ON ";
+                                    // $query .= "student_fee.fk_student_id=student_profile.student_id ";
+                                    // $query .= "WHERE fee_status='due_request'";
+                                    $query = "SELECT * FROM student_profile WHERE fk_client_id='$client'";
+                                    $result = query($query);
+                                    $dues = 0;
+                                    while ($row = mysqli_fetch_assoc($result)) {
+                                        $std_id = escape($row['student_id']);
+                                        $query = "SELECT * FROM student_fee WHERE fk_student_id='$std_id' AND fk_client_id='$client'";
+                                        $res = query($query);
+                                        while ($rows = mysqli_fetch_assoc($res)) {
+                                            if ($rows['fee_status'] == 'due_request' || $rows['fee_status'] == 'dues_request') {
+                                                $query = "SELECT * FROM student_fee WHERE fk_student_id='$std_id' AND fk_client_id='$client' ";
+                                                $query .= "AND fee_status='dues' OR fee_status='dues_request' OR fee_status='due_request'";
+                                                // $query .= "";
+                                                $rslt = query($query);
+                                                while ($ros = mysqli_fetch_assoc($rslt)) {
+                                                    $dues += $ros['pending_dues'];
+                                                }
+
+                                    ?>
+                                                <tr>
+                                                    <td><?php echo $row['roll_no']; ?></td>
+                                                    <td><?php echo $row['name']; ?></td>
+                                                    <td>Rs. <?php echo $dues; ?></td>
+                                                    <td><?php echo $rows['payment_date']; ?></td>
+                                                    <td><?php echo $rows['fee_method']; ?></td>
+                                                    <td>
+                                                        <?php
+                                                        if (str_contains(strtolower($rows['fee_method']), 'cash')) {
+                                                            echo "---";
+                                                        } else {
+                                                            $img = $rows['receipt_image'];
+                                                            echo "<img src='uploads/fees/$img' width='50px' height='50px' alt='no-img'>";
+                                                        }
+                                                        ?>
+                                                    </td>
+                                                    <td><a href="process-dues-requests.php?id=<?php echo $row['student_id']; ?>" class="btn btn-sm btn-info button">Process</a></td>
+                                                </tr>
+
+
+                                        <?php
+                                                break;
                                             }
-
-                                ?>
-                                            <tr>
-                                                <td><?php echo $row['roll_no']; ?></td>
-                                                <td><?php echo $row['name']; ?></td>
-                                                <td>Rs. <?php echo $dues; ?></td>
-                                                <td><?php echo $rows['payment_date']; ?></td>
-                                                <td><?php echo $rows['fee_method']; ?></td>
-                                                <td>
-                                                    <?php
-                                                    if (str_contains(strtolower($rows['fee_method']), 'cash')) {
-                                                        echo "---";
-                                                    } else {
-                                                        $img = $rows['receipt_image'];
-                                                        echo "<img src='uploads/fees/$img' width='50px' height='50px' alt='no-img'>";
-                                                    }
-                                                    ?>
-                                                </td>
-                                                <td><a href="process-dues-requests.php?id=<?php echo $row['student_id']; ?>" class="btn btn-sm btn-info button">Process</a></td>
-                                            </tr>
-
+                                        }
+                                        ?>
 
                                     <?php
-                                            break;
-                                        }
                                     }
                                     ?>
-
-                                <?php
-                                }
-                                ?>
-                            </tbody>
-                        </table>
+                                </tbody>
+                            </table>
+                        </div>
                         <!-- End Primary Color Bordered Table -->
 
                     </div>

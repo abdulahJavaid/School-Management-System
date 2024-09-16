@@ -3,6 +3,10 @@
 <!-- ======= Sidebar ======= -->
 <?php require_once("includes/sidebar.php"); ?>
 
+<?php
+// getting the client id
+$client = escape($_SESSION['client_id']);
+?>
 
 <?php
 // checking session for appropriate access
@@ -61,71 +65,67 @@ if ($_SESSION['login_access'] == 'developer' || $_SESSION['login_access'] == 'ac
         <h5 class="card-title">Staff Salaries</h5>
         <p>Pending salary payments.</p>
 
-        <table class="table table-bordered border-primary table-hover table-responsive">
-          <thead>
-            <tr>
-              <th scope="col">Name</th>
-              <th scope="col">Designation</th>
-              <th scope="col">Salary</th>
-              <th scope="col">Month</th>
-              <th scope="col">Payment</th>
-            </tr>
-          </thead>
-          <tbody>
-            <?php
-            // the current date
-            $date = date('Y-m-d', time());
-            $date = escape($date);
-
-            // select the records from database of today
-            $query = "SELECT * FROM teacher_profile INNER JOIN employee_salary ON ";
-            $query .= "teacher_profile.teacher_id=employee_salary.fk_teacher_id WHERE ";
-            $query .= "salary_status='unpaid'";
-            $result = query($query);
-            while ($row = mysqli_fetch_assoc($result)) {
-              $sal_id = $row['salary_id'];
-            ?>
+        <div class="table-responsive">
+          <table class="table table-bordered border-primary table-hover">
+            <thead>
               <tr>
-                <td><?php echo $row['name']; ?></td>
-                <td>Teacher</td>
-                <td>Rs.<?php echo $row['salary_amount']; ?></td>
-                <td><?php echo $row['month'] . ', ' . $row['year']; ?></td>
-                <td><a href="./process-salaries.php?id=<?php echo $sal_id; ?>" class="btn btn-sm btn-success">Process</a></td>
-                <!-- <td><a href="./image.php?image=<?php //echo $image; 
-                                                    ?>"><img src="uploads/expense-receiving/<?php //echo $row['image']; 
-                                                                                            ?>" width="30px" height="30px" alt="img"></a></td> -->
+                <th scope="col">Name</th>
+                <th scope="col">Designation</th>
+                <th scope="col">Salary</th>
+                <th scope="col">Month</th>
+                <th scope="col">Payment</th>
               </tr>
-            <?php
-            }
-            ?>
-            <?php
-            // the current date
-            $date = date('Y-m-d', time());
-            $date = escape($date);
+            </thead>
+            <tbody>
+              <?php
+              // the current date
+              $date = date('Y-m-d', time());
+              $date = escape($date);
 
-            // select the records from database of today
-            $query = "SELECT * FROM staff_profile INNER JOIN employee_salary ON ";
-            $query .= "staff_profile.staff_id=employee_salary.fk_staff_id WHERE ";
-            $query .= "salary_status='unpaid'";
-            $result = query($query);
-            while ($rows = mysqli_fetch_assoc($result)) {
-              $sal_id = $rows['salary_id'];
-            ?>
-              <tr>
-                <td><?php echo $rows['name']; ?></td>
-                <td><?php echo $rows['staff_designation']; ?></td>
-                <td>Rs.<?php echo $rows['salary_amount']; ?></td>
-                <td><?php echo $rows['month'] . ', ' . $rows['year']; ?></td>
-                <td><a href="./process-salaries.php?id=<?php echo $sal_id; ?>" class="btn btn-sm btn-success">Process</a></td>
-                <!-- <td><a href="./image.php?image=<?php //echo $image; 
-                                                    ?>"><img src="uploads/expense-receiving/<?php //echo $row['image']; 
-                                                                                            ?>" width="30px" height="30px" alt="img"></a></td> -->
-              </tr>
-            <?php
-            }
-            ?>
-          </tbody>
-        </table>
+              // select the records from database of today
+              $query = "SELECT * FROM teacher_profile INNER JOIN employee_salary ON ";
+              $query .= "teacher_profile.teacher_id=employee_salary.fk_teacher_id WHERE ";
+              $query .= "salary_status='unpaid' AND teacher_profile.fk_client_id='$client'";
+              $result = query($query);
+              while ($row = mysqli_fetch_assoc($result)) {
+                $sal_id = $row['salary_id'];
+              ?>
+                <tr>
+                  <td><?php echo $row['name']; ?></td>
+                  <td>Teacher</td>
+                  <td>Rs.<?php echo $row['salary_amount']; ?></td>
+                  <td><?php echo $row['month'] . ', ' . $row['year']; ?></td>
+                  <td><a href="./process-salaries.php?id=<?php echo $sal_id; ?>" class="btn btn-sm btn-success">Process</a></td>
+                </tr>
+              <?php
+              }
+              ?>
+              <?php
+              // the current date
+              $date = date('Y-m-d', time());
+              $date = escape($date);
+
+              // select the records from database of today
+              $query = "SELECT * FROM staff_profile INNER JOIN employee_salary ON ";
+              $query .= "staff_profile.staff_id=employee_salary.fk_staff_id WHERE ";
+              $query .= "salary_status='unpaid' AND staff_profile.fk_client_id='$client'";
+              $result = query($query);
+              while ($rows = mysqli_fetch_assoc($result)) {
+                $sal_id = $rows['salary_id'];
+              ?>
+                <tr>
+                  <td><?php echo $rows['name']; ?></td>
+                  <td><?php echo $rows['staff_designation']; ?></td>
+                  <td>Rs.<?php echo $rows['salary_amount']; ?></td>
+                  <td><?php echo $rows['month'] . ', ' . $rows['year']; ?></td>
+                  <td><a href="./process-salaries.php?id=<?php echo $sal_id; ?>" class="btn btn-sm btn-success">Process</a></td>
+                </tr>
+              <?php
+              }
+              ?>
+            </tbody>
+          </table>
+        </div>
 
       </div>
     </div>

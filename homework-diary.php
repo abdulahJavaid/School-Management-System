@@ -3,6 +3,11 @@
 <!-- ======= Sidebar ======= -->
 <?php require_once("includes/sidebar.php"); ?>
 
+<?php
+// getting the client id
+$client = escape($_SESSION['client_id']);
+?>
+
 <main id="main" class="main">
 
     <div class="pagetitle">
@@ -23,15 +28,17 @@
                     <select id="inputState" name="select" class="form-select" required>
                         <option selected value="choose_class">Choose Class</option>
                         <?php
-                        // fetching all the classes 
-                        $result = sql_select_all("all_classes");
+                        // fetching all the classes
+                        $query = "SELECT * FROM all_classes WHERE fk_client_id='$client'"; 
+                        $result = query($query);
                         while ($row = mysqli_fetch_assoc($result)) {
-
+                            $clas_id = $row['class_id'];
                         ?>
                             <optgroup label="Class: <?php echo $row['class_name']; ?>">
                                 <?php
                                 // fetching the related sections
-                                $result1 = sql_where("class_sections", "fk_class_id", $row['class_id']);
+                                $query = "SELECT * FROM class_sections WHERE fk_class_id='$clas_id' AND fk_client_id='$client'";
+                                $result1 = query($query);
                                 while ($row1 = mysqli_fetch_assoc($result1)) {
                                 ?>
                                     <option value="<?php echo $row['class_id'] . " " . $row1['section_id']; ?>"><?php echo $row['class_name'] . " " . $row1['section_name']; ?></option>
@@ -110,12 +117,13 @@
         // getting class and section names
         $q = "SELECT * FROM class_sections INNER JOIN all_classes ON ";
         $q .= "class_sections.fk_class_id=all_classes.class_id ";
-        $q .= "WHERE section_id='$section'";
+        $q .= "WHERE section_id='$section' AND class_sections.fk_client_id='$client'";
         $res = query($q);
         $rows = mysqli_fetch_assoc($res);
 
-
-        $get = sql_where_and('homework_diary', 'fk_section_id', "$section", 'date', "$date");
+        $query = "SELECT * FROM homework_diary WHERE fk_section_id='$section' AND date='$date' ";
+        $query .= "AND fk_client_id='$client'";
+        $get = query($query);
     ?>
         <div class="container my-5">
             <h1 class="text-center mb-4">Homework Diary</h1>
@@ -127,7 +135,7 @@
                 </div>
 
                 <?php
-                if (mysqli_num_rows($get)) {
+                if (mysqli_num_rows($get) != 0) {
                     while ($row = mysqli_fetch_assoc($get)) {
                 ?>
                         <div class="row mb-3 ps-3">
@@ -146,7 +154,7 @@
     ?>
         <div class="row ps-5 pe-5 pt-2">
             <div class="col-sm-12">
-                <div class="alert alert-danger">
+                <div class="alert alert-info">
                     <!-- <strong> -->
                     There was no diary added on this day for class <?php echo $rows['class_name'] . "-" . $rows['section_name']; ?>!
                     <!-- </strong> -->

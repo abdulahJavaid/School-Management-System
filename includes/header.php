@@ -87,7 +87,7 @@
 
           <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
             <i class="bi bi-bell"></i>
-            <span class="badge  badge-number" style="background-color: red">4</span>
+            <!-- <span class="badge  badge-number" style="background-color: red">4</span> -->
           </a><!-- End Notification Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
@@ -99,20 +99,31 @@
               <hr class="dropdown-divider">
             </li>
 
+            <?php
+            $client = escape($_SESSION['client_id']);
+            // getting the notifications
+            $query = "SELECT * FROM notices WHERE fk_client_id='$client' AND notice_status='school' ORDER BY notice_id DESC LIMIT 3";
+            $get_notices = query($query);
+            while($notices = mysqli_fetch_assoc($get_notices)){
+            ?>
+              
             <li class="notification-item">
               <i class="bi bi-exclamation-circle text-warning"></i>
               <div>
-                <h4>Lorem Ipsum</h4>
-                <p>Quae dolorem earum veritatis oditseno</p>
-                <p>30 min. ago</p>
+                <h4>Notice</h4>
+                <p><?php echo $notices['notice_description']; ?></p>
+                <p><?php echo $notices['notice_date']; ?></p>
               </div>
             </li>
 
             <li>
               <hr class="dropdown-divider">
             </li>
+            <?php
+            }
+            ?>
 
-            <li class="notification-item">
+            <!-- <li class="notification-item">
               <i class="bi bi-x-circle text-danger"></i>
               <div>
                 <h4>Atque rerum nesciunt</h4>
@@ -152,7 +163,7 @@
             </li>
             <li class="dropdown-footer">
               <a href="#">Show all notifications</a>
-            </li>
+            </li> -->
 
           </ul><!-- End Notification Dropdown Items -->
 

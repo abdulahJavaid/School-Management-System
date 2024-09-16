@@ -3,6 +3,11 @@
 <!-- ======= Sidebar ======= -->
 <?php require_once("includes/sidebar.php"); ?>
 
+<?php
+// getting the client id
+$client = escape($_SESSION['client_id']);
+?>
+
 <main id="main" class="main">
 
     <div class="pagetitle">
@@ -24,14 +29,16 @@
                         <option selected value="choose_class">Choose Class</option>
                         <?php
                         // fetching all the classes 
-                        $result = sql_select_all("all_classes");
+                        $query = "SELECT * FROM all_classes WHERE fk_client_id='$client'";
+                        $result = query($query);
                         while ($row = mysqli_fetch_assoc($result)) {
-
+                            $clas_id = $row['class_id'];
                         ?>
                             <optgroup label="Class: <?php echo $row['class_name']; ?>">
                                 <?php
                                 // fetching the related sections
-                                $result1 = sql_where("class_sections", "fk_class_id", $row['class_id']);
+                                $query = "SELECT * FROM class_sections WHERE fk_class_id='$clas_id' AND fk_client_id='$client'";
+                                $result1 = query($query);
                                 while ($row1 = mysqli_fetch_assoc($result1)) {
                                 ?>
                                     <option value="<?php echo $row['class_id'] . " " . $row1['section_id']; ?>"><?php echo $row['class_name'] . " " . $row1['section_name']; ?></option>
@@ -110,7 +117,7 @@
         // getting class and section names
         $q = "SELECT * FROM class_sections INNER JOIN all_classes ON ";
         $q .= "class_sections.fk_class_id=all_classes.class_id ";
-        $q .= "WHERE section_id='$section'";
+        $q .= "WHERE section_id='$section' AND class_sections.fk_client_id='$client'";
         $res = query($q);
         $rows = mysqli_fetch_assoc($res);
 
@@ -118,7 +125,7 @@
         $qu = "SELECT * FROM student_class INNER JOIN student_profile ON ";
         $qu .= "student_class.fk_student_id=student_profile.student_id INNER JOIN attendance ON ";
         $qu .= "student_profile.student_id=attendance.fk_student_id ";
-        $qu .= "WHERE fk_section_id='$section' AND date='$date'";
+        $qu .= "WHERE fk_section_id='$section' AND date='$date' AND student_class.fk_client_id='$client'";
         $get = query($qu);
     ?>
         <div class="container my-5">
@@ -133,51 +140,53 @@
                 <?php
                 if (mysqli_num_rows($get)) {
                 ?>
-                    <table class="table table-hover">
-                        <thead>
-                            <tr>
-                                <th scope="col">Registration#</th>
-                                <th scope="col">Name</th>
-                                <th scope="col">Present</th>
-                                <th scope="col">Absent</th>
-                                <th scope="col">Leave</th>
-                            </tr>
-                        </thead>
-
-
-                        <tbody>
-                            <?php
-                            while ($row = mysqli_fetch_assoc($get)) {
-                            ?>
+                    <div class="table-responsive">
+                        <table class="table table-hover">
+                            <thead>
                                 <tr>
-                                    <td><?php echo $row['roll_no']; ?></td>
-                                    <td><?php echo $row['name']; ?></td>
-                                    <?php
-                                    if ($row['attendance'] == 'present') {
-                                    ?>
-                                        <td><input class="raadio_c" type="radio" value="present" name="attendance<?php echo $row['student_id']; ?>" checked></td>
-                                        <td><input class="raadio_c" type="radio" value="absent" name="attendance<?php echo $row['student_id']; ?>" disabled></td>
-                                        <td><input class="raadio_c" type="radio" value="leave" name="attendance<?php echo $row['student_id']; ?>" disabled></td>
-                                    <?php } elseif ($row['attendance'] == 'absent') {
-                                    ?>
-                                        <td><input class="raadio_c" type="radio" value="present" name="attendance<?php echo $row['student_id']; ?>" disabled></td>
-                                        <td><input class="raadio_c" type="radio" value="absent" name="attendance<?php echo $row['student_id']; ?>" checked></td>
-                                        <td><input class="raadio_c" type="radio" value="leave" name="attendance<?php echo $row['student_id']; ?>" disabled></td>
-                                    <?php } elseif ($row['attendance'] == 'absent') {
-                                    ?>
-                                        <td><input class="raadio_c" type="radio" value="present" name="attendance<?php echo $row['student_id']; ?>" disabled></td>
-                                        <td><input class="raadio_c" type="radio" value="absent" name="attendance<?php echo $row['student_id']; ?>" disabled></td>
-                                        <td><input class="raadio_c" type="radio" value="leave" name="attendance<?php echo $row['student_id']; ?>" checked></td>
-                                    <?php }
-                                    ?>
-
+                                    <th scope="col">Registration#</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Present</th>
+                                    <th scope="col">Absent</th>
+                                    <th scope="col">Leave</th>
                                 </tr>
+                            </thead>
 
-                            <?php
-                            }
-                            ?>
-                        </tbody>
-                    </table>
+
+                            <tbody>
+                                <?php
+                                while ($row = mysqli_fetch_assoc($get)) {
+                                ?>
+                                    <tr>
+                                        <td><?php echo $row['roll_no']; ?></td>
+                                        <td><?php echo $row['name']; ?></td>
+                                        <?php
+                                        if ($row['attendance'] == 'present') {
+                                        ?>
+                                            <td><input class="raadio_c" type="radio" value="present" name="attendance<?php echo $row['student_id']; ?>" checked></td>
+                                            <td><input class="raadio_c" type="radio" value="absent" name="attendance<?php echo $row['student_id']; ?>" disabled></td>
+                                            <td><input class="raadio_c" type="radio" value="leave" name="attendance<?php echo $row['student_id']; ?>" disabled></td>
+                                        <?php } elseif ($row['attendance'] == 'absent') {
+                                        ?>
+                                            <td><input class="raadio_c" type="radio" value="present" name="attendance<?php echo $row['student_id']; ?>" disabled></td>
+                                            <td><input class="raadio_c" type="radio" value="absent" name="attendance<?php echo $row['student_id']; ?>" checked></td>
+                                            <td><input class="raadio_c" type="radio" value="leave" name="attendance<?php echo $row['student_id']; ?>" disabled></td>
+                                        <?php } elseif ($row['attendance'] == 'leave') {
+                                        ?>
+                                            <td><input class="raadio_c" type="radio" value="present" name="attendance<?php echo $row['student_id']; ?>" disabled></td>
+                                            <td><input class="raadio_c" type="radio" value="absent" name="attendance<?php echo $row['student_id']; ?>" disabled></td>
+                                            <td><input class="raadio_c" type="radio" value="leave" name="attendance<?php echo $row['student_id']; ?>" checked></td>
+                                        <?php }
+                                        ?>
+
+                                    </tr>
+
+                                <?php
+                                }
+                                ?>
+                            </tbody>
+                        </table>
+                    </div>
             </div>
         </div>
     <?php
@@ -186,7 +195,7 @@
     ?>
         <div class="row ps-5 pe-5 pt-2">
             <div class="col-sm-12">
-                <div class="alert alert-danger">
+                <div class="alert alert-info">
                     <!-- <strong> -->
                     There was no attendance added on this day for Class <?php echo $rows['class_name'] . "-" . $rows['section_name']; ?>!
                     <!-- </strong> -->

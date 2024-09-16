@@ -2,6 +2,12 @@
 
 <!-- ======= Sidebar ======= -->
 <?php require_once("includes/sidebar.php"); ?>
+
+<?php
+// getting the client id
+$client = escape($_SESSION['client_id']);
+?>
+
 <?php
 // if the get request is not set
 if (!isset($_GET['id'])) {
@@ -26,7 +32,7 @@ if (!isset($_GET['id'])) {
   $query .= "INNER JOIN class_sections ON all_classes.class_id = class_sections.fk_class_id ";
   $query .= "INNER JOIN student_class ON class_sections.section_id = student_class.fk_section_id ";
   $query .= "INNER JOIN student_profile ON student_class.fk_student_id = student_profile.student_id ";
-  $query .= "WHERE student_id = '$id' AND status='1'";
+  $query .= "WHERE student_id = '$id' AND status='1' AND student_profile.fk_client_id='$client'";
   $pass = mysqli_query($conn, $query);
   $row = mysqli_fetch_assoc($pass);
   ?>

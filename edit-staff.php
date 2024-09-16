@@ -2,6 +2,12 @@
 
 <!-- ======= Sidebar ======= -->
 <?php require_once("includes/sidebar.php"); ?>
+
+<?php
+// getting the client id
+$client = escape($_SESSION['client_id']);
+?>
+
 <?php
 // if the get request is not set
 if (!isset($_GET['id'])) {
@@ -12,7 +18,7 @@ if (!isset($_GET['id'])) {
 // fetching the student data here
 $id = escape($_GET['id']);
 $query = "SELECT * FROM staff_profile ";
-$query .= "WHERE staff_id='$id'";
+$query .= "WHERE staff_id='$id' AND fk_client_id='$client'";
 $pass = mysqli_query($conn, $query);
 $row = mysqli_fetch_assoc($pass);
 ?>
@@ -53,29 +59,28 @@ $row = mysqli_fetch_assoc($pass);
         $designation = escape($_POST['staff_designation']);
         $salary = escape($_POST['staff_salary']);
 
-
         // checking if the staff id is assigned to another teacher
-        $query = "SELECT * FROM teacher_profile WHERE school_id='$staff_id'";
+        $query = "SELECT * FROM teacher_profile WHERE school_id='$staff_id' AND fk_client_id='$client'";
         $find_tch_id = query($query);
         if (mysqli_num_rows($find_tch_id) == 0) {
             // checking if the staff id assigned to another staff member
-            $query = "SELECT * FROM staff_profile WHERE staff_school_id='$staff_id' AND NOT staff_id='$cid'";
+            $query = "SELECT * FROM staff_profile WHERE staff_school_id='$staff_id' AND fk_client_id='$client' AND NOT staff_id='$cid'";
             $find_staff_id = query($query);
             if (mysqli_num_rows($find_staff_id) == 0) {
                 // checking if the cnic is already assosiated to another teacher
-                $query = "SELECT * FROM teacher_profile WHERE cnic='$cnic'";
+                $query = "SELECT * FROM teacher_profile WHERE cnic='$cnic' AND fk_client_id='$client'";
                 $find_tch_cnic = query($query);
                 if (mysqli_num_rows($find_tch_cnic) == 0) {
                     // checking if the cnic is already assosiated to another staff member
-                    $query = "SELECT * FROM staff_profile WHERE cnic='$cnic' AND NOT staff_id='$cid'";
+                    $query = "SELECT * FROM staff_profile WHERE cnic='$cnic' AND fk_client_id='$client' AND NOT staff_id='$cid'";
                     $find_staff_cnic = query($query);
                     if (mysqli_num_rows($find_staff_cnic) == 0) {
                         // checking if the phone# is already associated to another teacher
-                        $query = "SELECT * FROM teacher_profile WHERE phone_no='$phone_no'";
+                        $query = "SELECT * FROM teacher_profile WHERE phone_no='$phone_no' AND fk_client_id='$client'";
                         $find_tch_phone = query($query);
                         if (mysqli_num_rows($find_tch_phone) == 0) {
                             // checking if the phone# is already associated to another staff member
-                            $query = "SELECT * FROM staff_profile WHERE phone_no='$phone_no' AND NOT staff_id='$cid'";
+                            $query = "SELECT * FROM staff_profile WHERE phone_no='$phone_no' AND fk_client_id='$client' AND NOT staff_id='$cid'";
                             $find_staff_phone = query($query);
                             if (mysqli_num_rows($find_staff_phone) == 0) {
 
@@ -89,13 +94,13 @@ $row = mysqli_fetch_assoc($pass);
                                     move_uploaded_file($tmp_img, "./uploads/staffs-profile/" . $img . "");
                                     // making the picture unique using his/her cnic or his/her father cnic & roll_no
                                     if (empty($cnic)) {
-                                        $new_img = $name . $staff_id . $img;
+                                        $new_img = $client . $staff_id . $img;
                                     } else {
-                                        $new_img = $cnic . $staff_id . $img;
+                                        $new_img = $client . $cnic . $staff_id . $img;
                                     }
                                     rename("./uploads/staffs-profile/" . $img . "", "./uploads/staffs-profile/" . $new_img . "");
                                 } else {
-                                    $new_img = '';
+                                    $new_img = $row['image'];
                                 }
                                 $new_img = escape($new_img);
 
@@ -104,7 +109,7 @@ $row = mysqli_fetch_assoc($pass);
                                 $query .= "phone_no='$phone_no', staff_gender='$gender', address='$address', ";
                                 $query .= "staff_school_id='$staff_id', staff_designation='$designation', ";
                                 $query .= "staff_salary='$salary', image='$new_img' ";
-                                $query .= "WHERE staff_id='$cid'";
+                                $query .= "WHERE staff_id='$cid' AND fk_client_id='$client'";
                                 $pass_query = mysqli_query($conn, $query);
 
                                 if ($pass_query) {
@@ -119,7 +124,7 @@ $row = mysqli_fetch_assoc($pass);
                                     $time = (string) $time;
 
                                     // adding activity into the logs
-                                    $query = "INSERT INTO admin_logs(log_message, time) VALUES('$log', '$time')";
+                                    $query = "INSERT INTO admin_logs(log_message, time, fk_client_id) VALUES('$log', '$time', '$client')";
                                     $pass_query2 = mysqli_query($conn, $query);
                                     if (!$pass_query2) {
                                         echo "Error: " . mysqli_error($conn);

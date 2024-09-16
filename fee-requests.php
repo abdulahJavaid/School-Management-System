@@ -4,10 +4,14 @@
 <?php require_once("includes/sidebar.php"); ?>
 
 <?php
+// getting the client id
+$client = escape($_SESSION['client_id']);
+?>
+
+<?php
 // checking session for appropriate access
 if ($_SESSION['login_access'] == 'developer' || $_SESSION['login_access'] == 'accountant' || $_SESSION['login_access'] == 'super') {
-  
-}else{
+} else {
   redirect("./");
 }
 ?>
@@ -34,52 +38,54 @@ if ($_SESSION['login_access'] == 'developer' || $_SESSION['login_access'] == 'ac
             <!-- <p>Add <code>.table-bordered</code> for borders on all sides of the table and cells.</p> -->
 
             <!-- Primary Color Bordered Table -->
-            <table class="table table-bordered border-primary">
-              <thead>
-                <tr>
-                  <th scope="col">Reg no#</th>
-                  <th scope="col">Name</th>
-                  <th scope="col">Monthly Fee (Rs)</th>
-                  <th scope="col">Month</th>
-                  <th scope="col">Payment date</th>
-                  <th scope="col">Fee Method</th>
-                  <th scope="col">Image</th>
-                  <th scope="col">Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                <?php
-                // the students who have paid fee
-                $query = "SELECT * FROM student_fee INNER JOIN student_profile ON ";
-                $query .= "student_fee.fk_student_id=student_profile.student_id ";
-                $query .= "WHERE fee_status='fee_request'";
-                $result = query($query);
-                while ($row = mysqli_fetch_assoc($result)) {
-                ?>
+            <div class="table-responsive">
+              <table class="table table-bordered border-primary">
+                <thead>
                   <tr>
-                    <td><?php echo $row['roll_no']; ?></td>
-                    <td><?php echo $row['name']; ?></td>
-                    <td>Rs. <?php echo $row['monthly_fee']; ?></td>
-                    <td><?php echo $row['year'] . ', ' . $row['month']; ?></td>
-                    <td><?php echo $row['payment_date']; ?></td>
-                    <td><?php echo $row['fee_method']; ?></td>
-                    <td>
-                      <?php
-                      if (str_contains(strtolower($row['fee_method']), 'cash')) {
-                        echo "---";
-                      } else {
-                        $img = $row['receipt_image'];
-                        echo "<img src='uploads/fees/$img' width='50px' height='50px' alt='no-img'>";
-                      }
-                      ?>
-                    </td>
-                    <td><a href="process-fee-requests.php?id=<?php echo $row['fee_id']; ?>" class="btn btn-sm btn-info button">Process</a></td>
+                    <th scope="col">Reg no#</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Monthly Fee (Rs)</th>
+                    <th scope="col">Month</th>
+                    <th scope="col">Payment date</th>
+                    <th scope="col">Fee Method</th>
+                    <th scope="col">Image</th>
+                    <th scope="col">Action</th>
                   </tr>
-                <?php
-                }
-                ?>
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  <?php
+                  // the students who have paid fee
+                  $query = "SELECT * FROM student_fee INNER JOIN student_profile ON ";
+                  $query .= "student_fee.fk_student_id=student_profile.student_id ";
+                  $query .= "WHERE fee_status='fee_request' AND student_fee.fk_client_id='$client'";
+                  $result = query($query);
+                  while ($row = mysqli_fetch_assoc($result)) {
+                  ?>
+                    <tr>
+                      <td><?php echo $row['roll_no']; ?></td>
+                      <td><?php echo $row['name']; ?></td>
+                      <td>Rs. <?php echo $row['monthly_fee']; ?></td>
+                      <td><?php echo $row['year'] . ', ' . $row['month']; ?></td>
+                      <td><?php echo $row['payment_date']; ?></td>
+                      <td><?php echo $row['fee_method']; ?></td>
+                      <td>
+                        <?php
+                        if (str_contains(strtolower($row['fee_method']), 'cash')) {
+                          echo "---";
+                        } else {
+                          $img = $row['receipt_image'];
+                          echo "<img src='uploads/fees/$img' width='50px' height='50px' alt='no-img'>";
+                        }
+                        ?>
+                      </td>
+                      <td><a href="process-fee-requests.php?id=<?php echo $row['fee_id']; ?>" class="btn btn-sm btn-info button">Process</a></td>
+                    </tr>
+                  <?php
+                  }
+                  ?>
+                </tbody>
+              </table>
+            </div>
             <!-- End Primary Color Bordered Table -->
 
           </div>
@@ -88,7 +94,7 @@ if ($_SESSION['login_access'] == 'developer' || $_SESSION['login_access'] == 'ac
     </div>
   </section>
 
-</main><!-- End #main --> 
+</main><!-- End #main -->
 
 <!-- ======= Footer ======= -->
 <?php include_once("includes/footer.php"); ?>

@@ -5,74 +5,86 @@ require_once('../db_connection/configs.php');
 require_once('../db_connection/connection.php');
 require_once('../includes/functions.php');
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    // Check if all fields are set
-    if (isset($_POST["about"]) && isset($_FILES["image"]) && isset($_POST["school_id"]) && isset($_POST["name"])  && isset($_POST["o_name"])  && isset($_POST["slogan"])  && isset($_POST["private"])  && isset($_POST["address"])  && isset($_POST["city"])  && isset($_POST["contact"])  && isset($_POST["email"])  && isset($_POST["expiry"])) {
-        // Get form data
-        $about = escape($_POST["about"]);
-        $school_id = escape($_POST["school_id"]);
-        $name = escape($_POST["name"]);
-        $o_name = escape($_POST["o_name"]);
-        $slogan = escape($_POST["slogan"]);
-        $private = escape($_POST["private"]);
-        $address = escape($_POST["address"]);
-        $city = escape($_POST["city"]);
-        $contact = escape($_POST["contact"]);
-        $email = escape($_POST["email"]);
-        $expiry = escape($_POST["expiry"]);
-        
-        // File upload handling
-        $target_dir = "../uploads/school-profile-uploads/"; // Directory where the file will be saved
-        $target_file = $target_dir . basename($_FILES["image"]["name"]); // Path of the uploaded file
-        $pic = basename($_FILES["image"]["name"]);
-        $uploadOk = 1; // Flag to check if file is uploaded successfully
-        $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION)); // File extension
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
+    // Get form data
+    $about = escape($_POST["about"]);
+    $client_id = escape($_POST["client_id"]);
+    $name = escape($_POST["name"]);
+    $o_name = escape($_POST["o_name"]);
+    $slogan = escape($_POST["slogan"]);
+    $private = escape($_POST["private"]);
+    $address = escape($_POST["address"]);
+    $city = escape($_POST["city"]);
+    $contact = escape($_POST["contact"]);
+    $email = escape($_POST["email"]);
+    $expiry = escape($_POST["expiry"]);
 
-        // Check if image file is an actual image or a fake image
-        $check = getimagesize($_FILES["image"]["tmp_name"]);
-        if ($check !== false) {
-            // Allow certain file formats
-            if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") {
-                redirect("../school-profile.php?m=Sorry, only JPG, JPEG, PNG, GIF files are allowed.");
-                $uploadOk = 0;
-            }
-        } else {
-            redirect("../school-profile.php?m=File is not an image.");
-            $uploadOk = 0;
-        }
+    // File upload handling
+    $target_dir = "../uploads/school-profile-uploads/"; // Directory where the file will be saved
+    $target_file = $target_dir . basename($_FILES["image"]["name"]); // Path of the uploaded file
+    $pic = basename($_FILES["image"]["name"]);
+    // $uploadOk = 1; // Flag to check if file is uploaded successfully
+    // $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION)); // File extension
 
-        // Check if the file already exists
-        if (file_exists($target_file)) {
-            redirect("../school-profile.php?m=Sorry, the file already exists.");
-            $uploadOk = 0;
-        }
+    // getting the data of the school to update school image
+    $client = escape($_SESSION['client_id']);
+    $query = "SELECT * FROM school_profile_ WHERE client_id='$client'";
+    $pass_query = query($query);
+    $get_school = mysqli_fetch_assoc($pass_query);
+    // moving the uploaded image
+    if (isset($_FILES['image']) && !empty($_FILES["image"]["tmp_name"])) {
+        $tmp = $_FILES['image']['tmp_name'];
 
-        // Check if $uploadOk is set to 0 by an error
-        if ($uploadOk == 0) {
-            redirect("../school-profile.php?m=Sorry, your file was not uploaded.");
-        } else {
-            // if everything is ok, try to upload file
-            if (move_uploaded_file($_FILES["image"]["tmp_name"], $target_file)) {
-                // Image uploaded successfully, now insert form data into the database
-                $pic = escape($pic);
-                // Insert form data and image path into the database
-                $query = "INSERT INTO school_profile_ (about, image, school_id, name, o_name, slogan, private, address, city, contact, email, expiry) 
-                VALUES ('$about', '$pic', '$school_id', '$name', '$o_name', '$slogan', '$private', '$address', '$city', '$contact', '$email', '$expiry')";
-                $result = mysqli_query($conn, $query);
-                if ($result) {
-                    echo "Data has been successfully inserted.";
-                    redirect("../school-profile.php?m=Data has been successfully inserted.");
-                } else {
-                    redirect("../school-profile.php?m=Error: " . mysqli_error($conn));
-                    echo "Error: " . mysqli_error($conn);
-                }
-            } else {
-                redirect("../school-profile.php?m=Sorry, there was an error uploading your file.");
-            }
-        }
+        unlink($target_dir . $get_school['image'] . "");
+        move_uploaded_file($tmp, $target_file);
+        $new_pic = $client_id . $city . $pic;
+        rename($target_file, $target_dir . $new_pic . "");
     } else {
-        echo "All fields are required.";
+        $new_pic = $get_school['image'];
     }
+
+
+    // Check if image file is an actual image or a fake image
+    // $check = getimagesize($_FILES["image"]["tmp_name"]);
+    // if ($check !== false) {
+    //     // Allow certain file formats
+    //     if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") {
+    //         redirect("../school-profile.php?m=Sorry, only JPG, JPEG, PNG, GIF files are allowed.");
+    //         $uploadOk = 0;
+    //     }
+    // } else {
+    //     redirect("../school-profile.php?m=File is not an image.");
+    //     $uploadOk = 0;
+    // }
+
+    // escaping the picture name
+    $new_pic = escape($new_pic);
+
+    // Insert form data and image path into the database
+    $query = "UPDATE school_profile_ SET about='$about', image='$new_pic', client_id='$client_id', ";
+    $query .= "name='$name', o_name='$o_name', slogan='$slogan', private='$private', ";
+    $query .= "address='$address', city='$city', contact='$contact', email='$email', expiry='$expiry' ";
+    $query .= "WHERE client_id='$client'";
+    $result = mysqli_query($conn, $query);
+
+
+    // code to add developer activity into the logs
+    $id = escape($_SESSION['login_id']);
+    $admin_name = escape($_SESSION['login_name']);
+    $log = "<strong>$admin_name</strong> from CodsMine updated School Profile !";
+    $time = date('d/m/Y h:i a', time());
+    $time = (string) $time;
+
+    // adding activity into the logs
+    $query = "INSERT INTO admin_logs(log_message, time, fk_client_id) VALUES('$log', '$time', '$client')";
+    $pass_query2 = mysqli_query($conn, $query);
+
+    if ($pass_query2) {
+        $_SESSION['school_name'] = $name;
+        redirect("../school-profile.php");
+    } else {
+        redirect("../school-profile.php?m=Error: " . mysqli_error($conn));
+    }
+
     mysqli_close($conn);
 }
-?>

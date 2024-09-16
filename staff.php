@@ -4,9 +4,8 @@
 <?php require_once("includes/sidebar.php"); ?>
 
 <?php
-
-
-
+// getting the client id
+$client = escape($_SESSION['client_id']);
 ?>
 
 <main id="main" class="main">
@@ -42,34 +41,36 @@
                         <p>Details of all working staff of <code><?php echo $_SESSION['school_name']; ?></code>.</p>
 
                         <!-- Primary Color Bordered Table -->
-                        <table class="table table-bordered border-primary table-hover">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Staff Id</th>
-                                    <th scope="col">Name</th>
-                                    <th scope="col">Address</th>
-                                    <th scope="col">See Profile</th>
-                                    <th scope="col">Edit Profile</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                $quer = "SELECT * FROM staff_profile WHERE staff_status='1'";
-                                $get = query($quer);
-                                while ($row = mysqli_fetch_assoc($get)) {
-                                ?>
+                        <div class="table-responsive">
+                            <table class="table table-bordered border-primary table-hover">
+                                <thead>
                                     <tr>
-                                        <td><?php echo $row['staff_school_id']; ?></td>
-                                        <td><?php echo $row['name']; ?></td>
-                                        <td><?php echo $row['address']; ?></td>
-                                        <td><a href="view-staff.php?id=<?php echo $row['staff_id']; ?>">View profile</a></td>
-                                        <td><a href="edit-staff.php?id=<?php echo $row['staff_id']; ?>">Edit profile</a></td>
+                                        <th scope="col">Staff Id</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Address</th>
+                                        <th scope="col">See Profile</th>
+                                        <th scope="col">Edit Profile</th>
                                     </tr>
-                                <?php
-                                } // end of while loop - fetching teacher records
-                                ?>
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    $quer = "SELECT * FROM staff_profile WHERE staff_status='1' AND fk_client_id='$client'";
+                                    $get = query($quer);
+                                    while ($row = mysqli_fetch_assoc($get)) {
+                                    ?>
+                                        <tr>
+                                            <td><?php echo $row['staff_school_id']; ?></td>
+                                            <td><?php echo $row['name']; ?></td>
+                                            <td><?php echo $row['address']; ?></td>
+                                            <td><a href="view-staff.php?id=<?php echo $row['staff_id']; ?>">View profile</a></td>
+                                            <td><a href="edit-staff.php?id=<?php echo $row['staff_id']; ?>">Edit profile</a></td>
+                                        </tr>
+                                    <?php
+                                    } // end of while loop - fetching teacher records
+                                    ?>
+                                </tbody>
+                            </table>
+                        </div>
                         <!-- End Primary Color Bordered Table -->
 
                     </div>

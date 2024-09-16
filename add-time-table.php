@@ -3,6 +3,11 @@
 <!-- ======= Sidebar ======= -->
 <?php require_once("includes/sidebar.php"); ?>
 
+<?php
+// getting the client id
+$client = escape($_SESSION['client_id']);
+?>
+
 <main id="main" class="main">
 
   <div class="pagetitle">
@@ -27,15 +32,17 @@
               <select id="inputState" name="select1" class="form-select mt-3" aria-label="Example input" aria-describedby="button-addon2">
                 <option selected value="empty">Class</option>
                 <?php
-                // fetching all the classes 
-                $result = sql_select_all("all_classes");
+                // fetching all the classes
+                $query = "SELECT * FROM all_classes WHERE fk_client_id='$client'";
+                $result = query($query);
                 while ($row = mysqli_fetch_assoc($result)) {
-
+                  $clas_id = $row['class_id'];
                 ?>
                   <optgroup label="Class: <?php echo $row['class_name']; ?>">
                     <?php
                     // fetching the related sections
-                    $result1 = sql_where("class_sections", "fk_class_id", $row['class_id']);
+                    $query = "SELECT * FROM class_sections WHERE fk_class_id='$clas_id' AND fk_client_id='$client'";
+                    $result1 = query($query);
                     while ($row1 = mysqli_fetch_assoc($result1)) {
                     ?>
                       <option value="<?php echo $row['class_id'] . " " . $row1['section_id']; ?>"><?php echo $row['class_name'] . " " . $row1['section_name']; ?></option>
@@ -56,14 +63,16 @@
                 <option selected value="empty">Class</option>
                 <?php
                 // fetching all the classes 
-                $result = sql_select_all("all_classes");
+                $query = "SELECT * FROM all_classes WHERE fk_client_id='$client'";
+                $result = query($query);
                 while ($row = mysqli_fetch_assoc($result)) {
-
+                  $clas_id = $row['class_id'];
                 ?>
                   <optgroup label="Class: <?php echo $row['class_name']; ?>">
                     <?php
                     // fetching the related sections
-                    $result1 = sql_where("class_sections", "fk_class_id", $row['class_id']);
+                    $query = "SELECT * FROM class_sections WHERE fk_class_id='$clas_id' AND fk_client_id='$client'";
+                    $result1 = query($query);
                     while ($row1 = mysqli_fetch_assoc($result1)) {
                     ?>
                       <option value="<?php echo $row['class_id'] . " " . $row1['section_id']; ?>"><?php echo $row['class_name'] . " " . $row1['section_name']; ?></option>
@@ -105,11 +114,15 @@
           $class = escape($class);
           $section = escape($section);
 
-          $result = sql_where('all_classes', 'class_id', $class);
+          $query = "SELECT * FROM all_classes WHERE class_id='$class' AND fk_client_id='$client'";
+          $result = query($query);
           $row = mysqli_fetch_assoc($result);
-          $result1 = sql_where_and('class_sections', 'section_id', $section, 'fk_class_id', $class);
+          $query = "SELECT * FROM class_sections WHERE section_id='$section' AND fk_class_id='$class' AND fk_client_id='$client'";
+          $result1 = query($query);
           $row1 = mysqli_fetch_assoc($result1);
-
+          $log_class = $row['class_name']; // class name for log creation
+          $log_section = $row1['section_name']; // section name for log creation
+          
         ?>
           <div class="card">
             <div class="card-body">
@@ -123,133 +136,135 @@
 
               <!-- Primary Color Bordered Table -->
               <form action="./backend/back-add-timetable.php" method="post">
-                <table class="table table-bordered border-primary">
-                  <thead>
-                    <tr>
-                      <th scope="col"><input type="hidden" name="section_id" value="<?php echo $row1['section_id']; ?>">#</th>
-                      <th scope="col"><input type="hidden" name="monday" value="Monday">Monday</th>
-                      <th scope="col"><input type="hidden" name="tuesday" value="Tuesday">Tuesday</th>
-                      <th scope="col"><input type="hidden" name="wednesday" value="Wednesday">Wednesday</th>
-                      <th scope="col"><input type="hidden" name="thursday" value="Thursday">Thursday</th>
-                      <th scope="col"><input type="hidden" name="friday" value="Friday">Friday</th>
-                      <th scope="col"><input type="hidden" name="saturday" value="Saturday">Saturday</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <?php
-                    // loooping the fields 9 times
-                    for ($i = 1; $i < 10; $i++) {
-                    ?>
-
-
-                      <!-- start tr -->
+                <div class="table-responsive">
+                  <table class="table table-bordered border-primary">
+                    <thead>
                       <tr>
-                        <td><input type="text" name="time<?php echo $i; ?>" class="form-control inpt" placeholder="time" size="5"></td>
-                        <td>
-                          <input type="text" name="dm<?php echo $i; ?>" class="form-control inpt-1" size="3" placeholder="Subject">
-                          <select id="inputState" name="tm<?php echo $i; ?>" class="form-select mt-1 inpt-1">
-                            <option value="">Teacher</option>
-                            <?php
-                            // select the teacher
-                            $result2 = sql_select_all('teacher_profile');
-                            while ($row = mysqli_fetch_assoc($result2)) {
-                            ?>
-                              <option value="<?php echo $row['name']; ?>"><?php echo $row['name']; ?></option>
-                            <?php
-                            }
-                            ?>
-                          </select>
-                          <input type="checkbox" name="bm<?php echo $i; ?>"> Break
-                        </td>
-                        <td>
-                          <input type="text" name="dt<?php echo $i; ?>" class="form-control inpt-1" size="3" placeholder="Subject">
-                          <select id="inputState" name="tt<?php echo $i; ?>" class="form-select mt-1 inpt-1">
-                            <option value="">Teacher</option>
-                            <?php
-                            // select the teacher
-                            $result2 = sql_select_all('teacher_profile');
-                            while ($row = mysqli_fetch_assoc($result2)) {
-                            ?>
-                              <option value="<?php echo $row['name']; ?>"><?php echo $row['name']; ?></option>
-                            <?php
-                            }
-                            ?>
-                          </select>
-                          <input type="checkbox" name="bt<?php echo $i; ?>"> Break
-                        </td>
-                        <td>
-                          <input type="text" name="dw<?php echo $i; ?>" class="form-control inpt-1" size="3" placeholder="Subject">
-                          <select id="inputState" name="tw<?php echo $i; ?>" class="form-select mt-1 inpt-1">
-                            <option value="">Teacher</option>
-                            <?php
-                            // select the teacher
-                            $result2 = sql_select_all('teacher_profile');
-                            while ($row = mysqli_fetch_assoc($result2)) {
-                            ?>
-                              <option value="<?php echo $row['name']; ?>"><?php echo $row['name']; ?></option>
-                            <?php
-                            }
-                            ?>
-                          </select>
-                          <input type="checkbox" name="bw<?php echo $i; ?>"> Break
-                        </td>
-                        <td>
-                          <input type="text" name="dth<?php echo $i; ?>" class="form-control inpt-1" size="3" placeholder="Subject">
-                          <select id="inputState" name="tth<?php echo $i; ?>" class="form-select mt-1 inpt-1">
-                            <option value="">Teacher</option>
-                            <?php
-                            // select the teacher
-                            $result2 = sql_select_all('teacher_profile');
-                            while ($row = mysqli_fetch_assoc($result2)) {
-                            ?>
-                              <option value="<?php echo $row['name']; ?>"><?php echo $row['name']; ?></option>
-                            <?php
-                            }
-                            ?>
-                          </select>
-                          <input type="checkbox" name="bth<?php echo $i; ?>"> Break
-                        </td>
-                        <td>
-                          <input type="text" name="df<?php echo $i; ?>" class="form-control inpt-1" size="3" placeholder="Subject">
-                          <select id="inputState" name="tf<?php echo $i; ?>" class="form-select mt-1 inpt-1">
-                            <option value="">Teacher</option>
-                            <?php
-                            // select the teacher
-                            $result2 = sql_select_all('teacher_profile');
-                            while ($row = mysqli_fetch_assoc($result2)) {
-                            ?>
-                              <option value="<?php echo $row['name']; ?>"><?php echo $row['name']; ?></option>
-                            <?php
-                            }
-                            ?>
-                          </select>
-                          <input type="checkbox" name="bf<?php echo $i; ?>"> Break
-                        </td>
-                        <td>
-                          <input type="text" name="ds<?php echo $i; ?>" class="form-control inpt-1" size="3" placeholder="Subject">
-                          <select id="inputState" name="ts<?php echo $i; ?>" class="form-select mt-1 inpt-1">
-                            <option value="">Teacher</option>
-                            <?php
-                            // select the teacher
-                            $result2 = sql_select_all('teacher_profile');
-                            while ($row = mysqli_fetch_assoc($result2)) {
-                            ?>
-                              <option value="<?php echo $row['name']; ?>"><?php echo $row['name']; ?></option>
-                            <?php
-                            }
-                            ?>
-                          </select>
-                          <input type="checkbox" name="bs<?php echo $i; ?>"> Break
-                        </td>
+                        <th scope="col"><input type="hidden" name="section_id" value="<?php echo $row1['section_id']; ?>">#&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                        <th scope="col"><input type="hidden" name="monday" value="Monday">Monday</th>
+                        <th scope="col"><input type="hidden" name="tuesday" value="Tuesday">Tuesday</th>
+                        <th scope="col"><input type="hidden" name="wednesday" value="Wednesday">Wednesday</th>
+                        <th scope="col"><input type="hidden" name="thursday" value="Thursday">Thursday</th>
+                        <th scope="col"><input type="hidden" name="friday" value="Friday">Friday</th>
+                        <th scope="col"><input type="hidden" name="saturday" value="Saturday">Saturday</th>
                       </tr>
-                      <!-- end tr -->
-                    <?php
-                    }
-                    ?>
+                    </thead>
+                    <tbody>
+                      <?php
+                      // loooping the fields 9 times
+                      for ($i = 1; $i < 10; $i++) {
+                      ?>
+                        <!-- start tr -->
+                        <tr>
+                          <td><input type="text" name="time<?php echo $i; ?>" class="form-control inpt" placeholder="time" size="5"></td>
+                          <td>
+                            <input type="text" name="dm<?php echo $i; ?>" class="form-control inpt-1" size="3" placeholder="Subject">
+                            <select id="inputState" name="tm<?php echo $i; ?>" class="form-select mt-1 inpt-1">
+                              <option value="">Teacher</option>
+                              <?php
+                              // select the teacher
+                              $result2 = sql_where('teacher_profile', 'fk_client_id', $client);
+                              while ($row = mysqli_fetch_assoc($result2)) {
+                              ?>
+                                <option value="<?php echo $row['name']; ?>"><?php echo $row['name']; ?></option>
+                              <?php
+                              }
+                              ?>
+                            </select>
+                            <input type="checkbox" name="bm<?php echo $i; ?>"> Break
+                          </td>
+                          <td>
+                            <input type="text" name="dt<?php echo $i; ?>" class="form-control inpt-1" size="3" placeholder="Subject">
+                            <select id="inputState" name="tt<?php echo $i; ?>" class="form-select mt-1 inpt-1">
+                              <option value="">Teacher</option>
+                              <?php
+                              // select the teacher
+                              $result2 = sql_where('teacher_profile', 'fk_client_id', $client);
+                              while ($row = mysqli_fetch_assoc($result2)) {
+                              ?>
+                                <option value="<?php echo $row['name']; ?>"><?php echo $row['name']; ?></option>
+                              <?php
+                              }
+                              ?>
+                            </select>
+                            <input type="checkbox" name="bt<?php echo $i; ?>"> Break
+                          </td>
+                          <td>
+                            <input type="text" name="dw<?php echo $i; ?>" class="form-control inpt-1" size="3" placeholder="Subject">
+                            <select id="inputState" name="tw<?php echo $i; ?>" class="form-select mt-1 inpt-1">
+                              <option value="">Teacher</option>
+                              <?php
+                              // select the teacher
+                              $result2 = sql_where('teacher_profile', 'fk_client_id', $client);
+                              while ($row = mysqli_fetch_assoc($result2)) {
+                              ?>
+                                <option value="<?php echo $row['name']; ?>"><?php echo $row['name']; ?></option>
+                              <?php
+                              }
+                              ?>
+                            </select>
+                            <input type="checkbox" name="bw<?php echo $i; ?>"> Break
+                          </td>
+                          <td>
+                            <input type="text" name="dth<?php echo $i; ?>" class="form-control inpt-1" size="3" placeholder="Subject">
+                            <select id="inputState" name="tth<?php echo $i; ?>" class="form-select mt-1 inpt-1">
+                              <option value="">Teacher</option>
+                              <?php
+                              // select the teacher
+                              $result2 = sql_where('teacher_profile', 'fk_client_id', $client);
+                              while ($row = mysqli_fetch_assoc($result2)) {
+                              ?>
+                                <option value="<?php echo $row['name']; ?>"><?php echo $row['name']; ?></option>
+                              <?php
+                              }
+                              ?>
+                            </select>
+                            <input type="checkbox" name="bth<?php echo $i; ?>"> Break
+                          </td>
+                          <td>
+                            <input type="text" name="df<?php echo $i; ?>" class="form-control inpt-1" size="3" placeholder="Subject">
+                            <select id="inputState" name="tf<?php echo $i; ?>" class="form-select mt-1 inpt-1">
+                              <option value="">Teacher</option>
+                              <?php
+                              // select the teacher
+                              $result2 = sql_where('teacher_profile', 'fk_client_id', $client);
+                              while ($row = mysqli_fetch_assoc($result2)) {
+                              ?>
+                                <option value="<?php echo $row['name']; ?>"><?php echo $row['name']; ?></option>
+                              <?php
+                              }
+                              ?>
+                            </select>
+                            <input type="checkbox" name="bf<?php echo $i; ?>"> Break
+                          </td>
+                          <td>
+                            <input type="text" name="ds<?php echo $i; ?>" class="form-control inpt-1" size="3" placeholder="Subject">
+                            <select id="inputState" name="ts<?php echo $i; ?>" class="form-select mt-1 inpt-1">
+                              <option value="">Teacher</option>
+                              <?php
+                              // select the teacher
+                              $result2 = sql_where('teacher_profile', 'fk_client_id', $client);
+                              while ($row = mysqli_fetch_assoc($result2)) {
+                              ?>
+                                <option value="<?php echo $row['name']; ?>"><?php echo $row['name']; ?></option>
+                              <?php
+                              }
+                              ?>
+                            </select>
+                            <input type="checkbox" name="bs<?php echo $i; ?>"> Break
+                          </td>
+                        </tr>
+                        <!-- end tr -->
+                      <?php
+                      }
+                      ?>
 
-                  </tbody>
-                </table>
+                    </tbody>
+                  </table>
+                </div>
                 <div class="d-flex justify-content-end">
+                  <input type="hidden" name="class" value="<?php echo $log_class; ?>">
+                  <input type="hidden" name="section" value="<?php echo $log_section; ?>">
                   <button type="submit" name="submit" class="btn btn-success">Submit timetable</button>
                 </div>
               </form>
@@ -279,9 +294,11 @@
           $class = escape($class);
           $section = escape($section);
 
-          $result = sql_where('all_classes', 'class_id', $class);
+          $query = "SELECT * FROM all_classes WHERE class_id='$class' AND fk_client_id='$client'";
+          $result = query($query);
           $row = mysqli_fetch_assoc($result);
-          $result1 = sql_where_and('class_sections', 'section_id', $section, 'fk_class_id', $class);
+          $query = "SELECT * FROM class_sections WHERE section_id='$section' AND fk_class_id='$class' AND fk_client_id='$client'";
+          $result1 = query($query);
           $row1 = mysqli_fetch_assoc($result1);
           $sid = $row1['section_id'];
           $sid = escape($sid);
@@ -291,8 +308,7 @@
           <div class="card">
             <div class="card-body">
               <h5 class="card-title">Class: <?php echo $row['class_name'] . " " . $row1['section_name']; ?></h5>
-              <p><code><u>Timetable:</u></code></p>
-
+              <!-- <p><code><u>Timetable:</u></code></p> -->
 
               <div class="d-flex justify-content-end">
                 <form action="" method="post">
@@ -302,63 +318,65 @@
                 </form>
               </div><br>
               <!-- Primary Color Bordered Table -->
-              <table class="table table-bordered border-primary">
-                <thead>
-                  <tr>
-                    <th scope="col"><input type="hidden" name="section_id" value="<?php echo $row1['section_id']; ?>">#</th>
-                    <?php
-                    // Select day names from the database
-                    $query = "SELECT * FROM timetable WHERE fk_section_id='$sid'";
-                    $result = query($query);
-                    while ($row3 = mysqli_fetch_assoc($result)) {
-                      $day = $row3['day'];
-                    ?>
-                      <th scope="col"><?php echo $day; ?></th>
-                    <?php
-                    }
-                    ?>
-                  </tr>
-                </thead>
-                <tbody>
-
-                  <?php
-                  // to fetch all the periods
-                  $query = "SELECT * FROM periods WHERE fk_section_id='$sid'";
-                  $ge = query($query);
-                  $arr = array(0, 6, 12, 18, 24, 30, 36, 42, 48, 54, 60);
-                  $arr1 = array(5, 11, 17, 23, 29, 35, 41, 47, 53, 59, 65);
-                  $va = 0;
-                  while ($ro = mysqli_fetch_assoc($ge)) {
-                    if (in_array($va, $arr)) {
-
-                  ?>
-                      <tr>
-                        <td><?php echo $ro['time']; ?></td>
-                        <?php if ($ro['period_name'] == 'break') { ?>
-                          <td><?php echo $ro['period_name']; ?></td>
-                        <?php } else { ?>
-                          <td><?php echo $ro['period_name'] . ' - ' . $ro['teacher_name']; ?></td>
-                        <?php } ?>
+              <div class="table-responsive">
+                <table class="table table-bordered border-primary table-hover">
+                  <thead>
+                    <tr>
+                      <th scope="col"><input type="hidden" name="section_id" value="<?php echo $row1['section_id']; ?>">#</th>
                       <?php
-                    } else {
+                      // Select day names from the database
+                      $query = "SELECT * FROM timetable WHERE fk_section_id='$sid' AND fk_client_id='$client'";
+                      $result = query($query);
+                      while ($row3 = mysqli_fetch_assoc($result)) {
+                        $day = $row3['day'];
                       ?>
-                        <?php if ($ro['period_name'] == 'break') { ?>
-                          <td><?php echo $ro['period_name']; ?></td>
-                        <?php } else { ?>
-                          <td><?php echo $ro['period_name'] . ' - ' . $ro['teacher_name']; ?></td>
-                        <?php } ?>
+                        <th scope="col"><?php echo $day; ?></th>
+                      <?php
+                      }
+                      ?>
+                    </tr>
+                  </thead>
+                  <tbody>
 
                     <?php
-                      if (in_array($va, $arr1)) {
-                        echo "</tr>";
-                      }
-                    }
-                    $va++;
-                  }
+                    // to fetch all the periods
+                    $query = "SELECT * FROM periods WHERE fk_section_id='$sid' AND fk_client_id='$client'";
+                    $ge = query($query);
+                    $arr = array(0, 6, 12, 18, 24, 30, 36, 42, 48, 54, 60);
+                    $arr1 = array(5, 11, 17, 23, 29, 35, 41, 47, 53, 59, 65);
+                    $va = 0;
+                    while ($ro = mysqli_fetch_assoc($ge)) {
+                      if (in_array($va, $arr)) {
+
                     ?>
-                    <!-- end tr -->
-                </tbody>
-              </table>
+                        <tr>
+                          <td><?php echo $ro['time']; ?></td>
+                          <?php if ($ro['period_name'] == 'break') { ?>
+                            <td><?php echo $ro['period_name']; ?></td>
+                          <?php } else { ?>
+                            <td><?php echo $ro['period_name'] . ' - ' . $ro['teacher_name']; ?></td>
+                          <?php } ?>
+                        <?php
+                      } else {
+                        ?>
+                          <?php if ($ro['period_name'] == 'break') { ?>
+                            <td><?php echo $ro['period_name']; ?></td>
+                          <?php } else { ?>
+                            <td><?php echo $ro['period_name'] . ' - ' . $ro['teacher_name']; ?></td>
+                          <?php } ?>
+
+                      <?php
+                        if (in_array($va, $arr1)) {
+                          echo "</tr>";
+                        }
+                      }
+                      $va++;
+                    }
+                      ?>
+                      <!-- end tr -->
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
         <?php
@@ -377,12 +395,16 @@
           $class = escape($class);
           $section = escape($section);
 
-          $result = sql_where('all_classes', 'class_id', $class);
+          $query = "SELECT * FROM all_classes WHERE class_id='$class' AND fk_client_id='$client'";
+          $result = query($query);
           $row = mysqli_fetch_assoc($result);
-          $result1 = sql_where_and('class_sections', 'section_id', $section, 'fk_class_id', $class);
+          $query = "SELECT * FROM class_sections WHERE section_id='$section' AND fk_class_id='$class' AND fk_client_id='$client'";
+          $result1 = query($query);
           $row1 = mysqli_fetch_assoc($result1);
           $sid = $row1['section_id'];
           $sid = escape($sid);
+          $log_class = $row['class_name']; // class name for log creation
+          $log_section = $row1['section_name']; // section name for log creation
 
         ?>
           <div class="card">
@@ -397,200 +419,204 @@
 
               <!-- Primary Color Bordered Table -->
               <form action="./backend/back-add-timetable.php" method="post">
-                <table class="table table-bordered border-primary">
-                  <thead>
-                    <tr>
-                      <th scope="col"><input type="hidden" name="section_id" value="<?php echo $row1['section_id']; ?>">#</th>
-                      <th scope="col"><input type="hidden" name="monday" value="Monday">Monday</th>
-                      <th scope="col"><input type="hidden" name="tuesday" value="Tuesday">Tuesday</th>
-                      <th scope="col"><input type="hidden" name="wednesday" value="Wednesday">Wednesday</th>
-                      <th scope="col"><input type="hidden" name="thursday" value="Thursday">Thursday</th>
-                      <th scope="col"><input type="hidden" name="friday" value="Friday">Friday</th>
-                      <th scope="col"><input type="hidden" name="saturday" value="Saturday">Saturday</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-
-                    <?php
-                    // to fetch all the periods of the selected section to update
-                    $query = "SELECT * FROM periods WHERE fk_section_id='$sid'";
-                    $ge = query($query);
-                    // array to check the start of a row <tr>
-                    $arr = array(0, 6, 12, 18, 24, 30, 36, 42, 48, 54, 60);
-                    // array to check the end of a row </tr>
-                    $arr1 = array(5, 11, 17, 23, 29, 35, 41, 47, 53, 59, 65);
-                    // array for unique input<->name generation for subject
-                    $d = ['dm', 'dt', 'dw', 'dth', 'df', 'ds'];
-                    // array for unique input<->name generation for teacher
-                    $t = ['tm', 'tt', 'tw', 'tth', 'tf', 'ts'];
-                    // array for unique input<->name generation for break
-                    $b = ['bm', 'bt', 'bw', 'bth', 'bf', 'bs'];
-                    // variable to check and control inclusion of <tr>&</tr> where necessary
-                    $va = 0;
-                    // variable to increment after a complete <tr></tr>
-                    $i = 1;
-                    // variable to go through above defined arrays and reset after complete <tr></tr>
-                    $j = 0;
-                    while ($ro = mysqli_fetch_assoc($ge)) {
-                      // $slct = 0;
-                      if (in_array($va, $arr)) {
-                        // if the loop rotation is first for each table row
-                    ?>
-                        <tr>
-                          <td><input type="text" name="time<?php echo $i; ?>" class="form-control inpt" value="<?php echo $ro['time']; ?>" placeholder="time" size="5"></td>
-                          <?php if ($ro['period_name'] == 'break') { ?>
-                            <td>
-                              <input type="text" name="<?php echo $d[$j] . $i; ?>" class="form-control inpt-1" size="3" placeholder="Subject">
-                              <select id="inputState" name="<?php echo $t[$j] . $i; ?>" class="form-select mt-1 inpt-1">
-                                <option value="">Teacher</option>
-                                <?php
-                                // select the teacher
-                                $result2 = sql_select_all('teacher_profile');
-                                while ($r = mysqli_fetch_assoc($result2)) {
-                                ?>
-                                  <option value="<?php echo $r['name']; ?>"><?php echo $r['name']; ?></option>
-                                <?php
-                                }
-                                ?>
-                              </select>
-                              <input type="checkbox" name="<?php echo $b[$j] . $i; ?>" checked> Break
-                            </td>
-                          <?php } else {
-                            // {elese} if the period_name != break
-                          ?>
-                            <td>
-                              <input type="text" name="<?php echo $d[$j] . $i; ?>" value="<?php echo $ro['period_name']; ?>" class="form-control inpt-1" size="3" placeholder="Subject">
-                              <select id="inputState" name="<?php echo $t[$j] . $i; ?>" class="<?php echo $t[$j] . $i; ?> form-select mt-1 inpt-1">
-                                <?php
-                                // getting teacher_name value for the period
-                                $tch = escape($ro['period_id']);
-                                $query = "SELECT * FROM periods WHERE period_id='$tch'";
-                                $res = query($query);
-                                $rws = mysqli_fetch_assoc($res);
-                                if ($rws['teacher_name'] == '!') {
-                                  // if there was no teacher previously assigned
-                                ?>
-                                  <option value="">Teacher</option>
-                                <?php
-                                } else {
-                                  // the teacher which was previously assigned
-                                ?>
-                                  <option selected value="<?php echo $rws['teacher_name']; ?>"><?php echo $rws['teacher_name']; ?></option>
-                                <?php
-                                }
-                                // selecting and showing other teachers which were not previously assigned
-                                $tch_name = escape($rws['teacher_name']);
-                                $tch = escape($ro['period_id']);
-                                $query = "SELECT * FROM teacher_profile WHERE NOT name='$tch_name'";
-                                $result2 = query($query);
-                                while ($r = mysqli_fetch_assoc($result2)) {
-                                  // if($r['name'] == $ro['teacher_name']){
-                                  //   $cls = $t[$j].$i;
-                                  //   echo "<script type='text/javascript'>select_opt({$cls}, {$slct});</script>";
-                                  // }
-                                ?>
-                                  <option value="<?php echo $r['name']; ?>"><?php echo $r['name']; ?></option>
-                                <?php
-                                  // }
-                                  // $slct++;
-                                }
-                                ?>
-                              </select>
-                              <input type="checkbox" name="<?php echo $b[$j] . $i; ?>"> Break
-                            </td>
-                          <?php } ?>
-                        <?php
-                      } else {
-                        // {else} if the loop rotation is not 1st for each table row
-                        ?>
-                          <?php if ($ro['period_name'] == 'break') {
-                            // if the period_name == break
-                          ?>
-                            <td>
-                              <input type="text" name="<?php echo $d[$j] . $i; ?>" class="form-control inpt-1" size="3" placeholder="Subject">
-                              <select id="inputState" name="<?php echo $t[$j] . $i; ?>" class="form-select mt-1 inpt-1">
-                                <option value="">Teacher</option>
-                                <?php
-
-                                // select all the teachers
-                                $result2 = sql_select_all('teacher_profile');
-                                while ($r = mysqli_fetch_assoc($result2)) {
-                                ?>
-                                  <option value="<?php echo $r['name']; ?>"><?php echo $r['name']; ?></option>
-                                <?php
-                                }
-                                ?>
-                              </select>
-                              <!-- The period_name was equal to break -->
-                              <input type="checkbox" name="<?php echo $b[$j] . $i; ?>" checked> Break
-                            </td>
-                          <?php } else {
-                            // {else} if the period_name was not break
-                          ?>
-                            <td>
-                              <input type="text" name="<?php echo $d[$j] . $i; ?>" value="<?php echo $ro['period_name']; ?>" class="form-control inpt-1" size="3" placeholder="Subject">
-                              <select id="inputState" name="<?php echo $t[$j] . $i; ?>" class="form-select mt-1 inpt-1">
-                                <?php
-                                // getting the teacher_name value from period
-                                $tch = escape($ro['period_id']);
-                                $query = "SELECT * FROM periods WHERE period_id='$tch'";
-                                $res = query($query);
-                                $rws = mysqli_fetch_assoc($res);
-                                if ($rws['teacher_name'] == '!') {
-                                  // if there was no teacher assigned previously
-                                ?>
-                                  <option value="">Teacher</option>
-                                <?php
-                                } else {
-                                  // if there was a teacher assigned previously
-                                ?>
-                                  <option selected value="<?php echo $rws['teacher_name']; ?>"><?php echo $rws['teacher_name']; ?></option>
-                                <?php
-                                }
-                                // selecting and showing other teachers which were not previously assigned to class
-                                $tch_name = escape($rws['teacher_name']);
-                                $tch = escape($ro['period_id']);
-                                $query = "SELECT * FROM teacher_profile WHERE NOT name='$tch_name'";
-                                $result2 = query($query);
-                                while ($r = mysqli_fetch_assoc($result2)) {
-                                  // if($r['name'] == $ro['teacher_name']){
-                                  //   $cls = $t[$j].$i;
-                                  //   echo "<script src=assets/js/main.js' type='text/javascript'>select_opt({$cls}, {$slct});</script>";
-                                  // }
-                                ?>
-                                  <option value="<?php echo $r['name']; ?>"><?php echo $r['name']; ?></option>
-                                <?php
-                                  // }
-                                  // $slct++;
-                                }
-                                ?>
-                              </select>
-                              <input type="checkbox" name="<?php echo $b[$j] . $i; ?>"> Break
-                            </td>
-                          <?php } ?>
+                <div class="table-responsive">
+                  <table class="table table-bordered border-primary">
+                    <thead>
+                      <tr>
+                        <th scope="col"><input type="hidden" name="section_id" value="<?php echo $row1['section_id']; ?>">#&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
+                        <th scope="col"><input type="hidden" name="monday" value="Monday">Monday</th>
+                        <th scope="col"><input type="hidden" name="tuesday" value="Tuesday">Tuesday</th>
+                        <th scope="col"><input type="hidden" name="wednesday" value="Wednesday">Wednesday</th>
+                        <th scope="col"><input type="hidden" name="thursday" value="Thursday">Thursday</th>
+                        <th scope="col"><input type="hidden" name="friday" value="Friday">Friday</th>
+                        <th scope="col"><input type="hidden" name="saturday" value="Saturday">Saturday</th>
+                      </tr>
+                    </thead>
+                    <tbody>
 
                       <?php
-                        if (in_array($va, $arr1)) {
-                          // after 6 rotations, including closing </tr>
-                          echo "</tr>";
-                        }
-                      }
-                      if (in_array($va, $arr1)) {
-                        // after every 6 rotations, incrementing and resetting the variable
-                        $i++;
-                        $j = 0;
-                      } else {
-                        // variab to add days names to input forms
-                        $j++;
-                      }
-                      // variable to check when to display time field
-                      $va++;
-                    }
+                      // to fetch all the periods of the selected section to update
+                      $query = "SELECT * FROM periods WHERE fk_section_id='$sid' AND fk_client_id='$client'";
+                      $ge = query($query);
+                      // array to check the start of a row <tr>
+                      $arr = array(0, 6, 12, 18, 24, 30, 36, 42, 48, 54, 60);
+                      // array to check the end of a row </tr>
+                      $arr1 = array(5, 11, 17, 23, 29, 35, 41, 47, 53, 59, 65);
+                      // array for unique input<->name generation for subject
+                      $d = ['dm', 'dt', 'dw', 'dth', 'df', 'ds'];
+                      // array for unique input<->name generation for teacher
+                      $t = ['tm', 'tt', 'tw', 'tth', 'tf', 'ts'];
+                      // array for unique input<->name generation for break
+                      $b = ['bm', 'bt', 'bw', 'bth', 'bf', 'bs'];
+                      // variable to check and control inclusion of <tr>&</tr> where necessary
+                      $va = 0;
+                      // variable to increment after a complete <tr></tr>
+                      $i = 1;
+                      // variable to go through above defined arrays and reset after complete <tr></tr>
+                      $j = 0;
+                      while ($ro = mysqli_fetch_assoc($ge)) {
+                        // $slct = 0;
+                        if (in_array($va, $arr)) {
+                          // if the loop rotation is first for each table row
                       ?>
-                      <!-- end of code to update timetable -->
-                  </tbody>
-                </table>
+                          <tr>
+                            <td><input type="text" name="time<?php echo $i; ?>" class="form-control inpt" value="<?php echo $ro['time']; ?>" placeholder="time" size="5"></td>
+                            <?php if ($ro['period_name'] == 'break') { ?>
+                              <td>
+                                <input type="text" name="<?php echo $d[$j] . $i; ?>" class="form-control inpt-1" size="3" placeholder="Subject">
+                                <select id="inputState" name="<?php echo $t[$j] . $i; ?>" class="form-select mt-1 inpt-1">
+                                  <option value="">Teacher</option>
+                                  <?php
+                                  // select the teacher
+                                  $result2 = sql_where('teacher_profile', 'fk_client_id', $client);
+                                  while ($r = mysqli_fetch_assoc($result2)) {
+                                  ?>
+                                    <option value="<?php echo $r['name']; ?>"><?php echo $r['name']; ?></option>
+                                  <?php
+                                  }
+                                  ?>
+                                </select>
+                                <input type="checkbox" name="<?php echo $b[$j] . $i; ?>" checked> Break
+                              </td>
+                            <?php } else {
+                              // {elese} if the period_name != break
+                            ?>
+                              <td>
+                                <input type="text" name="<?php echo $d[$j] . $i; ?>" value="<?php echo $ro['period_name']; ?>" class="form-control inpt-1" size="3" placeholder="Subject">
+                                <select id="inputState" name="<?php echo $t[$j] . $i; ?>" class="<?php echo $t[$j] . $i; ?> form-select mt-1 inpt-1">
+                                  <?php
+                                  // getting teacher_name value for the period
+                                  $tch = escape($ro['period_id']);
+                                  $query = "SELECT * FROM periods WHERE period_id='$tch' AND fk_client_id='$client'";
+                                  $res = query($query);
+                                  $rws = mysqli_fetch_assoc($res);
+                                  if ($rws['teacher_name'] == '!') {
+                                    // if there was no teacher previously assigned
+                                  ?>
+                                    <option value="">Teacher</option>
+                                  <?php
+                                  } else {
+                                    // the teacher which was previously assigned
+                                  ?>
+                                    <option selected value="<?php echo $rws['teacher_name']; ?>"><?php echo $rws['teacher_name']; ?></option>
+                                  <?php
+                                  }
+                                  // selecting and showing other teachers which were not previously assigned
+                                  $tch_name = escape($rws['teacher_name']);
+                                  $tch = escape($ro['period_id']);
+                                  $query = "SELECT * FROM teacher_profile WHERE fk_client_id='$client' AND NOT name='$tch_name'";
+                                  $result2 = query($query);
+                                  while ($r = mysqli_fetch_assoc($result2)) {
+                                    // if($r['name'] == $ro['teacher_name']){
+                                    //   $cls = $t[$j].$i;
+                                    //   echo "<script type='text/javascript'>select_opt({$cls}, {$slct});</script>";
+                                    // }
+                                  ?>
+                                    <option value="<?php echo $r['name']; ?>"><?php echo $r['name']; ?></option>
+                                  <?php
+                                    // }
+                                    // $slct++;
+                                  }
+                                  ?>
+                                </select>
+                                <input type="checkbox" name="<?php echo $b[$j] . $i; ?>"> Break
+                              </td>
+                            <?php } ?>
+                          <?php
+                        } else {
+                          // {else} if the loop rotation is not 1st for each table row
+                          ?>
+                            <?php if ($ro['period_name'] == 'break') {
+                              // if the period_name == break
+                            ?>
+                              <td>
+                                <input type="text" name="<?php echo $d[$j] . $i; ?>" class="form-control inpt-1" size="3" placeholder="Subject">
+                                <select id="inputState" name="<?php echo $t[$j] . $i; ?>" class="form-select mt-1 inpt-1">
+                                  <option value="">Teacher</option>
+                                  <?php
+
+                                  // select all the teachers
+                                  $result2 = sql_where('teacher_profile', 'fk_client_id', $client);
+                                  while ($r = mysqli_fetch_assoc($result2)) {
+                                  ?>
+                                    <option value="<?php echo $r['name']; ?>"><?php echo $r['name']; ?></option>
+                                  <?php
+                                  }
+                                  ?>
+                                </select>
+                                <!-- The period_name was equal to break -->
+                                <input type="checkbox" name="<?php echo $b[$j] . $i; ?>" checked> Break
+                              </td>
+                            <?php } else {
+                              // {else} if the period_name was not break
+                            ?>
+                              <td>
+                                <input type="text" name="<?php echo $d[$j] . $i; ?>" value="<?php echo $ro['period_name']; ?>" class="form-control inpt-1" size="3" placeholder="Subject">
+                                <select id="inputState" name="<?php echo $t[$j] . $i; ?>" class="form-select mt-1 inpt-1">
+                                  <?php
+                                  // getting the teacher_name value from period
+                                  $tch = escape($ro['period_id']);
+                                  $query = "SELECT * FROM periods WHERE period_id='$tch' AND fk_client_id='$client'";
+                                  $res = query($query);
+                                  $rws = mysqli_fetch_assoc($res);
+                                  if ($rws['teacher_name'] == '!') {
+                                    // if there was no teacher assigned previously
+                                  ?>
+                                    <option value="">Teacher</option>
+                                  <?php
+                                  } else {
+                                    // if there was a teacher assigned previously
+                                  ?>
+                                    <option selected value="<?php echo $rws['teacher_name']; ?>"><?php echo $rws['teacher_name']; ?></option>
+                                  <?php
+                                  }
+                                  // selecting and showing other teachers which were not previously assigned to class
+                                  $tch_name = escape($rws['teacher_name']);
+                                  $tch = escape($ro['period_id']);
+                                  $query = "SELECT * FROM teacher_profile WHERE fk_client_id='$client' AND NOT name='$tch_name'";
+                                  $result2 = query($query);
+                                  while ($r = mysqli_fetch_assoc($result2)) {
+                                    // if($r['name'] == $ro['teacher_name']){
+                                    //   $cls = $t[$j].$i;
+                                    //   echo "<script src=assets/js/main.js' type='text/javascript'>select_opt({$cls}, {$slct});</script>";
+                                    // }
+                                  ?>
+                                    <option value="<?php echo $r['name']; ?>"><?php echo $r['name']; ?></option>
+                                  <?php
+                                    // }
+                                    // $slct++;
+                                  }
+                                  ?>
+                                </select>
+                                <input type="checkbox" name="<?php echo $b[$j] . $i; ?>"> Break
+                              </td>
+                            <?php } ?>
+
+                        <?php
+                          if (in_array($va, $arr1)) {
+                            // after 6 rotations, including closing </tr>
+                            echo "</tr>";
+                          }
+                        }
+                        if (in_array($va, $arr1)) {
+                          // after every 6 rotations, incrementing and resetting the variable
+                          $i++;
+                          $j = 0;
+                        } else {
+                          // variab to add days names to input forms
+                          $j++;
+                        }
+                        // variable to check when to display time field
+                        $va++;
+                      }
+                        ?>
+                        <!-- end of code to update timetable -->
+                    </tbody>
+                  </table>
+                </div>
                 <div class="d-flex justify-content-end">
+                  <input type="hidden" name="class" value="<?php echo $log_class; ?>">
+                  <input type="hidden" name="section" value="<?php echo $log_section; ?>">
                   <button type="submit" name="submit" class="btn btn-success">Submit timetable</button>
                 </div>
               </form>

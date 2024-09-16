@@ -1,177 +1,146 @@
 <?php
-if(isset($_POST['npaid_name'])){
-    $get_name = escape($_POST['npaid_name']);
-  
-    $query = "SELECT * FROM school_profile_ ORDER BY id DESC LIMIT 1";
-    $result = mysqli_query($conn, $query);
-    $row = mysqli_fetch_assoc($result);
-    
-    $name = $row['name'];
-    $address = $row['address'];
-    $contact = $row['contact'];
-    $email = $row['email'];
-    $image = $row['image'];
-    $month = date('F');
-    $year = date('Y');
-    $html = "
+if (isset($_POST['npaid_name'])) {
+  $get_name = escape($_POST['npaid_name']);
+  // fetching the admin id and adding the data
+  $admin_name = escape($_SESSION['login_name']);
+  $log = "Admin <strong>$admin_name</strong> generated unpaid fee records of students with name {<strong>$get_name</strong>} !";
+  $times = date('d/m/Y h:i a', time());
+  $times = (string) $times;
+  // adding activity into the logs
+  $query = "INSERT INTO admin_logs(log_message, time, fk_client_id) VALUES('$log', '$times', '$client')";
+  $pass_query2 = mysqli_query($conn, $query);
+
+  $query = "SELECT * FROM school_profile_ WHERE client_id='$client'";
+  $result = mysqli_query($conn, $query);
+  $row = mysqli_fetch_assoc($result);
+
+  $name = $row['name'];
+  $address = $row['address'];
+  $contact = $row['contact'];
+  $email = $row['email'];
+  $image = $row['image'];
+  $month = date('F');
+  $year = date('Y');
+  $html = "
     <!DOCTYPE html>
     <html lang='en'>
       <head>
         <meta charset='utf-8'>
         <title>Example 1</title>
         <style>
+
+          /* Clearfix to fix floating elements */
           .clearfix:after {
-      content: '';
-      display: table;
-      clear: both;
-    }
-    
-    a {
-      color: #5D6975;
-      text-decoration: underline;
-    }
-    
-    body {
-      position: relative;
-      width: 21cm;  
-      height: 29.7cm; 
-      margin: 0 auto; 
-      color: #001028;
-      background: #FFFFFF; 
-      font-family: Arial, sans-serif; 
-      font-size: 12px; 
-      font-family: Arial;
-    }
-    
-    header {
-      padding: 10px 0;
-      margin-bottom: 30px;
-    }
-    
-    #logo {
-      text-align: center;
-      margin-bottom: 10px;
-    }
-    
-    #logo img {
-      width: 90px;
-    }
-    
-    h1 {
-      border-top: 1px solid  #5D6975;
-      border-bottom: 1px solid  #5D6975;
-      color: #5D6975;
-      font-size: 2.4em;
-      line-height: 1.4em;
-      font-weight: normal;
-      text-align: center;
-      margin: 0 0 20px 0;
-      background: url(uploads/pdf/dimension.png);
-    }
-    
-    #project {
-      float: left;
-    }
-    
-    #project span {
-      color: #5D6975;
-      text-align: right;
-      width: 52px;
-      margin-right: 10px;
-      display: inline-block;
-      font-size: 0.8em;
-    }
-    
-    #company {
-      float: right;
-      text-align: right;
-    }
-    
-    #project div,
-    #company div {
-      white-space: nowrap;        
-    }
-    
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      border-spacing: 0;
-      margin-bottom: 20px;
-    }
-    
-    table tr:nth-child(2n-1) td {
-      background: #F5F5F5;
-    }
-    
-    table th,
-    table td {
-      text-align: center;
-    }
-    
-    table th {
-      padding: 5px 20px;
-      color: #5D6975;
-      border-bottom: 1px solid #C1CED9;
-      white-space: nowrap;        
-      font-weight: normal;
-    }
-    
-    table .service,
-    table .desc {
-      text-align: left;
-    }
-    
-    table td {
-      padding: 20px;
-      text-align: right;
-    }
-    
-    table td.service,
-    table td.desc {
-      vertical-align: top;
-    }
-    
-    table td.unit,
-    table td.qty,
-    table td.total {
-      font-size: 1.2em;
-    }
-    
-    table td.grand {
-      border-top: 1px solid #5D6975;;
-    }
-    
-    #notices .notice {
-      color: #5D6975;
-      font-size: 1.2em;
-    }
-    
-    footer {
-      color: #5D6975;
-      width: 100%;
-      height: 30px;
-      position: absolute;
-      bottom: 0;
-      border-top: 1px solid #C1CED9;
-      padding: 8px 0;
-      text-align: center;
-    }
+            content: '';
+            display: table;
+            clear: both;
+          }
+          
+          a {
+            color: #5D6975;
+            text-decoration: underline;
+          }
+          
+          body {
+            width: 100%;
+            margin: 0 auto;
+            color: #001028;
+            font-family: Arial, sans-serif;
+            font-size: 12px;
+            background: #FFFFFF;
+          }
+
+          header {
+            padding: 10px 0;
+            margin-bottom: 20px;
+            text-align: center;
+          }
+
+          #logo img {
+            width: 80px;
+          }
+
+          h1 {
+            color: #5D6975;
+            font-size: 2.2em;
+            text-align: center;
+            margin-bottom: 15px;
+            border-top: 1px solid #5D6975;
+            border-bottom: 1px solid #5D6975;
+            padding: 5px 0;
+            background: url(uploads/pdf/dimension.png);
+          }
+
+          #project, #company {
+            text-align: left;
+            margin-bottom: 20px;
+          }
+
+          #company {
+            text-align: right;
+            float: right;
+          }
+
+          #project div {
+            margin-bottom: 5px;
+          }
+
+          table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+          }
+
+          table th, table td {
+            border: 1px solid #000;
+            padding: 8px;
+            text-align: left;
+          }
+
+          table th {
+            background: #F5F5F5;
+            text-align: center;
+          }
+
+          table td {
+            text-align: center;
+          }
+
+          .table-container {
+            width: 100%;
+          }
+
+          /* Print styling */
+          @media print {
+            body {
+              width: 100%;
+              margin: 0;
+              padding: 0;
+            }
+            header, footer {
+              page-break-before: always;
+            }
+            table {
+              font-size: 11px;
+            }
+          }
+
         </style>
       </head>
       <body>
         <header class='clearfix'>
           <div id='logo'>
             <img src='uploads/school-profile-uploads/";
-            if(empty($image)){
-                $html .= "no-image.png";
-            }else {
-                $html .= "$image";
-            }
-            $html .= "'>
+  if (empty($image)) {
+    $html .= "no-image.png";
+  } else {
+    $html .= "$image";
+  }
+  $html .= "'>
           </div>
           <h1>$name</h1>
           <div id='company' class='clearfix'>
-            <div><span>Fee Report:</span> $year, $month</div>
+            <div><span>Generated On:</span> $year, $month</div>
             <div><span>Report Type:</span> Not-paid Fee Records</div>
             <div><span>Report Data:</span> Names including word { $get_name }</div>
           </div>
@@ -192,56 +161,36 @@ if(isset($_POST['npaid_name'])){
               </tr>
             </thead>
             <tbody>";
-            
-            // $query = "SELECT * FROM student_fee INNER JOIN student_profile ON ";
-            // $query .= "student_fee.fk_student_id=student_profile.student_id ";
-            // $query .= "WHERE fee_status='paid' AND year='$year' AND month='$month'";
-            $query = "SELECT * FROM student_fee INNER JOIN student_profile ON ";
-            $query .= "student_fee.fk_student_id=student_profile.student_id ";
-            $query .= "WHERE name LIKE '%$get_name%' AND fee_status='unpaid' ORDER BY fee_id DESC";
+  $query = "SELECT * FROM student_fee INNER JOIN student_profile ON ";
+  $query .= "student_fee.fk_student_id=student_profile.student_id ";
+  $query .= "WHERE name LIKE '%$get_name%' AND fee_status='unpaid' AND student_fee.fk_client_id='$client' ORDER BY fee_id DESC";
 
-            $result = query($query);
-            while($row = mysqli_fetch_assoc($result)){
-                $roll_no = $row['roll_no'];
-                $s_name = $row['name'];
-                $fee = $row['monthly_fee'];
-                $paid = $row['monthly_fee'];
-                $dues = $row['pending_dues'];
-                $html .= "<tr>
+  $result = query($query);
+  while ($row = mysqli_fetch_assoc($result)) {
+    $roll_no = $row['roll_no'];
+    $s_name = $row['name'];
+    $fee = $row['monthly_fee'];
+    $paid = $row['monthly_fee'];
+    $dues = $row['pending_dues'];
+    $html .= "<tr>
                 <td class='service'>$roll_no</td>
                 <td class='desc'>$s_name</td>
                 <td class='unit'>Rs. $fee</td>
                 <td class='qty'>Rs. 0</td>
               </tr>";
-            }
-            //   $html .= "<tr>
-            //     <td colspan='4' class='grand total'>GRAND TOTAL</td>
-            //     <td class='grand total'>$6,500.00</td>
-            //   </tr>";
-            $html .= "</tbody>
-          </table>";
-          $html .= "<br><br><br>
-          <strong>Owner Signature:</strong> <u><span style='width:100px'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></u>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <strong>Accountant Signature:</strong> <u><span style='width:100px'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></u>
-          &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-          <strong>Editor Signature:</strong> <u><span style='width:100px'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></u>
-          <br><br>
-          <strong>Dated:</strong> <u><span style='width:100px'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></u>
-          ";
-
-
-        // $html .= "<div id='notices'>
-        //     <div>NOTICE:</div>
-        //     <div class='notice'>A finance charge of 1.5% will be made on unpaid balances after 30 days.</div>
-        //   </div>";
-        $html .= "</main>";
-        // $html .= "<footer>
-        //   Invoice was created on a computer and is valid without the signature and seal.
-        // </footer>";
-      $html .= "</body>
-    </html>
-    ";
-    }
-
-?>
+  }
+  $html .= 
+      "</tbody>
+          </table>
+        </div>
+        <br><br><br>
+        <strong>Owner Signature:</strong> <u>_____________________________</u>
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <strong>Accountant Signature:</strong> <u>_____________________________</u>
+        <br><br>
+        <strong>Dated:</strong> <u>_____________________________</u>
+      </main>
+    </body>
+  </html>
+";
+}

@@ -4,6 +4,11 @@
 <?php require_once("includes/sidebar.php"); ?>
 
 <?php
+// getting the client id
+$client = escape($_SESSION['client_id']);
+?>
+
+<?php
 // checking session for appropriate access
 if ($_SESSION['login_access'] == 'developer' || $_SESSION['login_access'] == 'accountant' || $_SESSION['login_access'] == 'super') {
 } else {
@@ -27,9 +32,20 @@ if (isset($_POST['rejected']) && !empty($_POST['rejection_reason'])) {
     // echo $_GET['id'];
     $rejection_reason = escape($_POST['rejection_reason']);
     $q = "UPDATE student_fee SET fee_method='', payment_date='', fee_status='rejected', admin_remarks='$rejection_reason' ";
-    $q .= "WHERE fee_id=$id";
+    $q .= "WHERE fee_id=$id AND fk_client_id='$client'";
     $result = query($q);
     if ($result) {
+        $name = escape($_POST['student_name']);
+        // fetching the admin id and adding the data
+        $admin_name = escape($_SESSION['login_name']);
+        $log = "Admin <strong>$admin_name</strong> rejected fees of student <strong>$name</strong> !";
+        $times = date('d/m/Y h:i a', time());
+        $times = (string) $times;
+        // adding activity into the logs
+        $query = "INSERT INTO admin_logs(log_message, time, fk_client_id) VALUES('$log', '$times', '$client')";
+        $pass_query2 = mysqli_query($conn, $query);
+
+
         redirect("./fee-requests.php");
     }
 } elseif (isset($_POST['rejected']) && empty($_POST['rejection_reason'])) {
@@ -40,18 +56,29 @@ if (isset($_POST['rejected']) && !empty($_POST['rejection_reason'])) {
 if (isset($_POST['due']) && !empty($_POST['dues'])) {
     $id = escape($_POST['id']);
     $dues = escape($_POST['dues']);
-    $q2 = "UPDATE student_fee SET fee_status='dues', pending_dues='$dues' ";
-    $q2 .= "WHERE fee_id='$id'";
+    $q2 = "UPDATE student_fee SET fee_status='dues', pending_dues='$dues', admin_remarks='' ";
+    $q2 .= "WHERE fee_id='$id' AND fk_client_id='$client'";
     $rs1 = query($q2);
     if ($rs1) {
+        $name = escape($_POST['student_name']);
+        // fetching the admin id and adding the data
+        $admin_name = escape($_SESSION['login_name']);
+        $log = "Admin <strong>$admin_name</strong> accepted fees of student <strong>$name</strong> as paid with some remaining dues !";
+        $times = date('d/m/Y h:i a', time());
+        $times = (string) $times;
+        // adding activity into the logs
+        $query = "INSERT INTO admin_logs(log_message, time, fk_client_id) VALUES('$log', '$times', '$client')";
+        $pass_query2 = mysqli_query($conn, $query);
+
+
         $date = date('Y-m-d', time());
         $name = escape($_POST['student_name']);
         $reg = escape($_POST['roll_no']);
         $fee = escape($_POST['monthly_fee']);
         $paid = (int) $fee - (int) $dues;
-        $comment = "Student $name, reg# $reg paid fee amount Rs.$paid with pending dues Rs.$dues (Monthly Fee)";
-        $qer = "INSERT INTO expense_receiving (comment, expense, receiving, date) ";
-        $qer .= "VALUES ('$comment', '0', '$paid', '$date')";
+        $comment = "Student $name, reg# $reg paid fee amount Rs.$paid with remaining dues Rs.$dues (Monthly Fee)";
+        $qer = "INSERT INTO expense_receiving (comment, expense, receiving, date, fk_client_id) ";
+        $qer .= "VALUES ('$comment', '0', '$paid', '$date', '$client')";
         $res = query($qer);
         if ($res) {
             redirect("./fee-requests.php");
@@ -65,16 +92,27 @@ if (isset($_POST['due']) && !empty($_POST['dues'])) {
 if (isset($_POST['paid'])) {
     $id = escape($_POST['id']);
     $q2 = "UPDATE student_fee SET fee_status='paid' ";
-    $q2 .= "WHERE fee_id='$id'";
+    $q2 .= "WHERE fee_id='$id' AND fk_client_id='$client'";
     $rs1 = query($q2);
     if ($rs1) {
+        $name = escape($_POST['student_name']);
+        // fetching the admin id and adding the data
+        $admin_name = escape($_SESSION['login_name']);
+        $log = "Admin <strong>$admin_name</strong> accepted fees of student <strong>$name</strong> as totally paid !";
+        $times = date('d/m/Y h:i a', time());
+        $times = (string) $times;
+        // adding activity into the logs
+        $query = "INSERT INTO admin_logs(log_message, time, fk_client_id) VALUES('$log', '$times', '$client')";
+        $pass_query2 = mysqli_query($conn, $query);
+
+
         $date = date('Y-m-d', time());
         $name = escape($_POST['student_name']);
         $reg = escape($_POST['roll_no']);
         $fee = escape($_POST['monthly_fee']);
         $comment = "Student $name, reg# $reg paid full fee amount Rs.$fee (Monthly Fee)";
-        $qer = "INSERT INTO expense_receiving (comment, expense, receiving, date) ";
-        $qer .= "VALUES ('$comment', '0', '$fee', '$date')";
+        $qer = "INSERT INTO expense_receiving (comment, expense, receiving, date, fk_client_id) ";
+        $qer .= "VALUES ('$comment', '0', '$fee', '$date', '$client')";
         $res = query($qer);
         if ($res) {
             redirect("./fee-requests.php");
@@ -118,34 +156,36 @@ if (isset($_POST['paid'])) {
                         $fee_id = escape($_GET['id']);
                         $query = "SELECT * FROM student_fee INNER JOIN ";
                         $query .= "student_profile ON student_fee.fk_student_id=student_profile.student_id ";
-                        $query .= "WHERE fee_id='$fee_id'";
+                        $query .= "WHERE fee_id='$fee_id' AND student_fee.fk_client_id='$client'";
                         $result = query($query);
                         $rows = mysqli_fetch_assoc($result);
                         ?>
                         <div class="tab-content pt-2">
                             <div class="tab-pane fade show active profile-edit pt-3" id="profile-edit">
-                                <table class="table table-bordered border-primary">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">Reg no#</th>
-                                            <th scope="col">Name</th>
-                                            <th scope="col">Monthly Fee (Rs)</th>
-                                            <th scope="col">Month</th>
-                                            <th scope="col">Payment Date</th>
-                                            <th scope="col">Fee Method</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td><?php echo $rows['roll_no']; ?></td>
-                                            <td><?php echo $rows['name']; ?></td>
-                                            <td>Rs. <?php echo $rows['monthly_fee']; ?></td>
-                                            <td><?php echo $rows['year'] . ', ' . $rows['month']; ?></td>
-                                            <td><?php echo $rows['payment_date']; ?></td>
-                                            <td><?php echo $rows['fee_method']; ?></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                <div class="table-responsive">
+                                    <table class="table table-bordered border-primary">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Reg no#</th>
+                                                <th scope="col">Name</th>
+                                                <th scope="col">Monthly Fee (Rs)</th>
+                                                <th scope="col">Month</th>
+                                                <th scope="col">Payment Date</th>
+                                                <th scope="col">Fee Method</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td><?php echo $rows['roll_no']; ?></td>
+                                                <td><?php echo $rows['name']; ?></td>
+                                                <td>Rs. <?php echo $rows['monthly_fee']; ?></td>
+                                                <td><?php echo $rows['year'] . ', ' . $rows['month']; ?></td>
+                                                <td><?php echo $rows['payment_date']; ?></td>
+                                                <td><?php echo $rows['fee_method']; ?></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
                                 <form method="post" action="" enctype="multipart/form-data">
                                     <?php
                                     if (!empty($rows['receipt_image'])) {
