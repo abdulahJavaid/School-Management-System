@@ -27,6 +27,16 @@ $client = escape($_SESSION['client_id']);
         $t_date = escape($t_date);
         $query = "INSERT INTO notices(notice_description, notice_date, fk_client_id) VALUES('$notice_description', '$t_date', '$client')";
         $result = mysqli_query($conn, $query);
+
+        // fetching the admin id and adding the data
+        $admin_name = escape($_SESSION['login_name']);
+        $log = "Admin <strong>$admin_name</strong> added an announcement/notification for school !";
+        $times = date('d/m/Y h:i a', time());
+        $times = (string) $times;
+        // adding activity into the logs
+        $query = "INSERT INTO admin_logs(log_message, time, fk_client_id) VALUES('$log', '$times', '$client')";
+        $pass_query2 = mysqli_query($conn, $query);
+
         if ($result) {
             echo "data has been successfully inserted";
             // redirect('../');

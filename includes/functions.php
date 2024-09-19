@@ -99,3 +99,19 @@ function escape($string)
     global $conn;
     return mysqli_real_escape_string($conn, $string);
 }
+
+// checking if the thumb impression exists in the database
+function check_finger ($name, $id) {
+    global $conn;
+    if(isset($_SESSION['client_id'])){
+        $client = escape($_SESSION['client_id']);
+    }
+    $query = "SELECT * FROM teacher_fingers WHERE fk_teacher_id='$id' AND finger_name='$name' ";
+    $query .= "AND fk_client_id='$client'";
+    $result = query($query);
+    if(mysqli_num_rows($result) == 1){
+        return "yes";
+    }else {
+        return "no";
+    }
+}

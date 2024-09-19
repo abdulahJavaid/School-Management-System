@@ -48,8 +48,8 @@ $client = escape($_SESSION['client_id']);
                                         <th scope="col">Staff Id</th>
                                         <th scope="col">Name</th>
                                         <th scope="col">Address</th>
-                                        <th scope="col">See Profile</th>
-                                        <th scope="col">Edit Profile</th>
+                                        <th scope="col">Profile</th>
+                                        <th scope="col">Profile</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -62,8 +62,8 @@ $client = escape($_SESSION['client_id']);
                                             <td><?php echo $row['staff_school_id']; ?></td>
                                             <td><?php echo $row['name']; ?></td>
                                             <td><?php echo $row['address']; ?></td>
-                                            <td><a href="view-staff.php?id=<?php echo $row['staff_id']; ?>">View profile</a></td>
-                                            <td><a href="edit-staff.php?id=<?php echo $row['staff_id']; ?>">Edit profile</a></td>
+                                            <td><a href="view-staff.php?id=<?php echo $row['staff_id']; ?>"><u>View</u></a></td>
+                                            <td><a href="edit-staff.php?id=<?php echo $row['staff_id']; ?>"><u>Edit</u></a></td>
                                         </tr>
                                     <?php
                                     } // end of while loop - fetching teacher records

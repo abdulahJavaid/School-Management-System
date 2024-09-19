@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 16, 2024 at 07:05 PM
+-- Generation Time: Sep 19, 2024 at 05:53 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -2745,6 +2745,20 @@ INSERT INTO `student_profile` (`student_id`, `name`, `cnic`, `student_gender`, `
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `teacher_fingers`
+--
+
+CREATE TABLE `teacher_fingers` (
+  `finger_id` int(11) NOT NULL,
+  `fk_teacher_id` int(11) NOT NULL,
+  `fingerprint` text NOT NULL,
+  `finger_name` varchar(100) NOT NULL,
+  `fk_client_id` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `teacher_passwords`
 --
 
@@ -3132,6 +3146,14 @@ ALTER TABLE `student_profile`
   ADD KEY `fk_client_id_for_student_profile` (`fk_client_id`);
 
 --
+-- Indexes for table `teacher_fingers`
+--
+ALTER TABLE `teacher_fingers`
+  ADD PRIMARY KEY (`finger_id`),
+  ADD KEY `fk_teacher_id_for_teacher_fingers` (`fk_teacher_id`),
+  ADD KEY `fk_client_id_for_teacher_fingers` (`fk_client_id`);
+
+--
 -- Indexes for table `teacher_passwords`
 --
 ALTER TABLE `teacher_passwords`
@@ -3284,6 +3306,12 @@ ALTER TABLE `student_profile`
   MODIFY `student_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=208;
 
 --
+-- AUTO_INCREMENT for table `teacher_fingers`
+--
+ALTER TABLE `teacher_fingers`
+  MODIFY `finger_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
 -- AUTO_INCREMENT for table `teacher_passwords`
 --
 ALTER TABLE `teacher_passwords`
@@ -3432,6 +3460,13 @@ ALTER TABLE `student_passwords`
 --
 ALTER TABLE `student_profile`
   ADD CONSTRAINT `fk_client_id_for_student_profile` FOREIGN KEY (`fk_client_id`) REFERENCES `school_profile_` (`client_id`);
+
+--
+-- Constraints for table `teacher_fingers`
+--
+ALTER TABLE `teacher_fingers`
+  ADD CONSTRAINT `fk_client_id_for_teacher_fingers` FOREIGN KEY (`fk_client_id`) REFERENCES `school_profile_` (`client_id`),
+  ADD CONSTRAINT `fk_teacher_id_for_teacher_fingers` FOREIGN KEY (`fk_teacher_id`) REFERENCES `teacher_profile` (`teacher_id`);
 
 --
 -- Constraints for table `teacher_passwords`

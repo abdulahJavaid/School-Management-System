@@ -48,12 +48,12 @@ $client = escape($_SESSION['client_id']);
                                         <th scope="col">Teacher Id</th>
                                         <th scope="col">Name</th>
                                         <th scope="col">Qualification</th>
-                                        <th scope="col">Date of Birth</th>
                                         <th scope="col">Address</th>
                                         <th scope="col">Email</th>
                                         <!-- <th scope="col">Assign Classes</th> -->
-                                        <th scope="col">See Profile</th>
-                                        <th scope="col">Edit Profile</th>
+                                        <th scope="col">Profile</th>
+                                        <th scope="col">Profile</th>
+                                        <th scope="col">Fingerprints</th>
 
                                     </tr>
                                 </thead>
@@ -70,12 +70,12 @@ $client = escape($_SESSION['client_id']);
 
                                             <td><?php echo $row['qualification']; ?></td>
 
-                                            <td><?php echo $row['dob']; ?></td>
                                             <td><?php echo $row['address']; ?></td>
                                             <td><?php echo $row['email']; ?></td>
                                             <!-- assigning the teacher to a class goes here -->
-                                            <td><a href="view-teacher.php?id=<?php echo $row['teacher_id']; ?>">View profile</a></td>
-                                            <td><a href="edit-teacher.php?id=<?php echo $row['teacher_id']; ?>">Edit profile</a></td>
+                                            <td><a href="view-teacher.php?id=<?php echo $row['teacher_id']; ?>"><u>View</u></a></td>
+                                            <td><a href="edit-teacher.php?id=<?php echo $row['teacher_id']; ?>"><u>Edit</u></a></td>
+                                            <td><a href="teacher-fingers.php?id=<?php echo $row['teacher_id']; ?>"><u>Add</u></a></td>
 
                                         </tr>
                                     <?php

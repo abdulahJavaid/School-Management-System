@@ -386,6 +386,7 @@ if (isset($_POST['submit'])) {
     </section>
 
 </main><!-- End #main -->
+
 <script>
     // code to upload and view the image
     document.getElementById('uploadButton').addEventListener('click', function() {

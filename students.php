@@ -80,8 +80,8 @@ $client = $_SESSION['client_id'];
                                         <th scope="col">Section</th>
                                         <th scope="col">Monthly Fee</th>
                                         <th scope="col">Dues</th>
-                                        <th scope="col">See Profile</th>
-                                        <th scope="col">Edit</th>
+                                        <th scope="col">Profile</th>
+                                        <th scope="col">Profile</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -119,8 +119,8 @@ $client = $_SESSION['client_id'];
                                                 <td><?php echo $row['section_name']; ?></td>
                                                 <td>Rs. <?php echo $row['fee_amount']; ?></td>
                                                 <td>null</td>
-                                                <td><a href="view-student.php?id=<?php echo $row['student_id']; ?>">View profile</a></td>
-                                                <td><a href="edit-student.php?id=<?php echo $row['student_id']; ?>">Edit profile</a></td>
+                                                <td><a href="view-student.php?id=<?php echo $row['student_id']; ?>"><u>View</u></a></td>
+                                                <td><a href="edit-student.php?id=<?php echo $row['student_id']; ?>"><u>Edit</u></a></td>
                                             </tr>
 
                                         <?php
