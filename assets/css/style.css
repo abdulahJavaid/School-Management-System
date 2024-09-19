@@ -608,7 +608,7 @@ h6 {
   padding: 20px;
   overflow-y: auto;
   scrollbar-width: thin;
-  scrollbar-color: #aab7cf transparent;
+  scrollbar-color: white transparent;
   box-shadow: 0px 0px 20px rgba(1, 41, 112, 0.1);
   background-color: #fff;
 }
@@ -620,7 +620,7 @@ h6 {
 }
 
 .sidebar::-webkit-scrollbar {
-  width: 5px;
+  width: 10px;
   height: 8px;
   background-color: #fff;
 }
@@ -754,6 +754,22 @@ h6 {
 .sidebar-nav .nav-content a.active i {
   background-color: #4154f1;
 }
+
+.nav-link.nav-profile .d-none.d-md-block {
+  color: white !important;
+  
+}
+
+.nav-link.nav-profile i.bi-chevron-down {
+  color: white !important;
+}
+
+.bi-chevron-down {
+  color: white !important;
+  
+}
+
+
 
 /*--------------------------------------------------------------
 # Dashboard
@@ -1235,31 +1251,35 @@ h6 {
 --------------------------------------------------------------*/
 .sidebar {
   /* #2193b0 */
-  background-color: #2193b0 !important;
+  background: linear-gradient(to right, #395bce , #41daa7 ) !important;
+
+
   scrollbar-color: #6dd5ed !important;
 }
 .sidebar-nav .nav-link {
   /* #6dd5ed */
-  background: #6dd5ed !important;
-  color: black !important;
+  background: rgb(68, 38, 189) !important;
+  color:      white !important;
 }
 .sidebar-nav .nav-link:hover {
-  /* background: #6dd5ed !important; */
-  opacity: 0.8;
-  color: white !important;
+  background: #2ECA6A !important; /* Update this color as needed */
+  opacity: 1;
+  color: #090174 !important; /* Update this color as needed */
 }
+
 .header {
   /* #2193b0 */
-  background-color: #2193b0 !important;
+  background: linear-gradient(to left, #395bce , #47e2af) !important;
 }
 .logo span {
   color: black;
 }
 .header .toggle-sidebar-btn {
-  color: black;
+  color: white;
 }
 .header-nav .nav-icon {
-  color: black;
+  color: white;
+
 }
 .sidebar-nav .nav-content a {
   color: black;
