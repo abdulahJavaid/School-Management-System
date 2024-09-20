@@ -13,12 +13,12 @@
   
   <!--Stylesheet-->
   <style>
-    input, .bg-danger {
+    /* input, .bg-danger {
       color: black;
     }
     input:focus {
       color: black;
-    }
+    } */
     button {
       cursor: pointer;
     }

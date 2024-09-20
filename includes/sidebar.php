@@ -16,10 +16,6 @@
         <!-- <i class="bi bi-chevron-down ms-auto"></i> -->
       </a>
     </li><!-- End School Profile Sidebar -->
-    <?php
-    // checking session for appropriate access
-    if ($_SESSION['login_access'] == 'developer' || $_SESSION['login_access'] == 'profiler' || $_SESSION['login_access'] == 'super') {
-    ?>
 
       <!-- <li class="nav-item">
         <a class="nav-link" data-bs-target="#component," href="./add-subjects.php">
@@ -103,14 +99,7 @@
           </li>
         </ul>
       </li><!-- End Timetable and exam schedule -->
-    <?php
-      // end of if statement
-    }
-    ?>
-    <?php
-    // checking session for appropriate access
-    if ($_SESSION['login_access'] == 'developer' || $_SESSION['login_access'] == 'accountant' || $_SESSION['login_access'] == 'super') {
-    ?>
+
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
           <i class=""><img src="images/asset-management.gif" width="30px" height="30px" alt=""></i><span>Finance Management</span>
@@ -147,6 +136,11 @@
         </a>
         <ul id="charts-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
+            <a href="issue-fee.php">
+              <i class="bi bi-arrow-right"></i><span>Issue Fees</span>
+            </a>
+          </li>
+          <li>
             <a href="fee-requests.php">
               <i class="bi bi-arrow-right"></i><span>Fee paid requests</span>
             </a>
@@ -173,36 +167,62 @@
           </li>
         </ul>
       </li><!-- End Student Fee Section -->
-    <?php
-      // end of if statement
-    }
-    ?>
+
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#student-tracking" data-bs-toggle="collapse" href="#">
+          <i class=><img src="images/analytics.gif" width="30px" height="30px" alt=""></i><span>Student Tracking</span>
+          <i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="student-tracking" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="progress-reports.php">
+              <i class="bi bi-arrow-right"></i><span>Progress Reports</span>
+            </a>
+          </li>
+          <li>
+            <a href="homework-diary.php">
+              <i class="bi bi-arrow-right"></i><span>Homework Diary</span>
+            </a>
+          </li>
+          <li>
+            <a href="attendance.php">
+              <i class="bi bi-arrow-right"></i><span>Attendance</span>
+            </a>
+          </li>
+        </ul>
+      </li><!-- End student daily reports -->
+
     <li class="nav-item">
       <a class="nav-link collapsed" data-bs-target="#tables-nav" href="fee-vouchers.php">
         <i class=><img src="images/voucher.gif" width="30px" height="30px" alt=""></i><span>Fee Vouchers</span>
         <!-- <i class="bi bi-chevron-down ms-auto"></i> -->
       </a>
-    </li><!-- End Student Fee Vouchers -->
-    <li class="nav-item">
+    </li>
+    <!-- End Student Fee Vouchers -->
+    
+    <!-- <li class="nav-item">
       <a class="nav-link collapsed" data-bs-target="#tables-nav" href="progress-reports.php">
         <i class=><img src="images/analytics.gif" width="30px" height="30px" alt=""></i><span>Progress Reports</span>
-        <!-- <i class="bi bi-chevron-down ms-auto"></i> -->
+        <i class="bi bi-chevron-down ms-auto"></i>
       </a>
-    </li><!-- End Student Progress Report -->
+    </li> -->
+    <!-- End Student Progress Report -->
 
-    <li class="nav-item">
+    <!-- <li class="nav-item">
       <a class="nav-link collapsed" data-bs-target="#tables-nav" href="homework-diary.php">
         <i class=><img src="images/diary.gif" width="30px" height="30px" alt=""></i><span>Home Work Diary</span>
-        <!-- <i class="bi bi-chevron-down ms-auto"></i> -->
+        <i class="bi bi-chevron-down ms-auto"></i>
       </a>
-    </li><!-- End Homework Diary -->
+    </li> -->
+    <!-- End Homework Diary -->
 
-    <li class="nav-item">
+    <!-- <li class="nav-item">
       <a class="nav-link collapsed" data-bs-target="#tables-nav" href="attendance.php">
         <i class=><img src="images/face.gif" width="30px" height="30px" alt=""></i><span>Attendance</span>
-        <!-- <i class="bi bi-chevron-down ms-auto"></i> -->
+        <i class="bi bi-chevron-down ms-auto"></i>
       </a>
-    </li><!-- End Student Attendance -->
+    </li> -->
+    <!-- End Student Attendance -->
 
     <li class="nav-item">
       <a class="nav-link collapsed" href="add-announcements.php">

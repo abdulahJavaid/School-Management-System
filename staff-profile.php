@@ -32,27 +32,27 @@ if (isset($_POST['submit'])) {
     $salary = escape($_POST['staff_salary']);
 
     // checking if the staff id is assigned to another teacher
-    $query = "SELECT * FROM teacher_profile WHERE school_id='$staff_id' AND fk_client_id='$client'";
+    $query = "SELECT * FROM teacher_profile WHERE school_id='$staff_id' AND teacher_status='1' AND fk_client_id='$client'";
     $find_tch_id = query($query);
     if (mysqli_num_rows($find_tch_id) == 0) {
         // checking if the staff id assigned to another staff member
-        $query = "SELECT * FROM staff_profile WHERE staff_school_id='$staff_id' AND fk_client_id='$client'";
+        $query = "SELECT * FROM staff_profile WHERE staff_school_id='$staff_id' AND staff_status='1' AND fk_client_id='$client'";
         $find_staff_id = query($query);
         if (mysqli_num_rows($find_staff_id) == 0) {
             // checking if the cnic is already assosiated to another teacher
-            $query = "SELECT * FROM teacher_profile WHERE cnic='$cnic' AND fk_client_id='$client'";
+            $query = "SELECT * FROM teacher_profile WHERE cnic='$cnic' AND teacher_status='1' AND fk_client_id='$client'";
             $find_tch_cnic = query($query);
             if (mysqli_num_rows($find_tch_cnic) == 0) {
                 // checking if the cnic is already assosiated to another staff member
-                $query = "SELECT * FROM staff_profile WHERE cnic='$cnic' AND fk_client_id='$client'";
+                $query = "SELECT * FROM staff_profile WHERE cnic='$cnic' AND staff_status='1' AND fk_client_id='$client'";
                 $find_staff_cnic = query($query);
                 if (mysqli_num_rows($find_staff_cnic) == 0) {
                     // checking if the phone# is already associated to another teacher
-                    $query = "SELECT * FROM teacher_profile WHERE phone_no='$phone_no' AND fk_client_id='$client'";
+                    $query = "SELECT * FROM teacher_profile WHERE phone_no='$phone_no' AND teacher_status='1' AND fk_client_id='$client'";
                     $find_tch_phone = query($query);
                     if (mysqli_num_rows($find_tch_phone) == 0) {
                         // checking if the phone# is already associated to another staff member
-                        $query = "SELECT * FROM staff_profile WHERE phone_no='$phone_no' AND fk_client_id='$client'";
+                        $query = "SELECT * FROM staff_profile WHERE phone_no='$phone_no' AND staff_status='1' AND fk_client_id='$client'";
                         $find_staff_phone = query($query);
                         if (mysqli_num_rows($find_staff_phone) == 0) {
 

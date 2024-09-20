@@ -125,7 +125,7 @@ $client = escape($_SESSION['client_id']);
         $qu = "SELECT * FROM student_class INNER JOIN student_profile ON ";
         $qu .= "student_class.fk_student_id=student_profile.student_id INNER JOIN attendance ON ";
         $qu .= "student_profile.student_id=attendance.fk_student_id ";
-        $qu .= "WHERE fk_section_id='$section' AND date='$date' AND student_class.fk_client_id='$client'";
+        $qu .= "WHERE fk_section_id='$section' AND student_status='1' AND date='$date' AND student_class.fk_client_id='$client'";
         $get = query($qu);
     ?>
         <div class="container my-5">

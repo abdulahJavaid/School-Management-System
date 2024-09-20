@@ -1,10 +1,11 @@
-<?php require_once("init.php"); // inclusion fo init file ?>
+<?php require_once("init.php"); // inclusion fo init file 
+?>
 
 <?php
-  // cheking if the user is logged in
-  if(!isset($_SESSION['login_access'])){
-    redirect("./login.php");
-  }
+// cheking if the user is logged in
+if (!isset($_SESSION['login_access'])) {
+  redirect("./login.php");
+}
 ?>
 
 <!DOCTYPE html>
@@ -14,7 +15,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>Dashboard - My School System</title>
+  <title>My School System</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -35,7 +36,7 @@
   <link href="assets/vendor/remixicon/remixicon.css" rel="stylesheet">
   <link href="assets/vendor/simple-datatables/style.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-<!-- 
+  <!-- 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> -->
 
@@ -61,7 +62,7 @@
     <div class="d-flex align-items-center justify-content-between">
       <a href="./index.php" class="logo d-flex align-items-center">
         <!-- <img src="assets/img/logo.png" alt=""> -->
-        <span class="d-none d-lg-block" style="color: white;">Insaaf School System</span>
+        <span class="d-none d-lg-block" style="color: white;"><?php echo $_SESSION['school_name']; ?> System</span>
       </a>
       <i class="bi bi-list toggle-sidebar-btn"></i>
     </div><!-- End Logo -->
@@ -86,7 +87,12 @@
         <li class="nav-item dropdown">
 
           <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
-            <i class="bi bi-bell"></i>
+            <i class="">
+              <h1 class="fw-boldf"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bell" viewBox="0 0 16 16">
+                <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2M8 1.918l-.797.161A4 4 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4 4 0 0 0-3.203-3.92zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5 5 0 0 1 13 6c0 .88.32 4.2 1.22 6" />
+              </svg></h1>
+              <!-- <img src="./images/bell-default-icon.jpg" width="50px" height="50px" alt=""> -->
+            </i>
             <!-- <span class="badge  badge-number" style="background-color: red">4</span> -->
           </a><!-- End Notification Icon -->
 
@@ -104,21 +110,21 @@
             // getting the notifications
             $query = "SELECT * FROM notices WHERE fk_client_id='$client' AND notice_status='school' ORDER BY notice_id DESC LIMIT 3";
             $get_notices = query($query);
-            while($notices = mysqli_fetch_assoc($get_notices)){
+            while ($notices = mysqli_fetch_assoc($get_notices)) {
             ?>
-              
-            <li class="notification-item">
-              <i class="bi bi-exclamation-circle text-warning"></i>
-              <div>
-                <h4>Notice</h4>
-                <p><?php echo $notices['notice_description']; ?></p>
-                <p><?php echo $notices['notice_date']; ?></p>
-              </div>
-            </li>
 
-            <li>
-              <hr class="dropdown-divider">
-            </li>
+              <li class="notification-item">
+                <i class="bi bi-exclamation-circle text-warning"></i>
+                <div>
+                  <h4>Notice</h4>
+                  <p><?php echo $notices['notice_description']; ?></p>
+                  <p><?php echo $notices['notice_date']; ?></p>
+                </div>
+              </li>
+
+              <li>
+                <hr class="dropdown-divider">
+              </li>
             <?php
             }
             ?>
@@ -176,9 +182,9 @@
             <i class="bi bi-gear"></i>
             <span class="badge bg-success badge-number">3</span>
           </a> -->
-          <!-- End Messages Icon -->
+        <!-- End Messages Icon -->
 
-          <!-- <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
+        <!-- <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
             <li class="dropdown-header">
               You have 3 new messages
               <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
@@ -234,15 +240,22 @@
             </li>
 
           </ul> -->
-          <!-- End Messages Dropdown Items -->
+        <!-- End Messages Dropdown Items -->
 
         <!-- </li> -->
         <!-- End Messages Nav -->
 
         <li class="nav-item dropdown pe-3">
 
-          <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-target="#profile-drop" data-bs-toggle="dropdown" >  <!-- includes/logout.php?get=yes-->
-            <img src="assets/img/school-profile-image.jpg" alt="Profile" class="rounded-circle">
+          <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-target="#profile-drop" data-bs-toggle="dropdown"> <!-- includes/logout.php?get=yes-->
+            <?php
+            $client = escape($_SESSION['client_id']);
+            $query = "SELECT * FROM school_profile_ WHERE client_id='$client'";
+            $get_school_data = query($query);
+            $school_specific = mysqli_fetch_assoc($get_school_data);
+            $school_png = $school_specific['image'];
+            ?>
+            <img src="./uploads/school-profile-uploads/<?php echo $school_png; ?>" alt="Profile" class="border-no">
             <!-- <i class="bi bi-box-arrow-right"></i> -->
             <span class="d-none d-md-block ps-2">Profile&nbsp;</span>
             <i class="bi bi-chevron-down"></i>

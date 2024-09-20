@@ -32,7 +32,7 @@
   $conn->close();
   ?>
   <div class="pagetitle">
-    <h1>School Profile</h1>
+    <h1>Profile</h1>
     <nav>
       <ol class="breadcrumb">
         <!-- <li class="breadcrumb-item"><a href="index.html">Home</a></li>
@@ -54,10 +54,13 @@
         <div class="card custom-card">
           <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
-            <img src="uploads/school-profile-uploads/<?php echo $img; ?>" alt="Profile" class="rounded-circle" style="width: 300px; height: 150px;">
-
-            <h2>School Name</h2>
-            <h3><?php echo $name; ?></h3>
+          <!-- class="rounded-circle" -->
+          <!-- style="width: 300px; height: 150px;" -->
+          
+            <img src="uploads/school-profile-uploads/<?php echo $img; ?>" width="200px" height="200px" alt="Profile">
+            
+            <h2 class=""><?php echo $name; ?></h2>
+            <h3><?php echo $address; ?></h3>
             <div class="social-links mt-2">
               <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
               <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
@@ -107,7 +110,7 @@
                   <h5 class="card-title">School Details</h5>
 
                   <div class="row">
-                    <div class="col-lg-3 col-md-4 label "><strong>Client Id</strong></div>
+                    <div class="col-lg-3 col-md-4 label "><strong>School Id</strong></div>
                     <div class="col-lg-9 col-md-8"><?php echo $client_id; ?></div>
                   </div>
 

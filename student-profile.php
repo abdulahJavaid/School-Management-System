@@ -56,11 +56,11 @@ if (isset($_POST['submit'])) {
     $classnsection = $_POST['classnsection'];
     if ($classnsection != 'choose-class') {
         // checking if the roll number is not assigned to another student
-        $query = "SELECT * FROM student_profile WHERE roll_no='$roll_no' AND fk_client_id='$client'";
+        $query = "SELECT * FROM student_profile WHERE roll_no='$roll_no' AND student_status='1' AND fk_client_id='$client'";
         $find_roll = query($query);
         if (mysqli_num_rows($find_roll) == 0) {
             // checking if the cnic/b-form is already assosiated to another student
-            $query = "SELECT * FROM student_profile WHERE cnic='$cnic' AND fk_client_id='$client'";
+            $query = "SELECT * FROM student_profile WHERE cnic='$cnic' AND student_status='1' AND fk_client_id='$client'";
             $find_cnic = query($query);
             if (mysqli_num_rows($find_cnic) == 0) {
                 // channging the picture name and moving to the folder
@@ -94,7 +94,7 @@ if (isset($_POST['submit'])) {
                 if ($pass_query) {
                     // getting student id
                     $gets = "SELECT student_id FROM student_profile WHERE name='$name' AND cnic='$cnic' AND father_name='$f_name' AND roll_no='$roll_no' ";
-                    $gets .= "AND roll_no='$roll_no'";
+                    $gets .= " AND student_status='1'";
                     $get2 = query($gets);
                     $get_r2 = mysqli_fetch_assoc($get2);
                     $student_id = $get_r2['student_id'];

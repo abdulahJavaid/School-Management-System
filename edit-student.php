@@ -21,7 +21,7 @@ $query = "SELECT * FROM all_classes ";
 $query .= "INNER JOIN class_sections ON all_classes.class_id = class_sections.fk_class_id ";
 $query .= "INNER JOIN student_class ON class_sections.section_id = student_class.fk_section_id ";
 $query .= "INNER JOIN student_profile ON student_class.fk_student_id = student_profile.student_id ";
-$query .= "WHERE student_id = '$id' AND student_class.status='1' ";
+$query .= "WHERE student_id = '$id' AND student_class.status='1' AND student_status='1' ";
 $query .= "AND student_profile.fk_client_id='$client'";
 $pass = mysqli_query($conn, $query);
 $row = mysqli_fetch_assoc($pass);
@@ -72,11 +72,11 @@ $row = mysqli_fetch_assoc($pass);
     $fee_amount = escape($_POST['fee_amount']);
 
     // checking if the roll number is not assigned to another student
-    $query = "SELECT * FROM student_profile WHERE roll_no='$roll_no' AND fk_client_id='$client' AND NOT student_id='$cid'";
+    $query = "SELECT * FROM student_profile WHERE roll_no='$roll_no' AND student_status='1' AND fk_client_id='$client' AND NOT student_id='$cid'";
     $find_roll = query($query);
     if (mysqli_num_rows($find_roll) == 0) {
       // checking if the cnic/b-form is already assosiated to another student
-      $query = "SELECT * FROM student_profile WHERE cnic='$cnic' AND fk_client_id='$client' AND NOT student_id='$cid'";
+      $query = "SELECT * FROM student_profile WHERE cnic='$cnic' AND student_status='1' AND fk_client_id='$client' AND NOT student_id='$cid'";
       $find_cnic = query($query);
       if (mysqli_num_rows($find_cnic) == 0) {
         // checking if the image is not empty and making it unique
@@ -100,7 +100,7 @@ $row = mysqli_fetch_assoc($pass);
         $query = "UPDATE student_profile SET name='$name', roll_no='$roll_no', cnic='$cnic', dob='$dob', ";
         $query .= "address='$address', email='$email', mobile_no='$mobile_no', father_name='$f_name', ";
         $query .= "father_cnic='$f_cnic', fee_amount='$fee_amount', image='$new_img', student_gender='$gender' ";
-        $query .= "WHERE student_id='$cid' AND fk_client_id='$client'";
+        $query .= "WHERE student_id='$cid' AND student_status='1' AND fk_client_id='$client'";
         $get = query($query);
 
         if ($get) {

@@ -164,7 +164,9 @@ if (isset($_POST['name'])) {
               </thead>
               <tbody>";
 
-  $query = "SELECT * FROM student_fee INNER JOIN student_profile ON student_fee.fk_student_id=student_profile.student_id WHERE name LIKE '%$get_name%' AND fee_status='paid' AND student_fee.fk_client_id='$client' ORDER BY fee_id DESC";
+  $query = "SELECT * FROM student_fee INNER JOIN student_profile ON student_fee.fk_student_id=student_profile.student_id ";
+  $query .= "WHERE name LIKE '%$get_name%' AND fee_status='paid' ";
+  $query .= "AND student_status='1' AND student_fee.fk_client_id='$client' ORDER BY fee_id DESC";
   $result = query($query);
   while ($row = mysqli_fetch_assoc($result)) {
     $roll_no = $row['roll_no'];

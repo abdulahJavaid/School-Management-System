@@ -30,7 +30,7 @@ $client = escape($_SESSION['client_id']);
 
         // fetching the admin id and adding the data
         $admin_name = escape($_SESSION['login_name']);
-        $log = "Admin <strong>$admin_name</strong> added an announcement/notification for school !";
+        $log = "Admin <strong>$admin_name</strong> added an announcement for school !";
         $times = date('d/m/Y h:i a', time());
         $times = (string) $times;
         // adding activity into the logs

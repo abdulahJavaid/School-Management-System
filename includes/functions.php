@@ -2,7 +2,20 @@
 // session_start();
 // all the general functions to be used
 
-// function for issuing Teacher Salaries
+// // function for adding unpaid fee to the dues
+// function add_unpaid_to_dues () {
+//     global $conn;
+//     if (isset($_SESSION['client_id'])) {
+//         $client = escape($_SESSION['client_id']);
+//         $date = date('d', time());
+//         if ($date == '28') {
+
+//         }
+//     }
+// }
+// add_unpaid_to_dues(); // calling the function
+
+// function for issuing Employee Salaries
 function employee_salary()
 {
     global $conn;

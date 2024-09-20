@@ -20,98 +20,9 @@ $client = escape($_SESSION['client_id']);
 
     </div><!-- End Page Title -->
 
-    <?php
-    // issue fees to whole school
-    if (isset($_POST['issued_fees'])) {
-        $due_date = escape($_POST['last_date']);
-        $month = date('F');
-        $year = date('Y');
-        $fee_status = 'unpaid';
-
-        $query = "SELECT student_id, fee_amount FROM student_profile WHERE student_status='1' AND fk_client_id='$client'";
-        $results = mysqli_query($conn, $query);
-        while ($row = mysqli_fetch_array($results)) {
-            $student_id = $row['student_id'];
-            $monthly_fee = $row['fee_amount'];
-
-            $query = "INSERT INTO student_fee(fk_student_id, year, month, monthly_fee, due_date, fee_status, fk_client_id) ";
-            $query .= "VALUES('$student_id', '$year', '$month', '$monthly_fee', '$due_date', '$fee_status', '$client')";
-            $resultss = query($query);
-
-            // adding the fee notices for the student
-            $today = date('Y-m-d', time());
-            $description = "Your Fees for this month has been issued!";
-            $query = "INSERT INTO notices(fk_student_id, notice_description, notice_status, notice_date, fk_client_id) ";
-            $query .= "VALUES('$student_id', '$description', 'student', '$today', '$client')";
-            $resultsss = query($query);
-        }
-        // fetching the admin id and adding the data
-        $admin_name = escape($_SESSION['login_name']);
-        $log = "Admin <strong>$admin_name</strong> issued Fees to all students !";
-        $times = date('d/m/Y h:i a', time());
-        $times = (string) $times;
-        // adding activity into the logs
-        $query = "INSERT INTO admin_logs(log_message, time, fk_client_id) VALUES('$log', '$times', '$client')";
-        $pass_query2 = mysqli_query($conn, $query);
-
-        redirect("./fee-vouchers.php");
-    }
-    ?>
-
     <!-- class and sections -->
     <div class="pagetitle">
         <div class="row">
-
-            <?php
-            // seeing if the fee is already issued
-            $month = date('F');
-            $year = date('Y');
-            $query = "SELECT * FROM student_fee WHERE month='$month' AND year='$year'";
-            $feees = query($query);
-            if (mysqli_num_rows($feees) == 0) {
-                // issue fees
-                if (!isset($_POST['issue_fees'])) {
-            ?>
-                    <div class="row mb-3">
-                        <div class="col-md-3 mb-3">
-                            <form action="" method="post">
-                                <button type="submit" name="issue_fees" class="btn btn-sm btn-success w-100">Issue Fees</button>
-                            </form>
-                        </div>
-                    </div>
-                <?php
-                }
-            } else {
-                echo "<code>Fees for this month is already issued</code>";
-            }
-            if (isset($_POST['issue_fees'])) {
-                ?>
-                <form action="" method="post">
-                    <div class="row mb-3">
-                        <p><code>Fee will be issued to whole school for </code><?php echo date('Y') . ', ' . date('F'); ?></p>
-                        <div class="col-sm-4">
-                            <label for="due-date" class="form-label"><strong>Fees Last date</strong> <code>*</code></label>
-
-                            <div class="col-auto">
-                                <div class="input-group">
-                                    <input
-                                        name="last_date"
-                                        type="date"
-                                        class="form-control"
-                                        aria-label="Example input"
-                                        aria-describedby="button-addon2" required />
-
-                                    <button type="submit" name="issued_fees" id="button-addon2" class="btn btn-sm btn-success">
-                                        Issue Fees
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            <?php
-            }
-            ?>
             <?php
             // download vouchers
             if (!isset($_POST['download_vouchers'])) {

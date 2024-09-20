@@ -85,7 +85,7 @@ if ($_SESSION['login_access'] == 'developer' || $_SESSION['login_access'] == 'ac
               // select the records from database of today
               $query = "SELECT * FROM teacher_profile INNER JOIN employee_salary ON ";
               $query .= "teacher_profile.teacher_id=employee_salary.fk_teacher_id WHERE ";
-              $query .= "salary_status='unpaid' AND teacher_profile.fk_client_id='$client'";
+              $query .= "salary_status='unpaid' AND teacher_status='1' AND teacher_profile.fk_client_id='$client'";
               $result = query($query);
               while ($row = mysqli_fetch_assoc($result)) {
                 $sal_id = $row['salary_id'];
@@ -108,7 +108,7 @@ if ($_SESSION['login_access'] == 'developer' || $_SESSION['login_access'] == 'ac
               // select the records from database of today
               $query = "SELECT * FROM staff_profile INNER JOIN employee_salary ON ";
               $query .= "staff_profile.staff_id=employee_salary.fk_staff_id WHERE ";
-              $query .= "salary_status='unpaid' AND staff_profile.fk_client_id='$client'";
+              $query .= "salary_status='unpaid' AND staff_status='1' AND staff_profile.fk_client_id='$client'";
               $result = query($query);
               while ($rows = mysqli_fetch_assoc($result)) {
                 $sal_id = $rows['salary_id'];

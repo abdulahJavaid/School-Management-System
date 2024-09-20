@@ -135,12 +135,12 @@ if (isset($_POST['paid'])) {
 
                         if ($get_salary['fk_staff_id'] == 0) {
                             $tch_id = $get_salary['fk_teacher_id'];
-                            $query = "SELECT * FROM teacher_profile WHERE teacher_id='$tch_id' AND fk_client_id='$client'";
+                            $query = "SELECT * FROM teacher_profile WHERE teacher_id='$tch_id' AND teacher_status='1' AND fk_client_id='$client'";
                             $teacher_record = query($query);
                             $get_record = mysqli_fetch_assoc($teacher_record);
                         } else {
                             $staff_id = $get_salary['fk_staff_id'];
-                            $query = "SELECT * FROM staff_profile WHERE staff_id='$staff_id' AND fk_client_id='$client'";
+                            $query = "SELECT * FROM staff_profile WHERE staff_id='$staff_id' AND staff_status='1' AND fk_client_id='$client'";
                             $staff_record = query($query);
                             $get_record = mysqli_fetch_assoc($staff_record);
                         }

@@ -57,7 +57,7 @@ if ($_SESSION['login_access'] == 'developer' || $_SESSION['login_access'] == 'ac
                   // the students who have paid fee
                   $query = "SELECT * FROM student_fee INNER JOIN student_profile ON ";
                   $query .= "student_fee.fk_student_id=student_profile.student_id ";
-                  $query .= "WHERE fee_status='fee_request' AND student_fee.fk_client_id='$client'";
+                  $query .= "WHERE fee_status='fee_request' AND student_status='1' AND student_fee.fk_client_id='$client'";
                   $result = query($query);
                   while ($row = mysqli_fetch_assoc($result)) {
                   ?>
@@ -78,7 +78,7 @@ if ($_SESSION['login_access'] == 'developer' || $_SESSION['login_access'] == 'ac
                         }
                         ?>
                       </td>
-                      <td><a href="process-fee-requests.php?id=<?php echo $row['fee_id']; ?>" class="btn btn-sm btn-info button">Process</a></td>
+                      <td><a href="process-fee-requests.php?id=<?php echo $row['fee_id']; ?>" class="btn btn-sm btn-success">Process</a></td>
                     </tr>
                   <?php
                   }

@@ -30,7 +30,7 @@ if (!isset($_GET['id'])) {
   <?php
   // fetching the student data here
   $id = escape($_GET['id']);
-  $query = "SELECT * FROM teacher_profile WHERE teacher_id='$id' AND fk_client_id='$client'";
+  $query = "SELECT * FROM teacher_profile WHERE teacher_id='$id' AND teacher_status='1' AND fk_client_id='$client'";
   $pass = mysqli_query($conn, $query);
   $row = mysqli_fetch_assoc($pass);
   ?>

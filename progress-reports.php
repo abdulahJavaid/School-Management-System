@@ -86,7 +86,7 @@ $client = escape($_SESSION['client_id']);
                 $name = escape($_POST['name']);
                 $roll_no = escape($_POST['roll_no']);
                 $query = "SELECT student_id FROM student_profile WHERE name='$name' AND roll_no='$roll_no' ";
-                $query .= "AND fk_client_id='$client'";
+                $query .= "AND student_status='1' AND fk_client_id='$client'";
                 $result = query($query);
                 if (mysqli_num_rows($result) != 0) {
                     $student = mysqli_fetch_assoc($result);

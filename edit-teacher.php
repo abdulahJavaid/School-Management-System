@@ -18,7 +18,7 @@ if (!isset($_GET['id'])) {
 // fetching the student data here
 $id = escape($_GET['id']);
 $query = "SELECT * FROM teacher_profile ";
-$query .= "WHERE teacher_id = '$id' AND fk_client_id='$client'";
+$query .= "WHERE teacher_id = '$id' AND teacher_status='1' AND fk_client_id='$client'";
 $pass = mysqli_query($conn, $query);
 $row = mysqli_fetch_assoc($pass);
 ?>
@@ -67,31 +67,31 @@ $row = mysqli_fetch_assoc($pass);
 
 
         // checking if the cnic is already associated to another teacher
-        $query = "SELECT * FROM teacher_profile WHERE cnic='$cnic' AND fk_client_id='$client' AND NOT teacher_id='$cid'";
+        $query = "SELECT * FROM teacher_profile WHERE cnic='$cnic' AND teacher_status='1' AND fk_client_id='$client' AND NOT teacher_id='$cid'";
         $check_cnic = query($query);
         if (mysqli_num_rows($check_cnic) == 0) {
             // checking if the cnic is already associated to another staff member
-            $query = "SELECT * FROM staff_profile WHERE cnic='$cnic' AND fk_client_id='$client'";
+            $query = "SELECT * FROM staff_profile WHERE cnic='$cnic' AND staff_status='1' AND fk_client_id='$client'";
             $check_staff_cnic = query($query);
             if (mysqli_num_rows($check_staff_cnic) == 0) {
                 // checking if the phone number is already associated to another teacher
-                $query = "SELECT * FROM teacher_profile WHERE phone_no='$phone_no' AND fk_client_id='$client' AND NOT teacher_id='$cid'";
+                $query = "SELECT * FROM teacher_profile WHERE phone_no='$phone_no' AND teacher_status='1' AND fk_client_id='$client' AND NOT teacher_id='$cid'";
                 $check_phone_no = query($query);
                 if (mysqli_num_rows($check_phone_no) == 0) {
                     // checking if the phone number is already associated to another staff member
-                    $query = "SELECT * FROM staff_profile WHERE phone_no='$phone_no' AND fk_client_id='$client'";
+                    $query = "SELECT * FROM staff_profile WHERE phone_no='$phone_no' AND staff_status='1' AND fk_client_id='$client'";
                     $check_staff_phone = query($query);
                     if (mysqli_num_rows($check_staff_phone) == 0) {
                         // checking if the email is already associated to another teacher
-                        $query = "SELECT * FROM teacher_profile WHERE email='$email' AND fk_client_id='$client' AND NOT teacher_id='$cid'";
+                        $query = "SELECT * FROM teacher_profile WHERE email='$email' AND teacher_status='1' AND fk_client_id='$client' AND NOT teacher_id='$cid'";
                         $check_email = query($query);
                         if (mysqli_num_rows($check_email) == 0) {
                             // checking if the teacher id is already associated to another teacher
-                            $query = "SELECT * FROM teacher_profile WHERE school_id='$school_id' AND fk_client_id='$client' AND NOT teacher_id='$cid'";
+                            $query = "SELECT * FROM teacher_profile WHERE school_id='$school_id' AND teacher_status='1' AND fk_client_id='$client' AND NOT teacher_id='$cid'";
                             $check_id = query($query);
                             if (mysqli_num_rows($check_id) == 0) {
                                 // checking if the teacher id is already associated to another staff member
-                                $query = "SELECT * FROM staff_profile WHERE staff_school_id='$school_id' AND fk_client_id='$client'";
+                                $query = "SELECT * FROM staff_profile WHERE staff_school_id='$school_id' AND staff_status='1' AND fk_client_id='$client'";
                                 $check_staff_id = query($query);
                                 if (mysqli_num_rows($check_staff_id) == 0) {
 
@@ -115,7 +115,7 @@ $row = mysqli_fetch_assoc($pass);
                                     $query .= "cnic='$cnic', dob='$dob', phone_no='$phone_no', email='$email', ";
                                     $query .= "address='$address', teacher_gender='$gender', teacher_salary='$salary', ";
                                     $query .= "image='$new_img'";
-                                    $query .= "WHERE teacher_id='$cid' AND fk_client_id='$client'";
+                                    $query .= "WHERE teacher_id='$cid' AND fk_client_id='$client' AND teacher_status='1'";
 
                                     $get = query($query);
                                     if ($get) {

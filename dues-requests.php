@@ -57,7 +57,7 @@ if ($_SESSION['login_access'] == 'developer' || $_SESSION['login_access'] == 'ac
                                     // $query = "SELECT * FROM student_fee INNER JOIN student_profile ON ";
                                     // $query .= "student_fee.fk_student_id=student_profile.student_id ";
                                     // $query .= "WHERE fee_status='due_request'";
-                                    $query = "SELECT * FROM student_profile WHERE fk_client_id='$client'";
+                                    $query = "SELECT * FROM student_profile WHERE student_status='1' AND fk_client_id='$client'";
                                     $result = query($query);
                                     $dues = 0;
                                     while ($row = mysqli_fetch_assoc($result)) {
@@ -91,7 +91,7 @@ if ($_SESSION['login_access'] == 'developer' || $_SESSION['login_access'] == 'ac
                                                         }
                                                         ?>
                                                     </td>
-                                                    <td><a href="process-dues-requests.php?id=<?php echo $row['student_id']; ?>" class="btn btn-sm btn-info button">Process</a></td>
+                                                    <td><a href="process-dues-requests.php?id=<?php echo $row['student_id']; ?>" class="btn btn-sm btn-success">Process</a></td>
                                                 </tr>
 
 

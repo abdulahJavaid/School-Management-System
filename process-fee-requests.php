@@ -156,7 +156,7 @@ if (isset($_POST['paid'])) {
                         $fee_id = escape($_GET['id']);
                         $query = "SELECT * FROM student_fee INNER JOIN ";
                         $query .= "student_profile ON student_fee.fk_student_id=student_profile.student_id ";
-                        $query .= "WHERE fee_id='$fee_id' AND student_fee.fk_client_id='$client'";
+                        $query .= "WHERE fee_id='$fee_id' AND student_status='1' AND student_fee.fk_client_id='$client'";
                         $result = query($query);
                         $rows = mysqli_fetch_assoc($result);
                         ?>

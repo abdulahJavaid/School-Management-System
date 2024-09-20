@@ -39,7 +39,7 @@ if (isset($_POST['select'])) {
     $query .= "class_sections ON student_class.fk_section_id=class_sections.section_id INNER JOIN ";
     $query .= "all_classes ON class_sections.fk_class_id=all_classes.class_id ";
     $query .= "WHERE year='$year' AND month='$month' AND fee_status='unpaid' AND section_id='$section' ";
-    $query .= "AND student_fee.fk_client_id='$client'";
+    $query .= "AND student_status='1' AND student_fee.fk_client_id='$client'";
 
     $pass = mysqli_query($conn, $query);
 

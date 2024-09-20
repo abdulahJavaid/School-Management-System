@@ -153,8 +153,8 @@ $client = $_SESSION['client_id'];
                                                 }
                                                 ?>
                                                 <td>Rs.<?php echo $dues; ?></td>
-                                                <td><a href="view-student.php?id=<?php echo $row['student_id']; ?>">View profile</a></td>
-                                                <td><a href="edit-student.php?id=<?php echo $row['student_id']; ?>">Edit profile</a></td>
+                                                <td><a href="view-student.php?id=<?php echo $row['student_id']; ?>"><u>View</u></a></td>
+                                                <td><a href="edit-student.php?id=<?php echo $row['student_id']; ?>"><u>Edit</u></a></td>
                                             </tr>
                                     <?php
                                         }

@@ -84,6 +84,7 @@ if (isset($_POST['salary_p_month'])) {
     $pass_query2 = mysqli_query($conn, $query);
 
 
+    // getting the employee salary records for the selected month
     $query = "SELECT * FROM employee_salary WHERE month='$month' AND year='$year' AND salary_status='paid' AND fk_client_id='$client'";
     $result = mysqli_query($conn, $query);
 
@@ -91,12 +92,12 @@ if (isset($_POST['salary_p_month'])) {
     while ($row = mysqli_fetch_assoc($result)) {
         if ($row['fk_staff_id'] == '0'){
             $tch_id = $row['fk_teacher_id'];
-            $query = "SELECT * FROM teacher_profile WHERE teacher_id='$tch_id' AND fk_client_id='$client'";
+            $query = "SELECT * FROM teacher_profile WHERE teacher_id='$tch_id' AND teacher_status='1' AND fk_client_id='$client'";
             $g_result = mysqli_query($conn, $query);
             $rows = mysqli_fetch_assoc($g_result);
         } else {
             $stf_id = $row['fk_staff_id'];
-            $query = "SELECT * FROM staff_profile WHERE staff_id='$stf_id' AND fk_client_id='$client'";
+            $query = "SELECT * FROM staff_profile WHERE staff_id='$stf_id' AND staff_status='1' AND fk_client_id='$client'";
             $g_result = mysqli_query($conn, $query);
             $rows = mysqli_fetch_assoc($g_result);
         }
@@ -139,19 +140,17 @@ if (isset($_POST['salary_p_month'])) {
     }
 
     // Closing table
-    $html .= "
-    <tr>
-    <td colspan='5'><strong>Total</strong></td>
-    <td>Rs.$totals</td>
-    <td>---</td>
-    </tr>
-    </tbody></table>";
-
-    // Signatures section
-    $html .= "<br><br><br>
-    <strong>Owner Signature:</strong> <u><span style='width:100px'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></u>
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-    <strong>Accountant Signature:</strong> <u><span style='width:100px'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></u>
-    <br><br>
-    <strong>Dated:</strong> <u><span style='width:100px'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></u>";
+  $html .= "</tbody>
+  </table>
+</div>
+<br><br><br>
+<strong>Owner:</strong> <u>__________________________</u>
+&nbsp;&nbsp;&nbsp;&nbsp;
+<strong>Accountant:</strong> <u>__________________________</u>
+<br><br>
+<strong>Dated:</strong> <u>_________________</u>
+</main>
+</body>
+</html>
+";
 }

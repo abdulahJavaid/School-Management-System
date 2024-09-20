@@ -157,7 +157,7 @@ if (isset($_POST['clear_dues']) && !empty($_POST['dues_amount'])) {
                                             // $query = "SELECT * FROM student_fee INNER JOIN ";
                                             // $query .= "student_profile ON student_fee.fk_student_id=student_profile.student_id ";
                                             // $query .= "WHERE fee_id='$std_id' AND fee_status='dues_request' OR fee_status='due_request' OR fee_status='dues'";
-                                            $query = "SELECT * FROM student_profile WHERE student_id='$std_id' AND fk_client_id='$client'";
+                                            $query = "SELECT * FROM student_profile WHERE student_id='$std_id' AND student_status='1' AND fk_client_id='$client'";
                                             $result = query($query);
                                             $row = mysqli_fetch_assoc($result);
                                             $query = "SELECT * FROM student_fee WHERE fk_student_id='$std_id' AND fk_client_id='$client' ";
