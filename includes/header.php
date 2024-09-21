@@ -265,7 +265,7 @@ $level = escape($_SESSION['login_access']);
             $school_specific = mysqli_fetch_assoc($get_school_data);
             $school_png = $school_specific['image'];
             ?>
-            <img src="./uploads/school-profile-uploads/<?php echo $school_png; ?>" alt="Profile" class="border-no">
+            <img src="./uploads/school-profile-uploads/<?php echo $school_png; ?>" alt="Profile" style="border-radius: 5%;">
             <!-- <i class="bi bi-box-arrow-right"></i> -->
             <span class="d-none d-md-block ps-2">Profile&nbsp;</span>
             <i class="bi bi-chevron-down"></i>
