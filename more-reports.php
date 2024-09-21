@@ -5,8 +5,14 @@
 
 <?php
 
+?>
 
-
+<?php
+// checking session for appropriate access
+if ($level == 'clerk' || $level == 'super' || $level == 'accountant') {}
+else {
+  redirect("./");
+}
 ?>
 
 <main id="main" class="main">

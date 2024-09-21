@@ -9,10 +9,11 @@ if (isset($_POST['salary_p_month'])) {
     $address = $ro['address'];
     $contact = $ro['contact'];
     $email = $ro['email'];
+    $pic = $ro['image'];
 
     // School details and header
-    $html = "<div style='clear:float;'><img style='float:left;' src='images/savy.png' height='155px' width='155px' alt='school-image'>";
-    $html .= "<h1>$s_name</h1><h5>$address</h5><h5>$contact</h5><h5>$email</h5></div><br><h2 style='clear:both;'>Paid Salary Records</h2>";
+    $html = "<div style='clear:float;'><img style='float:left; margin: 10px; border-radius: 5%;'  src='uploads/school-profile-uploads/$pic' height='155px' width='155px' alt='school-image'>";
+    $html .= "<h1 style='padding-top: 10px;'>$s_name</h1><h5>$address</h5><h5>$contact</h5><h5>$email</h5></div><br><h2 style='clear:both;'>Paid Salary Records</h2>";
 
     // Styles
     $html .= "
@@ -140,15 +141,15 @@ if (isset($_POST['salary_p_month'])) {
     }
 
     // Closing table
-  $html .= "</tbody>
-  </table>
+$html .= "</tbody>
+</table>
 </div>
 <br><br><br>
-<strong>Owner:</strong> <u>__________________________</u>
+<strong>Owner:</strong> <u>___________________</u>
 &nbsp;&nbsp;&nbsp;&nbsp;
-<strong>Accountant:</strong> <u>__________________________</u>
-<br><br>
-<strong>Dated:</strong> <u>_________________</u>
+<strong>Accountant:</strong> <u>___________________</u>
+<br><br><br>
+<strong>Dated:</strong> <u>___________________</u>
 </main>
 </body>
 </html>

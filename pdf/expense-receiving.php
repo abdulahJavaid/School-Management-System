@@ -8,13 +8,14 @@ if (isset($_POST['one'])) {
     $address = $row['address'];
     $contact = $row['contact'];
     $email = $row['email'];
+    $pic = $row['image'];
 
     // <tr>
     // <th colspan='4' style='min-width:auto;'><h3>Total Expenses</h3></th>
     // </tr>
 
-    $html = "<div style='clear:float;'><img style='float:left;' src='images/savy.png' height='155px' width='155px' alt='school-image'>";
-    $html .= "<h1>$name</h1><h5>$address</h5><h5>$contact</h5><h5>$email</h5></div><br><h2 style='clear:both;'>Expense and Receiving</h2>";
+    $html = "<div style='clear:float;'><img style='float:left; margin: 10px; border-radius: 5%;' src='uploads/school-profile-uploads/$pic' height='155px' width='155px' alt='school-image'>";
+    $html .= "<h1 style='padding-top: 10px;'>$name</h1><h5>$address</h5><h5>$contact</h5><h5>$email</h5></div><br><h2 style='clear:both;'>Expense and Receiving</h2>";
 
     // styles
 
@@ -161,16 +162,19 @@ if (isset($_POST['one'])) {
 <tr>
 <td colspan='2'>---</td>
 <td colspan='2'><strong>Total: </strong>Rs. $sum</td>
-</tr>
-</tbody>
-</table>
-<br><br><br>
-<strong>Owner Signature:</strong> <u><span style='width:100px'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></u>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<strong>Accountant Signature:</strong> <u><span style='width:100px'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></u>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-<br><br>
-<strong>Dated:</strong> <u><span style='width:100px'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span></u>
+</tr>";
+$html .= "</tbody>
+          </table>
+        </div>
+        <br><br><br>
+        <strong>Owner:</strong> <u>___________________</u>
+        &nbsp;&nbsp;&nbsp;&nbsp;
+        <strong>Accountant:</strong> <u>___________________</u>
+        <br><br><br>
+        <strong>Dated:</strong> <u>___________________</u>
+      </main>
+    </body>
+  </html>
 ";
 
     // <td><img src='./uploads/expense-uploads/$img' width='50px' height='50px' alt=''></td>

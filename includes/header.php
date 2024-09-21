@@ -6,6 +6,7 @@
 if (!isset($_SESSION['login_access'])) {
   redirect("./login.php");
 }
+$level = escape($_SESSION['login_access']);
 ?>
 
 <!DOCTYPE html>
@@ -83,6 +84,11 @@ if (!isset($_SESSION['login_access'])) {
             <i class="bi bi-search"></i>
           </a>
         </li><!-- End Search Icon-->
+
+        <?php
+        // if the logged in user is from school
+        if ($level == 'super' || $level == 'accountant' || $level == 'clerk'){
+        ?>
 
         <li class="nav-item dropdown">
 
@@ -174,6 +180,10 @@ if (!isset($_SESSION['login_access'])) {
           </ul><!-- End Notification Dropdown Items -->
 
         </li><!-- End Notification Nav -->
+
+        <?php
+        } // end of if statement
+        ?>
 
         <!-- <li class="nav-item dropdown">
 

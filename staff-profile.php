@@ -9,6 +9,14 @@ $client = escape($_SESSION['client_id']);
 ?>
 
 <?php
+// checking session for appropriate access
+if ($level == 'clerk' || $level == 'super') {}
+else {
+  redirect("./");
+}
+?>
+
+<?php
 // when there is no form submission, for form values
 $message = '';
 $name = '';

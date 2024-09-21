@@ -132,15 +132,6 @@ if (isset($_POST['current'])) {
       </head>
       <body>
         <header class='clearfix'>
-          <div id='logo'>
-            <img src='uploads/school-profile-uploads/";
-  if (empty($image)) {
-    $html .= "no-image.png";
-  } else {
-    $html .= "$image";
-  }
-  $html .= "'>
-          </div>
           <h1>$name</h1>
           <div id='company' class='clearfix'>
             <div><span>Generated On:</span> $year, $month</div>
@@ -190,13 +181,24 @@ if (isset($_POST['current'])) {
             </table>
           </div>
           <br><br><br>
-          <strong>Owner Signature:</strong> <u>_____________________________</u>
+          <strong>Owner:</strong> <u>___________________</u>
           &nbsp;&nbsp;&nbsp;&nbsp;
-          <strong>Accountant Signature:</strong> <u>_____________________________</u>
-          <br><br>
-          <strong>Dated:</strong> <u>_____________________________</u>
+          <strong>Accountant:</strong> <u>___________________</u>
+          <br><br><br>
+          <strong>Dated:</strong> <u>___________________</u>
         </main>
       </body>
     </html>
   ";
 }
+// the logo code
+//   <div id='logo'>
+//   <img src='uploads/school-profile-uploads/";
+//   if(empty($image)){
+//       $html .= "no-image.png";
+//   }else {
+//       $html .= "$image";
+//   }
+//   $html .= "' width='155px' height='100px' style='border-radius: 5%;'>
+// </div>
+?>

@@ -84,7 +84,7 @@
                 </li>
                 <?php
                 // if the login access is developer
-                if ($_SESSION['login_access'] == 'developer') {
+                if ($level == 'developer') {
                 ?>
                   <li class="nav-item">
                     <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Edit Profile</button>

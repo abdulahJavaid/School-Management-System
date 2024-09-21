@@ -8,6 +8,14 @@
 $client = escape($_SESSION['client_id']);
 ?>
 
+<?php
+// checking session for appropriate access
+if ($level == 'clerk' || $level == 'super' || $level == 'accountant') {}
+else {
+  redirect("./");
+}
+?>
+
 <main id="main" class="main">
 
     <div class="pagetitle">

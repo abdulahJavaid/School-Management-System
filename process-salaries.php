@@ -16,6 +16,14 @@ if (!isset($_GET['id'])) {
 ?>
 
 <?php
+// checking session for appropriate access
+if ($level == 'accountant' || $level == 'super') {}
+else {
+  redirect("./");
+}
+?>
+
+<?php
 // if the form is submitted and the employee is teacher
 if (isset($_POST['paid'])) {
 

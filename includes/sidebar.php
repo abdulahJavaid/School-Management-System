@@ -2,12 +2,20 @@
 
   <ul class="sidebar-nav" id="sidebar-nav">
 
+    <?php
+    // // if the logged in user is other than developer
+    // if($level != 'developer'){
+    ?>
     <li class="nav-item">
       <a class="nav-link " href="index.php">
         <i class=""><img src="images/dashboard.gif" width="30px" height="30px" alt=""></i>
         <span>Dashboard</span>
       </a>
-    </li><!-- End Dashboard Sidebar -->
+    </li>
+    <!-- End Dashboard Sidebar -->
+    <?php
+    // } // end of if
+    ?>
 
     <li class="nav-item">
       <a class="nav-link collapsed" data-bs-target="#components-nav" href="school-profile.php"> <!-- data-bs-toggle="collapse" -->
@@ -15,9 +23,10 @@
         <span>School Profile</span>
         <!-- <i class="bi bi-chevron-down ms-auto"></i> -->
       </a>
-    </li><!-- End School Profile Sidebar -->
+    </li>
+    <!-- End School Profile Sidebar -->
 
-      <!-- <li class="nav-item">
+    <!-- <li class="nav-item">
         <a class="nav-link" data-bs-target="#component," href="./add-subjects.php">
           <i class=""><img src="images/schoolprofile1.jpeg" width="30px" height="30px" alt=""></i>
           <span>Add subjects</span>
@@ -30,9 +39,9 @@
           <span>Student Migration</span>
         </a>
       </li> -->
-      <!-- End student migration tab -->
+    <!-- End student migration tab -->
 
-      <!-- <li class="nav-item">
+    <!-- <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#profiling" data-bs-toggle="collapse" href="#">
           <i class=""><img src="images/profile.jpeg" width="30px" height="30px" alt=""></i>
           <span>Profiles</span>
@@ -50,9 +59,14 @@
             </a>
         </ul>
       </li> -->
-      <!-- End student and staff profiles -->
+    <!-- End student and staff profiles -->
 
-      <!-- testing code -->
+    <!-- testing code -->
+
+    <?php
+    // if the logged in user is clerk or super
+    if ($level == 'clerk' || $level == 'super') {
+    ?>
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#profiling" data-bs-toggle="collapse" href="#">
           <i class=""><img src="images/profile.gif" width="30px" height="30px" alt=""></i>
@@ -76,11 +90,15 @@
             </a>
           </li>
         </ul>
-      </li>
+      </li><!-- End Profiles -->
+<?php
+    } // end of if statement
+?>
 
-
-
-
+      <?php
+    // if the logged in user is clerk or super
+    if ($level == 'clerk' || $level == 'super') {
+    ?>
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#chart-nav" data-bs-toggle="collapse" href="">
           <i class=><img src="images/calendar.gif" width="30px" height="30px" alt=""></i><span>Time Table/Schedules</span>
@@ -99,7 +117,15 @@
           </li>
         </ul>
       </li><!-- End Timetable and exam schedule -->
+    <?php
+    } // end of if statement
+    ?>
 
+
+    <?php
+    // if the logged in user is accountant or super
+    if ($level == 'accountant' || $level == 'super') {
+    ?>
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
           <i class=""><img src="images/asset-management.gif" width="30px" height="30px" alt=""></i><span>Finance Management</span>
@@ -128,7 +154,14 @@
           </li>
         </ul>
       </li><!-- End Finance Management -->
+      <?php
+    } // end of if statement
+      ?>
 
+      <?php
+    // if the logged in user is accountant or super
+    if ($level == 'accountant' || $level == 'super') {
+    ?>
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#charts-nav" data-bs-toggle="collapse" href="#">
           <i class=><img src="images/feee.gif" width="30px" height="30px" alt=""></i><span>Student Fee</span>
@@ -167,30 +200,46 @@
           </li>
         </ul>
       </li><!-- End Student Fee Section -->
+    <?php
+    } // end of if statement
+    ?>
 
-      <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#student-tracking" data-bs-toggle="collapse" href="#">
-          <i class=><img src="images/analytics.gif" width="30px" height="30px" alt=""></i><span>Student Tracking</span>
-          <i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="student-tracking" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="progress-reports.php">
-              <i class="bi bi-arrow-right"></i><span>Progress Reports</span>
-            </a>
-          </li>
-          <li>
-            <a href="homework-diary.php">
-              <i class="bi bi-arrow-right"></i><span>Homework Diary</span>
-            </a>
-          </li>
-          <li>
-            <a href="attendance.php">
-              <i class="bi bi-arrow-right"></i><span>Attendance</span>
-            </a>
-          </li>
-        </ul>
-      </li><!-- End student daily reports -->
+    <?php
+    // if the logged in user is from school
+    if ($level == 'clerk' || $level == 'super') {
+    ?>
+
+    <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#student-tracking" data-bs-toggle="collapse" href="#">
+        <i class=><img src="images/analytics.gif" width="30px" height="30px" alt=""></i><span>Student Tracking</span>
+        <i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul id="student-tracking" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+        <li>
+          <a href="progress-reports.php">
+            <i class="bi bi-arrow-right"></i><span>Progress Reports</span>
+          </a>
+        </li>
+        <li>
+          <a href="homework-diary.php">
+            <i class="bi bi-arrow-right"></i><span>Homework Diary</span>
+          </a>
+        </li>
+        <li>
+          <a href="attendance.php">
+            <i class="bi bi-arrow-right"></i><span>Attendance</span>
+          </a>
+        </li>
+      </ul>
+    </li><!-- End student daily reports -->
+    <?php
+    } // end of if statement
+    ?>
+
+    <?php
+    // if the loggd in user is from school
+    if ($level == 'super' || $level == 'accountant' || $level == 'clerk') {
+    ?>
 
     <li class="nav-item">
       <a class="nav-link collapsed" data-bs-target="#tables-nav" href="fee-vouchers.php">
@@ -198,8 +247,12 @@
         <!-- <i class="bi bi-chevron-down ms-auto"></i> -->
       </a>
     </li>
+    <?php
+    } // end of if statement
+    ?>
+
     <!-- End Student Fee Vouchers -->
-    
+
     <!-- <li class="nav-item">
       <a class="nav-link collapsed" data-bs-target="#tables-nav" href="progress-reports.php">
         <i class=><img src="images/analytics.gif" width="30px" height="30px" alt=""></i><span>Progress Reports</span>
@@ -224,19 +277,35 @@
     </li> -->
     <!-- End Student Attendance -->
 
+    <?php
+    // if the logged in user is from school
+    if ($level == 'super' || $level == 'accountant' || $level == 'clerk') {
+    ?>
+
     <li class="nav-item">
       <a class="nav-link collapsed" href="add-announcements.php">
         <i class=><img src="images/promote.gif" width="30px" height="30px" alt=""></i>
         <span>Add Announcements</span>
       </a>
     </li><!-- End Announcements tab -->
+    <?php
+    } // end of if statement
+    ?>
+
+    <?php
+    // if the logged in user is from the school
+    if ($level == 'super' || $level == 'accountant' || $level == 'clerk') {
+    ?>
 
     <li class="nav-item">
-      <a class="nav-link collapsed" href="#">
+      <a class="nav-link collapsed" href="more-reports.php">
         <i class=><img src="images/more.gif" width="30px" height="30px" alt=""></i>
         <span>More Reports</span>
       </a>
     </li><!-- Undefined functionality -->
+    <?php
+    } // end of if statement
+    ?>
 
   </ul>
 
