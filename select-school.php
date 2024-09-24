@@ -97,6 +97,52 @@ if ($level == 'developer') {
         };
         xhr.send(params);
     }
+    function searchDatabase() {
+    var searchQuery = document.getElementById('search-input').value.trim();
+
+    // If the search query is empty, clear the results
+    if (searchQuery.length === 0) {
+        document.getElementById('results').innerHTML = '';
+        return;
+    }
+
+    // Create a new XMLHttpRequest
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', './backend/search-school-developer.php', true); // Adjust path if needed
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+    // Function to execute when the request is complete
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            try {
+                var response = JSON.parse(xhr.responseText); // Parse the JSON response
+
+                // Clear previous results
+                var resultsDiv = document.getElementById('results');
+                resultsDiv.innerHTML = '';
+
+                // Check if we received results
+                if (response.length > 0) {
+                    // Loop through the results and display them
+                    response.forEach(function(item) {
+                        var resultItem = document.createElement('div');
+                        resultItem.textContent = item.name; // Adjust to the field you want to display
+                        resultsDiv.appendChild(resultItem);
+                    });
+                } else {
+                    resultsDiv.innerHTML = '<div>No matches found</div>';
+                }
+            } catch (e) {
+                console.error('Error parsing JSON:', e);
+                console.error('Response text:', xhr.responseText); // Log the raw response text for debugging
+            }
+        }
+    };
+
+    // Send the search query to the PHP script
+    xhr.send('query=' + encodeURIComponent(searchQuery));
+}
+
 </script>
 
 

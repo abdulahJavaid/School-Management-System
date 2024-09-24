@@ -1,5 +1,5 @@
 <?php
-// save teachers fingerprints
+// save the remaining sessions for developers
 // inclusion of required files and functions
 session_start();
 ob_start();

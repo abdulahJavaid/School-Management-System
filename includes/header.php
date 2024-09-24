@@ -385,12 +385,13 @@ if (!str_contains($uri, '/select-school.php')) {
         <ul class="d-flex align-items-center">
 
           <div class="search-bar ms-auto">
-            <form class="search-form d-flex align-items-center" method="POST" action="#">
-              <input type="text" name="query" placeholder="Search" title="Enter search keyword">
+            <form class="search-form d-flex align-items-center" method="POST" action="">
+              <input type="text" name="query" id="search-input" onkeyup="searchDatabase()" autocomplete="off" placeholder="Search" title="Enter search keyword">
               <button type="submit" title="Search"><i class="bi bi-search"></i></button>
             </form>
           </div>
           <!-- End Search Bar -->
+          <div id="results"></div>
 
           <li class="nav-item d-block d-xl-none">
             <a class="nav-link nav-icon search-bar-toggle " href="#">
