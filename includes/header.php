@@ -9,6 +9,17 @@ if (!isset($_SESSION['login_access'])) {
 $level = escape($_SESSION['login_access']);
 ?>
 
+<?php
+// getting the url of the page
+$uri = "" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . "";
+if (!str_contains($uri, '/select-school.php')) {
+  if ($_SESSION['login_access'] == 'developer' && (!isset($_SESSION['client_id']) || !isset($_SESSION['school_id']) || !isset($_SESSION['school_name']))) {
+    redirect("./select-school.php");
+  }
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -20,9 +31,9 @@ $level = escape($_SESSION['login_access']);
   <meta content="" name="description">
   <meta content="" name="keywords">
 
-  <!-- Favicons
-  <link href="assets/img/favicon.png" rel="icon">
-  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon"> -->
+  <!-- Favicons -->
+  <link href="./images/school-logo4.png" rel="icon">
+  <link href="./images/school-logo4.png" rel="apple-touch-icon">
 
   <!-- Google Fonts -->
   <link href="https://fonts.gstatic.com" rel="preconnect">
@@ -59,83 +70,109 @@ $level = escape($_SESSION['login_access']);
 
   <!-- ======= Header ======= -->
   <header id="header" class="header fixed-top d-flex align-items-center">
+    <?php
+    // getting the url of the page
+    $uri = "" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . "";
+    if (!str_contains($uri, '/select-school.php')) {
+    ?>
 
-    <div class="d-flex align-items-center justify-content-between">
-      <a href="./index.php" class="logo d-flex align-items-center">
-        <!-- <img src="assets/img/logo.png" alt=""> -->
-        <span class="d-none d-lg-block" style="color: white;"><?php echo $_SESSION['school_name']; ?> System</span>
-      </a>
-      <i class="bi bi-list toggle-sidebar-btn"></i>
-    </div><!-- End Logo -->
+      <div class="d-flex align-items-center justify-content-between">
+        <a href="./index.php" class="logo d-flex align-items-center">
+          <!-- <img src="assets/img/logo.png" alt=""> -->
+          <span class="d-none d-lg-block" style="color: white;"><?php echo $_SESSION['school_name']; ?></span>
+        </a>
+        <i class="bi bi-list toggle-sidebar-btn"></i>
+      </div><!-- End Logo -->
 
-    <!-- <div class="search-bar">
+      <!-- <div class="search-bar">
       <form class="search-form d-flex align-items-center" method="POST" action="#">
         <input type="text" name="query" placeholder="Search" title="Enter search keyword">
         <button type="submit" title="Search"><i class="bi bi-search"></i></button>
       </form>
     </div> -->
-    <!-- End Search Bar -->
+      <!-- End Search Bar -->
 
-    <nav class="header-nav ms-auto">
-      <ul class="d-flex align-items-center">
+      <nav class="header-nav ms-auto">
+        <ul class="d-flex align-items-center">
 
-        <li class="nav-item d-block d-lg-none">
-          <a class="nav-link nav-icon search-bar-toggle " href="#">
-            <i class="bi bi-search"></i>
-          </a>
-        </li><!-- End Search Icon-->
+          <!-- <li class="nav-item d-block d-lg-none">
+            <a class="nav-link nav-icon search-bar-toggle " href="#">
+              <i class="bi bi-search"></i>
+            </a>
+          </li> -->
+          <!-- End Search Icon-->
 
-        <?php
-        // if the logged in user is from school
-        if ($level == 'super' || $level == 'accountant' || $level == 'clerk'){
-        ?>
 
-        <li class="nav-item dropdown">
+          <?php
+          // if it is the developer
+          if ($level == 'developer') {
+          ?>
+            <li class="nav-item me-3 text-white">
 
-          <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
-            <i class="">
-              <h1 class="fw-boldf"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bell" viewBox="0 0 16 16">
-                <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2M8 1.918l-.797.161A4 4 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4 4 0 0 0-3.203-3.92zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5 5 0 0 1 13 6c0 .88.32 4.2 1.22 6" />
-              </svg></h1>
-              <!-- <img src="./images/bell-default-icon.jpg" width="50px" height="50px" alt=""> -->
-            </i>
-            <!-- <span class="badge  badge-number" style="background-color: red">4</span> -->
-          </a><!-- End Notification Icon -->
+              <a class="nav-link" href="./select-school.php">
+                <!-- <i class="fw"> -->
+                <u>select school</u>
+                <!-- </i> -->
+              </a>
 
-          <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
-            <li class="dropdown-header">
-              You have 4 new notifications
-              <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
             </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
+          <?php
+          } // end if developer
+          ?>
 
-            <?php
-            $client = escape($_SESSION['client_id']);
-            // getting the notifications
-            $query = "SELECT * FROM notices WHERE fk_client_id='$client' AND notice_status='school' ORDER BY notice_id DESC LIMIT 3";
-            $get_notices = query($query);
-            while ($notices = mysqli_fetch_assoc($get_notices)) {
-            ?>
 
-              <li class="notification-item">
-                <i class="bi bi-exclamation-circle text-warning"></i>
-                <div>
-                  <h4>Notice</h4>
-                  <p><?php echo $notices['notice_description']; ?></p>
-                  <p><?php echo $notices['notice_date']; ?></p>
-                </div>
-              </li>
 
-              <li>
-                <hr class="dropdown-divider">
-              </li>
-            <?php
-            }
-            ?>
+          <?php
+          // if the logged in user is from school
+          if ($level == 'super' || $level == 'accountant' || $level == 'clerk') {
+          ?>
 
-            <!-- <li class="notification-item">
+            <li class="nav-item dropdown">
+
+              <a class="nav-link nav-icon" href="#" data-bs-toggle="dropdown">
+                <i class="">
+                  <h1 class="fw-boldf"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bell" viewBox="0 0 16 16">
+                      <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2M8 1.918l-.797.161A4 4 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4 4 0 0 0-3.203-3.92zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5 5 0 0 1 13 6c0 .88.32 4.2 1.22 6" />
+                    </svg></h1>
+                  <!-- <img src="./images/bell-default-icon.jpg" width="50px" height="50px" alt=""> -->
+                </i>
+                <!-- <span class="badge  badge-number" style="background-color: red">4</span> -->
+              </a><!-- End Notification Icon -->
+
+              <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
+                <li class="dropdown-header">
+                  You have 4 new notifications
+                  <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
+                </li>
+                <li>
+                  <hr class="dropdown-divider">
+                </li>
+
+                <?php
+                $client = escape($_SESSION['client_id']);
+                // getting the notifications
+                $query = "SELECT * FROM notices WHERE fk_client_id='$client' AND notice_status='school' ORDER BY notice_id DESC LIMIT 3";
+                $get_notices = query($query);
+                while ($notices = mysqli_fetch_assoc($get_notices)) {
+                ?>
+
+                  <li class="notification-item">
+                    <i class="bi bi-exclamation-circle text-warning"></i>
+                    <div>
+                      <h4>Notice</h4>
+                      <p><?php echo $notices['notice_description']; ?></p>
+                      <p><?php echo $notices['notice_date']; ?></p>
+                    </div>
+                  </li>
+
+                  <li>
+                    <hr class="dropdown-divider">
+                  </li>
+                <?php
+                }
+                ?>
+
+                <!-- <li class="notification-item">
               <i class="bi bi-x-circle text-danger"></i>
               <div>
                 <h4>Atque rerum nesciunt</h4>
@@ -177,24 +214,24 @@ $level = escape($_SESSION['login_access']);
               <a href="#">Show all notifications</a>
             </li> -->
 
-          </ul><!-- End Notification Dropdown Items -->
+              </ul><!-- End Notification Dropdown Items -->
 
-        </li><!-- End Notification Nav -->
+            </li><!-- End Notification Nav -->
 
-        <?php
-        } // end of if statement
-        ?>
+          <?php
+          } // end of if statement
+          ?>
 
-        <!-- <li class="nav-item dropdown">
+          <!-- <li class="nav-item dropdown">
 
           <a class="nav-link nav-icon" href="#">
             <i class="bi bi-chat-left-text"></i>
             <i class="bi bi-gear"></i>
             <span class="badge bg-success badge-number">3</span>
           </a> -->
-        <!-- End Messages Icon -->
+          <!-- End Messages Icon -->
 
-        <!-- <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
+          <!-- <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow messages">
             <li class="dropdown-header">
               You have 3 new messages
               <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
@@ -250,47 +287,47 @@ $level = escape($_SESSION['login_access']);
             </li>
 
           </ul> -->
-        <!-- End Messages Dropdown Items -->
+          <!-- End Messages Dropdown Items -->
 
-        <!-- </li> -->
-        <!-- End Messages Nav -->
+          <!-- </li> -->
+          <!-- End Messages Nav -->
 
-        <li class="nav-item dropdown pe-3">
+          <li class="nav-item dropdown pe-3">
 
-          <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-target="#profile-drop" data-bs-toggle="dropdown"> <!-- includes/logout.php?get=yes-->
-            <?php
-            $client = escape($_SESSION['client_id']);
-            $query = "SELECT * FROM school_profile_ WHERE client_id='$client'";
-            $get_school_data = query($query);
-            $school_specific = mysqli_fetch_assoc($get_school_data);
-            $school_png = $school_specific['image'];
-            ?>
-            <img src="./uploads/school-profile-uploads/<?php echo $school_png; ?>" alt="Profile" style="border-radius: 5%;">
-            <!-- <i class="bi bi-box-arrow-right"></i> -->
-            <span class="d-none d-md-block ps-2">Profile&nbsp;</span>
-            <i class="bi bi-chevron-down"></i>
-          </a><!-- End Profile Iamge Icon -->
+            <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-target="#profile-drop" data-bs-toggle="dropdown"> <!-- includes/logout.php?get=yes-->
+              <?php
+              $client = escape($_SESSION['client_id']);
+              $query = "SELECT * FROM school_profile_ WHERE client_id='$client'";
+              $get_school_data = query($query);
+              $school_specific = mysqli_fetch_assoc($get_school_data);
+              $school_png = $school_specific['image'];
+              ?>
+              <img src="./uploads/school-profile-uploads/<?php echo $school_png; ?>" alt="Profile" style="border-radius: 5%;">
+              <!-- <i class="bi bi-box-arrow-right"></i> -->
+              <span class="d-none d-md-block ps-2">Profile&nbsp;</span>
+              <i class="bi bi-chevron-down"></i>
+            </a><!-- End Profile Iamge Icon -->
 
-          <ul id="profile-drop" class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
-            <li class="dropdown-header">
-              <h6><?php echo $_SESSION['school_name']; ?></h6>
-              <span></span>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
+            <ul id="profile-drop" class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+              <li class="dropdown-header">
+                <h6><?php echo $_SESSION['school_name']; ?></h6>
+                <span></span>
+              </li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
 
-            <li>
-              <a class="dropdown-item d-flex align-items-center" href="school-profile.php">
-                <i class="bi bi-person"></i>
-                <span>My Profile</span>
-              </a>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
+              <li>
+                <a class="dropdown-item d-flex align-items-center" href="school-profile.php">
+                  <i class="bi bi-person"></i>
+                  <span>My Profile</span>
+                </a>
+              </li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
 
-            <!-- <li>
+              <!-- <li>
               <a class="dropdown-item d-flex align-items-center" href="users-profile.html">
                 <i class="bi bi-gear"></i>
                 <span>Account Settings</span>
@@ -300,7 +337,7 @@ $level = escape($_SESSION['login_access']);
               <hr class="dropdown-divider">
             </li> -->
 
-            <!-- <li>
+              <!-- <li>
               <a class="dropdown-item d-flex align-items-center" href="pages-faq.html">
                 <i class="bi bi-question-circle"></i>
                 <span>Need Help?</span>
@@ -310,17 +347,88 @@ $level = escape($_SESSION['login_access']);
               <hr class="dropdown-divider">
             </li> -->
 
-            <li>
-              <a class="dropdown-item d-flex align-items-center" href="./backend/logout.php?get=yes">
-                <i class="bi bi-box-arrow-right"></i>
-                <span>Sign Out</span>
-              </a>
-            </li>
+              <li>
+                <a class="dropdown-item d-flex align-items-center" href="./backend/logout.php?get=yes">
+                  <i class="bi bi-box-arrow-right"></i>
+                  <span>Sign Out</span>
+                </a>
+              </li>
 
-          </ul><!--End Profile Dropdown Items -->
-        </li><!-- End Profile Nav -->
+            </ul><!--End Profile Dropdown Items -->
+          </li><!-- End Profile Nav -->
 
-      </ul>
-    </nav><!-- End Icons Navigation -->
+        </ul>
+      </nav><!-- End Icons Navigation -->
+    <?php
+    } // end of if to show the nav options
+    else {
+    ?>
+      <div class="d-flex align-items-center justify-content-between">
+        <a href="#" class="logo d-flex align-items-center">
+          <!-- <img src="assets/img/logo.png" alt=""> -->
+          <span class="d-block d-lg-block" style="color: white;">My School System</span>
+        </a>
+        <!-- <i class="bi bi-list toggle-sidebar-btn"></i> -->
+      </div><!-- End Logo -->
 
+      <!-- <div class="search-bar ms-auto">
+        <form class="search-form d-flex align-items-center" method="POST" action="#">
+          <input type="text" name="query" placeholder="Search" title="Enter search keyword">
+          <button type="submit" title="Search"><i class="bi bi-search"></i></button>
+        </form>
+      </div> -->
+      <!-- End Search Bar -->
+
+
+
+      <nav class="header-nav ms-auto">
+        <ul class="d-flex align-items-center">
+
+          <div class="search-bar ms-auto">
+            <form class="search-form d-flex align-items-center" method="POST" action="#">
+              <input type="text" name="query" placeholder="Search" title="Enter search keyword">
+              <button type="submit" title="Search"><i class="bi bi-search"></i></button>
+            </form>
+          </div>
+          <!-- End Search Bar -->
+
+          <li class="nav-item d-block d-xl-none">
+            <a class="nav-link nav-icon search-bar-toggle " href="#">
+              <i class="bi bi-search"></i>
+            </a>
+          </li>
+          <!-- End Search Icon-->
+
+          <li class="nav-item dropdown pe-3">
+
+            <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-target="#profile-drop" data-bs-toggle="dropdown"> <!-- includes/logout.php?get=yes-->
+              <img src="./images/admin-default-profile-image.jpg" alt="Profile" style="border-radius: 5%;">
+              <!-- <i class="bi bi-box-arrow-right"></i> -->
+              <span class="d-none d-md-block ps-2">Profile&nbsp;</span>
+              <i class="bi bi-chevron-down"></i>
+            </a><!-- End Profile Iamge Icon -->
+
+            <ul id="profile-drop" class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+              <li class="dropdown-header">
+                <h6><?php echo $_SESSION['login_name']; ?></h6>
+                <span></span>
+              </li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+
+              <li>
+                <a class="dropdown-item d-flex align-items-center" href="./backend/logout.php?get=yes">
+                  <i class="bi bi-box-arrow-right"></i>
+                  <span>Sign Out</span>
+                </a>
+              </li>
+
+            </ul><!--End Profile Dropdown Items -->
+          </li><!-- End Profile Nav -->
+        </ul>
+      </nav>
+    <?php
+    }
+    ?>
   </header><!-- End Header -->

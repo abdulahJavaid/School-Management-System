@@ -1,5 +1,13 @@
 <?php require_once("includes/init.php"); // inclusion fo init file 
 ?>
+
+<?php
+// cheking if the user is logged in
+if (isset($_SESSION['login_access'])) {
+  redirect("./");
+}
+// $level = escape($_SESSION['login_access']);
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -37,6 +45,16 @@ if (isset($_POST['submit'])) {
   if ($result) {
     if ($result['status'] == 1) {
       if (md5($password) == $result['password']) {
+        // if the logged in user is developer
+        if ($result['role'] == 'developer') {
+          $_SESSION['login_email'] = $result['email'];
+          $_SESSION['login_name'] = $result['admin_name'];
+          $_SESSION['login_access'] = $result['role'];
+          $_SESSION['login_id'] = $result['admin_id'];
+
+          redirect("./select-school.php");
+
+        }
         $_SESSION['login_email'] = $result['email'];
         $_SESSION['login_name'] = $result['admin_name'];
         $_SESSION['login_access'] = $result['role'];
