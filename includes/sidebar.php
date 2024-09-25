@@ -26,42 +26,19 @@
     </li>
     <!-- End School Profile Sidebar -->
 
-    <!-- <li class="nav-item">
-        <a class="nav-link" data-bs-target="#component," href="./add-subjects.php">
-          <i class=""><img src="images/schoolprofile1.jpeg" width="30px" height="30px" alt=""></i>
-          <span>Add subjects</span>
-        </a>
-      </li>
-
+    <?php
+    // if the logged in user is developer
+    if ($level == 'developer') {
+    ?>
       <li class="nav-item">
-        <a class="nav-link" data-bs-target="#component," href="./student-migration.php"> data-bs-toggle="collapse"
-          <i class=""><img src="images/schoolprofile1.jpeg" width="30px" height="30px" alt=""></i>
-          <span>Student Migration</span>
+        <a class="nav-link collapsed" href="./subs-codsmine.php">
+          <i class=><img src="images/subscribe.gif" width="30px" height="30px" alt=""></i>
+          <span>Subscriptions</span>
         </a>
-      </li> -->
-    <!-- End student migration tab -->
-
-    <!-- <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#profiling" data-bs-toggle="collapse" href="#">
-          <i class=""><img src="images/profile.jpeg" width="30px" height="30px" alt=""></i>
-          <span>Profiles</span>
-          <i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="profiling" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="teachers.php" onclick="keepDropdownOpen(event, this.href)">
-              <i class="bi bi-arrow-right"></i><span>Teacher Profiles</span>
-            </a>
-          </li>
-          <li>
-            <a href="students.php">
-              <i class="bi bi-arrow-right"></i><span>Student Profiles</span>
-            </a>
-        </ul>
-      </li> -->
-    <!-- End student and staff profiles -->
-
-    <!-- testing code -->
+      </li><!-- Undefined functionality -->
+    <?php
+    } // end of if
+    ?>
 
     <?php
     // if the logged in user is clerk or super
@@ -91,11 +68,11 @@
           </li>
         </ul>
       </li><!-- End Profiles -->
-<?php
+    <?php
     } // end of if statement
-?>
+    ?>
 
-      <?php
+    <?php
     // if the logged in user is clerk or super
     if ($level == 'clerk' || $level == 'super') {
     ?>
@@ -154,11 +131,11 @@
           </li>
         </ul>
       </li><!-- End Finance Management -->
-      <?php
+    <?php
     } // end of if statement
-      ?>
+    ?>
 
-      <?php
+    <?php
     // if the logged in user is accountant or super
     if ($level == 'accountant' || $level == 'super') {
     ?>
@@ -205,33 +182,46 @@
     ?>
 
     <?php
+    // if the logged in user is developer
+    if ($level == 'accountant' || $level == 'super') {
+    ?>
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="./subs-school.php">
+          <i class=><img src="images/subscribe.gif" width="30px" height="30px" alt=""></i>
+          <span>Subscriptions</span>
+        </a>
+      </li><!-- Undefined functionality -->
+    <?php
+    } // end of if
+    ?>
+
+    <?php
     // if the logged in user is from school
     if ($level == 'clerk' || $level == 'super') {
     ?>
-
-    <li class="nav-item">
-      <a class="nav-link collapsed" data-bs-target="#student-tracking" data-bs-toggle="collapse" href="#">
-        <i class=><img src="images/analytics.gif" width="30px" height="30px" alt=""></i><span>Student Tracking</span>
-        <i class="bi bi-chevron-down ms-auto"></i>
-      </a>
-      <ul id="student-tracking" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-        <li>
-          <a href="progress-reports.php">
-            <i class="bi bi-arrow-right"></i><span>Progress Reports</span>
-          </a>
-        </li>
-        <li>
-          <a href="homework-diary.php">
-            <i class="bi bi-arrow-right"></i><span>Homework Diary</span>
-          </a>
-        </li>
-        <li>
-          <a href="attendance.php">
-            <i class="bi bi-arrow-right"></i><span>Attendance</span>
-          </a>
-        </li>
-      </ul>
-    </li><!-- End student daily reports -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#student-tracking" data-bs-toggle="collapse" href="#">
+          <i class=><img src="images/analytics.gif" width="30px" height="30px" alt=""></i><span>Student Tracking</span>
+          <i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="student-tracking" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <li>
+            <a href="progress-reports.php">
+              <i class="bi bi-arrow-right"></i><span>Progress Reports</span>
+            </a>
+          </li>
+          <li>
+            <a href="homework-diary.php">
+              <i class="bi bi-arrow-right"></i><span>Homework Diary</span>
+            </a>
+          </li>
+          <li>
+            <a href="attendance.php">
+              <i class="bi bi-arrow-right"></i><span>Attendance</span>
+            </a>
+          </li>
+        </ul>
+      </li><!-- End student daily reports -->
     <?php
     } // end of if statement
     ?>
@@ -241,53 +231,27 @@
     if ($level == 'super' || $level == 'accountant' || $level == 'clerk') {
     ?>
 
-    <li class="nav-item">
-      <a class="nav-link collapsed" data-bs-target="#tables-nav" href="fee-vouchers.php">
-        <i class=><img src="images/voucher.gif" width="30px" height="30px" alt=""></i><span>Fee Vouchers</span>
-        <!-- <i class="bi bi-chevron-down ms-auto"></i> -->
-      </a>
-    </li>
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#tables-nav" href="fee-vouchers.php">
+          <i class=><img src="images/voucher.gif" width="30px" height="30px" alt=""></i><span>Fee Vouchers</span>
+          <!-- <i class="bi bi-chevron-down ms-auto"></i> -->
+        </a>
+      </li>
     <?php
     } // end of if statement
     ?>
-
-    <!-- End Student Fee Vouchers -->
-
-    <!-- <li class="nav-item">
-      <a class="nav-link collapsed" data-bs-target="#tables-nav" href="progress-reports.php">
-        <i class=><img src="images/analytics.gif" width="30px" height="30px" alt=""></i><span>Progress Reports</span>
-        <i class="bi bi-chevron-down ms-auto"></i>
-      </a>
-    </li> -->
-    <!-- End Student Progress Report -->
-
-    <!-- <li class="nav-item">
-      <a class="nav-link collapsed" data-bs-target="#tables-nav" href="homework-diary.php">
-        <i class=><img src="images/diary.gif" width="30px" height="30px" alt=""></i><span>Home Work Diary</span>
-        <i class="bi bi-chevron-down ms-auto"></i>
-      </a>
-    </li> -->
-    <!-- End Homework Diary -->
-
-    <!-- <li class="nav-item">
-      <a class="nav-link collapsed" data-bs-target="#tables-nav" href="attendance.php">
-        <i class=><img src="images/face.gif" width="30px" height="30px" alt=""></i><span>Attendance</span>
-        <i class="bi bi-chevron-down ms-auto"></i>
-      </a>
-    </li> -->
-    <!-- End Student Attendance -->
 
     <?php
     // if the logged in user is from school
     if ($level == 'super' || $level == 'accountant' || $level == 'clerk') {
     ?>
 
-    <li class="nav-item">
-      <a class="nav-link collapsed" href="add-announcements.php">
-        <i class=><img src="images/promote.gif" width="30px" height="30px" alt=""></i>
-        <span>Add Announcements</span>
-      </a>
-    </li><!-- End Announcements tab -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="add-announcements.php">
+          <i class=><img src="images/promote.gif" width="30px" height="30px" alt=""></i>
+          <span>Add Announcements</span>
+        </a>
+      </li><!-- End Announcements tab -->
     <?php
     } // end of if statement
     ?>
@@ -297,12 +261,12 @@
     if ($level == 'super' || $level == 'accountant' || $level == 'clerk') {
     ?>
 
-    <li class="nav-item">
-      <a class="nav-link collapsed" href="more-reports.php">
-        <i class=><img src="images/more.gif" width="30px" height="30px" alt=""></i>
-        <span>More Reports</span>
-      </a>
-    </li><!-- Undefined functionality -->
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="more-reports.php">
+          <i class=><img src="images/more.gif" width="30px" height="30px" alt=""></i>
+          <span>More Reports</span>
+        </a>
+      </li><!-- Undefined functionality -->
     <?php
     } // end of if statement
     ?>

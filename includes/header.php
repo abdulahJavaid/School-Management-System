@@ -380,25 +380,25 @@ if (!str_contains($uri, '/select-school.php')) {
       <!-- End Search Bar -->
 
 
-
       <nav class="header-nav ms-auto">
         <ul class="d-flex align-items-center">
 
-          <div class="search-bar ms-auto">
+          <div class="search-bar ms-auto" style="position: relative;">
             <form class="search-form d-flex align-items-center" method="POST" action="">
               <input type="text" name="query" id="search-input" onkeyup="searchDatabase()" autocomplete="off" placeholder="Search" title="Enter search keyword">
               <button type="submit" title="Search"><i class="bi bi-search"></i></button>
             </form>
+            <div class="dropdown-menu show" id="results" aria-labelledby="search-input" style="position: absolute; z-index: 1000; display: none;"></div>
           </div>
-          <!-- End Search Bar -->
-          <div id="results"></div>
+
+          <!-- Results dropdown -->
 
           <li class="nav-item d-block d-xl-none">
-            <a class="nav-link nav-icon search-bar-toggle " href="#">
+            <a class="nav-link nav-icon search-bar-toggle" href="#">
               <i class="bi bi-search"></i>
             </a>
           </li>
-          <!-- End Search Icon-->
+          <!-- End Search Icon -->
 
           <li class="nav-item dropdown pe-3">
 

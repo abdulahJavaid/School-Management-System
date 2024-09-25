@@ -11,21 +11,24 @@ require_once('../includes/functions.php');
 header('Content-Type: application/json');
 
 // Check if 'query' is sent via POST
-// if (isset($_POST['query'])) {
+if (isset($_POST['query'])) {
     $searchQuery = escape($_POST['query']);
 
     // SQL query to search for matches (adjust based on your table structure)
-    $query = "SELECT name FROM school_profile_ WHERE name LIKE '%$searchQuery%' LIMIT 10";
+    $query = "SELECT name, address FROM school_profile_ WHERE name LIKE '%$searchQuery%' LIMIT 10";
 
     $result = mysqli_query($conn, $query);
     $matches = [];
 
-    // Fetch results and store them in the $matches array
+    // Fetch results and store them in the $matches array$results = [];
     while ($row = mysqli_fetch_assoc($result)) {
-        $matches[] = $row;
+        $matches[] = [
+            'name' => $row['name'],
+            'address' => $row['address'] 
+        ];
     }
 
     // Return the results as a JSON response
     echo json_encode($matches);
-// }
+}
 ?>

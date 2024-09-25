@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 24, 2024 at 01:08 PM
+-- Generation Time: Sep 25, 2024 at 06:38 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -476,7 +476,8 @@ INSERT INTO `admin_logs` (`admin_log_id`, `log_message`, `time`, `fk_client_id`)
 (507, 'Admin <strong>Talha</strong> accepted fees of student <strong>Haroon Arshad</strong> as totally paid !', '23/09/2024 05:41 pm', '2'),
 (508, 'Admin <strong>Talha</strong> added expense into the expense/receiving sheet !', '23/09/2024 05:42 pm', '2'),
 (509, 'Admin <strong>Talha</strong> added an announcement for school !', '23/09/2024 05:53 pm', '2'),
-(510, 'Admin <strong>Talha</strong> added an announcement for school !', '23/09/2024 05:54 pm', '2');
+(510, 'Admin <strong>Talha</strong> added an announcement for school !', '23/09/2024 05:54 pm', '2'),
+(511, '<strong>Hamza</strong> from CodsMine added new school A plus !', '25/09/2024 12:58 pm', '6');
 
 -- --------------------------------------------------------
 
@@ -2248,16 +2249,21 @@ CREATE TABLE `school_profile_` (
   `city` varchar(150) NOT NULL,
   `contact` varchar(30) NOT NULL,
   `email` varchar(150) NOT NULL,
-  `expiry` date NOT NULL
+  `expiry` date NOT NULL,
+  `sub_amount` varchar(10) NOT NULL,
+  `codsmine_stake` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `school_profile_`
 --
 
-INSERT INTO `school_profile_` (`id`, `about`, `image`, `client_id`, `name`, `o_name`, `slogan`, `private`, `address`, `city`, `contact`, `email`, `expiry`) VALUES
-(12, 'It has good teachers who teach in a way that helps students learn. My school has 2 grassy playgrounds for outdoor sports. There is a good reputation for my school in the city.', '2Gujranwalasavy.png', '2', 'Savy Schoool', 'Munawwar Hussain', 'We strive to Earn', 'private', 'Rahwali, Gujranwala Cantt', 'Gujranwala', '03265434765', 'savyschool@gmail.com', '2025-03-04'),
-(13, 'about', '3cityimage-1.jpg', '3', 'name', 'o_name', 'slogan', 'private', 'address', 'city', '039878393', 'email@mails.com', '2024-09-28');
+INSERT INTO `school_profile_` (`id`, `about`, `image`, `client_id`, `name`, `o_name`, `slogan`, `private`, `address`, `city`, `contact`, `email`, `expiry`, `sub_amount`, `codsmine_stake`) VALUES
+(12, 'It has good teachers who teach in a way that helps students learn. My school has 2 grassy playgrounds for outdoor sports. There is a good reputation for my school in the city.', '2Gujranwalasavy.png', '2', 'Savy Schoool', 'Munawwar Hussain', 'We strive to Earn', 'private', 'Rahwali, Gujranwala Cantt', 'Gujranwala', '03265434765', 'savyschool@gmail.com', '2025-03-04', '500', '50'),
+(13, 'about', '3cityimage-1.jpg', '3', 'name', 'o_name', 'slogan', 'private', 'address', 'city', '039878393', 'email@mails.com', '2024-09-28', '', ''),
+(14, 'about', 'image', '4', 'savy', '0_name', 'slogan', 'private', 'address', 'city', 'contact', 'email', '2024-09-24', '', ''),
+(15, 'about', 'image', '5', 'savy', 'o_name', 'slogan', 'private', 'address', 'city', 'contact', 'email', '2024-09-24', '', ''),
+(16, 'So much abou us you should know, visit us!', '', '6', 'A plus', 'Sam Willings', 'Learn and Grow', 'private', 'Gujranwala, Rahwali Cantt Road', 'Gujranwala', '03098798768', 'ap@mail.com', '2025-09-25', '300', '50');
 
 -- --------------------------------------------------------
 
@@ -3013,6 +3019,49 @@ INSERT INTO `student_profile` (`student_id`, `name`, `cnic`, `student_gender`, `
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `student_subscriptions`
+--
+
+CREATE TABLE `student_subscriptions` (
+  `sub_id` int(11) NOT NULL,
+  `sub_status` varchar(10) NOT NULL,
+  `sub_expiry` date NOT NULL,
+  `sub_type` varchar(30) NOT NULL,
+  `sub_amount` varchar(10) NOT NULL,
+  `codsmine_stake` varchar(10) NOT NULL,
+  `procedure` varchar(30) NOT NULL DEFAULT 'unprocessed',
+  `fk_sub_log_id` int(11) NOT NULL,
+  `fk_student_id` int(11) NOT NULL,
+  `fk_client_id` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `student_trials`
+--
+
+CREATE TABLE `student_trials` (
+  `trial_id` int(11) NOT NULL,
+  `trial_expiry` date NOT NULL,
+  `fk_student_id` int(11) NOT NULL,
+  `fk_client_id` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `subscription_logs`
+--
+
+CREATE TABLE `subscription_logs` (
+  `sub_log_id` int(11) NOT NULL,
+  `sub_log` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `teacher_faces`
 --
 
@@ -3414,6 +3463,28 @@ ALTER TABLE `student_profile`
   ADD KEY `fk_client_id_for_student_profile` (`fk_client_id`);
 
 --
+-- Indexes for table `student_subscriptions`
+--
+ALTER TABLE `student_subscriptions`
+  ADD PRIMARY KEY (`sub_id`),
+  ADD KEY `fk_student_id_for_student_subscriptions` (`fk_student_id`),
+  ADD KEY `fk_client_id_for_student_subscriptions` (`fk_client_id`);
+
+--
+-- Indexes for table `student_trials`
+--
+ALTER TABLE `student_trials`
+  ADD PRIMARY KEY (`trial_id`),
+  ADD KEY `fk_student_id_for_student_trials` (`fk_student_id`),
+  ADD KEY `fk_client_id_for_student_trials` (`fk_client_id`);
+
+--
+-- Indexes for table `subscription_logs`
+--
+ALTER TABLE `subscription_logs`
+  ADD PRIMARY KEY (`sub_log_id`);
+
+--
 -- Indexes for table `teacher_faces`
 --
 ALTER TABLE `teacher_faces`
@@ -3457,7 +3528,7 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `admin_logs`
 --
 ALTER TABLE `admin_logs`
-  MODIFY `admin_log_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=511;
+  MODIFY `admin_log_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=512;
 
 --
 -- AUTO_INCREMENT for table `all_classes`
@@ -3541,7 +3612,7 @@ ALTER TABLE `salary_bonus`
 -- AUTO_INCREMENT for table `school_profile_`
 --
 ALTER TABLE `school_profile_`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `staff_profile`
@@ -3572,6 +3643,24 @@ ALTER TABLE `student_passwords`
 --
 ALTER TABLE `student_profile`
   MODIFY `student_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=208;
+
+--
+-- AUTO_INCREMENT for table `student_subscriptions`
+--
+ALTER TABLE `student_subscriptions`
+  MODIFY `sub_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `student_trials`
+--
+ALTER TABLE `student_trials`
+  MODIFY `trial_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `subscription_logs`
+--
+ALTER TABLE `subscription_logs`
+  MODIFY `sub_log_id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `teacher_faces`
@@ -3728,6 +3817,20 @@ ALTER TABLE `student_passwords`
 --
 ALTER TABLE `student_profile`
   ADD CONSTRAINT `fk_client_id_for_student_profile` FOREIGN KEY (`fk_client_id`) REFERENCES `school_profile_` (`client_id`);
+
+--
+-- Constraints for table `student_subscriptions`
+--
+ALTER TABLE `student_subscriptions`
+  ADD CONSTRAINT `fk_client_id_for_student_subscriptions` FOREIGN KEY (`fk_client_id`) REFERENCES `school_profile_` (`client_id`),
+  ADD CONSTRAINT `fk_student_id_for_student_subscriptions` FOREIGN KEY (`fk_student_id`) REFERENCES `student_profile` (`student_id`);
+
+--
+-- Constraints for table `student_trials`
+--
+ALTER TABLE `student_trials`
+  ADD CONSTRAINT `fk_client_id_for_student_trials` FOREIGN KEY (`fk_client_id`) REFERENCES `school_profile_` (`client_id`),
+  ADD CONSTRAINT `fk_student_id_for_student_trials` FOREIGN KEY (`fk_student_id`) REFERENCES `student_profile` (`student_id`);
 
 --
 -- Constraints for table `teacher_faces`
