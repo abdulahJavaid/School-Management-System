@@ -1,19 +1,5 @@
 <?php
-// session_start();
-// all the general functions to be used
-
-// // function for adding unpaid fee to the dues
-// function add_unpaid_to_dues () {
-//     global $conn;
-//     if (isset($_SESSION['client_id'])) {
-//         $client = escape($_SESSION['client_id']);
-//         $date = date('d', time());
-//         if ($date == '28') {
-
-//         }
-//     }
-// }
-// add_unpaid_to_dues(); // calling the function
+// all the functions
 
 // function for issuing Employee Salaries
 function employee_salary()
@@ -60,7 +46,11 @@ function employee_salary()
         }
     }
 }
-employee_salary(); // calling the function
+// On the selected date call the salary function
+$date = date('d', time());
+if ($date == '11') {
+    employee_salary(); // calling the function
+}
 
 // for redirections
 function redirect($location)
@@ -114,17 +104,18 @@ function escape($string)
 }
 
 // checking if the thumb impression exists in the database
-function check_finger ($name, $id) {
+function check_finger($name, $id)
+{
     global $conn;
-    if(isset($_SESSION['client_id'])){
+    if (isset($_SESSION['client_id'])) {
         $client = escape($_SESSION['client_id']);
     }
     $query = "SELECT * FROM teacher_fingers WHERE fk_teacher_id='$id' AND finger_name='$name' ";
     $query .= "AND fk_client_id='$client'";
     $result = query($query);
-    if(mysqli_num_rows($result) == 1){
+    if (mysqli_num_rows($result) == 1) {
         return "yes";
-    }else {
+    } else {
         return "no";
     }
 }

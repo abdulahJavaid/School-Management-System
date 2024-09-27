@@ -18,6 +18,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
     $contact = escape($_POST["contact"]);
     $email = escape($_POST["email"]);
     $expiry = escape($_POST["expiry"]);
+    $sub_amount = escape($_POST['sub_amount']);
+    $codsmine_stake = escape($_POST['codsmine_stake']);
 
     // File upload handling
     $target_dir = "../uploads/school-profile-uploads/"; // Directory where the file will be saved
@@ -63,7 +65,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
     // Insert form data and image path into the database
     $query = "UPDATE school_profile_ SET about='$about', image='$new_pic', client_id='$client_id', ";
     $query .= "name='$name', o_name='$o_name', slogan='$slogan', private='$private', ";
-    $query .= "address='$address', city='$city', contact='$contact', email='$email', expiry='$expiry' ";
+    $query .= "address='$address', city='$city', contact='$contact', email='$email', expiry='$expiry', ";
+    $query .= "sub_amount='$sub_amount', codsmine_stake='$codsmine_stake' ";
     $query .= "WHERE client_id='$client'";
     $result = mysqli_query($conn, $query);
 

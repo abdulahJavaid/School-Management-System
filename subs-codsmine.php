@@ -40,22 +40,22 @@ if ($level != 'developer') {
                             <!-- Bordered Tabs -->
                             <ul class="nav nav-tabs nav-tabs-bordered">
                                 <li class="nav-item">
-                                    <button class="nav-link" id="one-li" onclick="reloadPage('one-li')" data-bs-toggle="tab" data-bs-target="#payments">Payment</button>
+                                    <button class="nav-link active" id="one-li" onclick="reloadPag('one-li')" data-bs-toggle="tab" data-bs-target="#payments">Payment</button>
                                 </li>
                                 <li class="nav-item">
-                                    <button class="nav-link" id="two-li" onclick="reloadPage('two-li')" data-bs-toggle="tab" data-bs-target="#subscribed">Subscribed</button>
+                                    <button class="nav-link" id="two-li" onclick="reloadPag('two-li')" data-bs-toggle="tab" data-bs-target="#subscribed">Subscribed</button>
                                 </li>
                                 <li class="nav-item">
-                                    <button class="nav-link" id="three-li" onclick="reloadPage('three-li')" data-bs-toggle="tab" data-bs-target="#unsubscribed">Un-Subscribed</button>
+                                    <button class="nav-link" id="three-li" onclick="reloadPag('three-li')" data-bs-toggle="tab" data-bs-target="#unsubscribed">Un-Subscribed</button>
                                 </li>
                                 <li class="nav-item">
-                                    <button class="nav-link" id="four-li" onclick="reloadPage('four-li')" data-bs-toggle="tab" data-bs-target="#requests">Requested</button>
+                                    <button class="nav-link" id="four-li" onclick="reloadPag('four-li')" data-bs-toggle="tab" data-bs-target="#requests">Requested</button>
                                 </li>
                             </ul>
 
                             <!-- start payments tab -->
                             <div class="tab-content pt-2">
-                                <div class="tab-pane fade payments" id="payments">
+                                <div class="tab-pane fade show active payments" id="payments">
 
                                     <h4 class="card-title text-capitalize">Subscription Payments</h4>
                                     <!-- Primary Color Bordered Table -->
@@ -137,7 +137,10 @@ if ($level != 'developer') {
                                                                         <div class="col-xl-12">
                                                                             <div class="alert alert-info text-dark d-flex justify-content-between">
                                                                                 <span>CodsMine should pay <strong>Rs.<?php echo $to_pay; ?></strong> to <?php echo $_SESSION['school_name']; ?>.</span>
-                                                                                <button class="btn btn-sm btn-success ms-auto">Mark Paid</button>
+                                                                                <form action="./backend/manage-subscriptions.php" method="post">
+                                                                                    <input type="hidden" name="paid" value="<?php echo $to_pay; ?>">
+                                                                                    <button name="codsmine_paid" type="submit" class="btn btn-sm btn-success ms-auto">Mark Paid</button>
+                                                                                </form>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -378,45 +381,45 @@ if ($level != 'developer') {
 </main><!-- End #main -->
 
 <script>
-    // Function to reload the page and set the active tab
-    function reloadPage(elementId) {
-        // Save the active tab's ID before reload
-        localStorage.setItem('activeTab', elementId);
-        location.reload(); // Reload the page
-    }
+    // // Function to reload the page and set the active tab
+    // function reloadPage(elementId) {
+    //     // Save the active tab's ID before reload
+    //     localStorage.setItem('activeTab', elementId);
+    //     location.reload(); // Reload the page
+    // }
 
-    // Restore the active tab and show the corresponding tab content after page reload
-    window.addEventListener('load', function() {
-        const activeTab = localStorage.getItem('activeTab') || 'one-li'; // Default to first tab if not found
+    // // Restore the active tab and show the corresponding tab content after page reload
+    // window.addEventListener('load', function() {
+    //     const activeTab = localStorage.getItem('activeTab') || 'one-li'; // Default to first tab if not found
 
-        // Set the active class for the stored active tab
-        const activeButton = document.getElementById(activeTab);
-        activeButton.classList.add('active');
+    //     // Set the active class for the stored active tab
+    //     const activeButton = document.getElementById(activeTab);
+    //     activeButton.classList.add('active');
 
-        // Activate the corresponding tab content
-        const tabElement = new bootstrap.Tab(activeButton);
-        tabElement.show(); // Show the corresponding tab content
+    //     // Activate the corresponding tab content
+    //     const tabElement = new bootstrap.Tab(activeButton);
+    //     tabElement.show(); // Show the corresponding tab content
 
-        // Show the correct tab content by adding `active` and `show` classes
-        const activeTabContentId = activeButton.getAttribute('data-bs-target');
-        const activeTabContent = document.querySelector(activeTabContentId);
+    //     // Show the correct tab content by adding `active` and `show` classes
+    //     const activeTabContentId = activeButton.getAttribute('data-bs-target');
+    //     const activeTabContent = document.querySelector(activeTabContentId);
 
-        // Make the correct tab content active
-        activeTabContent.classList.add('active', 'show');
+    //     // Make the correct tab content active
+    //     activeTabContent.classList.add('active', 'show');
 
-        // Remove active and show classes from all other tab contents
-        const tabContents = document.querySelectorAll('.tab-pane');
-        tabContents.forEach(content => {
-            if (content.id !== activeTabContentId.substring(1)) { // Substring to remove '#' from the id
-                content.classList.remove('active', 'show');
-            }
-        });
-    });
+    //     // Remove active and show classes from all other tab contents
+    //     const tabContents = document.querySelectorAll('.tab-pane');
+    //     tabContents.forEach(content => {
+    //         if (content.id !== activeTabContentId.substring(1)) { // Substring to remove '#' from the id
+    //             content.classList.remove('active', 'show');
+    //         }
+    //     });
+    // });
 
-    // Clear localStorage on logout or specific actions
-    function clearTabStateOnLogout() {
-        localStorage.removeItem('activeTab'); // Clear stored active tab
-    }
+    // // Clear localStorage on logout or specific actions
+    // function clearTabStateOnLogout() {
+    //     localStorage.removeItem('activeTab'); // Clear stored active tab
+    // }
 
     // request the subscription of the student
     function approveSub(id, del) {

@@ -15,6 +15,8 @@
     // Fetch data
     $row = $result->fetch_assoc();
     $img = $row['image'];
+    $sub_amount = $row['sub_amount'];
+    $codsmine_stake = $row['codsmine_stake'];
     $client_id = $row['client_id'];
     $about = $row['about'];
     $name = $row['name'];
@@ -110,7 +112,7 @@
                   <h5 class="card-title">School Details</h5>
 
                   <div class="row">
-                    <div class="col-lg-3 col-md-4 label "><strong>School Id</strong></div>
+                    <div class="col-lg-3 col-md-4 label "><strong>Client Id</strong></div>
                     <div class="col-lg-9 col-md-8"><?php echo $client_id; ?></div>
                   </div>
 
@@ -152,6 +154,11 @@
                   <div class="row">
                     <div class="col-lg-3 col-md-4 label"><strong>Email</strong></div>
                     <div class="col-lg-9 col-md-8"><?php echo $email; ?></div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-lg-3 col-md-4 label"><strong>Subscription</strong></div>
+                    <div class="col-lg-9 col-md-8">Rs.<?php echo $sub_amount; ?></div>
                   </div>
 
                   <div class="row">
@@ -209,6 +216,20 @@
                       <label for="client_id" class="col-md-4 col-lg-3 col-form-label"><strong>Client Id</strong></label>
                       <div class="col-md-8 col-lg-9">
                         <input name="client_id" type="text" class="form-control" id="fullName" placeholder="Enter School Id" value="<?php echo $client_id; ?>" readonly>
+                      </div>
+                    </div>
+
+                    <div class="row mb-3">
+                      <label for="sub_amount" class="col-md-4 col-lg-3 col-form-label"><strong>Subscription</strong></label>
+                      <div class="col-md-8 col-lg-9">
+                        <input name="sub_amount" type="text" class="form-control" id="fullName" placeholder="Rs." value="<?php echo $sub_amount; ?>" readonly>
+                      </div>
+                    </div>
+
+                    <div class="row mb-3">
+                      <label for="codsmine_stake" class="col-md-4 col-lg-3 col-form-label"><strong>CodsMine stake</strong></label>
+                      <div class="col-md-8 col-lg-9">
+                        <input name="codsmine_stake" type="text" class="form-control" id="fullName" placeholder="Percentage" value="<?php echo $codsmine_stake; ?>" readonly>
                       </div>
                     </div>
 
