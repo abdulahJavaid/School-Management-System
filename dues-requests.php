@@ -67,7 +67,7 @@ else {
                                         while ($rows = mysqli_fetch_assoc($res)) {
                                             if ($rows['fee_status'] == 'due_request' || $rows['fee_status'] == 'dues_request') {
                                                 $query = "SELECT * FROM student_fee WHERE fk_student_id='$std_id' AND fk_client_id='$client' ";
-                                                $query .= "AND fee_status='dues' OR fee_status='dues_request' OR fee_status='due_request'";
+                                                $query .= "AND (fee_status='dues' OR fee_status='dues_request' OR fee_status='due_request')";
                                                 // $query .= "";
                                                 $rslt = query($query);
                                                 while ($ros = mysqli_fetch_assoc($rslt)) {

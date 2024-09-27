@@ -125,7 +125,7 @@ else {
             // adding unpaid fees to dues
             if (isset($_POST['add_unpaid'])) {
                 $query = "SELECT * FROM student_fee ";
-                $query .= "WHERE fee_status='unpaid' OR fee_status='rejected' ";
+                $query .= "WHERE (fee_status='unpaid' OR fee_status='rejected') ";
                 $query .= "AND student_fee.fk_client_id='$client'";
                 $get_unpaid = query($query);
                 while ($row = mysqli_fetch_assoc($get_unpaid)) {
@@ -153,7 +153,7 @@ else {
             <?php
             // if there are unapid fees of the month
             $query = "SELECT * FROM student_fee ";
-            $query .= "WHERE fee_status='unpaid' OR fee_status='rejected' ";
+            $query .= "WHERE (fee_status='unpaid' OR fee_status='rejected') ";
             $query .= "AND student_fee.fk_client_id='$client'";
             $check_fee = query($query);
             if (mysqli_num_rows($check_fee) != 0) {

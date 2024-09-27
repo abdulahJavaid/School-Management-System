@@ -158,7 +158,7 @@ if (isset($_POST['npaid_current'])) {
 
   $query = "SELECT * FROM student_fee INNER JOIN student_profile ON ";
   $query .= "student_fee.fk_student_id=student_profile.student_id ";
-  $query .= "WHERE fee_status='unpaid' OR fee_status='rejected' AND year='$year' AND month='$month' AND student_status='1' AND student_fee.fk_client_id='$client'";
+  $query .= "WHERE (fee_status='unpaid' OR fee_status='rejected') AND year='$year' AND month='$month' AND student_status='1' AND student_fee.fk_client_id='$client'";
 
   $result = query($query);
   while ($row = mysqli_fetch_assoc($result)) {

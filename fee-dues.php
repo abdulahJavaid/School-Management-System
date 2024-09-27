@@ -217,24 +217,24 @@ else {
                                         $month = escape($month);
                                         $query = "SELECT * FROM student_fee INNER JOIN student_profile ON ";
                                         $query .= "student_fee.fk_student_id=student_profile.student_id ";
-                                        $query .= "WHERE fee_status='dues' OR fee_status='due_request' OR fee_status='dues_request' AND year='$year' AND month='$month' ";
+                                        $query .= "WHERE (fee_status='dues' OR fee_status='due_request' OR fee_status='dues_request') AND year='$year' AND month='$month' ";
                                         $query .= "AND student_status='1' AND student_fee.fk_client_id='$client'";
                                     } elseif (isset($_POST['view_name'])) {
                                         $name = escape($_POST['name']);
                                         $query = "SELECT * FROM student_fee INNER JOIN student_profile ON ";
                                         $query .= "student_fee.fk_student_id=student_profile.student_id ";
-                                        $query .= "WHERE name LIKE '%$name%' AND student_status='1' AND student_fee.fk_client_id='$client' AND fee_status='dues' OR fee_status='due_request' OR fee_status='dues_request' ORDER BY fee_id DESC";
+                                        $query .= "WHERE name LIKE '%$name%' AND student_status='1' AND student_fee.fk_client_id='$client' AND (fee_status='dues' OR fee_status='due_request' OR fee_status='dues_request') ORDER BY fee_id DESC";
                                     } elseif (isset($_POST['view_reg'])) {
                                         $roll_no = escape($_POST['reg']);
                                         $query = "SELECT * FROM student_fee INNER JOIN student_profile ON ";
                                         $query .= "student_fee.fk_student_id=student_profile.student_id ";
-                                        $query .= "WHERE roll_no='$roll_no' AND student_status='1' AND student_fee.fk_client_id='$client' AND fee_status='dues' OR fee_status='due_request' OR fee_status='dues_request' ORDER BY fee_id DESC";
+                                        $query .= "WHERE roll_no='$roll_no' AND student_status='1' AND student_fee.fk_client_id='$client' AND (fee_status='dues' OR fee_status='due_request' OR fee_status='dues_request') ORDER BY fee_id DESC";
                                     } else {
                                         $year = date('Y');
                                         $month = date('F');
                                         $query = "SELECT * FROM student_fee INNER JOIN student_profile ON ";
                                         $query .= "student_fee.fk_student_id=student_profile.student_id ";
-                                        $query .= "WHERE fee_status='dues' OR fee_status='due_request' OR fee_status='dues_request' AND year='$year' AND month='$month' ";
+                                        $query .= "WHERE (fee_status='dues' OR fee_status='due_request' OR fee_status='dues_request') AND year='$year' AND month='$month' ";
                                         $query .= "AND student_status='1' AND student_fee.fk_client_id='$client'";
                                     }
                                     $result = query($query);

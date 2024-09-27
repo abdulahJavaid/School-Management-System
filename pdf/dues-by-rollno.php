@@ -155,7 +155,7 @@ if (isset($_POST['due_roll_no'])) {
             <tbody>";
     $query = "SELECT * FROM student_fee INNER JOIN student_profile ON ";
     $query .= "student_fee.fk_student_id=student_profile.student_id ";
-    $query .= "WHERE roll_no='$get_roll' AND student_status='1' AND student_fee.fk_client_id='$client' AND fee_status='dues' OR fee_status='due_request' OR fee_status='dues_request' ORDER BY fee_id DESC";
+    $query .= "WHERE roll_no='$get_roll' AND student_status='1' AND student_fee.fk_client_id='$client' AND (fee_status='dues' OR fee_status='due_request' OR fee_status='dues_request') ORDER BY fee_id DESC";
 
     $result = query($query);
     while ($row = mysqli_fetch_assoc($result)) {

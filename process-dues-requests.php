@@ -31,7 +31,7 @@ if (isset($_POST['reject']) && !empty($_POST['rejection_reason'])) {
     $std_id = escape($_POST['student_id']);
     $rejection_reason = escape($_POST['rejection_reason']);
     $query = "SELECT * FROM student_fee WHERE fk_student_id='$std_id' AND fk_client_id='$client' ";
-    $query .= "AND fee_status='due_request' OR fee_status='dues_request'";
+    $query .= "AND (fee_status='due_request' OR fee_status='dues_request')";
     $res = query($query);
     while ($row = mysqli_fetch_assoc($res)) {
         $fee_id = escape($row['fee_id']);
@@ -161,7 +161,7 @@ if (isset($_POST['clear_dues']) && !empty($_POST['dues_amount'])) {
                                             $result = query($query);
                                             $row = mysqli_fetch_assoc($result);
                                             $query = "SELECT * FROM student_fee WHERE fk_student_id='$std_id' AND fk_client_id='$client' ";
-                                            $query .= "AND fee_status='dues' OR fee_status='dues_request' OR fee_status='due_request'";
+                                            $query .= "AND (fee_status='dues' OR fee_status='dues_request' OR fee_status='due_request')";
                                             $result = query($query);
                                             $total_dues = 0;
                                             while ($rows = mysqli_fetch_assoc($result)) {
@@ -186,7 +186,7 @@ if (isset($_POST['clear_dues']) && !empty($_POST['dues_amount'])) {
                                 <?php
                                 // getting the date where the request was put
                                 $query = "SELECT * FROM student_fee WHERE fk_student_id='$std_id' AND fk_client_id='$client' ";
-                                $query .= "AND fee_status='dues_request' OR fee_status='due_request'";
+                                $query .= "AND (fee_status='dues_request' OR fee_status='due_request')";
                                 $result = query($query);
                                 $rows = mysqli_fetch_assoc($result);
                                 ?>
