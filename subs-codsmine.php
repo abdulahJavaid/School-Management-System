@@ -72,8 +72,11 @@ if ($level != 'developer') {
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                // getting the unsubscribed students
-                                                $query = "SELECT * FROM student_profile INNER JOIN student_class ON ";
+                                                // payment records
+                                                $query = "SELECT student_profile.*, student_class.*, class_sections.*, ";
+                                                $query .= "all_classes.*, student_subscriptions.*, ";
+                                                $query .= "school_profile_.sub_amount, school_profile_.codsmine_stake ";
+                                                $query .= "FROM student_profile INNER JOIN student_class ON ";
                                                 $query .= "student_profile.student_id=student_class.fk_student_id ";
                                                 $query .= "INNER JOIN class_sections ON student_class.fk_section_id=class_sections.section_id ";
                                                 $query .= "INNER JOIN all_classes ON class_sections.fk_class_id=all_classes.class_id ";
@@ -232,7 +235,10 @@ if ($level != 'developer') {
                                             <tbody>
                                                 <?php
                                                 // getting the unsubscribed students
-                                                $query = "SELECT * FROM student_profile INNER JOIN student_class ON ";
+                                                $query = "SELECT student_profile.*, student_class.*, class_sections.*, ";
+                                                $query .= "all_classes.*, student_subscriptions.*, ";
+                                                $query .= "school_profile_.sub_amount, school_profile_.codsmine_stake ";
+                                                $query .= "FROM student_profile INNER JOIN student_class ON ";
                                                 $query .= "student_profile.student_id=student_class.fk_student_id ";
                                                 $query .= "INNER JOIN class_sections ON student_class.fk_section_id=class_sections.section_id ";
                                                 $query .= "INNER JOIN all_classes ON class_sections.fk_class_id=all_classes.class_id ";
@@ -283,7 +289,10 @@ if ($level != 'developer') {
                                             <tbody>
                                                 <?php
                                                 // getting the unsubscribed students
-                                                $query = "SELECT * FROM student_profile INNER JOIN student_class ON ";
+                                                $query = "SELECT student_profile.*, student_class.*, class_sections.*, ";
+                                                $query .= "all_classes.*, ";
+                                                $query .= "school_profile_.sub_amount, school_profile_.codsmine_stake ";
+                                                $query .= "FROM student_profile INNER JOIN student_class ON ";
                                                 $query .= "student_profile.student_id=student_class.fk_student_id ";
                                                 $query .= "INNER JOIN class_sections ON student_class.fk_section_id=class_sections.section_id ";
                                                 $query .= "INNER JOIN all_classes ON class_sections.fk_class_id=all_classes.class_id ";
@@ -339,7 +348,10 @@ if ($level != 'developer') {
                                             <tbody>
                                                 <?php
                                                 // getting the unsubscribed students
-                                                $query = "SELECT * FROM student_profile INNER JOIN student_class ON ";
+                                                $query = "SELECT student_profile.*, student_class.*, class_sections.*, ";
+                                                $query .= "all_classes.*, student_subscriptions.*, ";
+                                                $query .= "school_profile_.sub_amount, school_profile_.codsmine_stake ";
+                                                $query .= "FROM student_profile INNER JOIN student_class ON ";
                                                 $query .= "student_profile.student_id=student_class.fk_student_id ";
                                                 $query .= "INNER JOIN class_sections ON student_class.fk_section_id=class_sections.section_id ";
                                                 $query .= "INNER JOIN all_classes ON class_sections.fk_class_id=all_classes.class_id ";

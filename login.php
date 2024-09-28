@@ -15,21 +15,14 @@ if (isset($_SESSION['login_access'])) {
   <!-- Design by foolishdeveloper.com -->
   <title>My School System</title>
 
+  
+  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <link href="assets/css/login.css" rel="stylesheet">
   
   <!--Stylesheet-->
   <style>
-    /* input, .bg-danger {
-      color: black;
-    }
-    input:focus {
-      color: black;
-    } */
-    button {
-      cursor: pointer;
-    }
   </style>
 
 </head>
@@ -79,19 +72,28 @@ if (isset($_POST['submit'])) {
 }
 ?>
 
-<body>
-  <div class="background">
+<body class="bg-image">
+  <!-- <div class="background">
     <div class="shape"></div>
     <div class="shape"></div>
-  </div>
-  <form action="" method="post">
-    <h3>Login Here</h3>
+  </div> -->
+  <div class="container">
+    <div class="row h-100">
+    <div class="d-sm-none d-md-block col-md-5 mt-3">
+      <div class="d-flex justify-content-start align-items-center h-100 pb-4">
+        <!-- <h3 class="h3 text-info">Welcome to,</h3><br> -->
+        <h1 class="h1 text-light h1-login">My School System!</h1>
+      </div>
+    </div>
+    <div class="col-md-5 col-sm-8 offset-sm-2 col-10 offset-1 mt-3">
+    <form action="" method="post">
+    <h3><strong>Login Here</strong></h3>
     <span class="bg-danger"><?php echo $message; ?></span>
 
-    <label for="username">Admin Email</label>
+    <label for="username"><strong>Admin Email</strong></label>
     <input type="email" placeholder="example@mail.com" id="username" name="admin_email" required>
 
-    <label for="password">Password</label>
+    <label for="password"><strong>Password</strong></label>
     <input type="password" placeholder="Password" id="password" name="password" required>
 
     <button name="submit">Log In</button><br><br>
@@ -101,6 +103,9 @@ if (isset($_POST['submit'])) {
       <div class="fb"><i class="fab fa-facebook"></i>  Facebook</div>
     </div> -->
   </form>
+</div>
+    </div>
+  </div>
 
 </body>
 

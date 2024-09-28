@@ -26,8 +26,10 @@ if ($level != 'accountant' && $level != 'super') {
             </ol>
         </nav>
     </div>
-
     <!-- End Page Title -->
+
+
+    <div id="success-popup" style="display:none;">Success! Subscription Requested.</div>
 
     <section class="section profile">
         <div class="row">
@@ -72,8 +74,11 @@ if ($level != 'accountant' && $level != 'super') {
                                             </thead>
                                             <tbody>
                                                 <?php
-                                                // getting the unsubscribed students
-                                                $query = "SELECT * FROM student_profile INNER JOIN student_class ON ";
+                                                // payment records
+                                                $query = "SELECT student_profile.*, student_class.*, class_sections.*, ";
+                                                $query .= "all_classes.*, student_subscriptions.*, ";
+                                                $query .= "school_profile_.sub_amount, school_profile_.codsmine_stake ";
+                                                $query .= "FROM student_profile INNER JOIN student_class ON ";
                                                 $query .= "student_profile.student_id=student_class.fk_student_id ";
                                                 $query .= "INNER JOIN class_sections ON student_class.fk_section_id=class_sections.section_id ";
                                                 $query .= "INNER JOIN all_classes ON class_sections.fk_class_id=all_classes.class_id ";
@@ -232,7 +237,10 @@ if ($level != 'accountant' && $level != 'super') {
                                             <tbody>
                                                 <?php
                                                 // getting the unsubscribed students
-                                                $query = "SELECT * FROM student_profile INNER JOIN student_class ON ";
+                                                $query = "SELECT student_profile.*, student_class.*, class_sections.*, ";
+                                                $query .= "all_classes.*, student_subscriptions.*, ";
+                                                $query .= "school_profile_.sub_amount, school_profile_.codsmine_stake ";
+                                                $query .= "FROM student_profile INNER JOIN student_class ON ";
                                                 $query .= "student_profile.student_id=student_class.fk_student_id ";
                                                 $query .= "INNER JOIN class_sections ON student_class.fk_section_id=class_sections.section_id ";
                                                 $query .= "INNER JOIN all_classes ON class_sections.fk_class_id=all_classes.class_id ";
@@ -284,7 +292,10 @@ if ($level != 'accountant' && $level != 'super') {
                                             <tbody>
                                                 <?php
                                                 // getting the unsubscribed students
-                                                $query = "SELECT * FROM student_profile INNER JOIN student_class ON ";
+                                                $query = "SELECT student_profile.*, student_class.*, class_sections.*, ";
+                                                $query .= "all_classes.*, ";
+                                                $query .= "school_profile_.sub_amount, school_profile_.codsmine_stake ";
+                                                $query .= "FROM student_profile INNER JOIN student_class ON ";
                                                 $query .= "student_profile.student_id=student_class.fk_student_id ";
                                                 $query .= "INNER JOIN class_sections ON student_class.fk_section_id=class_sections.section_id ";
                                                 $query .= "INNER JOIN all_classes ON class_sections.fk_class_id=all_classes.class_id ";
@@ -344,7 +355,10 @@ if ($level != 'accountant' && $level != 'super') {
                                             <tbody>
                                                 <?php
                                                 // getting the unsubscribed students
-                                                $query = "SELECT * FROM student_profile INNER JOIN student_class ON ";
+                                                $query = "SELECT student_profile.*, student_class.*, class_sections.*, ";
+                                                $query .= "all_classes.*, student_subscriptions.*, ";
+                                                $query .= "school_profile_.sub_amount, school_profile_.codsmine_stake ";
+                                                $query .= "FROM student_profile INNER JOIN student_class ON ";
                                                 $query .= "student_profile.student_id=student_class.fk_student_id ";
                                                 $query .= "INNER JOIN class_sections ON student_class.fk_section_id=class_sections.section_id ";
                                                 $query .= "INNER JOIN all_classes ON class_sections.fk_class_id=all_classes.class_id ";
@@ -447,7 +461,26 @@ if ($level != 'accountant' && $level != 'super') {
 
                             if (item.msg == 'success') {
                                 rowToRemove = document.getElementById(del);
-                                rowToRemove.remove();
+                                rowToRemove.remove(); 
+                                
+                                // Show the popup
+                                var popup = document.getElementById('success-popup');
+                                // console.log(popup);
+                                popup.style.display = 'block'; // Make sure it's visible
+                                popup.style.position = 'fixed'; // Make sure it's positioned correctly
+                                popup.style.top = '15%'; // Position it at the top
+                                popup.style.right = '30%'; // Position it to the right
+                                popup.style.backgroundColor = '#d4edda'; // Light green background
+                                popup.style.color = '#155724'; // Dark green text color
+                                popup.style.padding = '10px'; // Padding for content
+                                popup.style.borderRadius = '5px'; // Rounded corners
+                                popup.style.boxShadow = '0px 0px 10px rgba(0, 0, 0, 0.1)'; // Soft shadow
+                                popup.style.zIndex = '9999'; // Ensure it appears on top
+
+                                // Hide the popup after 3 seconds
+                                setTimeout(function() {
+                                    popup.style.display = 'none';
+                                }, 3000);
                             }
 
                         });
@@ -464,7 +497,6 @@ if ($level != 'accountant' && $level != 'super') {
         xhr.send('request_sub=' + encodeURIComponent(sendId));
     }
 </script>
-
 
 <!-- ======= Footer ======= -->
 <?php include_once("includes/footer.php"); ?>

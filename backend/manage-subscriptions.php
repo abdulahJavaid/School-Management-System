@@ -30,28 +30,38 @@ if (isset($_POST['request_sub'])) {
     $amount = $school['sub_amount'];
     $stake = $school['codsmine_stake'];
 
-    // requesting subscription
-    $query = "INSERT INTO student_subscriptions(sub_status, sub_type, sub_amount, ";
-    $query .= "codsmine_stake, fk_student_id, fk_client_id)";
-    $query .= "VALUES('requested', 'school', '$amount', ";
-    $query .= "'$stake' , '$std_id', '$client')";
-    $set_subscription = query($query);
+    // checking if the subscription is requested
+    $query = "SELECT * FROM student_subscriptions WHERE fk_student_id='$std_id' ";
+    $query .= "AND fk_client_id='$client' AND sub_status='requested'";
+    $check_requested = query($query);
 
     $matches = [];
-    if ($set_subscription) {
-        // fetching the admin id and adding the data
-        $id = escape($_SESSION['login_id']);
-        $admin_name = escape($_SESSION['login_name']);
-        $log = "Admin <strong>$admin_name</strong> requested subscription of student <strong>$student_name</strong> !";
-        $times = date('d/m/Y h:i a', time());
-        $times = (string) $times;
-        // adding activity into the logs
-        $query = "INSERT INTO admin_logs(log_message, time, fk_client_id) VALUES('$log', '$times', '$client')";
-        $pass_query2 = mysqli_query($conn, $query);
-
-        $matches[] = ['msg' => "success"];
-    } else {
+    if (mysqli_num_rows($check_requested) > 0) {
         $matches[] = ['msg' => "failure"];
+    } else {
+        // requesting subscription
+        $query = "INSERT INTO student_subscriptions(sub_status, sub_type, sub_amount, ";
+        $query .= "codsmine_stake, fk_student_id, fk_client_id)";
+        $query .= "VALUES('requested', 'school', '$amount', ";
+        $query .= "'$stake' , '$std_id', '$client')";
+        $set_subscription = query($query);
+
+
+        if ($set_subscription) {
+            // fetching the admin id and adding the data
+            $id = escape($_SESSION['login_id']);
+            $admin_name = escape($_SESSION['login_name']);
+            $log = "Admin <strong>$admin_name</strong> requested subscription of student <strong>$student_name</strong> !";
+            $times = date('d/m/Y h:i a', time());
+            $times = (string) $times;
+            // adding activity into the logs
+            $query = "INSERT INTO admin_logs(log_message, time, fk_client_id) VALUES('$log', '$times', '$client')";
+            $pass_query2 = mysqli_query($conn, $query);
+
+            $matches[] = ['msg' => "success"];
+        } else {
+            $matches[] = ['msg' => "failure"];
+        }
     }
 
     echo json_encode($matches);
@@ -111,6 +121,13 @@ if (isset($_POST['school_paid'])) {
         $query .= "AND fk_client_id='$client'";
         $update_subs = query($query);
         if ($update_subs) {
+            // Receiving for the school
+            $subs_amount_received = $paid + $paid;
+            $date = date('y-m-d', time());
+            $comment = "Rs.$subs_amount_received received from student subscriptions";
+            $query = "INSERT INTO expense_receiving (image, comment, expense, receiving, date, fk_client_id) ";
+            $query .= "VALUES ('', '$comment', '0', '$subs_amount_received', '$date', '$client')";
+            $add_receiving = mysqli_query($conn, $query);
             // Expense for the school
             $date = date('y-m-d', time());
             $comment = "Rs.$paid paid as subscription share to CodsMine";
