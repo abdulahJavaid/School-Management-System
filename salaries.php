@@ -95,7 +95,7 @@ else {
                   <td>Teacher</td>
                   <td>Rs.<?php echo $row['salary_amount']; ?></td>
                   <td><?php echo $row['month'] . ', ' . $row['year']; ?></td>
-                  <td><a href="./process-salaries.php?id=<?php echo $sal_id; ?>" class="btn btn-sm btn-success">Process</a></td>
+                  <td><a class="btn btn-sm btn-outline-success" href="./process-salaries.php?id=<?php echo $sal_id; ?>">Process</a></td>
                 </tr>
               <?php
               }
@@ -118,7 +118,7 @@ else {
                   <td><?php echo $rows['staff_designation']; ?></td>
                   <td>Rs.<?php echo $rows['salary_amount']; ?></td>
                   <td><?php echo $rows['month'] . ', ' . $rows['year']; ?></td>
-                  <td><a href="./process-salaries.php?id=<?php echo $sal_id; ?>" class="btn btn-sm btn-success">Process</a></td>
+                  <td><a class="btn btn-sm btn-outline-success" href="./process-salaries.php?id=<?php echo $sal_id; ?>">Process</a></td>
                 </tr>
               <?php
               }

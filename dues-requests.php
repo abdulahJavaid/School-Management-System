@@ -91,7 +91,7 @@ else {
                                                         }
                                                         ?>
                                                     </td>
-                                                    <td><a href="process-dues-requests.php?id=<?php echo $row['student_id']; ?>" class="btn btn-sm btn-success">Process</a></td>
+                                                    <td><a href="process-dues-requests.php?id=<?php echo $row['student_id']; ?>" class="btn btn-sm btn-outline-success">Process</a></td>
                                                 </tr>
 
 

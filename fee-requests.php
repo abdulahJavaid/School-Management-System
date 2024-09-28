@@ -78,7 +78,7 @@ else {
                         }
                         ?>
                       </td>
-                      <td><a href="process-fee-requests.php?id=<?php echo $row['fee_id']; ?>" class="btn btn-sm btn-success">Process</a></td>
+                      <td><a href="process-fee-requests.php?id=<?php echo $row['fee_id']; ?>" class="btn btn-sm btn-outline-success">Process</a></td>
                     </tr>
                   <?php
                   }

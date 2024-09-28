@@ -70,8 +70,8 @@ else {
                                             <td><?php echo $row['staff_school_id']; ?></td>
                                             <td><?php echo $row['name']; ?></td>
                                             <td><?php echo $row['address']; ?></td>
-                                            <td><a href="view-staff.php?id=<?php echo $row['staff_id']; ?>"><u>View</u></a></td>
-                                            <td><a href="edit-staff.php?id=<?php echo $row['staff_id']; ?>"><u>Edit</u></a></td>
+                                            <td><a class="btn btn-sm btn-outline-success" href="view-staff.php?id=<?php echo $row['staff_id']; ?>">View</a></td>
+                                            <td><a class="btn btn-sm btn-outline-success" href="edit-staff.php?id=<?php echo $row['staff_id']; ?>">Edit</a></td>
                                         </tr>
                                     <?php
                                     } // end of while loop - fetching teacher records

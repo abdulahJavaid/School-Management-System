@@ -88,7 +88,7 @@ else {
         </div>
     </div>
 
-    <p><code>The pdf will be generated for the selected option. If no option is selected, current month record will be generated,</code></p>
+    <p><code>The pdf will be generated for the selected option. If no option is selected, current month record will be generated</code></p>
     <!-- <br> -->
 
     <!-- the table with the data -->
@@ -164,7 +164,6 @@ else {
                                                 <input
                                                     name="month"
                                                     type="month"
-                                                    size="4"
                                                     class="form-control"
                                                     value="<?php if (isset($_POST['view_month'])) {
                                                                 echo $_POST['month'];
