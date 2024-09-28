@@ -1,4 +1,4 @@
-<?php require_once("includes/init.php"); // inclusion fo init file 
+<?php require_once("./includes/init.php"); // inclusion fo init file 
 ?>
 
 <?php
@@ -6,26 +6,30 @@
 if (isset($_SESSION['login_access'])) {
   redirect("./");
 }
-// $level = escape($_SESSION['login_access']);
 ?>
+
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-  <!-- Design by foolishdeveloper.com -->
-  <title>My School System</title>
+  <meta charset="utf-8">
+  <title>RegistrationForm_v9 by Colorlib</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  
-  <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-  <link href="assets/css/login.css" rel="stylesheet">
-  
-  <!--Stylesheet-->
-  <style>
-  </style>
+  <!-- LINEARICONS -->
+  <link rel="stylesheet" href="assets/login-files/fonts/linearicons/style.css">
 
+  <!-- MATERIAL DESIGN ICONIC FONT -->
+  <link rel="stylesheet" href="assets/login-files/fonts/material-design-iconic-font/css/material-design-iconic-font.min.css">
+
+  <!-- DATE-PICKER -->
+  <link rel="stylesheet" href="assets/login-files/vendor/date-picker/css/datepicker.min.css">
+
+  <!-- STYLE CSS -->
+  <link rel="stylesheet" href="assets/login-files/css/style.css">
 </head>
+
+
 <?php // to check if the password and id match
 
 $message = '';
@@ -72,41 +76,44 @@ if (isset($_POST['submit'])) {
 }
 ?>
 
-<body class="bg-image">
-  <!-- <div class="background">
-    <div class="shape"></div>
-    <div class="shape"></div>
-  </div> -->
-  <div class="container">
-    <div class="row h-100">
-    <div class="d-sm-none d-md-block col-md-5 mt-3">
-      <div class="d-flex justify-content-start align-items-center h-100 pb-4">
-        <!-- <h3 class="h3 text-info">Welcome to,</h3><br> -->
-        <h1 class="h1 text-light h1-login">My School System!</h1>
-      </div>
-    </div>
-    <div class="col-md-5 col-sm-8 offset-sm-2 col-10 offset-1 mt-3">
-    <form action="" method="post">
-    <h3><strong>Login Here</strong></h3>
-    <span class="bg-danger"><?php echo $message; ?></span>
+<body>
 
-    <label for="username"><strong>Admin Email</strong></label>
-    <input type="email" placeholder="example@mail.com" id="username" name="admin_email" required>
+  <div class="wrapper">
+    <div class="inner">
+      <form action="" method="post">
+        <h3>My School System</h3>
+        <!-- <h3>Admin</h3> -->
+        <div class="form-row">
+          <div class="form-wrapper">
+            <label for="">Email *</label>
+            <input type="email" name="admin_email" class="form-control" placeholder="Your email">
+          </div>
+          <div class="form-wrapper">
+          </div>
+        </div>
+        <div class="form-row last">
+          <div class="form-wrapper">
+            <label for="">Password *</label>
+            <input type="password" name="password" class="form-control" placeholder="Your password">
+          </div>
+          <div class="form-wrapper">
+          </div>
+        </div>
 
-    <label for="password"><strong>Password</strong></label>
-    <input type="password" placeholder="Password" id="password" name="password" required>
-
-    <button name="submit">Log In</button><br><br>
-    <!-- <p class="login-link">Reset password? <a href="signup.php">Sign up</a></p> -->
-    <!-- <div class="social">
-      <div class="go"><i class="fab fa-google"></i>  Google</div>
-      <div class="fb"><i class="fab fa-facebook"></i>  Facebook</div>
-    </div> -->
-  </form>
-</div>
+        <button name="submit" data-text="Login">
+          <span>Login</span>
+        </button>
+      </form>
     </div>
   </div>
 
-</body>
+  <script src="assets/login-files/js/jquery-3.3.1.min.js"></script>
+
+  <!-- DATE-PICKER -->
+  <script src="assets/login-files/vendor/date-picker/js/datepicker.js"></script>
+  <script src="assets/login-files/vendor/date-picker/js/datepicker.en.js"></script>
+
+  <script src="assets/login-files/js/main.js"></script>
+</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
 
 </html>
