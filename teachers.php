@@ -61,7 +61,7 @@ else {
                                         <!-- <th scope="col">Assign Classes</th> -->
                                         <th scope="col">Profile</th>
                                         <th scope="col">Profile</th>
-                                        <th scope="col">Fingerprints</th>
+                                        <!-- <th scope="col">Fingerprints</th> -->
 
                                     </tr>
                                 </thead>
@@ -83,7 +83,7 @@ else {
                                             <!-- assigning the teacher to a class goes here -->
                                             <td><a href="view-teacher.php?id=<?php echo $row['teacher_id']; ?>"><u>View</u></a></td>
                                             <td><a href="edit-teacher.php?id=<?php echo $row['teacher_id']; ?>"><u>Edit</u></a></td>
-                                            <td><a href="teacher-fingers.php?id=<?php echo $row['teacher_id']; ?>"><u>Add</u></a></td>
+                                            <!-- <td><a href="teacher-fingers.php?id="><u>Add</u></a></td> -->
 
                                         </tr>
                                     <?php

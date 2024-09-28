@@ -9,6 +9,10 @@
 <!--  -->
 <!--  -->
 <!--  -->
+<?php
+// redirect
+redirect("./");
+?>
 
 <?php
 // getting teacher name

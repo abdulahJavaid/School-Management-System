@@ -3,6 +3,11 @@
 <!-- ======= Sidebar ======= -->
 <?php require_once("includes/sidebar.php"); ?>
 
+<?php
+// redirect
+redirect("./");
+?>
+
 <main id="main" class="main">
 
     <div class="pagetitle">

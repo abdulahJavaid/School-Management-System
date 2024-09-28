@@ -4,6 +4,11 @@
 <?php require_once("includes/sidebar.php"); ?>
 
 <?php
+// redirect
+redirect("./");
+?>
+
+<?php
 // getting the client id
 $client = escape($_SESSION['client_id']);
 ?>
