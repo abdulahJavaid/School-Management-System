@@ -81,7 +81,7 @@ if (isset($_POST['submit'])) {
   <div class="wrapper">
     <div class="inner">
       <form action="" method="post">
-        <h3>My School System</h3>
+        <h3><strong>My School System</strong></h3>
         <!-- <h3>Admin</h3> -->
         <div class="form-row">
           <div class="form-wrapper">

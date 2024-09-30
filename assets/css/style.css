@@ -1535,6 +1535,10 @@ end Code for showing radio buttons as nice checkbox buttons
 }
 /* end school,teacher,student profile hover */
 
+/* The card headers on view student tracking pages */
 
+.card-bg-header {
+  background-color: #2193b0 !important;
+}
 
 

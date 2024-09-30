@@ -137,12 +137,12 @@ else {
         $get = query($qu);
     ?>
         <div class="container my-5">
-            <h1 class="text-center mb-4">Class Attendance</h1>
+            <!-- <h1 class="text-center mb-4">Class Attendance</h1> -->
 
             <!-- Class attendance Card -->
             <div class="card">
-                <div class="card-header bg-secondary text-white">
-                    <h5 class="mb-0">Class: <?php echo $rows['class_name'] . " " . $rows['section_name']; ?> / <?php echo date("jS \of F Y", strtotime($date)); ?></h5>
+                <div class="card-header card-bg-header text-white">
+                    <h5 class="mb-0"><strong>Class: <?php echo $rows['class_name'] . " " . $rows['section_name']; ?> / <?php echo date("jS \of F Y", strtotime($date)); ?></strong></h5>
                 </div>
 
                 <?php
@@ -166,7 +166,7 @@ else {
                                 while ($row = mysqli_fetch_assoc($get)) {
                                 ?>
                                     <tr>
-                                        <td><?php echo $row['roll_no']; ?></td>
+                                        <td class="ps-3"><?php echo $row['roll_no']; ?></td>
                                         <td><?php echo $row['name']; ?></td>
                                         <?php
                                         if ($row['attendance'] == 'present') {

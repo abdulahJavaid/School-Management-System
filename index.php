@@ -50,27 +50,38 @@
       <li data-target="#mySlider" data-slide-to="0" class="active"></li>
       <li data-target="#mySlider" data-slide-to="1"></li>
       <li data-target="#mySlider" data-slide-to="2"></li>
+      <li data-target="#mySlider" data-slide-to="3"></li>
+      <li data-target="#mySlider" data-slide-to="4"></li>
     </ol>
     <div class="carousel-inner">
       <div class="carousel-item active">
-        <img src="images/slider1.jpeg" class="d-block w-100" alt="First Slide">
+        <img src="images/the-slider-1.jpg" class="d-block w-100" alt="First Slide">
         <div class="carousel-caption">
           <h5>Empowering Minds, Shaping Futures</h5>
-          <p>we nurture academic growth and personal development, preparing students for success and positive contributions to society</p>
         </div>
       </div>
       <div class="carousel-item">
-        <img src="images/slider2.jpeg" class="d-block w-100" alt="Second Slide">
+        <img src="images/the-slider-12.jpg" class="d-block w-100" alt="Second Slide">
         <div class="carousel-caption">
           <h5>Learning Today, Leading Tomorrow</h5>
-          <p>we inspire students to achieve excellence and become future leaders. Our focus is on holistic education that fosters intellectual growth and character development.</p>
         </div>
       </div>
       <div class="carousel-item">
-        <img src="images/slider3.jpeg" class="d-block w-100" alt="Third Slide">
+        <img src="images/the-slider-3.jpg" class="d-block w-100" alt="Third Slide">
         <div class="carousel-caption">
           <h5>Where Potential Meets Purpose</h5>
-          <p>empowers students to discover their strengths and pursue their passions. We are dedicated to providing a supportive environment that shapes confident, capable individuals</p>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img src="images/the-slider-11.jpg" class="d-block w-100" alt="Fourth Slide">
+        <div class="carousel-caption">
+          <h5>Earn A Bright Future</h5>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <img src="images/the-slider-5.jpg" class="d-block w-100" alt="Fifth Slide">
+        <div class="carousel-caption">
+          <h5>Books Our Friends</h5>
         </div>
       </div>
     </div>

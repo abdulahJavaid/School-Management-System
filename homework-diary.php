@@ -32,7 +32,7 @@ else {
     <div class="pagetitle">
         <div class="row">
             <form action="" method="post">
-                <div class="col-lg-3">
+                <div class="col-lg-4">
                     <select id="inputState" name="select" class="form-select" required>
                         <option selected value="choose_class">Choose Class</option>
                         <?php
@@ -134,12 +134,12 @@ else {
         $get = query($query);
     ?>
         <div class="container my-5">
-            <h1 class="text-center mb-4">Homework Diary</h1>
+            <!-- <h1 class="text-center mb-4">Homework Diary</h1> -->
 
             <!-- Homework Diary Card -->
             <div class="card">
-                <div class="card-header bg-secondary text-white">
-                    <h5 class="mb-0">Class: <?php echo $rows['class_name'] . " " . $rows['section_name']; ?> / <?php echo date("jS \of F Y", strtotime($date)); ?></h5>
+                <div class="card-header card-bg-header text-white mb-3">
+                    <h5 class="mb-0"><strong>Class: <?php echo $rows['class_name'] . " " . $rows['section_name']; ?> / <?php echo date("jS \of F Y", strtotime($date)); ?></strong></h5>
                 </div>
 
                 <?php
