@@ -1,27 +1,33 @@
 <?php
-if (isset($_POST['name'])) {
-  $get_name = escape($_POST['name']);
-  // fetching the admin id and adding the data
-  $admin_name = escape($_SESSION['login_name']);
-  $log = "Admin <strong>$admin_name</strong> generated paid fee records of students with name {<strong>$get_name</strong>} !";
-  $times = date('d/m/Y h:i a', time());
-  $times = (string) $times;
-  // adding activity into the logs
-  $query = "INSERT INTO admin_logs(log_message, time, fk_client_id) VALUES('$log', '$times', '$client')";
-  $pass_query2 = mysqli_query($conn, $query);
+// paid fee for the current month
 
-  $query = "SELECT * FROM school_profile_ WHERE client_id='$client'";
-  $result = mysqli_query($conn, $query);
-  $row = mysqli_fetch_assoc($result);
+if (isset($_POST['month'])) {
 
-  $name = $row['name'];
-  $address = $row['address'];
-  $contact = $row['contact'];
-  $email = $row['email'];
-  $image = $row['image'];
-  $month = date('F');
-  $year = date('Y');
-  $html = "
+    $date = $_POST['month'];
+    $timestamp = strtotime($date);
+    $year = date('Y', $timestamp);
+    $month = date('F', $timestamp);
+    // fetching the admin id and adding the data
+    $admin_name = escape($_SESSION['login_name']);
+    $log = "Admin <strong>$admin_name</strong> generated paid fee records of <strong>$month, $year</strong> !";
+    $times = date('d/m/Y h:i a', time());
+    $times = (string) $times;
+    // adding activity into the logs
+    $query = "INSERT INTO admin_logs(log_message, time, fk_client_id) VALUES('$log', '$times', '$client')";
+    $pass_query2 = mysqli_query($conn, $query);
+
+    $query = "SELECT * FROM school_profile_ WHERE client_id='$client'";
+    $result = mysqli_query($conn, $query);
+    $row = mysqli_fetch_assoc($result);
+
+    $name = $row['name'];
+    $address = $row['address'];
+    $contact = $row['contact'];
+    $email = $row['email'];
+    $image = $row['image'];
+    $current_month = date('F');
+    $current_year = date('Y');
+    $html = "
     <!DOCTYPE html>
     <html lang='en'>
       <head>
@@ -130,10 +136,10 @@ if (isset($_POST['name'])) {
       <body>
         <header class='clearfix'>
           <h1>$name</h1>
-          <div id='company'>
-            <div><span><strong>Generated On:</strong></span> $year, $month</div>
+          <div id='company' class='clearfix'>
+            <div><span><strong>Generated On:</strong></span> $current_year, $current_month</div>
             <div><span><strong>Report Type:</strong></span> Paid Fee Records</div>
-            <div><span><strong>Report Data:</strong></span> Names including word { $get_name }</div>
+            <div><span><strong>Report Data:</strong></span> $year, $month records</div>
           </div>
           <div id='project'>
             <div>$contact</div>
@@ -142,74 +148,73 @@ if (isset($_POST['name'])) {
           </div>
         </header>
         <main>
-          <div class='table-container'>
-            <table>
-              <thead>
-                <tr>
-                  <th>Reg no#</th>
-                  <th>Name</th>
-                  <th>Monthly Fee</th>
-                  <th>Funds</th>
-                  <th>Total Fee</th>
-                  <th>Amount Paid</th>
-                  <th>Dues</th>
-                </tr>
-              </thead>
-              <tbody>";
+          <table>
+            <thead>
+              <tr>
+                <th class='service'><h3>Reg no#</h3></th>
+                <th class='desc'><h3>Name</h3></th>
+                <th><h3>Monthly Fee</h3></th>
+                <th><h3>Funds</h3></th>
+                <th><h3>Total Fee</h3></th>
+                <th><h3>Amount Paid</h3></th>
+                <th><h3>Dues</h3></th>
+              </tr>
+            </thead>
+            <tbody>";
 
-  $query = "SELECT * FROM student_fee LEFT JOIN student_funds ON ";
-  $query .= "student_fee.fee_id=student_funds.fk_fee_id ";
-  $query .= "INNER JOIN student_profile ON ";
-  $query .= "student_fee.fk_student_id=student_profile.student_id ";
-  $query .= "WHERE name LIKE '%$get_name%' AND fee_status='paid' ";
-  $query .= "AND student_status='1' AND student_fee.fk_client_id='$client' ORDER BY fee_id DESC";
+    $query = "SELECT * FROM student_fee LEFT JOIN student_funds ON ";
+    $query .= "student_fee.fee_id=student_funds.fk_fee_id ";
+    $query .= "INNER JOIN student_profile ON ";
+    $query .= "student_fee.fk_student_id=student_profile.student_id ";
+    $query .= "WHERE fee_status='paid' AND student_status='1' AND year='$year' AND month='$month' ";
+    $query .= "AND student_fee.fk_client_id='$client'";
 
-  // looping to get the funds record
-  $result = query($query);
-  $funds = [];
-  $main_data = [];
-  while ($rows = mysqli_fetch_assoc($result)) {
-    $main_id = $rows['fee_id'];
-    if (!empty($rows['fk_fee_id'])) {
-      if (!isset($funds[$main_id])) {
-        $funds[$main_id] = [
-          'funds' => []
-        ];
-      }
-      $funds[$main_id]['funds'][] = '<strong>' . $rows['fund_title'] . '</strong><br>' . $rows['fund_amount'] . '<br>';
+    // looping to get the funds record
+    $result = query($query);
+    $funds = [];
+    $main_data = [];
+    while ($rows = mysqli_fetch_assoc($result)) {
+        $main_id = $rows['fee_id'];
+        if (!empty($rows['fk_fee_id'])) {
+            if (!isset($funds[$main_id])) {
+                $funds[$main_id] = [
+                    'funds' => []
+                ];
+            }
+            $funds[$main_id]['funds'][] = '<strong>' . $rows['fund_title'] . '</strong><br>' . $rows['fund_amount'] . '<br>';
+        }
+        if (!isset($main_data[$main_id])) {
+            $main_data[$main_id] = $rows;
+        }
     }
-    if (!isset($main_data[$main_id])) {
-      $main_data[$main_id] = $rows;
-    }
-  }
-  // showing the records in the main table
-  foreach ($main_data as $row) {
-    $current_id = $row['fee_id'];
-    $roll_no = $row['roll_no'];
-    $s_name = $row['name'];
-    $fee = $row['monthly_fee'];
-    $total_fee = $row['total_fee'];
-    $paid = $row['total_fee'];
-    $dues = $row['pending_dues'];
-    $html .= "<tr>
+    // showing the records in the main table
+    foreach ($main_data as $row) {
+        $current_id = $row['fee_id'];
+        $roll_no = $row['roll_no'];
+        $s_name = $row['name'];
+        $fee = $row['monthly_fee'];
+        $total_fee = $row['total_fee'];
+        $paid = $row['total_fee'];
+        $dues = $row['pending_dues'];
+        $html .= "<tr>
                 <td class='service'>$roll_no</td>
                 <td class='desc'>$s_name</td>
                 <td class='unit'>Rs.$fee</td>
                 <td class='unit'>";
-    if (isset($funds[$current_id])) {
-      foreach ($funds[$current_id]['funds'] as $get) {
-        $html .= "$get";
-      }
-    } else {
-      $html .= "---";
-    }
-    $html .= "</td>
+        if (isset($funds[$current_id])) {
+            foreach ($funds[$current_id]['funds'] as $get) {
+                $html .= "$get";
+            }
+        } else {
+            $html .= "---";
+        }
+        $html .= "</td>
                 <td class='unit'>Rs.$total_fee</td>
                 <td class='qty'>Rs.$paid</td>
                 <td class='total'>Rs.$dues</td>
               </tr>";
-  }
-  $html .= "</tbody>
+    }
+    $html .= "</tbody>
             </table>
           </div>
           <br><br><br>

@@ -86,6 +86,7 @@ if ($level != 'developer') {
                                                 $query .= "ORDER BY fk_sub_log_id, sub_id";
                                                 $get_pay_std = query($query);
 
+                                                // coupling the records with the same log id into one array
                                                 $coupled_records = [];
                                                 while ($sub_pay = mysqli_fetch_assoc($get_pay_std)) {
                                                     $coupled_records[$sub_pay['fk_sub_log_id']][] = $sub_pay;

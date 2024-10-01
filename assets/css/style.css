@@ -1538,6 +1538,7 @@ end Code for showing radio buttons as nice checkbox buttons
 /* The card headers on view student tracking pages */
 
 .card-bg-header {
+  /* #6dd5ed #2193b0 */
   background-color: #2193b0 !important;
 }
 

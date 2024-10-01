@@ -119,3 +119,9 @@ function check_finger($name, $id)
         return "no";
     }
 }
+
+// to get the last id of the insert record
+function last_id() {
+    global $conn;
+    return mysqli_insert_id($conn);
+}

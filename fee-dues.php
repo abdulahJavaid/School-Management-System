@@ -199,7 +199,9 @@ else {
                                     <tr>
                                         <th scope="col">Reg no#</th>
                                         <th scope="col">Name</th>
-                                        <th scope="col">Monthly Fee (Rs)</th>
+                                        <th scope="col">Monthly Fee</th>
+                                        <th scope="col">Funds</th>
+                                        <th scope="col">Total Fee</th>
                                         <th scope="col">Month</th>
                                         <th scope="col">Paid Amount</th>
                                         <th scope="col">Dues</th>
@@ -214,44 +216,84 @@ else {
                                         $year = escape($year);
                                         $month = date('F', strtotime($date));
                                         $month = escape($month);
-                                        $query = "SELECT * FROM student_fee INNER JOIN student_profile ON ";
+                                        $query = "SELECT * FROM student_fee LEFT JOIN student_funds ON ";
+                                        $query .= "student_fee.fee_id=student_funds.fk_fee_id ";
+                                        $query .= "INNER JOIN student_profile ON ";
                                         $query .= "student_fee.fk_student_id=student_profile.student_id ";
                                         $query .= "WHERE (fee_status='dues' OR fee_status='due_request' OR fee_status='dues_request') AND year='$year' AND month='$month' ";
                                         $query .= "AND student_status='1' AND student_fee.fk_client_id='$client'";
                                     } elseif (isset($_POST['view_name'])) {
                                         $name = escape($_POST['name']);
-                                        $query = "SELECT * FROM student_fee INNER JOIN student_profile ON ";
+                                        $query = "SELECT * FROM student_fee LEFT JOIN student_funds ON ";
+                                        $query .= "student_fee.fee_id=student_funds.fk_fee_id ";
+                                        $query .= "INNER JOIN student_profile ON ";
                                         $query .= "student_fee.fk_student_id=student_profile.student_id ";
                                         $query .= "WHERE name LIKE '%$name%' AND student_status='1' AND student_fee.fk_client_id='$client' AND (fee_status='dues' OR fee_status='due_request' OR fee_status='dues_request') ORDER BY fee_id DESC";
                                     } elseif (isset($_POST['view_reg'])) {
                                         $roll_no = escape($_POST['reg']);
-                                        $query = "SELECT * FROM student_fee INNER JOIN student_profile ON ";
+                                        $query = "SELECT * FROM student_fee LEFT JOIN student_funds ON ";
+                                        $query .= "student_fee.fee_id=student_funds.fk_fee_id ";
+                                        $query .= "INNER JOIN student_profile ON ";
                                         $query .= "student_fee.fk_student_id=student_profile.student_id ";
                                         $query .= "WHERE roll_no='$roll_no' AND student_status='1' AND student_fee.fk_client_id='$client' AND (fee_status='dues' OR fee_status='due_request' OR fee_status='dues_request') ORDER BY fee_id DESC";
                                     } else {
                                         $year = date('Y');
                                         $month = date('F');
-                                        $query = "SELECT * FROM student_fee INNER JOIN student_profile ON ";
+                                        $query = "SELECT * FROM student_fee LEFT JOIN student_funds ON ";
+                                        $query .= "student_fee.fee_id=student_funds.fk_fee_id ";
+                                        $query .= "INNER JOIN student_profile ON ";
                                         $query .= "student_fee.fk_student_id=student_profile.student_id ";
                                         $query .= "WHERE (fee_status='dues' OR fee_status='due_request' OR fee_status='dues_request') AND year='$year' AND month='$month' ";
                                         $query .= "AND student_status='1' AND student_fee.fk_client_id='$client'";
                                     }
+                                    // looping to get the funds record
                                     $result = query($query);
-                                    while ($row = mysqli_fetch_assoc($result)) {
+                                    $funds = [];
+                                    $main_data = [];
+                                    while ($rows = mysqli_fetch_assoc($result)) {
+                                        $main_id = $rows['fee_id'];
+                                        if (!empty($rows['fk_fee_id'])) {
+                                            if (!isset($funds[$main_id])) {
+                                                $funds[$main_id] = [
+                                                    'funds' => []
+                                                ];
+                                            }
+                                            $funds[$main_id]['funds'][] = '<strong>' . $rows['fund_title'] . '</strong><br>' . $rows['fund_amount'] . '<br>';
+                                        }
+                                        if (!isset($main_data[$main_id])) {
+                                            $main_data[$main_id] = $rows;
+                                        }
+                                    }
+                                    // showing the records in the main table
+                                    foreach ($main_data as $row) {
+                                        $current_id = $row['fee_id'];
                                     ?>
                                         <tr>
                                             <td><?php echo $row['roll_no']; ?></td>
                                             <td><?php echo $row['name']; ?></td>
-                                            <td>Rs. <?php echo $row['monthly_fee']; ?></td>
+                                            <td>Rs.<?php echo $row['monthly_fee']; ?></td>
+                                            <td>
+                                                <?php
+                                                // getting the funds from the loop
+                                                if (isset($funds[$current_id])) {
+                                                    foreach ($funds[$current_id]['funds'] as $get) {
+                                                        echo $get;
+                                                    }
+                                                } else {
+                                                    echo "---";
+                                                }
+                                                ?>
+                                            </td>
+                                            <td>Rs.<?php echo $row['total_fee']; ?></td>
                                             <td><?php echo $row['year'] . ', ' . $row['month']; ?></td>
                                             <td>
                                                 <?php
                                                 if ($row['fee_status'] == 'paid') {
-                                                    echo $row['monthly_fee'];
+                                                    echo 'Rs.'.$row['total_fee'];
                                                 } else {
                                                     $dues = (int) $row['pending_dues'];
-                                                    $paid = (int) $row['monthly_fee'] - $dues;
-                                                    echo 'Rs.' . $paid;
+                                                    $paid = (int) $row['total_fee'] - $dues;
+                                                    echo 'Rs.'. $paid;
                                                 }
                                                 ?>
                                             </td>
