@@ -261,7 +261,7 @@ if ($level == 'accountant' || $level == 'super') {
                                                     'funds' => []
                                                 ];
                                             }
-                                            $funds[$main_id]['funds'][] = '<strong>' . $rows['fund_title'] . '</strong><br>' . $rows['fund_amount'] . '<br>';
+                                            $funds[$main_id]['funds'][] = '--' . $rows['fund_title'] . '<br>Rs.' . $rows['fund_amount'] . '<br>';
                                         }
                                         if (!isset($main_data[$main_id])) {
                                             $main_data[$main_id] = $rows;

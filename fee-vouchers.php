@@ -33,11 +33,11 @@ else {
         <div class="row">
             <?php
             // download vouchers
-            if (!isset($_POST['download_vouchers'])) {
+            if (!isset($_GET['download_vouchers'])) {
             ?>
                 <div class="row mb-3">
                     <div class="col-md-3 mb-3">
-                        <form action="" method="post">
+                        <form action="" method="get">
                             <button type="submit" name="download_vouchers" class="btn btn-sm btn-success w-100">Download vouchers</button>
                         </form>
                     </div>
@@ -46,7 +46,7 @@ else {
             }
             ?>
             <?php
-            if (isset($_POST['download_vouchers'])) {
+            if (isset($_GET['download_vouchers'])) {
                 // unset($_GET['ms']);
                 // unset($_GET['m']);
             ?>

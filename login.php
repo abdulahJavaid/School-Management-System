@@ -13,9 +13,13 @@ if (isset($_SESSION['login_access'])) {
 
 <head>
   <meta charset="utf-8">
-  <title>RegistrationForm_v9 by Colorlib</title>
+  <title>My School System</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+  <!-- Favicons -->
+  <link href="./images/school-logo4.png" rel="icon">
+  <link href="./images/school-logo4.png" rel="apple-touch-icon">
+  
   <!-- LINEARICONS -->
   <link rel="stylesheet" href="assets/login-files/fonts/linearicons/style.css">
 

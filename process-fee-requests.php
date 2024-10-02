@@ -10,9 +10,9 @@ $client = escape($_SESSION['client_id']);
 
 <?php
 // checking session for appropriate access
-if ($level == 'accountant' || $level == 'super') {}
-else {
-  redirect("./");
+if ($level == 'accountant' || $level == 'super') {
+} else {
+    redirect("./");
 }
 ?>
 
@@ -27,9 +27,7 @@ if (!isset($_GET['id'])) {
 $id = escape($_GET['id']);
 // rejected fees
 if (isset($_POST['rejected']) && !empty($_POST['rejection_reason'])) {
-    // echo $_GET['id'];
     $id = escape($_POST['id']);
-    // echo $_GET['id'];
     $rejection_reason = escape($_POST['rejection_reason']);
     $q = "UPDATE student_fee SET fee_method='', payment_date='', fee_status='rejected', admin_remarks='$rejection_reason' ";
     $q .= "WHERE fee_id=$id AND fk_client_id='$client'";
@@ -44,7 +42,6 @@ if (isset($_POST['rejected']) && !empty($_POST['rejection_reason'])) {
         // adding activity into the logs
         $query = "INSERT INTO admin_logs(log_message, time, fk_client_id) VALUES('$log', '$times', '$client')";
         $pass_query2 = mysqli_query($conn, $query);
-
 
         redirect("./fee-requests.php");
     }
@@ -71,6 +68,7 @@ if (isset($_POST['due']) && !empty($_POST['dues'])) {
         $pass_query2 = mysqli_query($conn, $query);
 
 
+        // addin the receivings
         $date = date('Y-m-d', time());
         $name = escape($_POST['student_name']);
         $reg = escape($_POST['roll_no']);
@@ -106,6 +104,7 @@ if (isset($_POST['paid'])) {
         $pass_query2 = mysqli_query($conn, $query);
 
 
+        // adding the receivings
         $date = date('Y-m-d', time());
         $name = escape($_POST['student_name']);
         $reg = escape($_POST['roll_no']);
@@ -154,12 +153,32 @@ if (isset($_POST['paid'])) {
                         <?php
                         // get student info
                         $fee_id = escape($_GET['id']);
-                        $query = "SELECT * FROM student_fee INNER JOIN ";
-                        $query .= "student_profile ON student_fee.fk_student_id=student_profile.student_id ";
+                        $query = "SELECT * FROM student_fee LEFT JOIN student_funds ON ";
+                        $query .= "student_fee.fee_id=student_funds.fk_fee_id ";
+                        $query .= "INNER JOIN student_profile ON ";
+                        $query .= "student_fee.fk_student_id=student_profile.student_id ";
                         $query .= "WHERE fee_id='$fee_id' AND student_status='1' AND student_fee.fk_client_id='$client'";
+
+                        // looping to get the funds record
                         $result = query($query);
-                        $rows = mysqli_fetch_assoc($result);
+                        $funds = [];
+                        $main_data = [];
+                        while ($row = mysqli_fetch_assoc($result)) {
+                            $main_id = $row['fee_id'];
+                            if (!empty($row['fk_fee_id'])) {
+                                if (!isset($funds[$main_id])) {
+                                    $funds[$main_id] = [
+                                        'funds' => []
+                                    ];
+                                }
+                                $funds[$main_id]['funds'][] = '(' . $row['fund_title'] . ' - ' . $row['fund_amount'] . ') ';
+                            }
+                            if (!isset($main_data[$main_id])) {
+                                $main_data[$main_id] = $row;
+                            }
+                        }
                         ?>
+
                         <div class="tab-content pt-2">
                             <div class="tab-pane fade show active profile-edit pt-3" id="profile-edit">
                                 <div class="table-responsive">
@@ -168,58 +187,83 @@ if (isset($_POST['paid'])) {
                                             <tr>
                                                 <th scope="col">Reg no#</th>
                                                 <th scope="col">Name</th>
-                                                <th scope="col">Monthly Fee (Rs)</th>
+                                                <th scope="col">Monthly Fee</th>
+                                                <th scope="col">Funds</th>
+                                                <th scope="col">Total Fee</th>
                                                 <th scope="col">Month</th>
                                                 <th scope="col">Payment Date</th>
-                                                <th scope="col">Fee Method</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td><?php echo $rows['roll_no']; ?></td>
-                                                <td><?php echo $rows['name']; ?></td>
-                                                <td>Rs. <?php echo $rows['monthly_fee']; ?></td>
-                                                <td><?php echo $rows['year'] . ', ' . $rows['month']; ?></td>
-                                                <td><?php echo $rows['payment_date']; ?></td>
-                                                <td><?php echo $rows['fee_method']; ?></td>
-                                            </tr>
+                                            <?php
+                                            // showing the records in the main table
+                                            foreach ($main_data as $rows) {
+                                                $current_id = $rows['fee_id'];
+                                            ?>
+                                                <tr>
+                                                    <td><?php echo $rows['roll_no']; ?></td>
+                                                    <td><?php echo $rows['name']; ?></td>
+                                                    <td>Rs. <?php echo $rows['monthly_fee']; ?></td>
+                                                    <td class="text-center">
+                                                        <span class="d-inline-block"
+                                                            tabindex="0"
+                                                            data-bs-toggle="tooltip"
+                                                            title="<?php
+                                                                    // getting the funds from the loop
+                                                                    if (isset($funds[$current_id])) {
+                                                                        foreach ($funds[$current_id]['funds'] as $get) {
+                                                                            echo $get;
+                                                                        }
+                                                                    } else {
+                                                                        echo "---";
+                                                                    }
+                                                                    ?>">
+                                                            <button type="button" class="btn btn-sm btn-outline-dark"><i class="fa-solid fa-question"></i></button>
+                                                        </span>
+
+                                                    </td>
+                                                    <td>Rs.<?php echo $rows['total_fee']; ?></td>
+                                                    <td><?php echo $rows['year'] . ', ' . $rows['month']; ?></td>
+                                                    <td><?php echo $rows['payment_date']; ?></td>
+                                                </tr>
+                                            <?php
+                                            }
+                                            ?>
                                         </tbody>
                                     </table>
                                 </div>
-                                <form method="post" action="" enctype="multipart/form-data">
-                                    <?php
-                                    if (!empty($rows['receipt_image'])) {
-                                    ?>
-                                        <!-- <input type="text" name="receipt_image" value="<?php //echo $rows['receipt_image']; 
-                                                                                            ?>"> -->
-                                    <?php
-                                    }
-
-                                    ?>
-                                    <input type="hidden" name="id" value="<?php echo $id; ?>" id="">
-                                    <input type="hidden" name="student_id" value="<?php echo $rows['student_id']; ?>" id="">
-                                    <input type="hidden" name="student_name" value="<?php echo $rows['name']; ?>" id="">
-                                    <input type="hidden" name="roll_no" value="<?php echo $rows['roll_no']; ?>" id="">
-                                    <input type="hidden" name="monthly_fee" value="<?php echo $rows['monthly_fee']; ?>" id="">
-                                    <input type="hidden" name="year" value="<?php echo $rows['year']; ?>" id="">
-                                    <input type="hidden" name="month" value="<?php echo $rows['month']; ?>" id="">
-                                    <div class="row mb-3">
-                                        <div class="col-md-8 col-lg-9">
-                                            <input name="dues" type="text" class="form-control" value="" placeholder="Add dues (if any)">
+                                <?php
+                                // loop for getting the student data
+                                foreach ($main_data as $rows) {
+                                ?>
+                                    <form method="post" action="" enctype="multipart/form-data">
+                                        <input type="hidden" name="id" value="<?php echo $id; ?>" id="">
+                                        <input type="hidden" name="student_id" value="<?php echo $rows['student_id']; ?>" id="">
+                                        <input type="hidden" name="student_name" value="<?php echo $rows['name']; ?>" id="">
+                                        <input type="hidden" name="roll_no" value="<?php echo $rows['roll_no']; ?>" id="">
+                                        <input type="hidden" name="monthly_fee" value="<?php echo $rows['total_fee']; ?>" id="">
+                                        <input type="hidden" name="year" value="<?php echo $rows['year']; ?>" id="">
+                                        <input type="hidden" name="month" value="<?php echo $rows['month']; ?>" id="">
+                                        <div class="row mb-3">
+                                            <div class="col-md-8 col-lg-9 mt-2">
+                                                <input name="dues" type="text" class="form-control" value="" placeholder="Add dues (if fees is not full paid)">
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="row mb-3">
-                                        <div class="col-md-8 col-lg-9">
-                                            <input name="rejection_reason" type="text" class="form-control" value="" placeholder="Add reason (if rejected)">
+                                        <div class="row mb-3">
+                                            <div class="col-md-8 col-lg-9 mt-2">
+                                                <input name="rejection_reason" type="text" class="form-control" value="" placeholder="Add reason (if rejected)">
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    <div class="text-center">
-                                        <button type="submit" name="paid" class="btn btn-sm btn-success">Mark Paid</button>
-                                        <button type="submit" name="due" class="btn btn-sm btn-primary">Add dues</button>
-                                        <button type="submit" name="rejected" class="btn btn-sm btn-danger">Rejected</button>
-                                    </div>
-                                </form><!-- End Profile Edit Form -->
+                                        <div class="text-center">
+                                            <button type="submit" name="paid" class="btn btn-sm btn-success">Mark Paid</button>
+                                            <button type="submit" name="due" class="btn btn-sm btn-primary">Add dues</button>
+                                            <button type="submit" name="rejected" class="btn btn-sm btn-danger">Rejected</button>
+                                        </div>
+                                    </form><!-- End Profile Edit Form -->
+                                <?php
+                                }
+                                ?>
 
                             </div>
 
@@ -232,16 +276,17 @@ if (isset($_POST['paid'])) {
             <div class="col-xl-4">
                 <div class="card">
                     <?php
-                    if (str_contains(strtolower($rows['fee_method']), 'cash')) {
-                        $img = "image-by-cash-default-admin.jpg";
-                        echo "<img src='uploads/fees/$img' alt='no-img'>";
-                    } else {
-                        $img = $rows['receipt_image'];
-                        echo "<img src='uploads/fees/$img' alt='no-img'>";
-                    }
+                    foreach ($main_data as $rows) {
+                        if (str_contains(strtolower($rows['fee_method']), 'cash')) {
+                            $img = "image-by-cash-default-admin.jpg";
+                            echo "<img src='uploads/fees/$img' alt='no-img'>";
+                        } else {
+                            $img = $rows['receipt_image'];
+                            echo "<img src='uploads/fees/$img' alt='no-img'>";
+                        }
                     ?>
-                    <div class="card-body">
-                        <h5 class="card-title">
+                        <div class="card-body">
+                            <h5 class="card-title">
                             <?php
                             if (str_contains(strtolower($rows['fee_method']), 'cash')) {
                                 echo "Paid by Cash";
@@ -249,9 +294,10 @@ if (isset($_POST['paid'])) {
                                 $img = $rows['receipt_image'];
                                 echo "Payment Receipt";
                             }
+                        }
                             ?>
-                        </h5>
-                    </div>
+                            </h5>
+                        </div>
                 </div>
             </div>
         </div>

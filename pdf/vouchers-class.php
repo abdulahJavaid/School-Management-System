@@ -3,7 +3,7 @@
 
 if (isset($_POST['select'])) {
 
-    if($_POST['select'] == 'choose_class') {
+    if ($_POST['select'] == 'choose_class') {
         redirect("./fee-vouchers.php?m=1");
     }
 
@@ -33,15 +33,34 @@ if (isset($_POST['select'])) {
     $month = date('F');
     $year = date('Y');
 
-    $query = "SELECT * FROM student_fee INNER JOIN ";
-    $query .= "student_profile ON student_fee.fk_student_id=student_profile.student_id INNER JOIN ";
+    $query = "SELECT * FROM student_fee LEFT JOIN student_funds ON ";
+    $query .= "student_fee.fee_id=student_funds.fk_fee_id ";
+    $query .= "INNER JOIN student_profile ON ";
+    $query .= "student_fee.fk_student_id=student_profile.student_id INNER JOIN ";
     $query .= "student_class ON student_profile.student_id=student_class.fk_student_id INNER JOIN ";
     $query .= "class_sections ON student_class.fk_section_id=class_sections.section_id INNER JOIN ";
     $query .= "all_classes ON class_sections.fk_class_id=all_classes.class_id ";
     $query .= "WHERE year='$year' AND month='$month' AND fee_status='unpaid' AND section_id='$section' ";
     $query .= "AND student_status='1' AND student_fee.fk_client_id='$client'";
 
-    $pass = mysqli_query($conn, $query);
+    // looping to get the funds record
+    $result = query($query);
+    $funds = [];
+    $main_data = [];
+    while ($row = mysqli_fetch_assoc($result)) {
+        $main_id = $row['fee_id'];
+        if (!empty($row['fk_fee_id'])) {
+            if (!isset($funds[$main_id])) {
+                $funds[$main_id] = [
+                    'funds' => []
+                ];
+            }
+            $funds[$main_id]['funds'][] = '<tr><td>' . $row['fund_title'] . '</td><td>Rs.' . $row['fund_amount'] . '</td></tr>';
+        }
+        if (!isset($main_data[$main_id])) {
+            $main_data[$main_id] = $row;
+        }
+    }
 
     $html = "
   <!DOCTYPE html>
@@ -139,104 +158,128 @@ body {
     </style>
 </head>
 <body>";
-    while ($rows = mysqli_fetch_assoc($pass)) {
+    // showing the records in the main table
+    foreach ($main_data as $rows) {
+        $current_id = $rows['fee_id'];
+
         $student_name = $rows['name'];
         $roll_no = $rows['roll_no'];
         $class = $rows['class_name'];
         $section = $rows['section_name'];
         $fee = $rows['monthly_fee'];
         $last_date = $rows['due_date'];
+        $total_fee = $rows['total_fee'];
 
         // $html .= "1";
         $html .= "<div class='vouchers'>
-        <div class='voucher-container'>
-            <div class='voucher-header'>
-            <span class='voucher-type'>Student Copy</span><br>
-                <h3 class='school-name'>$name</h3>
-            </div>
-            <h2 class='voucher-title'>Fee Voucher</h2>
-            
-            <div class='voucher-details'>
-                <p><strong>Student Name:</strong> $student_name</p>
-                <p><strong>Roll Number:</strong> $roll_no</p>
-                <p><strong>Class:</strong> $class $section</p>
-                <p><strong>Month:</strong> $year $month</p>
-            </div>
-            
-            <table class='fee-table'>
-                <thead>
-                    <tr>
-                        <th>Description</th>
-                        <th>Amount (Rs.)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Monthly Fees</td>
-                        <td>$fee</td>
-                    </tr>
-                </tbody>
-            </table>
-            
-            <div class='payment-info'>
-                <p><strong>Last Date:</strong> $last_date</p>
-                <p><strong>Payment Method:</strong> Bank Transfer/Cash</p>
-            </div>
-            
-            <div class='footer'>
-                <p><strong>Note:</strong> Please ensure payment is made by the due date to avoid any late fees.</p>
-            </div>
+    <div class='voucher-container'>
+        <div class='voucher-header'>
+        <center><img src='./uploads/school-profile-uploads/$image' width='70px' height='70px'/></center>
+        <span class='voucher-type'>Student Copy</span><br>
+            <h3 class='school-name'>$name</h3>
         </div>
+        <h2 class='voucher-title'>Fee Voucher</h2>
+        
+        <div class='voucher-details'>
+            <p><strong>Student Name:</strong> $student_name</p>
+            <p><strong>Roll Number:</strong> $roll_no</p>
+            <p><strong>Class:</strong> $class $section</p>
+            <p><strong>Month:</strong> $year $month</p>
+        </div>
+        
+        <table class='fee-table'>
+            <thead>
+                <tr>
+                    <th>Description</th>
+                    <th>Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Monthly Fee</td>
+                    <td>Rs.$fee</td>
+                </tr>";
+        if (isset($funds[$current_id])) {
+            foreach ($funds[$current_id]['funds'] as $get) {
+                $html .= "$get";
+            }
+        }
+        $html .= "<tr>
+                    <td><strong>Total Fee</strong></td>
+                    <td>Rs.$total_fee</td>
+                </tr>
+                </tbody>
+        </table>
+        
+        <div class='payment-info'>
+            <p><strong>Last Date:</strong> $last_date</p>
+            <p><strong>Payment Method:</strong> Bank Transfer/Cash</p>
+        </div>
+        
+        <div class='footer'>
+            <p><strong>Note:</strong> Please ensure payment is made by the due date to avoid any late fees.</p>
+        </div>
+    </div>
 
-        <div class='voucher-container'>
-            <div class='voucher-header'>
-            <span class='voucher-type'>School Copy</span><br>
-                <h3 class='school-name'>$name</h3>
-            </div>
-            <h2 class='voucher-title'>Fee Voucher</h2>
-            
-            <div class='voucher-details'>
-                <p><strong>Student Name:</strong> $student_name</p>
-                <p><strong>Roll Number:</strong> $roll_no</p>
-                <p><strong>Class:</strong> $class $section</p>
-                <p><strong>Month:</strong> $year $month</p>
-            </div>
-            
-            <table class='fee-table'>
-                <thead>
-                    <tr>
-                        <th>Description</th>
-                        <th>Amount (Rs.)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Monthly Fee</td>
-                        <td>$fee</td>
-                    </tr>
-                </tbody>
-            </table>
-            
-            <div class='payment-info'>
-                <p><strong>Last Date:</strong> $last_date</p>
-                <p><strong>Payment Method:</strong> Bank Transfer/Cash</p>
-            </div>
-            
-            <div class='footer'>
-                <p><strong>Note:</strong> Please ensure payment is made by the due date to avoid any late fees.</p>
-            </div>
+    <div class='voucher-container'>
+        <div class='voucher-header'>
+        <center><img src='./uploads/school-profile-uploads/$image' width='70px' height='70px'/></center>
+        <span class='voucher-type'>School Copy</span><br>
+            <h3 class='school-name'>$name</h3>
         </div>
-    </div>";
+        <h2 class='voucher-title'>Fee Voucher</h2>
+        
+        <div class='voucher-details'>
+            <p><strong>Student Name:</strong> $student_name</p>
+            <p><strong>Roll Number:</strong> $roll_no</p>
+            <p><strong>Class:</strong> $class $section</p>
+            <p><strong>Month:</strong> $year $month</p>
+        </div>
+        
+        <table class='fee-table'>
+            <thead>
+                <tr>
+                    <th>Description</th>
+                    <th>Amount</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Monthly Fee</td>
+                    <td>Rs.$fee</td>
+                </tr>";
+        if (isset($funds[$current_id])) {
+            foreach ($funds[$current_id]['funds'] as $get) {
+                $html .= "$get";
+            }
+        }
+        $html .= "<tr>
+                    <td><strong>Total Fee</strong></td>
+                    <td>Rs.$total_fee</td>
+                </tr>
+                </tbody>
+        </table>
+        
+        <div class='payment-info'>
+            <p><strong>Last Date:</strong> $last_date</p>
+            <p><strong>Payment Method:</strong> Bank Transfer/Cash</p>
+        </div>
+        
+        <div class='footer'>
+            <p><strong>Note:</strong> Please ensure payment is made by the due date to avoid any late fees.</p>
+        </div>
+    </div>
+</div>";
     }
     $html .= "</body>
 </html>
   ";
-  // fetching the admin id and adding the data
-  $admin_name = escape($_SESSION['login_name']);
-  $log = "Admin <strong>$admin_name</strong> generated fee vouchers of class <strong>$class $section</strong> !";
-  $times = date('d/m/Y h:i a', time());
-  $times = (string) $times;
-  // adding activity into the logs
-  $query = "INSERT INTO admin_logs(log_message, time, fk_client_id) VALUES('$log', '$times', '$client')";
-  $pass_query2 = mysqli_query($conn, $query);
+    // fetching the admin id and adding the data
+    $admin_name = escape($_SESSION['login_name']);
+    $log = "Admin <strong>$admin_name</strong> generated fee vouchers of class <strong>$class $section</strong> !";
+    $times = date('d/m/Y h:i a', time());
+    $times = (string) $times;
+    // adding activity into the logs
+    $query = "INSERT INTO admin_logs(log_message, time, fk_client_id) VALUES('$log', '$times', '$client')";
+    $pass_query2 = mysqli_query($conn, $query);
 }

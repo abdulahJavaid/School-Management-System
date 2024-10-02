@@ -49,7 +49,6 @@ if (isset($_POST['reject']) && !empty($_POST['rejection_reason'])) {
     $query = "INSERT INTO admin_logs(log_message, time, fk_client_id) VALUES('$log', '$times', '$client')";
     $pass_query2 = mysqli_query($conn, $query);
 
-
     redirect("./dues-requests.php");
 } elseif (isset($_POST['reject']) && empty($_POST['rejection_reason'])) {
     $message = "Please add dues rejection reason!";

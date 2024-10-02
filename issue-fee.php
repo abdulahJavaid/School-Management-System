@@ -43,12 +43,57 @@ if ($level == 'accountant' || $level == 'super') {
         while ($row = mysqli_fetch_array($results)) {
             $student_id = $row['student_id'];
             $monthly_fee = $row['fee_amount'];
+            
+            // calculating the total fees
+            $total_fee = (int) $monthly_fee;
+            if (!empty($_POST['fund1'])) {
+                $total_fee += (int) $_POST['fund1'];
+            }
+            if (!empty($_POST['fund2'])) {
+                $total_fee += (int) $_POST['fund2'];
+            }
+            if (!empty($_POST['fund3'])) {
+                $total_fee += (int) $_POST['fund3'];
+            }
+            if (!empty($_POST['fund4'])) {
+                $total_fee += (int) $_POST['fund4'];
+            }
+            $total_fee = (string) $total_fee;
 
-            $query = "INSERT INTO student_fee(fk_student_id, year, month, monthly_fee, due_date, fee_status, fk_client_id) ";
-            $query .= "VALUES('$student_id', '$year', '$month', '$monthly_fee', '$due_date', '$fee_status', '$client')";
+            $query = "INSERT INTO student_fee(fk_student_id, year, month, monthly_fee, total_fee, due_date, fee_status, fk_client_id) ";
+            $query .= "VALUES('$student_id', '$year', '$month', '$monthly_fee', '$total_fee', '$due_date', '$fee_status', '$client')";
             $resultss = query($query);
 
+            $last_id = last_id();
             // adding the funds if any
+            if (!empty($_POST['fund1'])) {
+                $fund1t = $_POST['fund1t'];
+                $fund1 = $_POST['fund1'];
+                $query = "INSERT INTO student_funds(fk_fee_id, fund_title, fund_amount, fk_client_id) ";
+                $query .= "VALUES('$last_id', '$fund1t', '$fund1', '$client')";
+                $pass_fund1 = query($query);
+            }
+            if (!empty($_POST['fund2'])) {
+                $fund2t = $_POST['fund2t'];
+                $fund2 = $_POST['fund2'];
+                $query = "INSERT INTO student_funds(fk_fee_id, fund_title, fund_amount, fk_client_id) ";
+                $query .= "VALUES('$last_id', '$fund2t', '$fund2', '$client')";
+                $pass_fund2 = query($query);
+            }
+            if (!empty($_POST['fund3'])) {
+                $fund3t = $_POST['fund3t'];
+                $fund3 = $_POST['fund3'];
+                $query = "INSERT INTO student_funds(fk_fee_id, fund_title, fund_amount, fk_client_id) ";
+                $query .= "VALUES('$last_id', '$fund3t', '$fund3', '$client')";
+                $pass_fund3 = query($query);
+            }
+            if (!empty($_POST['fund4'])) {
+                $fund4t = $_POST['fund4t'];
+                $fund4 = $_POST['fund4'];
+                $query = "INSERT INTO student_funds(fk_fee_id, fund_title, fund_amount, fk_client_id) ";
+                $query .= "VALUES('$last_id', '$fund4t', '$fund4', '$client')";
+                $pass_fund4 = query($query);
+            }
 
             // adding the fee notices for the student
             $today = date('Y-m-d', time());
@@ -147,21 +192,21 @@ if ($level == 'accountant' || $level == 'super') {
                 $fund6 = $_POST['fund6'];
                 $query = "INSERT INTO student_funds(fk_fee_id, fund_title, fund_amount, fk_client_id) ";
                 $query .= "VALUES('$last_id', '$fund6t', '$fund6', '$client')";
-                $pass_fund1 = query($query);
+                $pass_fund2 = query($query);
             }
             if (!empty($_POST['fund7'])) {
                 $fund7t = $_POST['fund7t'];
                 $fund7 = $_POST['fund7'];
                 $query = "INSERT INTO student_funds(fk_fee_id, fund_title, fund_amount, fk_client_id) ";
                 $query .= "VALUES('$last_id', '$fund7t', '$fund7', '$client')";
-                $pass_fund1 = query($query);
+                $pass_fund3 = query($query);
             }
             if (!empty($_POST['fund8'])) {
                 $fund8t = $_POST['fund8t'];
                 $fund8 = $_POST['fund8'];
                 $query = "INSERT INTO student_funds(fk_fee_id, fund_title, fund_amount, fk_client_id) ";
                 $query .= "VALUES('$last_id', '$fund8t', '$fund8', '$client')";
-                $pass_fund1 = query($query);
+                $pass_fund4 = query($query);
             }
 
             // adding the fee notices for the student
@@ -626,7 +671,7 @@ if ($level == 'accountant' || $level == 'super') {
                 $get_unpaid = query($query);
                 while ($row = mysqli_fetch_assoc($get_unpaid)) {
                     $fee_id = $row['fee_id'];
-                    $fee = $row['monthly_fee'];
+                    $fee = $row['total_fee'];
 
                     $query = "UPDATE student_fee SET fee_status='dues', pending_dues='$fee' ";
                     $query .= "WHERE fee_id='$fee_id' AND fk_client_id='$client'";

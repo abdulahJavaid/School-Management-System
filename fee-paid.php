@@ -23,7 +23,7 @@ if ($level == 'accountant' || $level == 'super') {
         <nav>
             <ol class="breadcrumb">
                 <!-- <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-      <li class="breadcrumb-item">Users</li> -->
+                <li class="breadcrumb-item">Users</li> -->
                 <li class="breadcrumb-item active"><?php echo $_SESSION['school_name']; ?></li>
             </ol>
         </nav>
@@ -258,7 +258,7 @@ if ($level == 'accountant' || $level == 'super') {
                                                     'funds' => []
                                                 ];
                                             }
-                                            $funds[$main_id]['funds'][] = '<strong>' . $rows['fund_title'] . '</strong><br>' . $rows['fund_amount'] . '<br>';
+                                            $funds[$main_id]['funds'][] = '--' . $rows['fund_title'] . '<br>Rs.' . $rows['fund_amount'] . '<br>';
                                         }
                                         if (!isset($main_data[$main_id])) {
                                             $main_data[$main_id] = $rows;

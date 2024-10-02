@@ -44,7 +44,7 @@ else {
                   <tr>
                     <th scope="col">Reg no#</th>
                     <th scope="col">Name</th>
-                    <th scope="col">Monthly Fee (Rs)</th>
+                    <th scope="col">Total Fee</th>
                     <th scope="col">Month</th>
                     <th scope="col">Payment date</th>
                     <th scope="col">Fee Method</th>
@@ -64,7 +64,7 @@ else {
                     <tr>
                       <td><?php echo $row['roll_no']; ?></td>
                       <td><?php echo $row['name']; ?></td>
-                      <td>Rs. <?php echo $row['monthly_fee']; ?></td>
+                      <td>Rs.<?php echo $row['total_fee']; ?></td>
                       <td><?php echo $row['year'] . ', ' . $row['month']; ?></td>
                       <td><?php echo $row['payment_date']; ?></td>
                       <td><?php echo $row['fee_method']; ?></td>
