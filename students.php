@@ -127,8 +127,8 @@ else {
                                                 <td><?php echo $row['section_name']; ?></td>
                                                 <td>Rs. <?php echo $row['fee_amount']; ?></td>
                                                 <td>null</td>
-                                                <td><a href="view-student.php?id=<?php echo $row['student_id']; ?>"><u>View</u></a></td>
-                                                <td><a href="edit-student.php?id=<?php echo $row['student_id']; ?>"><u>Edit</u></a></td>
+                                                <td><a class="btn btn-sm btn-outline-success" href="view-student.php?id=<?php echo $row['student_id']; ?>">View</a></td>
+                                                <td><a class="btn btn-sm btn-outline-success" href="edit-student.php?id=<?php echo $row['student_id']; ?>">Edit</a></td>
                                             </tr>
 
                                         <?php

@@ -58,6 +58,7 @@ $row = mysqli_fetch_assoc($pass);
   $dob = '';
   $address = '';
   $mobile_no = '';
+  $second_mobile_no = '';
   $email = '';
   $f_name = '';
   $f_cnic = '';
@@ -74,6 +75,7 @@ $row = mysqli_fetch_assoc($pass);
     $dob = escape($_POST['dob']);
     $address = escape($_POST['address']);
     $mobile_no = escape($_POST['mobile_no']);
+    $second_mobile_no = escape($_POST['second_mobile_no']);
     $email = escape($_POST['email']);
     $f_name = escape($_POST['f_name']);
     $f_cnic = escape($_POST['f_cnic']);
@@ -107,7 +109,8 @@ $row = mysqli_fetch_assoc($pass);
 
         $query = "UPDATE student_profile SET name='$name', roll_no='$roll_no', cnic='$cnic', dob='$dob', ";
         $query .= "address='$address', email='$email', mobile_no='$mobile_no', father_name='$f_name', ";
-        $query .= "father_cnic='$f_cnic', fee_amount='$fee_amount', image='$new_img', student_gender='$gender' ";
+        $query .= "father_cnic='$f_cnic', fee_amount='$fee_amount', image='$new_img', student_gender='$gender', ";
+        $query .= "second_mobile_no='$second_mobile_no' ";
         $query .= "WHERE student_id='$cid' AND student_status='1' AND fk_client_id='$client'";
         $get = query($query);
 
@@ -138,6 +141,7 @@ $row = mysqli_fetch_assoc($pass);
         $dob = escape($_POST['dob']);
         $address = escape($_POST['address']);
         $mobile_no = escape($_POST['mobile_no']);
+        $second_mobile_no = escape($_POST['second_mobile_no']);
         $email = escape($_POST['email']);
         $f_name = escape($_POST['f_name']);
         $f_cnic = escape($_POST['f_cnic']);
@@ -152,6 +156,7 @@ $row = mysqli_fetch_assoc($pass);
       $dob = escape($_POST['dob']);
       $address = escape($_POST['address']);
       $mobile_no = escape($_POST['mobile_no']);
+      $second_mobile_no = escape($_POST['second_mobile_no']);
       $email = escape($_POST['email']);
       $f_name = escape($_POST['f_name']);
       $f_cnic = escape($_POST['f_cnic']);
@@ -283,13 +288,6 @@ $row = mysqli_fetch_assoc($pass);
                   </div>
                 </div>
 
-                <!-- <div class="row mb-3">
-                  <label for="about" class="col-md-4 col-lg-3 col-form-label">Registration#</label>
-                  <div class="col-md-8 col-lg-9">
-                    <textarea name="roll_no" class="form-control" id="about" style="height: 100px">Sunt est soluta temporibus accusantium neque nam maiores cumque temporibus. Tempora libero non est unde veniam est qui dolor. Ut sunt iure rerum quae quisquam autem eveniet perspiciatis odit. Fuga sequi sed ea saepe at unde.</textarea>
-                  </div>
-                </div> -->
-
                 <div class="row mb-3">
                   <label for="cnic" class="col-md-4 col-lg-3 col-form-label"><strong>Cnic/B-form</strong></label>
                   <div class="col-md-8 col-lg-9">
@@ -318,23 +316,30 @@ $row = mysqli_fetch_assoc($pass);
                 </div>
 
                 <div class="row mb-3">
-                  <label for="fullName" class="col-md-4 col-lg-3 col-form-label"><strong>Father Cnic</strong></label>
+                  <label for="f_cnic" class="col-md-4 col-lg-3 col-form-label"><strong>Father Cnic</strong></label>
                   <div class="col-md-8 col-lg-9">
                     <input name="f_cnic" type="text" class="form-control" id="fullName" value="<?php echo ($f_cnic == '') ? $row['father_cnic'] : $f_cnic; ?>" required>
                   </div>
                 </div>
 
                 <div class="row mb-3">
-                  <label for="Address" class="col-md-4 col-lg-3 col-form-label"><strong>Address</strong></label>
+                  <label for="address" class="col-md-4 col-lg-3 col-form-label"><strong>Address</strong></label>
                   <div class="col-md-8 col-lg-9">
                     <input name="address" type="text" class="form-control" id="Address" value="<?php echo ($address == '') ? $row['address'] : $address; ?>">
                   </div>
                 </div>
 
                 <div class="row mb-3">
-                  <label for="Phone" class="col-md-4 col-lg-3 col-form-label"><strong>Phone#</strong></label>
+                  <label for="mobile_no" class="col-md-4 col-lg-3 col-form-label"><strong>Phone#</strong></label>
                   <div class="col-md-8 col-lg-9">
                     <input name="mobile_no" type="text" class="form-control" id="Phone" value="<?php echo ($mobile_no == '') ? $row['mobile_no'] : $mobile_no; ?>" required>
+                  </div>
+                </div>
+
+                <div class="row mb-3">
+                  <label for="second_mobile_no" class="col-md-4 col-lg-3 col-form-label"><strong>Other Phone#</strong></label>
+                  <div class="col-md-8 col-lg-9">
+                    <input name="second_mobile_no" type="text" class="form-control" id="Phone" value="<?php echo ($second_mobile_no == '') ? $row['second_mobile_no'] : $second_mobile_no; ?>">
                   </div>
                 </div>
 

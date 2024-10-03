@@ -141,8 +141,8 @@ if (!str_contains($uri, '/select-school.php')) {
 
               <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
                 <li class="dropdown-header">
-                  You have 4 new notifications
-                  <a href="#"><span class="badge rounded-pill bg-primary p-2 ms-2">View all</span></a>
+                  All notification
+                  <a href="#"><span class="badge rounded-pill bg-success p-2 ms-2">View</span></a>
                 </li>
                 <li>
                   <hr class="dropdown-divider">
@@ -301,8 +301,13 @@ if (!str_contains($uri, '/select-school.php')) {
               $get_school_data = query($query);
               $school_specific = mysqli_fetch_assoc($get_school_data);
               $school_png = $school_specific['image'];
+
+              if (!empty($school_png)) {
               ?>
-              <img src="./uploads/school-profile-uploads/<?php echo $school_png; ?>" alt="Profile" style="border-radius: 5%;">
+                <img src="./uploads/school-profile-uploads/<?php echo $school_png; ?>" width="50px" alt="Profile" style="border-radius: 7%;">
+              <?php } else { ?>
+                <img src="uploads/school-profile-uploads/default-school-profile-image.jpg" width="50px" alt="Profile" style="border-radius: 7%;">
+              <?php } ?>
               <!-- <i class="bi bi-box-arrow-right"></i> -->
               <span class="d-none d-md-block ps-2">Profile&nbsp;</span>
               <i class="bi bi-chevron-down"></i>

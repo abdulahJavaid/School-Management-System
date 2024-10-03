@@ -58,9 +58,13 @@
 
           <!-- class="rounded-circle" -->
           <!-- style="width: 300px; height: 150px;" -->
-          
+          <?php
+          if (!empty($img)) {
+          ?>
             <img src="uploads/school-profile-uploads/<?php echo $img; ?>" width="200px" height="200px" alt="Profile">
-            
+            <?php } else { ?>
+              <img src="uploads/school-profile-uploads/default-school-profile-image.jpg" width="200px" height="200px" alt="Profile">
+              <?php } ?>
             <h2 class=""><?php echo $name; ?></h2>
             <h3><?php echo $address; ?></h3>
             <div class="social-links mt-2">

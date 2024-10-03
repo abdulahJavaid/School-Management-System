@@ -5,7 +5,7 @@ if (isset($_POST['roll_no_voucher'])) {
     $roll_no = escape($_POST['roll_no_voucher']);
     // fetching the admin id and adding the data
     $admin_name = escape($_SESSION['login_name']);
-    $log = "Admin <strong>$admin_name</strong> generated fee voucher student with reg# {<strong>$roll_no</strong>} !";
+    $log = "Admin <strong>$admin_name</strong> generated fee voucher of student with reg# {<strong>$roll_no</strong>} !";
     $times = date('d/m/Y h:i a', time());
     $times = (string) $times;
     // adding activity into the logs

@@ -80,7 +80,8 @@ h3 {
 	text-transform: uppercase;
 	font-size: 35px;
 	font-family: "Poppins-Medium";
-	color: #3e91f7;
+	// color: #3e91f7;
+	color: #2193b0;
 	letter-spacing: 3px;
 	margin-bottom: 22px;
 	font-weight: 500;
@@ -179,7 +180,8 @@ button {
 	align-items: center;
 	justify-content: center;
 	padding: 0;
-	background: #3e91f7;
+	// background: #3e91f7;
+	background: #2193b0;
 	color: #fff;
 	text-transform: uppercase;
 	font-family: "Muli-SemiBold";
@@ -210,7 +212,8 @@ button {
 	    transition: all 0.3s;
 	}
 	&:hover {
-		background: #0072fd;
+		// background: #0072fd;
+		background: #2193b0;
 		span {
 			opacity: 0;
 			-webkit-transform: translate(0px,40px);

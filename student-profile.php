@@ -25,6 +25,7 @@ $gender = '';
 $f_name = '';
 $f_cnic = '';
 $mobile_no = '';
+$second_mobile_no = '';
 $dob = '';
 $address = '';
 $roll_no = '';
@@ -53,6 +54,7 @@ if (isset($_POST['submit'])) {
     $f_name = escape($_POST['f_name']);
     $f_cnic = escape($_POST['f_cnic']);
     $mobile_no = escape($_POST['mobile_no']);
+    $second_mobile_no = escape($_POST['second_mobile_no']);
     $dob = escape($_POST['dob']);
     $address = escape($_POST['address']);
     $roll_no = escape($_POST['roll_no']);
@@ -91,10 +93,10 @@ if (isset($_POST['submit'])) {
                 $enc_password = $password;
 
                 // query to add student
-                $query = "INSERT INTO student_profile(name, cnic, mobile_no, dob, ";
+                $query = "INSERT INTO student_profile(name, cnic, mobile_no, second_mobile_no, dob, ";
                 $query .= "address, roll_no, email, password, fee_amount, ";
                 $query .= "father_name, father_cnic, image, student_gender, fk_client_id) ";
-                $query .= "VALUES('$name', '$cnic', '$mobile_no', '$dob', ";
+                $query .= "VALUES('$name', '$cnic', '$mobile_no', '$second_mobile_no', '$dob', ";
                 $query .= "'$address', '$roll_no', '$email', '$enc_password', ";
                 $query .= "'$fee_amount', '$f_name', '$f_cnic', '$new_img', '$gender', '$client')";
                 $pass_query = mysqli_query($conn, $query);
@@ -107,11 +109,6 @@ if (isset($_POST['submit'])) {
                     $get_r2 = mysqli_fetch_assoc($get2);
                     $student_id = $get_r2['student_id'];
                     // $student_id = mysqli_insert_id($conn);
-
-                    // // storing the student passwords into the database
-                    // $query = "INSERT INTO student_passwords(fk_student_id, student_password) ";
-                    // $query .= "VALUES('$student_id', '$password')";
-                    // $pass_query = query($query);
 
                     // adding the class and section of the student
                     $queri = "INSERT INTO student_class(fk_student_id, fk_class_id, fk_section_id, fk_client_id) ";
@@ -149,6 +146,7 @@ if (isset($_POST['submit'])) {
                 $f_name = escape($_POST['f_name']);
                 $f_cnic = escape($_POST['f_cnic']);
                 $mobile_no = escape($_POST['mobile_no']);
+                $second_mobile_no = escape($_POST['second_mobile_no']);
                 $dob = escape($_POST['dob']);
                 $address = escape($_POST['address']);
                 $roll_no = escape($_POST['roll_no']);
@@ -165,6 +163,7 @@ if (isset($_POST['submit'])) {
             $f_name = escape($_POST['f_name']);
             $f_cnic = escape($_POST['f_cnic']);
             $mobile_no = escape($_POST['mobile_no']);
+            $second_mobile_no = escape($_POST['second_mobile_no']);
             $dob = escape($_POST['dob']);
             $address = escape($_POST['address']);
             $email = escape($_POST['email']);
@@ -179,6 +178,7 @@ if (isset($_POST['submit'])) {
         $f_name = escape($_POST['f_name']);
         $f_cnic = escape($_POST['f_cnic']);
         $mobile_no = escape($_POST['mobile_no']);
+        $second_mobile_no = escape($_POST['second_mobile_no']);
         $dob = escape($_POST['dob']);
         $address = escape($_POST['address']);
         $roll_no = escape($_POST['roll_no']);
@@ -293,26 +293,33 @@ if (isset($_POST['submit'])) {
                                     </div>
 
                                     <div class="row mb-3">
-                                        <label for="phone_no" class="col-md-4 col-lg-3 col-form-label"><strong>Phone#</strong> <code>*</code></label>
+                                        <label for="mobile_no" class="col-md-4 col-lg-3 col-form-label"><strong>Phone#</strong> <code>*</code></label>
                                         <div class="col-md-8 col-lg-9">
                                             <input name="mobile_no" type="text" class="form-control" id="Job" value="<?php echo ($mobile_no == '') ? '' : $mobile_no; ?>" placeholder="Phone number" required>
                                         </div>
                                     </div>
 
                                     <div class="row mb-3">
-                                        <label for="class" class="col-md-4 col-lg-3 col-form-label"><strong>Email</strong> </label>
+                                        <label for="second_mobile_no" class="col-md-4 col-lg-3 col-form-label"><strong>Other Phone#</strong> <code>*</code></label>
+                                        <div class="col-md-8 col-lg-9">
+                                            <input name="second_mobile_no" type="text" class="form-control" id="Job" value="<?php echo ($second_mobile_no == '') ? '' : $second_mobile_no; ?>" placeholder="Phone number" required>
+                                        </div>
+                                    </div>
+
+                                    <div class="row mb-3">
+                                        <label for="email" class="col-md-4 col-lg-3 col-form-label"><strong>Email</strong> </label>
                                         <div class="col-md-8 col-lg-9">
                                             <input name="email" type="email" class="form-control" id="Country" value="<?php echo ($email == '') ? '' : $email; ?>" placeholder="Email address">
                                         </div>
                                     </div>
                                     <div class="row mb-3">
-                                        <label for="class" class="col-md-4 col-lg-3 col-form-label"><strong>Reg no#</strong> <code>*</code></label>
+                                        <label for="roll_no" class="col-md-4 col-lg-3 col-form-label"><strong>Reg no#</strong> <code>*</code></label>
                                         <div class="col-md-8 col-lg-9">
                                             <input name="roll_no" type="text" class="form-control" id="Country" value="<?php echo ($roll_no == '') ? '' : $roll_no; ?>" placeholder="Student reg. number" required>
                                         </div>
                                     </div>
                                     <div class="row mb-3">
-                                        <label for="class" class="col-md-4 col-lg-3 col-form-label"><strong>Monthly Fee</strong> <code>*</code></label>
+                                        <label for="fee_amount" class="col-md-4 col-lg-3 col-form-label"><strong>Monthly Fee</strong> <code>*</code></label>
                                         <div class="col-md-8 col-lg-9">
                                             <input name="fee_amount" type="text" class="form-control" id="Country" value="<?php echo ($fee_amount == '') ? '' : $fee_amount; ?>" placeholder="Fees in - (Rs)" required>
                                         </div>

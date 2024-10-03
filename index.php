@@ -73,7 +73,7 @@
         </div>
       </div>
       <div class="carousel-item">
-        <img src="images/the-slider-11.jpg" class="d-block w-100" alt="Fourth Slide">
+        <img src="images/the-slider-15.jpg" class="d-block w-100" alt="Fourth Slide">
         <div class="carousel-caption">
           <h5>Earn A Bright Future</h5>
         </div>
