@@ -450,7 +450,7 @@ if ($level == 'accountant' || $level == 'super') {
                     <form action="" method="post">
                         <div class="card">
                             <div class="card-header border-bottom border-success text-dark mb-3">
-                                <h4 class="mb-0">
+                                <h5 class="mb-0">
                                     <strong>Issue Fees class wise / </strong><?php echo date('Y') . ', ' . date('F'); ?>
                                     <span class="d-inline-block"
                                         tabindex="0"
