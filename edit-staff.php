@@ -10,9 +10,9 @@ $client = escape($_SESSION['client_id']);
 
 <?php
 // checking session for appropriate access
-if ($level == 'clerk' || $level == 'super') {}
-else {
-  redirect("./");
+if ($level == 'clerk' || $level == 'super') {
+} else {
+    redirect("./");
 }
 ?>
 
@@ -357,6 +357,7 @@ $row = mysqli_fetch_assoc($pass);
                                 </div>
 
                                 <div class="text-end">
+                                    <a class="btn btn-sm btn-outline-danger" href="./staff.php">Cancel</a>
                                     <button type="submit" name="submit" class="btn btn-sm btn-success">Update Profile</button>
                                 </div>
                             </form><!-- End Profile Edit Form -->

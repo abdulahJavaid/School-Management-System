@@ -62,6 +62,10 @@ if (isset($_POST['submit'])) {
     $password = md5('12345');
     $fee_amount = escape($_POST['fee_amount']);
 
+    include_once("./refactoring/student-reg-codes.php");
+
+    $roll_no = $student_reg_code . $roll_no;
+
     // checking if the admin has selected the class
     $classnsection = $_POST['classnsection'];
     if ($classnsection != 'choose-class') {
