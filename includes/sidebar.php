@@ -272,18 +272,18 @@
     ?>
     <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#syllabus" data-bs-toggle="collapse" href="#">
-          <i class=><img src="images/syllabus.jpeg" width="30px" height="30px" alt=""></i><span>Syllabus</span>
+          <i class=><img src="images/syllabus.jpeg" width="30px" height="30px" alt=""></i><span>MCQ's</span>
           <i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="syllabus" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
-            <a href="">
-              <i class="bi bi-arrow-right"></i><span>Fadral Board</span>
+            <a href="add-mcq.php">
+              <i class="bi bi-arrow-right"></i><span>Add Mcq's</span>
             </a>
           </li>
           <li>
-            <a href="classes.php">
-              <i class="bi bi-arrow-right"></i><span>Gujranwala Board</span>
+            <a href="view-mcq.php">
+              <i class="bi bi-arrow-right"></i><span>View Mcq's</span>
             </a>
           </li>
         </ul>
