@@ -18,18 +18,11 @@ $client = escape($_SESSION['client_id']);
 
 <?php
 
+// function to add autoloaded mcqs
 function saveQuestion($question, $option1, $option2, $option3, $option4, $correct_option) {
-    // Output the question and options here (you can replace this with DB insertion logic)
-    // echo "<strong>Question:</strong> $question<br>";
-    // echo "<strong>Option 1:</strong> $option1<br>";
-    // echo "<strong>Option 2:</strong> $option2<br>";
-    // echo "<strong>Option 3:</strong> $option3<br>";
-    // echo "<strong>Option 4:</strong> $option4<br>";
-    // echo "<strong>Correct Option:</strong> $correct_option<br><hr>";
     $chapter = $_POST['chapter'];
     
     // insert the question
-    // $question = $_POST['q1'];
     $query = "INSERT INTO questions(question, fk_chapter_id) ";
     $query .= "VALUES('$question', '$chapter')";
     $insert_question = query($query);
@@ -39,12 +32,10 @@ function saveQuestion($question, $option1, $option2, $option3, $option4, $correc
     
     // insert option 1
     if ($correct_option == 'option1') {
-        // $option1 = $_POST['op1'];
         $query = "INSERT INTO options(option_description, option_status, fk_question_id) ";
         $query .= "VALUES('$option1', 'correct', '$last_id')";
         $insert_option1 = query($query);
     } else {
-        // $option1 = $_POST['op1'];
         $query = "INSERT INTO options(option_description, option_status, fk_question_id) ";
         $query .= "VALUES('$option1', 'incorrect', '$last_id')";
         $insert_option1 = query($query);
@@ -52,12 +43,10 @@ function saveQuestion($question, $option1, $option2, $option3, $option4, $correc
 
     // insert option 2
     if ($correct_option == 'option2') {
-        // $option2 = $_POST['op2'];
         $query = "INSERT INTO options(option_description, option_status, fk_question_id) ";
         $query .= "VALUES('$option2', 'correct', '$last_id')";
         $insert_option2 = query($query);
     } else {
-        // $option2 = $_POST['op2'];
         $query = "INSERT INTO options(option_description, option_status, fk_question_id) ";
         $query .= "VALUES('$option2', 'incorrect', '$last_id')";
         $insert_option2 = query($query);
@@ -66,12 +55,10 @@ function saveQuestion($question, $option1, $option2, $option3, $option4, $correc
     // insert option 3
     if ($option3 != 'empty') {
         if ($correct_option == 'option3') {
-            // $option3 = $_POST['op3'];
             $query = "INSERT INTO options(option_description, option_status, fk_question_id) ";
             $query .= "VALUES('$option3', 'correct', '$last_id')";
             $insert_option3 = query($query);
         } else {
-            // $option3 = $_POST['op3'];
             $query = "INSERT INTO options(option_description, option_status, fk_question_id) ";
             $query .= "VALUES('$option3', 'incorrect', '$last_id')";
             $insert_option3 = query($query);
@@ -81,19 +68,15 @@ function saveQuestion($question, $option1, $option2, $option3, $option4, $correc
     // insert option 4
     if ($option4 != 'empty') {
         if ($correct_option == 'option4') {
-            // $option4 = $_POST['op4'];
             $query = "INSERT INTO options(option_description, option_status, fk_question_id) ";
             $query .= "VALUES('$option4', 'correct', '$last_id')";
             $insert_option4 = query($query);
         } else {
-            // $option4 = $_POST['op4'];
             $query = "INSERT INTO options(option_description, option_status, fk_question_id) ";
             $query .= "VALUES('$option4', 'incorrect', '$last_id')";
             $insert_option4 = query($query);
         }
     }
-
-    // redirect("./add-mcq.php?board=$board&class=$class&subject=$subject&chapter=$chapter&add_mcqs=''");
 
 }
 
@@ -173,9 +156,7 @@ if (isset($_POST['auto_mcqs'])) {
     }
 }
 
-
-
-// add the mcq
+// add single mcq
 if (isset($_POST['submit_mcq'])) {
     $board = $_POST['board'];
     $class = $_POST['class'];
@@ -400,11 +381,18 @@ if (isset($_POST['submit_mcq'])) {
                 <div class="row">
                     <?php
                     // if add MCQ request is submitted
-                    if (isset($_GET['add_mcqs'])) {
-                        $board = $_GET['board'];
-                        $class = $_GET['class'];
-                        $subject = $_GET['subject'];
-                        $chapter = $_GET['chapter'];
+                    if (isset($_GET['add_mcqs']) || isset($_POST['add_mcqs'])) {
+                        if (isset($_GET['add_mcqs'])) {
+                            $board = $_GET['board'];
+                            $class = $_GET['class'];
+                            $subject = $_GET['subject'];
+                            $chapter = $_GET['chapter'];
+                        } elseif (isset($_POST['add_mcqs'])) {
+                            $board = $_POST['board'];
+                            $class = $_POST['class'];
+                            $subject = $_POST['subject'];
+                            $chapter = $_POST['chapter'];
+                        }
                     ?>
                         <div class="col-lg-12">
                             <div class="card">
