@@ -17,6 +17,164 @@ $client = escape($_SESSION['client_id']);
 ?>
 
 <?php
+
+function saveQuestion($question, $option1, $option2, $option3, $option4, $correct_option) {
+    // Output the question and options here (you can replace this with DB insertion logic)
+    // echo "<strong>Question:</strong> $question<br>";
+    // echo "<strong>Option 1:</strong> $option1<br>";
+    // echo "<strong>Option 2:</strong> $option2<br>";
+    // echo "<strong>Option 3:</strong> $option3<br>";
+    // echo "<strong>Option 4:</strong> $option4<br>";
+    // echo "<strong>Correct Option:</strong> $correct_option<br><hr>";
+    $chapter = $_POST['chapter'];
+    
+    // insert the question
+    // $question = $_POST['q1'];
+    $query = "INSERT INTO questions(question, fk_chapter_id) ";
+    $query .= "VALUES('$question', '$chapter')";
+    $insert_question = query($query);
+
+    // getting the last inserted id
+    $last_id = last_id();
+    
+    // insert option 1
+    if ($correct_option == 'option1') {
+        // $option1 = $_POST['op1'];
+        $query = "INSERT INTO options(option_description, option_status, fk_question_id) ";
+        $query .= "VALUES('$option1', 'correct', '$last_id')";
+        $insert_option1 = query($query);
+    } else {
+        // $option1 = $_POST['op1'];
+        $query = "INSERT INTO options(option_description, option_status, fk_question_id) ";
+        $query .= "VALUES('$option1', 'incorrect', '$last_id')";
+        $insert_option1 = query($query);
+    }
+
+    // insert option 2
+    if ($correct_option == 'option2') {
+        // $option2 = $_POST['op2'];
+        $query = "INSERT INTO options(option_description, option_status, fk_question_id) ";
+        $query .= "VALUES('$option2', 'correct', '$last_id')";
+        $insert_option2 = query($query);
+    } else {
+        // $option2 = $_POST['op2'];
+        $query = "INSERT INTO options(option_description, option_status, fk_question_id) ";
+        $query .= "VALUES('$option2', 'incorrect', '$last_id')";
+        $insert_option2 = query($query);
+    }
+
+    // insert option 3
+    if ($option3 != 'empty') {
+        if ($correct_option == 'option3') {
+            // $option3 = $_POST['op3'];
+            $query = "INSERT INTO options(option_description, option_status, fk_question_id) ";
+            $query .= "VALUES('$option3', 'correct', '$last_id')";
+            $insert_option3 = query($query);
+        } else {
+            // $option3 = $_POST['op3'];
+            $query = "INSERT INTO options(option_description, option_status, fk_question_id) ";
+            $query .= "VALUES('$option3', 'incorrect', '$last_id')";
+            $insert_option3 = query($query);
+        }
+    }
+
+    // insert option 4
+    if ($option4 != 'empty') {
+        if ($correct_option == 'option4') {
+            // $option4 = $_POST['op4'];
+            $query = "INSERT INTO options(option_description, option_status, fk_question_id) ";
+            $query .= "VALUES('$option4', 'correct', '$last_id')";
+            $insert_option4 = query($query);
+        } else {
+            // $option4 = $_POST['op4'];
+            $query = "INSERT INTO options(option_description, option_status, fk_question_id) ";
+            $query .= "VALUES('$option4', 'incorrect', '$last_id')";
+            $insert_option4 = query($query);
+        }
+    }
+
+    // redirect("./add-mcq.php?board=$board&class=$class&subject=$subject&chapter=$chapter&add_mcqs=''");
+
+}
+
+// auto add mcqs
+if (isset($_POST['auto_mcqs'])) {
+    // redirect("./");
+    $board = $_POST['board'];
+    $class = $_POST['class'];
+    $subject = $_POST['subject'];
+    $chapter = $_POST['chapter'];
+    if ($_FILES['file']['error'] == UPLOAD_ERR_OK) {
+        $fileTmpPath = $_FILES['file']['tmp_name'];
+        $fileContents = file_get_contents($fileTmpPath);
+
+        // Split the content by lines
+        $lines = explode(PHP_EOL, $fileContents);
+        $question = '';
+        $option1 = $option2 = $option3 = $option4 = 'empty';
+        $correct_option = '';
+
+        foreach ($lines as $line) {
+            $line = trim($line);
+
+            if (strpos($line, 'Q.') === 0) {
+                // Save the previous question if it exists
+                if (!empty($question)) {
+                    saveQuestion($question, $option1, $option2, $option3, $option4, $correct_option);
+                }
+
+                // Extract the new question text
+                $question = trim(substr($line, 2)); // Remove 'Q.' from the start
+                // Reset options and correct option
+                $option1 = $option2 = $option3 = $option4 = 'empty';
+                $correct_option = '';
+            }
+
+            if (strpos($line, 'O.') === 0) {
+                // Remove 'O.' and get the options
+                $options = trim(substr($line, 2)); // Remove 'O.' from the start
+                $optionList = explode(' ', $options);
+                $optionCount = 1;
+
+                foreach ($optionList as $option) {
+                    $isCorrect = false;
+
+                    // Check if this option is marked as correct
+                    if (strpos($option, '(correct)') !== false) {
+                        $option = str_replace('(correct)', '', $option);
+                        $isCorrect = true;
+                    }
+
+                    $optionVar = 'option' . $optionCount;
+                    $$optionVar = trim($option);
+
+                    if ($isCorrect) {
+                        $correct_option = 'option' . $optionCount;
+                    }
+
+                    $optionCount++;
+                }
+
+                // Fill remaining options as 'empty' if less than 4
+                for ($i = $optionCount; $i <= 4; $i++) {
+                    ${'option' . $i} = 'empty';
+                }
+            }
+        }
+
+        // Save the last question in the file
+        if (!empty($question)) {
+            saveQuestion($question, $option1, $option2, $option3, $option4, $correct_option);
+        }
+    redirect("./add-mcq.php?board=$board&class=$class&subject=$subject&chapter=$chapter&add_mcqs=''");
+
+    } else {
+        echo "Error uploading the file.";
+    }
+}
+
+
+
 // add the mcq
 if (isset($_POST['submit_mcq'])) {
     $board = $_POST['board'];
@@ -68,7 +226,7 @@ if (isset($_POST['submit_mcq'])) {
         $query = "INSERT INTO options(option_description, option_status, fk_question_id) ";
         $query .= "VALUES('$option1', 'correct', '$last_id')";
         $insert_option1 = query($query);
-    }else{
+    } else {
         $option1 = $_POST['op1'];
         $query = "INSERT INTO options(option_description, option_status, fk_question_id) ";
         $query .= "VALUES('$option1', 'incorrect', '$last_id')";
@@ -81,7 +239,7 @@ if (isset($_POST['submit_mcq'])) {
         $query = "INSERT INTO options(option_description, option_status, fk_question_id) ";
         $query .= "VALUES('$option2', 'correct', '$last_id')";
         $insert_option2 = query($query);
-    }else{
+    } else {
         $option2 = $_POST['op2'];
         $query = "INSERT INTO options(option_description, option_status, fk_question_id) ";
         $query .= "VALUES('$option2', 'incorrect', '$last_id')";
@@ -95,7 +253,7 @@ if (isset($_POST['submit_mcq'])) {
             $query = "INSERT INTO options(option_description, option_status, fk_question_id) ";
             $query .= "VALUES('$option3', 'correct', '$last_id')";
             $insert_option3 = query($query);
-        }else{
+        } else {
             $option3 = $_POST['op3'];
             $query = "INSERT INTO options(option_description, option_status, fk_question_id) ";
             $query .= "VALUES('$option3', 'incorrect', '$last_id')";
@@ -110,7 +268,7 @@ if (isset($_POST['submit_mcq'])) {
             $query = "INSERT INTO options(option_description, option_status, fk_question_id) ";
             $query .= "VALUES('$option4', 'correct', '$last_id')";
             $insert_option4 = query($query);
-        }else{
+        } else {
             $option4 = $_POST['op4'];
             $query = "INSERT INTO options(option_description, option_status, fk_question_id) ";
             $query .= "VALUES('$option4', 'incorrect', '$last_id')";
@@ -139,7 +297,7 @@ if (isset($_POST['submit_mcq'])) {
     <div class="row">
         <div class="container">
             <!-- Row for Name and Reg# Inputs -->
-            <form action="" method="get">
+            <form action="" method="post" enctype="multipart/form-data">
                 <div class="row align-items-center">
 
                     <!-- Select the Board -->
@@ -221,6 +379,20 @@ if (isset($_POST['submit_mcq'])) {
                             </button>
                         </div>
                     </div>
+
+                    <div class="row" id="file" style="display: none;">
+                        <!-- Select the Subject -->
+                        <div class="col-6">
+                            <div class="input-group mb-2">
+                                <input name="file" type="file" class="form-control" id="image"
+                                    aria-label="Example Input" aria-describedby="button-addon5" accept=".txt">
+                                <button name="auto_mcqs" class="btn btn-sm btn-outline-success" type="submit" id="button-addon5">
+                                    Auto Upload
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </form>
 
@@ -431,6 +603,7 @@ if (isset($_POST['submit_mcq'])) {
                         // display to block of class select
                         document.getElementById('chapterSelect').style.display = "block";
                         document.getElementById('submitBtn').style.display = "block";
+                        document.getElementById('file').style.display = "block";
 
                         // classes maping
                         var subjects = {
