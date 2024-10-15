@@ -281,14 +281,14 @@ if ($level == 'accountant' || $level == 'super') {
                 ?>
                     <form action="" method="post">
                         <div class="card">
-                            <div class="card-header border-bottom border-success text-dark mb-3">
+                            <div class="card-header card-bg-header text-dark mb-3">
                                 <h5 class="mb-0">
                                     <strong>Issue Fees / </strong><?php echo date('Y') . ', ' . date('F'); ?>
                                     <span class="d-inline-block"
                                         tabindex="0"
                                         data-bs-toggle="tooltip"
                                         title="Fees & Funds will be issued to all the students whose fees is not issued.">
-                                        <button type="button" class="btn btn-sm btn-outline-dark"><i class="fa-solid fa-question"></i></button>
+                                        <button type="button" class="btn btn-sm btn-outline-light"><i class="fa-solid fa-question"></i></button>
                                     </span>
                                 </h5>
                             </div>
@@ -449,14 +449,14 @@ if ($level == 'accountant' || $level == 'super') {
                 ?>
                     <form action="" method="post">
                         <div class="card">
-                            <div class="card-header border-bottom border-success text-dark mb-3">
+                            <div class="card-header card-bg-header text-dark mb-3">
                                 <h5 class="mb-0">
                                     <strong>Issue Fees class wise / </strong><?php echo date('Y') . ', ' . date('F'); ?>
                                     <span class="d-inline-block"
                                         tabindex="0"
                                         data-bs-toggle="tooltip"
                                         title="Fees & funds will be issued class wise, if fee is issued to all class students then fees cannot be issued. If even one student is missing the fees can be issued.">
-                                        <button type="button" class="btn btn-sm btn-outline-dark"><i class="fa-solid fa-question"></i></button>
+                                        <button type="button" class="btn btn-sm btn-outline-light"><i class="fa-solid fa-question"></i></button>
                                     </span>
                                 </h5>
                             </div>
@@ -515,7 +515,7 @@ if ($level == 'accountant' || $level == 'super') {
                                 </div>
                                 <div class="col-sm-4 order-3 order-sm-2 mb-1">
                                     <div class="form-check ps-5" id="fund5">
-                                        <input class="form-check-input border-dark" type="checkbox" onclick="add_funds()" value="" id="fund5_ch">
+                                        <input class="form-check-input border-dark" type="checkbox" onclick="add_fund()" value="" id="fund5_ch">
                                         <label class="form-check-label" for="fund5">
                                             <strong>Add Fund?</strong>
                                         </label>
@@ -545,7 +545,7 @@ if ($level == 'accountant' || $level == 'super') {
                                 </div>
                                 <div class="col-sm-4 order-4 order-sm-3 mb-1">
                                     <div class="form-check ps-5" id="fund6">
-                                        <input class="form-check-input border-dark" type="checkbox" onclick="add_funds()" value="" id="fund6_ch">
+                                        <input class="form-check-input border-dark" type="checkbox" onclick="add_fund()" value="" id="fund6_ch">
                                         <label class="form-check-label" for="fund6">
                                             <strong>Add Fund?</strong>
                                         </label>
@@ -593,7 +593,7 @@ if ($level == 'accountant' || $level == 'super') {
                                 </div>
                                 <div class="col-sm-4 order-sm-5 order-5 mb-1">
                                     <div class="form-check ps-5" id="fund7">
-                                        <input class="form-check-input border-dark" type="checkbox" onclick="add_funds()" value="" id="fund7_ch">
+                                        <input class="form-check-input border-dark" type="checkbox" onclick="add_fund()" value="" id="fund7_ch">
                                         <label class="form-check-label" for="fund7">
                                             <strong>Add Fund?</strong>
                                         </label>
@@ -623,7 +623,7 @@ if ($level == 'accountant' || $level == 'super') {
                                 </div>
                                 <div class="col-sm-4 order-sm-5 order-5 mb-1">
                                     <div class="form-check ps-5" id="fund8">
-                                        <input class="form-check-input border-dark" type="checkbox" onclick="add_funds()" value="" id="fund8_ch">
+                                        <input class="form-check-input border-dark" type="checkbox" onclick="add_fund()" value="" id="fund8_ch">
                                         <label class="form-check-label" for="fund8">
                                             <strong>Add Fund?</strong>
                                         </label>
@@ -724,10 +724,6 @@ if ($level == 'accountant' || $level == 'super') {
         var is_fund2 = document.getElementById('fund2_ch').checked;
         var is_fund3 = document.getElementById('fund3_ch').checked;
         var is_fund4 = document.getElementById('fund4_ch').checked;
-        var is_fund5 = document.getElementById('fund5_ch').checked;
-        var is_fund6 = document.getElementById('fund6_ch').checked;
-        var is_fund7 = document.getElementById('fund7_ch').checked;
-        var is_fund8 = document.getElementById('fund8_ch').checked;
 
         // if fund1 is checked
         if (is_fund1 == true) {
@@ -737,7 +733,7 @@ if ($level == 'accountant' || $level == 'super') {
             document.getElementById("fund_one").value = "";
         }
 
-        // if fund1 is checked
+        // if fund2 is checked
         if (is_fund2 == true) {
             document.getElementById("fund2_d").style.display = "block";
         } else {
@@ -745,7 +741,7 @@ if ($level == 'accountant' || $level == 'super') {
             document.getElementById("fund_two").value = "";
         }
 
-        // if fund1 is checked
+        // if fund3 is checked
         if (is_fund3 == true) {
             document.getElementById("fund3_d").style.display = "block";
         } else {
@@ -753,15 +749,24 @@ if ($level == 'accountant' || $level == 'super') {
             document.getElementById("fund_three").value = "";
         }
 
-        // if fund1 is checked
+        // if fund4 is checked
         if (is_fund4 == true) {
             document.getElementById("fund4_d").style.display = "block";
         } else {
             document.getElementById("fund4_d").style.display = "none";
             document.getElementById("fund_four").value = "";
         }
+    }
 
-        // if fund1 is checked
+    // show and hide partial payment inputs class wise
+    function add_fund() {
+        var is_fund5 = document.getElementById('fund5_ch').checked;
+        var is_fund6 = document.getElementById('fund6_ch').checked;
+        var is_fund7 = document.getElementById('fund7_ch').checked;
+        var is_fund8 = document.getElementById('fund8_ch').checked;
+        
+        
+        // if fund5 is checked
         if (is_fund5 == true) {
             document.getElementById("fund5_d").style.display = "block";
         } else {
@@ -769,7 +774,7 @@ if ($level == 'accountant' || $level == 'super') {
             document.getElementById("fund_five").value = "";
         }
 
-        // if fund1 is checked
+        // if fund6 is checked
         if (is_fund6 == true) {
             document.getElementById("fund6_d").style.display = "block";
         } else {
@@ -777,7 +782,7 @@ if ($level == 'accountant' || $level == 'super') {
             document.getElementById("fund_six").value = "";
         }
 
-        // if fund1 is checked
+        // if fund7 is checked
         if (is_fund7 == true) {
             document.getElementById("fund7_d").style.display = "block";
         } else {
@@ -785,7 +790,7 @@ if ($level == 'accountant' || $level == 'super') {
             document.getElementById("fund_seven").value = "";
         }
 
-        // if fund1 is checked
+        // if fund8 is checked
         if (is_fund8 == true) {
             document.getElementById("fund8_d").style.display = "block";
         } else {

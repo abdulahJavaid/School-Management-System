@@ -334,15 +334,17 @@ if (isset($_POST['submit'])) {
                                             <select id="inputState" name="classnsection" class="form-select" required>
                                                 <option selected value="choose-class">Choose class</option>
                                                 <?php
-                                                // fetching all the classes 
-                                                $result = sql_select_all("all_classes");
+                                                // fetching all the classes
+                                                $query = "SELECT * FROM all_classes WHERE fk_client_id='$client'";
+                                                $result = query($query);
                                                 while ($row = mysqli_fetch_assoc($result)) {
-
+                                                    $clas_id = $row['class_id'];
                                                 ?>
                                                     <optgroup label="Class: <?php echo $row['class_name']; ?>">
                                                         <?php
                                                         // fetching the related sections
-                                                        $result1 = sql_where("class_sections", "fk_class_id", $row['class_id']);
+                                                        $query = "SELECT * FROM class_sections WHERE fk_class_id='$clas_id' AND fk_client_id='$client'";
+                                                        $result1 = query($query);
                                                         while ($row1 = mysqli_fetch_assoc($result1)) {
                                                         ?>
                                                             <option value="<?php echo $row['class_id'] . " " . $row1['section_id']; ?>"><?php echo $row['class_name'] . " " . $row1['section_name']; ?></option>

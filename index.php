@@ -245,10 +245,13 @@
                   <li class="dropdown-header text-start">
                     <h6>Filter</h6>
                   </li>
+                  <li><a class="dropdown-item" href="?filter=today">Today</a></li>
+                  <li><a class="dropdown-item" href="?filter=month">This Month</a></li>
+                  <li><a class="dropdown-item" href="?filter=year">This Year</a></li>
 
-                  <li><a class="dropdown-item" href="#">Today</a></li>
+                  <!-- <li><a class="dropdown-item" href="#">Today</a></li>
                   <li><a class="dropdown-item" href="#">This Month</a></li>
-                  <li><a class="dropdown-item" href="#">This Year</a></li>
+                  <li><a class="dropdown-item" href="#">This Year</a></li> -->
                 </ul>
               </div>
 
@@ -258,19 +261,83 @@
                 <!-- Line Chart -->
                 <div id="reportsChart"></div>
 
+                <?php
+                // making the charts work for today reports
+
+                // get all expense of the day
+                $today = date('Y-m-d', time());
+                $query = "SELECT * FROM expense_receiving WHERE receiving='0' AND date='$today'";
+                $get_expense = query($query);
+                $expenses = [0];
+                $add_expense = 0;
+                while ($row = mysqli_fetch_assoc($get_expense)) {
+                  $add_expense += (int) $row['expense'];
+                }
+                $expenses[] = $add_expense;
+
+                // get all receivings of the day
+                $today = date('Y-m-d', time());
+                $query = "SELECT * FROM expense_receiving WHERE expense='0' AND date='$today'";
+                $get_receiving = query($query);
+                $receivings = [0];
+                $add_receiving = 0;
+                while ($row = mysqli_fetch_assoc($get_receiving)) {
+                  $add_receiving += (int) $row['receiving'];
+                }
+                $receivings[] = $add_receiving;
+
+                // get all pending dues of the day
+                $today = date('Y-m-d', time());
+                $query = "SELECT * FROM student_fee WHERE NOT pending_dues='0' AND payment_date='$today'";
+                $get_dues = query($query);
+                $dues = [0];
+                $add_dues = 0;
+                while ($row = mysqli_fetch_assoc($get_dues)) {
+                  $add_dues += (int) $row['pending_dues'];
+                }
+                $dues[] = $add_dues;
+                
+                $dates = [0];
+                $dates[] = $today;
+
+
+                ?>
+
                 <script>
+                  var expenseData = [];
+                  var receivingData = [];
+                  var duesData = [];
+                  var dates = [];
+
+                  <?php
+                  foreach ($expenses as $expense) {
+                    echo "expenseData.push($expense);";
+                  }
+                  foreach ($receivings as $receiving) {
+                    echo "receivingData.push($receiving);";
+                  }
+                  foreach ($dues as $due) {
+                    echo "duesData.push($due);";
+                  }
+                  foreach ($dates as $date) {
+                    echo "dates.push($date);";
+                  }
+                  ?>
+
                   document.addEventListener("DOMContentLoaded", () => {
                     new ApexCharts(document.querySelector("#reportsChart"), {
-                      series: [{
-                        name: 'Sales',
-                        data: [31, 40, 28, 51, 42, 82, 56],
-                      }, {
-                        name: 'Revenue',
-                        data: [11, 32, 45, 32, 34, 52, 41]
-                      }, {
-                        name: 'Customers',
-                        data: [15, 11, 32, 18, 9, 24, 11]
-                      }],
+                        series: [{
+                          name: 'Expense',
+                          data: expenseData,
+                        },
+                        {
+                          name: 'Receiving',
+                          data: receivingData,
+                        },
+                        {
+                          name: 'Dues',
+                          data: duesData,
+                        }],
                       chart: {
                         height: 350,
                         type: 'area',
@@ -300,11 +367,11 @@
                       },
                       xaxis: {
                         type: 'datetime',
-                        categories: ["2018-09-19T00:00:00.000Z", "2018-09-19T01:30:00.000Z", "2018-09-19T02:30:00.000Z", "2018-09-19T03:30:00.000Z", "2018-09-19T04:30:00.000Z", "2018-09-19T05:30:00.000Z", "2018-09-19T06:30:00.000Z"]
+                        categories: dates,
                       },
                       tooltip: {
                         x: {
-                          format: 'dd/MM/yy HH:mm'
+                          format: 'dd/MM/yy'
                         },
                       }
                     }).render();
@@ -315,7 +382,8 @@
               </div>
 
             </div>
-          </div><!-- End Reports -->
+          </div>
+          <!-- End Reports -->
 
 
 
