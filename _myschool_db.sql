@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 12, 2024 at 12:25 PM
+-- Generation Time: Oct 15, 2024 at 03:22 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -679,7 +679,40 @@ INSERT INTO `admin_logs` (`admin_log_id`, `log_message`, `time`, `fk_client_id`)
 (712, 'Admin <strong>Abd</strong> issued Fees to students !', '09/10/2024 12:28 pm', '2'),
 (713, 'Admin <strong>Abd</strong> generated fee voucher of student with reg# {<strong>67</strong>} !', '09/10/2024 12:28 pm', '2'),
 (714, 'Admin <strong>Abd</strong> generated fee voucher of student with reg# {<strong>11</strong>} !', '09/10/2024 03:51 pm', '2'),
-(715, 'Admin <strong>Abd</strong> generated fee voucher of student with reg# {<strong>25</strong>} !', '11/10/2024 11:53 am', '2');
+(715, 'Admin <strong>Abd</strong> generated fee voucher of student with reg# {<strong>25</strong>} !', '11/10/2024 11:53 am', '2'),
+(716, 'Admin <strong>Abd</strong> paid salary to teacher <strong>Ali</strong> !', '12/10/2024 02:30 pm', '2'),
+(717, 'Admin <strong>Abd</strong> paid salary to teacher <strong>Imran Rashid</strong> !', '12/10/2024 02:30 pm', '2'),
+(718, 'Admin <strong>Abd</strong> paid salary to teacher <strong>Sir Tanveer</strong> !', '12/10/2024 02:30 pm', '2'),
+(719, 'Admin <strong>Abd</strong> paid salary to teacher <strong>Miss Ayesha</strong> !', '12/10/2024 02:30 pm', '2'),
+(720, 'Admin <strong>Abd</strong> paid salary to teacher <strong>Miss Anam</strong> !', '12/10/2024 02:30 pm', '2'),
+(721, 'Admin <strong>Abd</strong> added receivings into the expense/receiving sheet !', '12/10/2024 03:03 pm', '2'),
+(722, 'Admin <strong>Abd</strong> added receivings into the expense/receiving sheet !', '12/10/2024 03:04 pm', '2'),
+(723, 'Admin <strong>Abd</strong> accepted fees of student <strong>Alishba Mughal</strong> as paid with some remaining dues !', '12/10/2024 03:47 pm', '2'),
+(724, 'Admin <strong>Abd</strong> accepted fees of student <strong>Maham Mughal</strong> as paid with some remaining dues !', '12/10/2024 03:49 pm', '2'),
+(725, 'Admin <strong>Abd</strong> accepted fees of student <strong>Ali Raza</strong> as totally paid !', '12/10/2024 03:49 pm', '2'),
+(726, 'Admin <strong>Abd</strong> accepted fees of student <strong>Bilal Butt</strong> as totally paid !', '12/10/2024 03:49 pm', '2'),
+(727, 'Admin <strong>Abd</strong> accepted fees of student <strong>Bisma Khan</strong> as paid with some remaining dues !', '12/10/2024 03:49 pm', '2'),
+(728, 'Admin <strong>Abd</strong> accepted fees of student <strong>Ali Hamza</strong> as paid with some remaining dues !', '12/10/2024 03:49 pm', '2'),
+(729, 'Admin <strong>Abd</strong> accepted fees of student <strong>Shahwaiz Jutt</strong> as paid with some remaining dues !', '12/10/2024 03:49 pm', '2'),
+(730, 'Admin <strong>Abd</strong> accepted fees of student <strong>Haroon Arshad</strong> as paid with some remaining dues !', '12/10/2024 04:03 pm', '2'),
+(731, 'Admin <strong>Abd</strong> accepted fees of student <strong>Sufyan Safdar</strong> as paid with some remaining dues !', '12/10/2024 04:03 pm', '2'),
+(732, 'Admin <strong>Abd</strong> accepted fees of student <strong>Hamid Tariq</strong> as paid with some remaining dues !', '12/10/2024 04:03 pm', '2'),
+(733, 'Admin <strong>Abd</strong> accepted fees of student <strong>Faheem Fayyaz</strong> as paid with some remaining dues !', '12/10/2024 04:03 pm', '2'),
+(734, 'Admin <strong>Abd</strong> accepted fees of student <strong>Uzair butt</strong> as paid with some remaining dues !', '12/10/2024 04:03 pm', '2'),
+(735, 'Admin <strong>Abd</strong> accepted fees of student <strong>Meerab Asif</strong> as paid with some remaining dues !', '12/10/2024 04:03 pm', '2'),
+(736, 'Admin <strong>Abd</strong> accepted fees of student <strong>Noor Amir</strong> as paid with some remaining dues !', '12/10/2024 04:04 pm', '2'),
+(737, 'Admin <strong>Abd</strong> accepted fees of student <strong>Alina Ali</strong> as paid with some remaining dues !', '12/10/2024 04:04 pm', '2'),
+(738, 'Admin <strong>Abd</strong> accepted fees of student <strong>Ayesha</strong> as paid with some remaining dues !', '12/10/2024 04:04 pm', '2'),
+(739, 'Admin <strong>Abd</strong> accepted fees of student <strong>Maria</strong> as paid with some remaining dues !', '12/10/2024 04:04 pm', '2'),
+(740, 'Admin <strong>Abd</strong> accepted fees of student <strong>Areeba </strong> as paid with some remaining dues !', '12/10/2024 04:04 pm', '2'),
+(741, 'Admin <strong>Abd</strong> accepted fees of student <strong>Qahafa Mughal</strong> as paid with some remaining dues !', '12/10/2024 04:04 pm', '2'),
+(742, 'Admin <strong>Abd</strong> accepted fees of student <strong>Anas Asif</strong> as paid with some remaining dues !', '12/10/2024 04:04 pm', '2'),
+(743, 'Admin <strong>Abd</strong> accepted fees of student <strong>M.Ahmad</strong> as paid with some remaining dues !', '12/10/2024 04:04 pm', '2'),
+(744, 'Admin <strong>Abd</strong> accepted fees of student <strong>Abul Rahmen</strong> as paid with some remaining dues !', '12/10/2024 04:05 pm', '2'),
+(745, 'Admin <strong>Abd</strong> accepted fees of student <strong>Misba Jutt</strong> as paid with some remaining dues !', '12/10/2024 04:05 pm', '2'),
+(746, 'Admin <strong>Abd</strong> accepted fees of student <strong>Amer Hamza</strong> as paid with some remaining dues !', '12/10/2024 04:05 pm', '2'),
+(747, 'Admin <strong>Abd</strong> accepted fees of student <strong>Kinza Mehar</strong> as paid with some remaining dues !', '12/10/2024 04:05 pm', '2'),
+(748, 'Admin <strong>Abd</strong> added new student <strong>Huma</strong> !', '12/10/2024 04:08 pm', '2');
 
 -- --------------------------------------------------------
 
@@ -971,7 +1004,7 @@ INSERT INTO `employee_salary` (`salary_id`, `fk_teacher_id`, `fk_staff_id`, `yea
 (98, 1, 0, '2024', 'September', '50000', '2024-09-12', '80000', 'paid', '2'),
 (99, 2, 0, '2024', 'September', '50000', '2024-09-14', '50000', 'paid', '2'),
 (100, 3, 0, '2024', 'September', '50000', '2024-09-14', '50000', 'paid', '2'),
-(101, 4, 0, '2024', 'September', '50000', '0000-00-00', '', 'unpaid', '2'),
+(101, 4, 0, '2024', 'September', '50000', '2024-10-12', '50000', 'paid', '2'),
 (102, 5, 0, '2024', 'September', '40000', '2024-09-12', '40000', 'paid', '2'),
 (103, 6, 0, '2024', 'September', '60000', '0000-00-00', '', 'unpaid', '2'),
 (104, 7, 0, '2024', 'September', '45000', '0000-00-00', '', 'unpaid', '2'),
@@ -1003,9 +1036,9 @@ INSERT INTO `employee_salary` (`salary_id`, `fk_teacher_id`, `fk_staff_id`, `yea
 (130, 0, 1, '2024', 'September', '65000', '0000-00-00', '', 'unpaid', '2'),
 (131, 0, 2, '2024', 'September', '65000', '0000-00-00', '', 'unpaid', '2'),
 (132, 0, 3, '2024', 'September', '70000', '2024-09-11', '40000', 'paid', '2'),
-(133, 1, 0, '2024', 'October', '50000', '0000-00-00', '', 'unpaid', '2'),
-(134, 2, 0, '2024', 'October', '50000', '0000-00-00', '', 'unpaid', '2'),
-(135, 3, 0, '2024', 'October', '55000', '0000-00-00', '', 'unpaid', '2'),
+(133, 1, 0, '2024', 'October', '50000', '2024-10-12', '50000', 'paid', '2'),
+(134, 2, 0, '2024', 'October', '50000', '2024-10-12', '50000', 'paid', '2'),
+(135, 3, 0, '2024', 'October', '55000', '2024-10-12', '55000', 'paid', '2'),
 (136, 4, 0, '2024', 'October', '50000', '0000-00-00', '', 'unpaid', '2'),
 (137, 5, 0, '2024', 'October', '40000', '0000-00-00', '', 'unpaid', '2'),
 (138, 6, 0, '2024', 'October', '60000', '0000-00-00', '', 'unpaid', '2'),
@@ -1033,7 +1066,7 @@ INSERT INTO `employee_salary` (`salary_id`, `fk_teacher_id`, `fk_staff_id`, `yea
 (160, 28, 0, '2024', 'October', '50000', '0000-00-00', '', 'unpaid', '2'),
 (161, 29, 0, '2024', 'October', '40000', '0000-00-00', '', 'unpaid', '2'),
 (162, 30, 0, '2024', 'October', '40000', '0000-00-00', '', 'unpaid', '2'),
-(163, 31, 0, '2024', 'October', '50000', '0000-00-00', '', 'unpaid', '2'),
+(163, 31, 0, '2024', 'October', '50000', '2024-10-12', '50000', 'paid', '2'),
 (164, 32, 0, '2024', 'October', '50000', '0000-00-00', '', 'unpaid', '2'),
 (165, 33, 0, '2024', 'October', '60000', '0000-00-00', '', 'unpaid', '2'),
 (166, 0, 1, '2024', 'October', '65000', '0000-00-00', '', 'unpaid', '2'),
@@ -1133,7 +1166,39 @@ INSERT INTO `expense_receiving` (`er_id`, `image`, `comment`, `expense`, `receiv
 (43, '', 'Student Areeba , reg# 11 paid fee amount Rs.0 with remaining dues Rs.1000 (Monthly Fee)', '0', '0', '2024-10-02', '2'),
 (44, '', 'Student Qahafa Mughal, reg# 12 paid full fee amount Rs.3500 (Monthly Fee)', '0', '3500', '2024-10-02', '2'),
 (45, '', 'Student Anas Asif, reg# 13 paid fee amount Rs.2500 with remaining dues Rs.1000 (Monthly Fee)', '0', '2500', '2024-10-02', '2'),
-(46, '', 'Student Areeba , reg# 11 paid dues amount Rs.200 (Pending Dues)', '0', '200', '2024-10-02', '2');
+(46, '', 'Student Areeba , reg# 11 paid dues amount Rs.200 (Pending Dues)', '0', '200', '2024-10-02', '2'),
+(47, '', 'Salary of teacher Ali was paid.', '50000', '0', '2024-10-12', '2'),
+(48, '', 'Salary of teacher Imran Rashid was paid.', '50000', '0', '2024-10-12', '2'),
+(49, '', 'Salary of teacher Sir Tanveer was paid.', '50000', '0', '2024-10-12', '2'),
+(50, '', 'Salary of teacher Miss Ayesha was paid.', '55000', '0', '2024-10-12', '2'),
+(51, '', 'Salary of teacher Miss Anam was paid.', '50000', '0', '2024-10-12', '2'),
+(52, '', 'loan', '0', '50000', '2024-10-12', '2'),
+(53, '', 'funds', '0', '300000', '2024-10-12', '2'),
+(54, '', 'Student Alishba Mughal, reg# 26 paid fee amount Rs.1300 with remaining dues Rs.1100 (Monthly Fee)', '0', '1300', '2024-10-12', '2'),
+(55, '', 'Student Maham Mughal, reg# 19 paid fee amount Rs.100 with remaining dues Rs.2300 (Monthly Fee)', '0', '100', '2024-10-12', '2'),
+(56, '', 'Student Ali Raza, reg# 20 paid full fee amount Rs.2400 (Monthly Fee)', '0', '2400', '2024-10-12', '2'),
+(57, '', 'Student Bilal Butt, reg# 21 paid full fee amount Rs.2400 (Monthly Fee)', '0', '2400', '2024-10-12', '2'),
+(58, '', 'Student Bisma Khan, reg# 22 paid fee amount Rs.100 with remaining dues Rs.2300 (Monthly Fee)', '0', '100', '2024-10-12', '2'),
+(59, '', 'Student Ali Hamza, reg# 23 paid fee amount Rs.100 with remaining dues Rs.2300 (Monthly Fee)', '0', '100', '2024-10-12', '2'),
+(60, '', 'Student Shahwaiz Jutt, reg# 24 paid fee amount Rs.100 with remaining dues Rs.2300 (Monthly Fee)', '0', '100', '2024-10-12', '2'),
+(61, '', 'Student Haroon Arshad, reg# 1 paid fee amount Rs.0 with remaining dues Rs.2900 (Monthly Fee)', '0', '0', '2024-10-12', '2'),
+(62, '', 'Student Sufyan Safdar, reg# 2 paid fee amount Rs.100 with remaining dues Rs.2300 (Monthly Fee)', '0', '100', '2024-10-12', '2'),
+(63, '', 'Student Hamid Tariq, reg# 3 paid fee amount Rs.100 with remaining dues Rs.2300 (Monthly Fee)', '0', '100', '2024-10-12', '2'),
+(64, '', 'Student Faheem Fayyaz, reg# 4 paid fee amount Rs.200 with remaining dues Rs.2200 (Monthly Fee)', '0', '200', '2024-10-12', '2'),
+(65, '', 'Student Uzair butt, reg# 5 paid fee amount Rs.100 with remaining dues Rs.2300 (Monthly Fee)', '0', '100', '2024-10-12', '2'),
+(66, '', 'Student Meerab Asif, reg# 6 paid fee amount Rs.0 with remaining dues Rs.2400 (Monthly Fee)', '0', '0', '2024-10-12', '2'),
+(67, '', 'Student Noor Amir, reg# 7 paid fee amount Rs.0 with remaining dues Rs.2400 (Monthly Fee)', '0', '0', '2024-10-12', '2'),
+(68, '', 'Student Alina Ali, reg# 8 paid fee amount Rs.0 with remaining dues Rs.2400 (Monthly Fee)', '0', '0', '2024-10-12', '2'),
+(69, '', 'Student Ayesha, reg# 9 paid fee amount Rs.0 with remaining dues Rs.2400 (Monthly Fee)', '0', '0', '2024-10-12', '2'),
+(70, '', 'Student Maria, reg# 10 paid fee amount Rs.0 with remaining dues Rs.2400 (Monthly Fee)', '0', '0', '2024-10-12', '2'),
+(71, '', 'Student Areeba , reg# 11 paid fee amount Rs.0 with remaining dues Rs.2400 (Monthly Fee)', '0', '0', '2024-10-12', '2'),
+(72, '', 'Student Qahafa Mughal, reg# 12 paid fee amount Rs.0 with remaining dues Rs.2400 (Monthly Fee)', '0', '0', '2024-10-12', '2'),
+(73, '', 'Student Anas Asif, reg# 13 paid fee amount Rs.0 with remaining dues Rs.2400 (Monthly Fee)', '0', '0', '2024-10-12', '2'),
+(74, '', 'Student M.Ahmad, reg# 15 paid fee amount Rs.0 with remaining dues Rs.2400 (Monthly Fee)', '0', '0', '2024-10-12', '2'),
+(75, '', 'Student Abul Rahmen, reg# 14 paid fee amount Rs.0 with remaining dues Rs.2400 (Monthly Fee)', '0', '0', '2024-10-12', '2'),
+(76, '', 'Student Misba Jutt, reg# 16 paid fee amount Rs.0 with remaining dues Rs.2400 (Monthly Fee)', '0', '0', '2024-10-12', '2'),
+(77, '', 'Student Amer Hamza, reg# 17 paid fee amount Rs.0 with remaining dues Rs.2400 (Monthly Fee)', '0', '0', '2024-10-12', '2'),
+(78, '', 'Student Kinza Mehar, reg# 18 paid fee amount Rs.0 with remaining dues Rs.2400 (Monthly Fee)', '0', '0', '2024-10-12', '2');
 
 -- --------------------------------------------------------
 
@@ -4429,7 +4494,8 @@ INSERT INTO `student_class` (`student_class_id`, `fk_student_id`, `fk_class_id`,
 (338, 214, 21, 31, 1, '101'),
 (339, 213, 22, 32, 1, '101'),
 (340, 212, 22, 32, 1, '101'),
-(341, 337, 1, 1, 1, '2');
+(341, 337, 1, 1, 1, '2'),
+(342, 338, 8, 15, 1, '2');
 
 -- --------------------------------------------------------
 
@@ -4459,31 +4525,31 @@ CREATE TABLE `student_fee` (
 --
 
 INSERT INTO `student_fee` (`fee_id`, `fk_student_id`, `year`, `month`, `fee_method`, `receipt_image`, `monthly_fee`, `total_fee`, `due_date`, `payment_date`, `fee_status`, `pending_dues`, `admin_remarks`, `fk_client_id`) VALUES
-(1, 1, '2024', 'October', '', '', '1500', '2900', '2024-10-18', '0000-00-00', 'unpaid', 0, '', '2'),
-(2, 2, '2024', 'October', '', '', '1000', '2400', '2024-10-18', '0000-00-00', 'unpaid', 0, '', '2'),
-(3, 3, '2024', 'October', '', '', '1000', '2400', '2024-10-18', '0000-00-00', 'unpaid', 0, '', '2'),
-(4, 4, '2024', 'October', '', '', '1000', '2400', '2024-10-18', '0000-00-00', 'unpaid', 0, '', '2'),
-(5, 5, '2024', 'October', '', '', '1000', '2400', '2024-10-18', '0000-00-00', 'unpaid', 0, '', '2'),
-(6, 6, '2024', 'October', '', '', '1000', '2400', '2024-10-18', '0000-00-00', 'unpaid', 0, '', '2'),
-(7, 7, '2024', 'October', '', '', '1000', '2400', '2024-10-18', '0000-00-00', 'unpaid', 0, '', '2'),
-(8, 8, '2024', 'October', '', '', '1000', '2400', '2024-10-18', '0000-00-00', 'unpaid', 0, '', '2'),
-(9, 9, '2024', 'October', '', '', '1000', '2400', '2024-10-18', '0000-00-00', 'unpaid', 0, '', '2'),
-(10, 10, '2024', 'October', '', '', '1000', '2400', '2024-10-18', '0000-00-00', 'unpaid', 0, '', '2'),
-(11, 11, '2024', 'October', '', '', '1000', '2400', '2024-10-18', '0000-00-00', 'unpaid', 0, '', '2'),
-(12, 12, '2024', 'October', '', '', '1000', '2400', '2024-10-18', '0000-00-00', 'unpaid', 0, '', '2'),
-(13, 13, '2024', 'October', '', '', '1000', '2400', '2024-10-18', '0000-00-00', 'unpaid', 0, '', '2'),
-(14, 14, '2024', 'October', '', '', '1000', '2400', '2024-10-18', '0000-00-00', 'unpaid', 0, '', '2'),
-(15, 15, '2024', 'October', '', '', '1000', '2400', '2024-10-18', '0000-00-00', 'unpaid', 0, '', '2'),
-(16, 16, '2024', 'October', '', '', '1000', '2400', '2024-10-18', '0000-00-00', 'unpaid', 0, '', '2'),
-(17, 17, '2024', 'October', '', '', '1000', '2400', '2024-10-18', '0000-00-00', 'unpaid', 0, '', '2'),
-(18, 18, '2024', 'October', '', '', '1000', '2400', '2024-10-18', '0000-00-00', 'unpaid', 0, '', '2'),
-(19, 19, '2024', 'October', '', '', '1000', '2400', '2024-10-18', '0000-00-00', 'unpaid', 0, '', '2'),
-(20, 20, '2024', 'October', '', '', '1000', '2400', '2024-10-18', '0000-00-00', 'unpaid', 0, '', '2'),
-(21, 21, '2024', 'October', '', '', '1000', '2400', '2024-10-18', '0000-00-00', 'unpaid', 0, '', '2'),
-(22, 22, '2024', 'October', '', '', '1000', '2400', '2024-10-18', '0000-00-00', 'unpaid', 0, '', '2'),
-(23, 23, '2024', 'October', '', '', '1000', '2400', '2024-10-18', '0000-00-00', 'unpaid', 0, '', '2'),
-(24, 24, '2024', 'October', '', '', '1000', '2400', '2024-10-18', '0000-00-00', 'unpaid', 0, '', '2'),
-(25, 25, '2024', 'October', '', '', '1000', '2400', '2024-10-18', '0000-00-00', 'unpaid', 0, '', '2'),
+(1, 1, '2024', 'October', 'cash', '', '1500', '2900', '2024-10-18', '2024-10-12', 'dues', 2900, '', '2'),
+(2, 2, '2024', 'October', 'cash', '', '1000', '2400', '2024-10-18', '2024-10-12', 'dues', 2300, '', '2'),
+(3, 3, '2024', 'October', 'cash', '', '1000', '2400', '2024-10-18', '2024-10-12', 'dues', 2300, '', '2'),
+(4, 4, '2024', 'October', 'cash', '', '1000', '2400', '2024-10-18', '2024-10-12', 'dues', 2200, '', '2'),
+(5, 5, '2024', 'October', 'cash', '', '1000', '2400', '2024-10-18', '2024-10-12', 'dues', 2300, '', '2'),
+(6, 6, '2024', 'October', 'cash', '', '1000', '2400', '2024-10-18', '2024-10-12', 'dues', 2400, '', '2'),
+(7, 7, '2024', 'October', 'cash', '', '1000', '2400', '2024-10-18', '2024-10-12', 'dues', 2400, '', '2'),
+(8, 8, '2024', 'October', 'cash', '', '1000', '2400', '2024-10-18', '2024-10-12', 'dues', 2400, '', '2'),
+(9, 9, '2024', 'October', 'cash', '', '1000', '2400', '2024-10-18', '2024-10-12', 'dues', 2400, '', '2'),
+(10, 10, '2024', 'October', 'cash', '', '1000', '2400', '2024-10-18', '2024-10-12', 'dues', 2400, '', '2'),
+(11, 11, '2024', 'October', 'cash', '', '1000', '2400', '2024-10-18', '2024-10-12', 'dues', 2400, '', '2'),
+(12, 12, '2024', 'October', 'cash', '', '1000', '2400', '2024-10-18', '2024-10-12', 'dues', 2400, '', '2'),
+(13, 13, '2024', 'October', 'cash', '', '1000', '2400', '2024-10-18', '2024-10-12', 'dues', 2400, '', '2'),
+(14, 14, '2024', 'October', 'cash', '', '1000', '2400', '2024-10-18', '2024-10-12', 'dues', 2400, '', '2'),
+(15, 15, '2024', 'October', 'cash', '', '1000', '2400', '2024-10-18', '2024-10-12', 'dues', 2400, '', '2'),
+(16, 16, '2024', 'October', 'cash', '', '1000', '2400', '2024-10-18', '2024-10-12', 'dues', 2400, '', '2'),
+(17, 17, '2024', 'October', 'cash', '', '1000', '2400', '2024-10-18', '2024-10-12', 'dues', 2400, '', '2'),
+(18, 18, '2024', 'October', 'cash', '', '1000', '2400', '2024-10-18', '2024-10-12', 'dues', 2400, '', '2'),
+(19, 19, '2024', 'October', 'cash', '', '1000', '2400', '2024-10-18', '2024-10-12', 'dues', 2300, '', '2'),
+(20, 20, '2024', 'October', 'cash', '', '1000', '2400', '2024-10-18', '2024-10-12', 'paid', 0, '', '2'),
+(21, 21, '2024', 'October', 'cash', '', '1000', '2400', '2024-10-18', '2024-10-12', 'paid', 0, '', '2'),
+(22, 22, '2024', 'October', 'cash', '', '1000', '2400', '2024-10-18', '2024-10-12', 'dues', 2300, '', '2'),
+(23, 23, '2024', 'October', 'cash', '', '1000', '2400', '2024-10-18', '2024-10-12', 'dues', 2300, '', '2'),
+(24, 24, '2024', 'October', 'cash', '', '1000', '2400', '2024-10-18', '2024-10-12', 'dues', 2300, '', '2'),
+(25, 25, '2024', 'October', 'cash', '', '1000', '2400', '2024-10-18', '2024-10-12', 'dues', 1100, '', '2'),
 (26, 26, '2024', 'October', '', '', '1000', '2400', '2024-10-18', '0000-00-00', 'unpaid', 0, '', '2'),
 (27, 27, '2024', 'October', '', '', '1000', '2400', '2024-10-18', '0000-00-00', 'unpaid', 0, '', '2'),
 (28, 28, '2024', 'October', '', '', '1000', '2400', '2024-10-18', '0000-00-00', 'unpaid', 0, '', '2'),
@@ -5480,7 +5546,8 @@ INSERT INTO `student_profile` (`student_id`, `name`, `cnic`, `student_gender`, `
 (334, 'Zunaira', '', '', '0000-00-00', 'Zubair Gondal', '', '', '', '', 'SVR223', '', '', '', '', 1, '101'),
 (335, 'M Arslan', '', '', '0000-00-00', 'M. Atif', '', '', '', '', 'SVR224', '', '', '', '', 1, '101'),
 (336, 'M. Ayan', '', '', '0000-00-00', 'Jamshaid Raza', '', '', '', '', 'SVR225', '', '', '', '', 1, '101'),
-(337, 'hammy', '9384793487', 'male', '2024-10-17', 'Abdul Ghani', '038478473783738', 'Gujranwala', '03249873849', '03487738490834', 'SVR301', '', 'email@mails.com', '2000', '827ccb0eea8a706c4c34a16891f84e7b', 1, '2');
+(337, 'hammy', '9384793487', 'male', '2024-10-17', 'Abdul Ghani', '038478473783738', 'Gujranwala', '03249873849', '03487738490834', '301', '', 'email@mails.com', '2000', '827ccb0eea8a706c4c34a16891f84e7b', 1, '2'),
+(338, 'Huma', '39894802984309', 'female', '2024-10-16', 'Ali Tariq', '0329890439043', 'Gujranwala', '230940', '9342903249', '213', '', 'gals@mail.com', '5000', '827ccb0eea8a706c4c34a16891f84e7b', 1, '2');
 
 -- --------------------------------------------------------
 
@@ -6097,7 +6164,7 @@ ALTER TABLE `admin`
 -- AUTO_INCREMENT for table `admin_logs`
 --
 ALTER TABLE `admin_logs`
-  MODIFY `admin_log_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=716;
+  MODIFY `admin_log_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=749;
 
 --
 -- AUTO_INCREMENT for table `all_classes`
@@ -6169,7 +6236,7 @@ ALTER TABLE `exam_schedule`
 -- AUTO_INCREMENT for table `expense_receiving`
 --
 ALTER TABLE `expense_receiving`
-  MODIFY `er_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
+  MODIFY `er_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=79;
 
 --
 -- AUTO_INCREMENT for table `homework_diary`
@@ -6229,7 +6296,7 @@ ALTER TABLE `staff_profile`
 -- AUTO_INCREMENT for table `student_class`
 --
 ALTER TABLE `student_class`
-  MODIFY `student_class_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=342;
+  MODIFY `student_class_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=343;
 
 --
 -- AUTO_INCREMENT for table `student_fee`
@@ -6247,7 +6314,7 @@ ALTER TABLE `student_funds`
 -- AUTO_INCREMENT for table `student_profile`
 --
 ALTER TABLE `student_profile`
-  MODIFY `student_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=338;
+  MODIFY `student_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=339;
 
 --
 -- AUTO_INCREMENT for table `student_subscriptions`
