@@ -78,18 +78,28 @@
     ?>
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#chart-nav" data-bs-toggle="collapse" href="">
-          <i class=><img src="images/calendar.gif" width="30px" height="30px" alt=""></i><span>Time Table/Schedules</span>
+          <i class=><img src="images/calendar.gif" width="30px" height="30px" alt=""></i><span>Class Management</span>
           <i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="chart-nav" class="nav-content collapse " data-bs-parent="#sidebar-nav">
           <li>
+            <a href="add-class-section.php">
+              <i class="bi bi-arrow-right"></i><span>Class & Sections</span>
+            </a>
+          </li>
+          <li>
+            <a href="add-section-subjects.php">
+              <i class="bi bi-arrow-right"></i><span>Subjects</span>
+            </a>
+          </li>
+          <li>
             <a href="add-time-table.php">
-              <i class="bi bi-arrow-right"></i><span>Add Time Table</span>
+              <i class="bi bi-arrow-right"></i><span>Timetables</span>
             </a>
           </li>
           <li>
             <a href="add-exam-schedule.php">
-              <i class="bi bi-arrow-right"></i><span>Add Exam Schedule</span>
+              <i class="bi bi-arrow-right"></i><span>Exam Schedules</span>
             </a>
           </li>
         </ul>
@@ -264,7 +274,7 @@
       <li class="nav-item">
         <a class="nav-link collapsed" href="more-reports.php">
           <i class=><img src="images/more.gif" width="30px" height="30px" alt=""></i>
-          <span>More Reports</span>
+          <span>More Features</span>
         </a>
       </li><!-- Undefined functionality -->
     <?php

@@ -18,7 +18,7 @@ else {
 <main id="main" class="main">
 
     <div class="pagetitle">
-        <h1>More Reports</h1>
+        <h1>More Features</h1>
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item active"><?php echo $_SESSION['school_name']; ?></li>
@@ -38,7 +38,7 @@ else {
         <div class="row">
             <div class="col-md-12">
                 <div class="text-center">
-            <img src="./images/coming-soon-default-image2.jpg" height="440px" width="900px" style="border-radius: 10px;" alt="">
+            <img src="./images/coming-soon-default-image3.svg" height="440px" width="900px" style="border-radius: 10px;" alt="">
                 </div>
                 <!-- <div class="card">
                     <div class="card-body">

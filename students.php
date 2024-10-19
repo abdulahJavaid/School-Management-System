@@ -10,9 +10,9 @@ $client = $_SESSION['client_id'];
 
 <?php
 // checking session for appropriate access
-if ($level == 'clerk' || $level == 'super') {}
-else {
-  redirect("./");
+if ($level == 'clerk' || $level == 'super') {
+} else {
+    redirect("./");
 }
 ?>
 
@@ -32,40 +32,51 @@ else {
     <div class="pagetitle">
         <div class="row">
             <form action="" method="post">
-                <div class="col-md-4">
-                    <select id="inputState" name="select" class="form-select">
-                        <option selected>Choose Class</option>
-                        <?php
-                        // fetching all the classes
-                        $query = "SELECT * FROM all_classes WHERE fk_client_id='$client'";
-                        $result = query($query);
-                        while ($row = mysqli_fetch_assoc($result)) {
-                            $clas_id = $row['class_id'];
-                        ?>
-                            <optgroup label="Class: <?php echo $row['class_name']; ?>">
-                                <?php
-                                // fetching the related sections
-                                $query = "SELECT * FROM class_sections WHERE fk_class_id='$clas_id' AND fk_client_id='$client'";
-                                $result1 = query($query);
-                                while ($row1 = mysqli_fetch_assoc($result1)) {
-                                ?>
-                                    <option value="<?php echo $row['class_id'] . " " . $row1['section_id']; ?>"><?php echo $row['class_name'] . " " . $row1['section_name']; ?></option>
-                                <?php
-                                }
-                                ?>
-                            </optgroup>
-                        <?php } ?>
-                    </select>
-                </div>
-                <div class="row">
-                    <div class="col-md-2">
-                        <input type="submit" name="submit" class="btn btn-success mx-auto" value="See Class Data">
-                    </div>
-                    <div class="d-flex justify-content-end">
-                        <a class="btn btn-success" href="./student-profile.php">Add Student</a>
+                <div class="col-md-4 col-sm-6 col-12">
+                    <div class="input-group mb-2">
+                        <select id="inputState"
+                            name="select"
+                            class="form-select"
+                            aria-describedby="button-addon1"
+                            required>
+                            <option value="" disabled selected>Choose Class</option>
+                            <?php
+                            // fetching all the classes
+                            $query = "SELECT * FROM all_classes WHERE fk_client_id='$client'";
+                            $result = query($query);
+                            while ($row = mysqli_fetch_assoc($result)) {
+                                $clas_id = $row['class_id'];
+                            ?>
+                                <optgroup label="Class: <?php echo $row['class_name']; ?>">
+                                    <?php
+                                    // fetching the related sections
+                                    $query = "SELECT * FROM class_sections WHERE fk_class_id='$clas_id' AND fk_client_id='$client'";
+                                    $result1 = query($query);
+                                    while ($row1 = mysqli_fetch_assoc($result1)) {
+                                    ?>
+                                        <option value="<?php echo $row['class_id'] . " " . $row1['section_id']; ?>"><?php echo $row['class_name'] . " " . $row1['section_name']; ?></option>
+                                    <?php
+                                    }
+                                    ?>
+                                </optgroup>
+                            <?php } ?>
+                        </select>
+                        <button type="submit" name="submit" id="button-addon1" class="btn btn-sm btn-success">
+                            Select Class
+                        </button>
                     </div>
                 </div>
             </form>
+        </div>
+
+        <!-- <div class="d-inline-flex justify-content-end mb-2 w-100">
+            <a class="btn btn-sm btn-success" href="./student-profile.php">Add Student</a>
+        </div> -->
+
+        <div class="row">
+            <div class="d-inline-flex justify-content-end">
+                <a class="btn btn-sm btn-success" href="./student-profile.php">Add Student</a>
+            </div>
         </div>
     </div><!-- End Select Student and add Student -->
 
@@ -76,6 +87,10 @@ else {
                     <div class="card-body">
                         <h5 class="card-title">Student Details</h5>
                         <p>Student Details of All the registered students of <code><?php echo $_SESSION['school_name']; ?></code>.</p>
+
+                        <!-- <div class="d-flex justify-content-end mb-2">
+                            <a class="btn btn-sm btn-success" href="./student-profile.php">Add Student</a>
+                        </div> -->
 
                         <!-- Primary Color Bordered Table -->
                         <div class="table-responsive">
