@@ -46,8 +46,6 @@ if (isset($_POST['add_subject'])) {
 
 ?>
 
-
-
 <main id="main" class="main">
 
     <div class="pagetitle">
@@ -124,6 +122,43 @@ if (isset($_POST['add_subject'])) {
 
             <section class="section profile">
                 <div class="row">
+                    
+                <div class="col-sm-12">
+                        <div class="card">
+                            <div class="card-body pt-3">
+                                <h5 class="card-title">Class & Sections</h5>
+                                <div class="tab-content pt-2">
+                                    <?php
+                                    // getting all the classes and related sections
+                                    $query = "SELECT * FROM all_classes INNER JOIN class_sections ON ";
+                                    $query .= "all_classes.class_id=class_sections.fk_class_id ";
+                                    $query .= "INNER JOIN section_subjects ON class_sections.section_id=section_subjects.fk_section_id ";
+                                    $query .= "WHERE class_sections.fk_client_id='$client'";
+                                    $query .= "ORDER BY fk_class_id, section_id, subject_id";
+                                    $get_sections = query($query);
+
+                                    $data = [];
+                                    while ($row = mysqli_fetch_assoc($get_sections)) {
+                                        if (!isset($data[$row['class_name'] . ' ' . $row['section_name']])) {
+                                            $data[$row['class_name'] . ' ' . $row['section_name']] = [];
+                                        }
+                                        $data[$row['class_name'] . ' ' . $row['section_name']][] = $row['subject_name'];
+                                    }
+
+                                    foreach ($data as $key => $value) {
+                                        echo "<strong>Class</strong>: " . $key . "<br>";
+
+                                        foreach ($value as $subject) {
+                                            echo "<strong>---</strong> " . $subject . "<br>";
+                                        }
+                                    }
+
+                                    ?>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
 
 
                 </div>
