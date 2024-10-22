@@ -37,7 +37,7 @@ if (isset($_POST['query'])) {
     $searchQuery = escape($_POST['query']);
 
     // SQL query to search for matches (adjust based on your table structure)
-    $query = "SELECT teacher_id, name FROM teacher_profile WHERE name LIKE '$searchQuery%' LIMIT 3";
+    $query = "SELECT teacher_id, name FROM teacher_profile WHERE name LIKE '$searchQuery%'";
 
     $result = mysqli_query($conn, $query);
     $matches = [];

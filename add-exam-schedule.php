@@ -67,6 +67,12 @@ if ($level == 'clerk' || $level == 'super') {
           <!-- View timetable select option -->
           <div class="col-auto">
             <div class="input-group">
+              <input type="month" class="form-control mt-3" value="" name="schedule_month">
+            </div>
+          </div>
+
+          <div class="col-auto">
+            <div class="input-group">
               <select id="inputState" name="select" class="form-select mt-3" aria-label="Example input" aria-describedby="button-addon3">
                 <option selected value="empty">Class</option>
                 <?php
@@ -100,7 +106,7 @@ if ($level == 'clerk' || $level == 'super') {
     </div>
   </form>
   <br>
-  <!-- end of the form -->
+  <!-- end of the form, view/add schedule -->
 
   <!-- Exam Schedule Form, hidden by default -->
   <section class="section profile" id="examScheduleForm">
@@ -142,16 +148,10 @@ if ($level == 'clerk' || $level == 'super') {
           <div class="card">
             <div class="card-body pt-3">
 
-              <h5 class="card-title">Class: <?php echo $row['class_name'] . ' ' . $row1['section_name']; ?></h5>
+              <h5 class="card-title pb-0 mb-1">Class: <?php echo $row['class_name'] . ' ' . $row1['section_name']; ?></h5>
               <p><code><u>Instructions:</u></code>
-                <br><code>1. Don't leave time/subject/date empty or the relevant record will not be added</code>
+                <br><code>1. If you leave a field empty, only that record will not be added.</code>
               </p>
-              <!-- Bordered Tabs -->
-              <!-- <ul class="nav nav-tabs nav-tabs-bordered">
-              <li class="nav-item">
-                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Add Exam Schedule</button>
-              </li>
-            </ul> -->
               <div class="tab-content pt-2">
                 <div class="tab-pane fade show active profile-edit pt-3" id="profile-edit">
                   <form method="post" action="backend/back-add-exam.php">
@@ -159,8 +159,8 @@ if ($level == 'clerk' || $level == 'super') {
                       <div class="row align-items-center">
                         <div class="col-12">
                           <div class="input-group">
-                            <label for="exam_title" class="col-md-4 col-lg-3 col-form-label"><strong>Exam Title <code>*</code></strong></label>
-                            <input name="exam_title" type="text" class="form-control" value="" placeholder="eg: Montly Test September">
+                            <label for="exam_title" class="col-md-4 col-lg-2 col-form-label"><strong>Exam Title <code>*</code></strong></label>
+                            <input name="exam_title" type="text" class="form-control" value="" placeholder="eg: Montly Test">
                           </div>
                         </div>
                       </div>
@@ -169,8 +169,6 @@ if ($level == 'clerk' || $level == 'super') {
                       <div class="row align-items-center">
                         <div class="col-12">
                           <div class="row">
-
-
                             <label for="space" class="col-md-4 col-lg-2 col-form-label"></label>
                             <div class="col-lg-2 pe-3">
                               <span class="text-secondary"><strong>Paper Time</strong></span>
@@ -191,8 +189,6 @@ if ($level == 'clerk' || $level == 'super') {
                             <div class="col-lg-2 pe-3">
                               <sapn class="text-secondary"><strong>Teacher</strong></span>
                             </div>
-
-
                           </div>
                         </div>
                       </div>
@@ -210,7 +206,7 @@ if ($level == 'clerk' || $level == 'super') {
                                 <input name="exam_time<?php echo $i; ?>" type="text" class="form-control" value="" placeholder="paper time">
                               </div>
                               <div class="col-lg-2 px-1">
-                                <select name="subject" id="" class="form-select">
+                                <select name="subject_id<?php echo $i; ?>" id="" class="form-select">
                                   <option value="" disabled selected>Select</option>
                                   <!-- <option value="" disabled selected><input type="text" name="" id=""></option> -->
                                   <?php
@@ -233,17 +229,18 @@ if ($level == 'clerk' || $level == 'super') {
                                   type="text"
                                   id="teacher_name<?php echo $i; ?>"
                                   class="form-control" value=""
-                                  onclick="getTeachers('<?php echo 'teacher_name' . $i; ?>')"
-                                  onkeyup="searchDatabase('<?php echo 'teacher_name' . $i; ?>')"
+                                  onclick="getTeachers('<?php echo $i; ?>')"
+                                  onkeyup="searchDatabase('<?php echo $i; ?>')"
                                   autocomplete="off"
                                   placeholder="search">
-                                <div class="dropdown-menu show" id="results" aria-labelledby="search-input" style="position: absolute; z-index: 1000; display: none;"></div>
+                                <div class="dropdown-menu show" id="results<?php echo $i; ?>" aria-labelledby="search-input" style="position: absolute; z-index: 1000; display: none;"></div>
                               </div>
 
                             </div>
                           </div>
                         </div>
                       </div>
+                      <input type="hidden" name="teacher_id<?php echo $i; ?>" id="teacher_id<?php echo $i; ?>">
                     <?php
                     }
                     ?>
@@ -262,142 +259,25 @@ if ($level == 'clerk' || $level == 'super') {
             </div>
           </div>
         <?php
-        } // end of if to add exam schedule
+        } // end of code to add exam schedule
         ?>
-
-        <script>
-          // clear all results
-          function clearResults() {
-            document.getElementById('results').style.display = 'none';
-          }
-
-          // code to get all the teachers of the school
-          function getTeachers(id) {
-            var searchQuery = document.getElementById(id).value.trim();
-
-            var xhr = new XMLHttpRequest();
-            xhr.open('POST', './backend/search-teacher.php', true);
-            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-
-            xhr.onreadystatechange = function() {
-              if (xhr.readyState === 4 && xhr.status === 200) {
-                try {
-                  var response = JSON.parse(xhr.responseText);
-
-                  var resultsDiv = document.getElementById('results');
-                  resultsDiv.innerHTML = ''; // Clear previous results
-
-                  if (response.length > 0) {
-                    // Show the results div
-                    resultsDiv.style.display = 'block';
-
-                    // Loop through each result
-                    response.forEach(function(item) {
-                      var resultItem = document.createElement('div');
-                       // Bootstrap styling for each item
-                      resultItem.classList.add('dropdown-item');
-
-                      // Create a link element
-                      var name = document.createElement('span');
-                      name.textContent = item.name; // Display the result name
-                      name.style.display = 'block'; // Make the link a block element
-                      resultItem.appendChild(name);
-
-                      // Optionally, display the id below the name
-                      var address = document.createElement('small');
-                      address.textContent = item.id; // Display the result id
-                      address.style.color = '#6c757d'; // Make the text grey
-                      resultItem.appendChild(address);
-
-                      resultsDiv.appendChild(resultItem);
-
-                    });
-                  } else {
-                    resultsDiv.style.display = 'none';
-                  }
-                } catch (e) {
-                  console.error('Error parsing JSON:', e);
-                  console.error('Response text:', xhr.responseText);
-                }
-              }
-            };
-
-            xhr.send('allquery=' + encodeURIComponent('1'));
-          }
-
-          // code to get the search results of the matching teachernames
-          function searchDatabase(id) {
-            var searchQuery = document.getElementById(id).value.trim();
-
-            // If the search query is empty, hide the results
-            if (searchQuery.length === 0) {
-              document.getElementById('results').style.display = 'none';
-              return;
-            }
-
-            var xhr = new XMLHttpRequest();
-            xhr.open('POST', './backend/search-teacher.php', true); // Adjust the path to your PHP file
-            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-
-            xhr.onreadystatechange = function() {
-              if (xhr.readyState === 4 && xhr.status === 200) {
-                try {
-                  var response = JSON.parse(xhr.responseText);
-
-                  var resultsDiv = document.getElementById('results');
-                  resultsDiv.innerHTML = ''; // Clear previous results
-
-                  if (response.length > 0) {
-                    // Show the results div
-                    resultsDiv.style.display = 'block';
-
-                    // Loop through each result and add as a nav link
-                    response.forEach(function(item) {
-                      var resultItem = document.createElement('div');
-                      resultItem.classList.add('dropdown-item'); // Bootstrap styling for each item
-
-                      // Create a link element
-                      var name = document.createElement('span');
-                      name.textContent = item.name; // Display the result name
-                      name.style.display = 'block'; // Make the link a block element
-                      resultItem.appendChild(name);
-
-                      // Optionally, display the URL below the name
-                      var address = document.createElement('small');
-                      address.textContent = item.id; // Display the result id
-                      address.style.color = '#6c757d'; // Make the text grey
-                      resultItem.appendChild(address);
-
-                      resultsDiv.appendChild(resultItem);
-
-                    });
-                  } else {
-                    resultsDiv.style.display = 'none';
-                  }
-                } catch (e) {
-                  console.error('Error parsing JSON:', e);
-                  console.error('Response text:', xhr.responseText);
-                }
-              }
-            };
-
-            xhr.send('query=' + encodeURIComponent(searchQuery));
-          }
-        </script>
-
-
 
 
         <?php
-        // if view exam schedule request is submitted
-        if (isset($_POST['view']) && $_POST['select'] != 'empty') {
+        // code to view exam schedule
+        if (isset($_POST['view']) && $_POST['select'] != 'empty' && !empty($_POST['schedule_month'])) {
+          // fetching exam month and year
+          $get = escape($_POST['schedule_month']);
+          $time_stamp = strtotime($get);
+          $exam_year = date('Y', $time_stamp);
+          $exam_month = date('F', $time_stamp);
+          // fetching the class and section id
           $fetch = $_POST['select'];
           $length = strlen($fetch);
           $find = strpos($fetch, ' ');
           $number = $find + 1;
           $useable = $length - $number;
           $useable1 = $find;
-
           $section = substr($fetch, -$useable);
           $class = substr($fetch, 0, $find);
           $section = (int) $section;
@@ -405,73 +285,88 @@ if ($level == 'clerk' || $level == 'super') {
           $section = escape($section);
           $class = escape($class);
 
-          $query = "SELECT * FROM all_classes WHERE class_id='$class' AND fk_client_id='$client'";
+          // getting the exam schedule
+          $query = "SELECT * FROM exam_schedule INNER JOIN exam_title ON ";
+          $query .= "exam_schedule.fk_exam_title_id=exam_title.exam_title_id ";
+          $query .= "INNER JOIN class_sections ON exam_schedule.fk_section_id=class_sections.section_id ";
+          $query .= "INNER JOIN all_classes ON class_sections.fk_class_id=all_classes.class_id ";
+          $query .= "INNER JOIN section_subjects ON ";
+          $query .= "exam_schedule.fk_subject_id=section_subjects.subject_id ";
+          $query .= "WHERE exam_month='$exam_month' AND exam_year='$exam_year' ";
+          $query .= "AND exam_schedule.fk_section_id='$section' AND exam_schedule.fk_client_id='$client'";
           $result = query($query);
-          $row = mysqli_fetch_assoc($result);
-          $query = "SELECT * FROM class_sections WHERE section_id='$section' AND fk_class_id='$class' AND fk_client_id='$client'";
-          $result1 = query($query);
-          $row1 = mysqli_fetch_assoc($result1);
+
+          $data = [];
+          while ($row = mysqli_fetch_assoc($result)) {
+            if (!isset($data[$row['exam_title_id']])) {
+              // $data[$row['exam_title_id']] = [];
+              $data[$row['exam_title_id']] = [
+                'class_name' => $row['class_name'],
+                'section_name' => $row['section_name'],
+                'exam_title' => $row['exam_title']
+              ];
+            }
+            if (!isset($data[$row['exam_title_id']]['schedule'])) {
+              $data[$row['exam_title_id']]['schedule'] = [];
+            }
+            $data[$row['exam_title_id']]['schedule'][] = $row;
+          }
         ?>
           <div class="card">
             <div class="card-body pt-3">
+              <?php
+              // getting all the exam schedules
+              foreach ($data as $get) {
 
-              <h5 class="card-title">Class: <?php echo $row['class_name'] . ' ' . $row1['section_name']; ?></h5>
-              <!-- <p><code><u>Instructions:</u></code>
-              <br><code>1. Don't leave time/subject/date empty or the relevant record will not be added</code>
-            </p> -->
-              <!-- Bordered Tabs -->
-              <!-- <ul class="nav nav-tabs nav-tabs-bordered">
-              <li class="nav-item">
-                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Exam Schedule</button>
-              </li>
-            </ul> -->
-              <div class="tab-content pt-0">
-                <div class="tab-pane fade show active profile-edit pt-3" id="profile-edit">
-                  <div class="d-flex justify-content-end">
-                    <form action="" method="post">
-                      <input type="hidden" name="section_id" value="<?php echo $section; ?>">
-                      <input type="hidden" name="class_id" value="<?php echo $class; ?>">
-                      <button type="submit" name="update" class="btn btn-sm btn-success">Update Schedule</button>
-                    </form>
-                  </div><br>
-                  <!-- Primary Color Bordered Table -->
-                  <div class="table-responsive">
-                    <table class="table table-bordered border-primary table-hover">
-                      <thead>
-                        <tr>
-                          <th scope="col"><input type="hidden" name="section_id" value="<?php echo $row1['section_id']; ?>">#</th>
-                          <th scope="col">Time</th>
-                          <th scope="col">Subject</th>
-                          <th scope="col">Date</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <?php
-                        // show the exam schedule
-                        $query = "SELECT * FROM exam_schedule WHERE fk_section_id='$section' AND fk_client_id='$client'";
-                        $result = query($query);
-                        $i = 1;
-                        while ($ro = mysqli_fetch_assoc($result)) {
-                        ?>
+              ?>
+                <h5 class="card-title pb-0 mb-0">Class: <?php echo $get['class_name'] . ' ' . $get['section_name']; ?></h5>
+                <div class="tab-content pt-0">
+                  <div class="tab-pane fade show active profile-edit pt-3" id="profile-edit">
+                    <div class="d-flex justify-content-end">
+                      <form action="" method="post">
+                        <input type="hidden" name="section_id" value="<?php echo $section; ?>">
+                        <input type="hidden" name="class_id" value="<?php echo $class; ?>">
+                        <button type="submit" name="update" class="btn btn-sm btn-success">Update Schedule</button>
+                      </form>
+                    </div><br>
+                    <!-- Primary Color Bordered Table -->
+                    <div class="table-responsive">
+                      <table class="table table-bordered border-primary table-hover">
+                        <thead>
                           <tr>
-                            <td>Paper <?php echo $i; ?></td>
-                            <td><?php echo $ro['time']; ?></td>
-                            <td><?php echo $ro['subject']; ?></td>
-                            <td><?php echo $ro['date']; ?></td>
+                            <th colspan="4"><?php echo $get['exam_title']; ?></th>
                           </tr>
-                        <?php
-                          $i++;
-                        }
-                        ?>
+                          <tr>
+                            <th scope="col"><input type="hidden" name="section_id" value="<?php echo $row1['section_id']; ?>">#</th>
+                            <th scope="col">Time</th>
+                            <th scope="col">Subject</th>
+                            <th scope="col">Date</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <?php
+                          $i = 1;
+                          foreach ($get['schedule'] as $ro) {
+                          ?>
+                            <tr>
+                              <td>Paper <?php echo $i; ?></td>
+                              <td><?php echo $ro['exam_time']; ?></td>
+                              <td><?php echo $ro['subject_name']; ?></td>
+                              <td><?php echo $ro['exam_date']; ?></td>
+                            </tr>
+                          <?php
+                            $i++;
+                          }
+                          ?>
 
-                      </tbody>
-                    </table>
+                        </tbody>
+                      </table>
+                    </div>
+
                   </div>
 
                 </div>
-
-              </div>
-
+              <?php } ?>
             </div>
           </div>
         <?php
@@ -497,16 +392,10 @@ if ($level == 'clerk' || $level == 'super') {
           <div class="card">
             <div class="card-body pt-3">
 
-              <h5 class="card-title">Class: <?php echo $row['class_name'] . ' ' . $row1['section_name']; ?></h5>
+              <h5 class="card-title mb-0 pb-1">Class: <?php echo $row['class_name'] . ' ' . $row1['section_name']; ?></h5>
               <p><code><u>Instructions:</u></code>
                 <br><code>1. Don't leave time/subject/date empty or the relevant record will not be added</code>
               </p>
-              <!-- Bordered Tabs -->
-              <!-- <ul class="nav nav-tabs nav-tabs-bordered">
-              <li class="nav-item">
-                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Add Exam Schedule</button>
-              </li>
-            </ul> -->
               <div class="tab-content pt-2">
                 <div class="tab-pane fade show active profile-edit pt-3" id="profile-edit">
                   <form method="post" action="backend/back-add-exam.php">
@@ -523,11 +412,11 @@ if ($level == 'clerk' || $level == 'super') {
                             <div class="input-group">
                               <label for="name<?php echo $i; ?>" class="col-md-4 col-lg-3 col-form-label">Paper <?php echo $i; ?></label>
                               <!-- <div class="col-md-6"> -->
-                              <input name="time<?php echo $i; ?>" type="text" class="form-control" value="<?php echo $row['time']; ?>" placeholder="time">
+                              <input name="time<?php echo $i; ?>" type="text" class="form-control" value="<?php echo $row['exam_time']; ?>" placeholder="time">
                               &nbsp;&nbsp;
-                              <input name="subject<?php echo $i; ?>" type="text" class="form-control" value="<?php echo $row['subject']; ?>" placeholder="subject">
+                              <input name="subject<?php echo $i; ?>" type="text" class="form-control" value="<?php echo $row['fk_subject_id']; ?>" placeholder="subject">
                               &nbsp;&nbsp;
-                              <input name="date<?php echo $i; ?>" type="date" class="form-control" value="<?php echo $row['date']; ?>" placeholder="date">
+                              <input name="date<?php echo $i; ?>" type="date" class="form-control" value="<?php echo $row['exam_date']; ?>" placeholder="date">
                               <!-- </div> -->
                             </div>
                           </div>
@@ -559,6 +448,150 @@ if ($level == 'clerk' || $level == 'super') {
   </section>
 
 </main><!-- End #main -->
+
+<script>
+  // clear all results
+  function clearResults() {
+    var i = 1;
+    while (i < 10) {
+      document.getElementById('results' + i).style.display = 'none';
+      i++;
+    }
+  }
+
+  // code to get all the teachers of the school
+  function getTeachers(id) {
+    var teacherName = 'teacher_name' + id;
+    var resultList = 'results' + id;
+    var teacherId = 'teacher_id' + id;
+
+    var searchQuery = document.getElementById(teacherName).value.trim();
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', './backend/search-teacher.php', true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+        try {
+          var response = JSON.parse(xhr.responseText);
+          var resultsDiv = document.getElementById(resultList);
+          resultsDiv.innerHTML = ''; // Clear previous results
+          if (response.length > 0) {
+            // Show and style the results div
+            resultsDiv.style.display = 'block';
+            resultsDiv.style.maxHeight = '200px';
+            resultsDiv.style.overflowY = 'scroll';
+            resultsDiv.style.cursor = 'pointer';
+
+            // Loop through each result
+            response.forEach(function(item) {
+              var resultItem = document.createElement('div');
+              // Bootstrap styling for each item
+              resultItem.classList.add('dropdown-item');
+
+              // Create element
+              var name = document.createElement('span');
+              name.textContent = item.name;
+              name.style.display = 'block';
+              resultItem.appendChild(name);
+
+              // //   add the dropdown divider class
+              //   var divider = document.createElement('div');
+              //   divider.classList.add('dropdown-divider');
+              //   resultItem.appendChild(divider);
+
+              // Add the result item to the results div
+              resultsDiv.appendChild(resultItem);
+
+              // Add onclick event for each result item
+              resultItem.onclick = function() {
+                document.getElementById(teacherName).value = item.name;
+                document.getElementById(teacherId).value = item.id;
+              };
+            });
+          } else {
+            resultsDiv.style.display = 'none';
+          }
+        } catch (e) {
+          console.error('Error parsing JSON:', e);
+          console.error('Response text:', xhr.responseText);
+        }
+      }
+    };
+    xhr.send('allquery=' + encodeURIComponent('1'));
+  }
+
+
+  // code to get the search results of the matching teachernames
+  function searchDatabase(id) {
+    var teacherName = 'teacher_name' + id;
+    var resultList = 'results' + id;
+    var teacherId = 'teacher_id' + id;
+
+    var searchQuery = document.getElementById(teacherName).value.trim();
+
+    // If the search query is empty, hide the results
+    if (searchQuery.length === 0) {
+      document.getElementById('results').style.display = 'none';
+      return;
+    }
+
+    var xhr = new XMLHttpRequest();
+    xhr.open('POST', './backend/search-teacher.php', true); // Adjust the path to your PHP file
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+        try {
+          var response = JSON.parse(xhr.responseText);
+
+          var resultsDiv = document.getElementById(resultList);
+          resultsDiv.innerHTML = ''; // Clear previous results
+
+          if (response.length > 0) {
+            // Show and style the results div
+            resultsDiv.style.display = 'block';
+            resultsDiv.style.maxHeight = '200px';
+            resultsDiv.style.overflowY = 'scroll';
+            resultsDiv.style.cursor = 'pointer';
+
+            // Loop through each result and add as a nav link
+            response.forEach(function(item) {
+              var resultItem = document.createElement('div');
+              resultItem.classList.add('dropdown-item'); // Bootstrap styling for each item
+
+              // Create a link element
+              var name = document.createElement('span');
+              name.textContent = item.name; // Display the result name
+              name.style.display = 'block'; // Make the link a block element
+              resultItem.appendChild(name);
+
+              // //   add the dropdown divider class
+              //   var divider = document.createElement('div');
+              //   divider.classList.add('dropdown-divider');
+              //   resultItem.appendChild(divider);
+
+              resultsDiv.appendChild(resultItem);
+
+              // Add onclick event for each result item
+              resultItem.onclick = function() {
+                document.getElementById(teacherName).value = item.name;
+                document.getElementById(teacherId).value = item.id;
+              };
+            });
+          } else {
+            resultsDiv.style.display = 'none';
+          }
+        } catch (e) {
+          console.error('Error parsing JSON:', e);
+          console.error('Response text:', xhr.responseText);
+        }
+      }
+    };
+
+    xhr.send('query=' + encodeURIComponent(searchQuery));
+  }
+</script>
 
 
 <!-- ======= Footer ======= -->
