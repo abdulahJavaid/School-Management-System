@@ -150,111 +150,97 @@ if ($level == 'clerk' || $level == 'super') {
 
               <h5 class="card-title pb-0 mb-1">Class: <?php echo $row['class_name'] . ' ' . $row1['section_name']; ?></h5>
               <p><code><u>Instructions:</u></code>
-                <br><code>1. If you leave a field empty, only that record will not be added.</code>
+                <br><code>1. If you leave any field empty, that record (paper/row) will not be added.</code>
               </p>
-              <div class="tab-content pt-2">
-                <div class="tab-pane fade show active profile-edit pt-3" id="profile-edit">
-                  <form method="post" action="backend/back-add-exam.php">
-                    <div class="row mb-3">
-                      <div class="row align-items-center">
-                        <div class="col-12">
-                          <div class="input-group">
-                            <label for="exam_title" class="col-md-4 col-lg-2 col-form-label"><strong>Exam Title <code>*</code></strong></label>
-                            <input name="exam_title" type="text" class="form-control" value="" placeholder="eg: Montly Test">
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="row mb-3">
-                      <div class="row align-items-center">
-                        <div class="col-12">
-                          <div class="row">
-                            <label for="space" class="col-md-4 col-lg-2 col-form-label"></label>
-                            <div class="col-lg-2 pe-3">
-                              <span class="text-secondary"><strong>Paper Time</strong></span>
+              <form method="post" action="backend/back-add-exam.php">
+                <div class="table-md-responsive">
+                  <table class="table table-bordered border-light">
+                    <thead>
+                      <tr>
+                        <th colspan="2">
+                          <label for="exam_title" class="col-form-label me-1"><strong>Title<code>*</code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong></label>
+                        </th>
+                        <th colspan="5">
+                          <input name="exam_title" type="text" class="form-control" value="" placeholder="eg: Montly Test">
+                        </th>
+                      </tr>
+                      <tr>
+                        <th colspan="2"></th>
+                        <th>
+                          <span class="text-secondary"><strong>Time&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong></span>
+                        </th>
+                        <th>
+                          <sapn class="text-secondary"><strong>Subject&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong></span>
+                        </th>
+                        <th>
+                          <sapn class="text-secondary"><strong>Paper Date&nbsp;&nbsp;&nbsp;&nbsp;</strong></span>
+                        </th>
+                        <th>
+                          <sapn class="text-secondary"><strong>Submission&nbsp;&nbsp;&nbsp;&nbsp;</strong></span>
+                        </th>
+                        <th>
+                          <sapn class="text-secondary"><strong>Teacher&nbsp;&nbsp;&nbsp;&nbsp;</strong></span>
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <?php
+                      // looping to get 9 form fields
+                      for ($i = 1; $i < 10; $i++) {
+                      ?>
+                        <tr>
+                          <td colspan="2">
+                            <label for="name<?php echo $i; ?>" class="col-form-label">Paper <?php echo $i; ?>: </label>
+                          </td>
+                          <td>
+                            <input name="exam_time<?php echo $i; ?>" type="text" class="form-control" value="" placeholder="paper time">
+                          </td>
+                          <td>
+                            <select name="subject_id<?php echo $i; ?>" id="" class="form-select">
+                              <option value="" disabled selected>Select</option>
+                              <?php
+                              foreach ($subjects as $id => $name) {
+                              ?>
+                                <option value="<?php echo $id; ?>"><?php echo $name; ?></option>
+                              <?php
+                              }
+                              ?>
+                            </select>
+                          </td>
+                          <td>
+                            <input name="exam_date<?php echo $i; ?>" type="date" class="form-control" value="" placeholder="date">
+                          </td>
+                          <td>
+                            <input name="submission_date<?php echo $i; ?>" type="date" class="form-control" value="" placeholder="date">
+                          </td>
+                          <td>
+                            <div style="position: relative;">
+                              <input name="teacher_name<?php echo $i; ?>"
+                                type="text"
+                                id="teacher_name<?php echo $i; ?>"
+                                class="form-control" value=""
+                                onclick="getTeachers('<?php echo $i; ?>')"
+                                onkeyup="searchDatabase('<?php echo $i; ?>')"
+                                autocomplete="off"
+                                placeholder="search">
+                              <div class="dropdown-menu show" id="results<?php echo $i; ?>" aria-labelledby="search-input" style="position: absolute; z-index: 1000; display: none;"></div>
                             </div>
-
-                            <div class="col-lg-2 pe-3">
-                              <sapn class="text-secondary"><strong>Subject</strong></span>
-                            </div>
-
-                            <div class="col-lg-2 pe-3">
-                              <sapn class="text-secondary"><strong>Paper Date</strong></span>
-                            </div>
-
-                            <div class="col-lg-2 pe-3">
-                              <sapn class="text-secondary"><strong>Submission</strong></span>
-                            </div>
-
-                            <div class="col-lg-2 pe-3">
-                              <sapn class="text-secondary"><strong>Teacher</strong></span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <?php
-                    // looping to get 9 form fields
-                    for ($i = 1; $i < 10; $i++) {
-                    ?>
-                      <div class="row mb-3">
-                        <div class="row align-items-center">
-                          <div class="col-12">
-                            <div class="input-group">
-                              <label for="name<?php echo $i; ?>" class="col-md-4 col-lg-2 col-form-label">Paper <?php echo $i; ?></label>
-                              <div class="col-lg-2 px-1">
-                                <input name="exam_time<?php echo $i; ?>" type="text" class="form-control" value="" placeholder="paper time">
-                              </div>
-                              <div class="col-lg-2 px-1">
-                                <select name="subject_id<?php echo $i; ?>" id="" class="form-select">
-                                  <option value="" disabled selected>Select</option>
-                                  <!-- <option value="" disabled selected><input type="text" name="" id=""></option> -->
-                                  <?php
-                                  foreach ($subjects as $id => $name) {
-                                  ?>
-                                    <option value="<?php echo $id; ?>"><?php echo $name; ?></option>
-                                  <?php
-                                  }
-                                  ?>
-                                </select>
-                              </div>
-                              <div class="col-lg-2 px-1">
-                                <input name="exam_date<?php echo $i; ?>" type="date" class="form-control" value="" placeholder="date">
-                              </div>
-                              <div class="col-lg-2 px-1">
-                                <input name="submission_date<?php echo $i; ?>" type="date" class="form-control" value="" placeholder="date">
-                              </div>
-                              <div class="col-lg-2 px-1" style="position: relative;">
-                                <input name="teacher_name<?php echo $i; ?>"
-                                  type="text"
-                                  id="teacher_name<?php echo $i; ?>"
-                                  class="form-control" value=""
-                                  onclick="getTeachers('<?php echo $i; ?>')"
-                                  onkeyup="searchDatabase('<?php echo $i; ?>')"
-                                  autocomplete="off"
-                                  placeholder="search">
-                                <div class="dropdown-menu show" id="results<?php echo $i; ?>" aria-labelledby="search-input" style="position: absolute; z-index: 1000; display: none;"></div>
-                              </div>
-
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      <input type="hidden" name="teacher_id<?php echo $i; ?>" id="teacher_id<?php echo $i; ?>">
-                    <?php
-                    }
-                    ?>
-                    <input type="hidden" name="section_id" value="<?php echo $row1['section_id']; ?>">
-                    <input type="hidden" name="class" value="<?php echo $log_class; ?>">
-                    <input type="hidden" name="section" value="<?php echo $log_section; ?>">
-                    <div class="d-flex justify-content-end">
-                      <button type="submit" name="submit" class="btn btn-sm btn-success">Submit schedule</button>
-                    </div>
-                  </form><!-- End Add timetable Form -->
-
+                          </td>
+                        </tr>
+                        <input type="hidden" name="teacher_id<?php echo $i; ?>" id="teacher_id<?php echo $i; ?>">
+                      <?php
+                      } // end of for loop
+                      ?>
+                    </tbody>
+                  </table>
                 </div>
-
-              </div>
+                <input type="hidden" name="section_id" value="<?php echo $row1['section_id']; ?>">
+                <input type="hidden" name="class" value="<?php echo $log_class; ?>">
+                <input type="hidden" name="section" value="<?php echo $log_section; ?>">
+                <div class="d-flex justify-content-end">
+                  <button type="submit" name="submit" class="btn btn-sm btn-success">Submit schedule</button>
+                </div>
+              </form><!-- End Add timetable Form -->
 
             </div>
           </div>
@@ -296,6 +282,7 @@ if ($level == 'clerk' || $level == 'super') {
           $query .= "AND exam_schedule.fk_section_id='$section' AND exam_schedule.fk_client_id='$client'";
           $result = query($query);
 
+          // coupling the data for exam schedule view
           $data = [];
           while ($row = mysqli_fetch_assoc($result)) {
             if (!isset($data[$row['exam_title_id']])) {
@@ -316,7 +303,7 @@ if ($level == 'clerk' || $level == 'super') {
             <div class="card-body pt-3">
               <?php
               // getting all the exam schedules
-              foreach ($data as $get) {
+              foreach ($data as $key => $get) {
 
               ?>
                 <h5 class="card-title pb-0 mb-0">Class: <?php echo $get['class_name'] . ' ' . $get['section_name']; ?></h5>
@@ -326,6 +313,7 @@ if ($level == 'clerk' || $level == 'super') {
                       <form action="" method="post">
                         <input type="hidden" name="section_id" value="<?php echo $section; ?>">
                         <input type="hidden" name="class_id" value="<?php echo $class; ?>">
+                        <input type="hidden" name="title_id" value="<?php echo $key; ?>">
                         <button type="submit" name="update" class="btn btn-sm btn-success">Update Schedule</button>
                       </form>
                     </div><br>
@@ -379,72 +367,177 @@ if ($level == 'clerk' || $level == 'super') {
           $class = (int) $_POST['class_id'];
           $section = escape($section);
           $class = escape($class);
+          $exam_title_id = escape($_POST['title_id']);
 
-          $query = "SELECT * FROM all_classes WHERE class_id='$class' AND fk_client_id='$client'";
+          // getting all the subjects
+          $query = "SELECT * FROM section_subjects WHERE fk_section_id='$section' AND fk_client_id='$client'";
+          $get_subjects = query($query);
+          $subjects = [];
+          while ($row = mysqli_fetch_assoc($get_subjects)) {
+            $subjects[$row['subject_id']] = $row['subject_name'];
+          }
+
+          $log_class = '';
+          $log_section = '';
+
+          // getting the exam schedule
+          $query = "SELECT * FROM exam_title INNER JOIN exam_schedule ON ";
+          $query .= "exam_title.exam_title_id=exam_schedule.fk_exam_title_id ";
+          $query .= "INNER JOIN teacher_profile ON ";
+          $query .= "exam_schedule.fk_teacher_id=teacher_profile.teacher_id ";
+          $query .= "INNER JOIN class_sections ON exam_schedule.fk_section_id=class_sections.section_id ";
+          $query .= "INNER JOIN all_classes ON class_sections.fk_class_id=all_classes.class_id ";
+          $query .= "WHERE fk_exam_title_id='$exam_title_id' ";
+          $query .= "AND exam_schedule.fk_section_id='$section' AND exam_schedule.fk_client_id='$client'";
           $result = query($query);
-          $row = mysqli_fetch_assoc($result);
-          $query = "SELECT * FROM class_sections WHERE section_id='$section' AND fk_class_id='$class' AND fk_client_id='$client'";
-          $result1 = query($query);
-          $row1 = mysqli_fetch_assoc($result1);
-          $log_class = $row['class_name'];
-          $log_section = $row1['section_name'];
+
+          // coupling the data for exam update view
+          $data = [];
+          while ($row = mysqli_fetch_assoc($result)) {
+            if (!isset($data[$row['exam_title_id']])) {
+              // $data[$row['exam_title_id']] = [];
+              $data[$row['exam_title_id']] = [
+                'class_name' => $row['class_name'],
+                'section_name' => $row['section_name'],
+                'section_id' => $row['fk_section_id'],
+                'exam_title' => $row['exam_title']
+              ];
+            }
+            if (!isset($data[$row['exam_title_id']]['schedule'])) {
+              $data[$row['exam_title_id']]['schedule'] = [];
+            }
+            $data[$row['exam_title_id']]['schedule'][] = $row;
+          }
         ?>
           <div class="card">
             <div class="card-body pt-3">
 
-              <h5 class="card-title mb-0 pb-1">Class: <?php echo $row['class_name'] . ' ' . $row1['section_name']; ?></h5>
-              <p><code><u>Instructions:</u></code>
-                <br><code>1. Don't leave time/subject/date empty or the relevant record will not be added</code>
-              </p>
-              <div class="tab-content pt-2">
-                <div class="tab-pane fade show active profile-edit pt-3" id="profile-edit">
-                  <form method="post" action="backend/back-add-exam.php">
-                    <?php
-                    // looping to get all exam schedule fields
-                    $query = "SELECT * FROM exam_schedule WHERE fk_section_id='$section' AND fk_client_id='$client'";
-                    $result = query($query);
-                    $i = 1;
-                    while ($row = mysqli_fetch_assoc($result)) {
-                    ?>
-                      <div class="row mb-3">
-                        <div class="row align-items-center">
-                          <div class="col-auto">
-                            <div class="input-group">
-                              <label for="name<?php echo $i; ?>" class="col-md-4 col-lg-3 col-form-label">Paper <?php echo $i; ?></label>
-                              <!-- <div class="col-md-6"> -->
-                              <input name="time<?php echo $i; ?>" type="text" class="form-control" value="<?php echo $row['exam_time']; ?>" placeholder="time">
-                              &nbsp;&nbsp;
-                              <input name="subject<?php echo $i; ?>" type="text" class="form-control" value="<?php echo $row['fk_subject_id']; ?>" placeholder="subject">
-                              &nbsp;&nbsp;
-                              <input name="date<?php echo $i; ?>" type="date" class="form-control" value="<?php echo $row['exam_date']; ?>" placeholder="date">
-                              <!-- </div> -->
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    <?php
-                      $i++;
-                    }
-                    ?>
-                    <input type="hidden" name="section_id" value="<?php echo $row1['section_id']; ?>">
-                    <input type="hidden" name="class" value="<?php echo $log_class; ?>">
-                    <input type="hidden" name="section" value="<?php echo $log_section; ?>">
-                    <div class="d-flex justify-content-end">
-                      <button type="submit" name="submit" class="btn btn-sm btn-success">Submit schedule</button>
-                    </div>
-                  </form><!-- End Add timetable Form -->
+              <form method="post" action="backend/back-add-exam.php">
 
+                <?php
+                // getting all the exam schedules
+                foreach ($data as $key => $get) {
+
+                ?>
+                  <h5 class="card-title mb-0 pb-1">Class: <?php echo $get['class_name'] . ' ' . $get['section_name']; ?></h5>
+                  <code><u>Instructions:</u></code>
+                  <br><code>1. If you leave any field empty, that record (paper/row) will not be added.</code>
+                  <div class="table-md-responsive">
+                    <table class="table table-bordered border-light">
+                      <thead>
+                        <tr>
+                          <th colspan="2">
+                            <label for="exam_title" class="col-form-label me-1"><strong>Title<code>*</code>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong></label>
+                          </th>
+                          <th colspan="5">
+                            <input name="exam_title" value="<?php echo $get['exam_title']; ?>" type="text" class="form-control" placeholder="eg: Montly Test">
+                          </th>
+                        </tr>
+                        <tr>
+                          <th colspan="2"></th>
+                          <th>
+                            <span class="text-secondary"><strong>Time&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong></span>
+                          </th>
+                          <th>
+                            <sapn class="text-secondary"><strong>Subject&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</strong></span>
+                          </th>
+                          <th>
+                            <sapn class="text-secondary"><strong>Paper Date&nbsp;&nbsp;&nbsp;&nbsp;</strong></span>
+                          </th>
+                          <th>
+                            <sapn class="text-secondary"><strong>Submission&nbsp;&nbsp;&nbsp;&nbsp;</strong></span>
+                          </th>
+                          <th>
+                            <sapn class="text-secondary"><strong>Teacher&nbsp;&nbsp;&nbsp;&nbsp;</strong></span>
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <?php
+                        $i = 1;
+                        foreach ($get['schedule'] as $ro) {
+                        ?>
+                          <tr>
+                            <td colspan="2">
+                              <label for="name<?php echo $i; ?>" class="col-form-label">Paper <?php echo $i; ?>: </label>
+                              <input type="hidden" name="exam_schedule_id<?php echo $i; ?>" value="<?php echo $ro['exam_schedule_id']; ?>">
+                            </td>
+                            <td>
+                              <input name="exam_time<?php echo $i; ?>" value="<?php echo $ro['exam_time']; ?>" type="text" class="form-control" placeholder="paper time">
+                            </td>
+                            <td>
+                              <select name="subject_id<?php echo $i; ?>" id="" class="form-select">
+                                <option value="" disabled>Select</option>
+                                <?php
+                                $select_subjects = $subjects;
+                                $get_subject;
+                                if (isset($select_subjects[$ro['fk_subject_id']])) {
+                                  $get_subject = $select_subjects[$ro['fk_subject_id']];
+                                  unset($select_subjects[$ro['fk_subject_id']]);
+                                }
+                                $select_subjects = [$ro['fk_subject_id'] => $get_subject] + $select_subjects;
+                                foreach ($select_subjects as $id => $name) {
+                                ?>
+                                  <option value="<?php echo $id; ?>"><?php echo $name; ?></option>
+                                <?php
+                                }
+                                ?>
+                              </select>
+                            </td>
+                            <td>
+                              <input name="exam_date<?php echo $i; ?>" value="<?php echo $ro['exam_date']; ?>" type="date" class="form-control" placeholder="date">
+                            </td>
+                            <td>
+                              <input name="submission_date<?php echo $i; ?>" value="<?php echo $ro['submission_date']; ?>" type="date" class="form-control" placeholder="date">
+                            </td>
+                            <td>
+                              <div style="position: relative;">
+                                <input name="teacher_name<?php echo $i; ?>"
+                                  type="text"
+                                  value="<?php echo $ro['name']; ?>"
+                                  id="teacher_name<?php echo $i; ?>"
+                                  class="form-control" value=""
+                                  onclick="getTeachers('<?php echo $i; ?>')"
+                                  onkeyup="searchDatabase('<?php echo $i; ?>')"
+                                  autocomplete="off"
+                                  placeholder="search">
+                                <div class="dropdown-menu show" id="results<?php echo $i; ?>" aria-labelledby="search-input" style="position: absolute; z-index: 1000; display: none;"></div>
+                              </div>
+                            </td>
+                          </tr>
+                          <input type="hidden" name="teacher_id<?php echo $i; ?>" id="teacher_id<?php echo $i; ?>" value="<?php echo $ro['teacher_id']; ?>">
+                        <?php
+                          $i++;
+                        } // end of inner foreach loop
+                        ?>
+                      </tbody>
+                    </table>
+                  </div>
+                <input type="hidden" name="exam_title_id" value="<?php echo $key; ?>">
+                <input type="hidden" name="section_id" value="<?php echo $get['section_id']; ?>">
+                <input type="hidden" name="class" value="<?php echo $get['class_name']; ?>">
+                <input type="hidden" name="section" value="<?php echo $get['section_name']; ?>">
+                <div class="d-flex justify-content-end">
+                  <a href="./add-exam-schedule.php" class="btn btn-sm btn-outline-danger">Cancel</a>
+                  &nbsp;
+                  <button type="submit" name="update" class="btn btn-sm btn-success">Update schedule</button>
                 </div>
-
-              </div>
+                <?php
+                } // end of outer foreach loop
+                ?>
+              </form><!-- End Add timetable Form -->
 
             </div>
+
           </div>
-        <?php
-        } // end of if to update exam schedule
-        ?>
+
       </div>
     </div>
+  <?php
+        } // end of if to update exam schedule
+  ?>
+  </div>
+  </div>
   </section>
 
 </main><!-- End #main -->
