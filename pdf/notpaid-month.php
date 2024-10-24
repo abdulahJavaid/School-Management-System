@@ -224,6 +224,9 @@ if (isset($_POST['npaid_month'])) {
       </body>
     </html>
   ";
+  
+  // downloaded pdf name
+  $pdf_name = "unpaid-fee-record-of-" . $year . '-' . $month . ".pdf";
 }
 // the logo code
 //   <div id='logo'>

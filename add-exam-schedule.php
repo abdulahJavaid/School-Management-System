@@ -310,6 +310,16 @@ if ($level == 'clerk' || $level == 'super') {
                 <div class="tab-content pt-0">
                   <div class="tab-pane fade show active profile-edit pt-3" id="profile-edit">
                     <div class="d-flex justify-content-end">
+                      <form action="generate-pdf.php" method="post" class="form-inline">
+                        <div class="me-2">
+                          <input type="hidden" name="class_section" value="<?php echo $get['class_name'] . ' ' . $get['section_name']; ?>">
+                          <input type="hidden" name="section_id" value="<?php echo $section; ?>">
+                          <input type="hidden" name="exam_title_id" value="<?php echo $key; ?>">
+                        <button type="submit" name="download_exam_schedule" class="btn btn-sm btn-outline-success">
+                          Download
+                        </button>
+                      </div>
+                      </form>
                       <form action="" method="post">
                         <input type="hidden" name="section_id" value="<?php echo $section; ?>">
                         <input type="hidden" name="class_id" value="<?php echo $class; ?>">
@@ -513,15 +523,15 @@ if ($level == 'clerk' || $level == 'super') {
                       </tbody>
                     </table>
                   </div>
-                <input type="hidden" name="exam_title_id" value="<?php echo $key; ?>">
-                <input type="hidden" name="section_id" value="<?php echo $get['section_id']; ?>">
-                <input type="hidden" name="class" value="<?php echo $get['class_name']; ?>">
-                <input type="hidden" name="section" value="<?php echo $get['section_name']; ?>">
-                <div class="d-flex justify-content-end">
-                  <a href="./add-exam-schedule.php" class="btn btn-sm btn-outline-danger">Cancel</a>
-                  &nbsp;
-                  <button type="submit" name="update" class="btn btn-sm btn-success">Update schedule</button>
-                </div>
+                  <input type="hidden" name="exam_title_id" value="<?php echo $key; ?>">
+                  <input type="hidden" name="section_id" value="<?php echo $get['section_id']; ?>">
+                  <input type="hidden" name="class" value="<?php echo $get['class_name']; ?>">
+                  <input type="hidden" name="section" value="<?php echo $get['section_name']; ?>">
+                  <div class="d-flex justify-content-end">
+                    <a href="./add-exam-schedule.php" class="btn btn-sm btn-outline-danger">Cancel</a>
+                    &nbsp;
+                    <button type="submit" name="update" class="btn btn-sm btn-success">Update schedule</button>
+                  </div>
                 <?php
                 } // end of outer foreach loop
                 ?>

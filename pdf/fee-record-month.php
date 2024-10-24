@@ -227,6 +227,9 @@ if (isset($_POST['month'])) {
       </body>
     </html>
   ";
+  
+  // downloaded pdf name
+  $pdf_name = "paid-fee-record-of-" . $year . '-' . $month . ".pdf";
 }
 // the logo code
 //   <div id='logo'>

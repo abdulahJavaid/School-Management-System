@@ -217,6 +217,9 @@ if (isset($_POST['npaid_name'])) {
       </body>
     </html>
   ";
+  
+  // downloaded pdf name
+  $pdf_name = "unpaid-fee-record-of-name-" . $get_name . ".pdf";
 }
 // the logo code
 //   <div id='logo'>

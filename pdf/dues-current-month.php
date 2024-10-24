@@ -223,6 +223,8 @@ if (isset($_POST['due_current'])) {
       </body>
     </html>
   ";
+  // downloaded pdf name
+  $pdf_name = "dues-record-of-" . $current_year . '-' . $current_month . ".pdf";
 }
 // the logo code
 //   <div id='logo'>

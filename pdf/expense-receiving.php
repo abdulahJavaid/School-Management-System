@@ -71,6 +71,8 @@ if (isset($_POST['one'])) {
 <tbody>";
     if (empty($_POST['two']) || $_POST['one'] == $_POST['two']) {
         $date = escape($_POST['one']);
+        // downloaded pdf name
+        $pdf_name = "expense-receiving-" . $date . ".pdf";
         // fetching the admin id and adding the data
         $id = escape($_SESSION['login_id']);
         $admin_name = escape($_SESSION['login_name']);
@@ -112,6 +114,8 @@ if (isset($_POST['one'])) {
     } else {
         $date = escape($_POST['one']);
         $date1 = escape($_POST['two']);
+        // downloaded pdf name
+        $pdf_name = "expense-receiving-from-" . $date . '-to-' . $date1 . ".pdf";
 
         // fetching the admin id and adding the data
         $id = escape($_SESSION['login_id']);

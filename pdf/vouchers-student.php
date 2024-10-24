@@ -271,4 +271,7 @@ body {
     $html .= "</body>
 </html>
   ";
+  
+  // downloaded pdf name
+  $pdf_name = "fee-voucher-reg-no-" . $roll_no . ".pdf";
 }

@@ -221,6 +221,9 @@ if (isset($_POST['roll_no'])) {
       </body>
     </html>
   ";
+  
+  // downloaded pdf name
+  $pdf_name = "paid-fee-record-of-reg-no-" . $get_roll . ".pdf";
 }
 // the logo code
 //   <div id='logo'>

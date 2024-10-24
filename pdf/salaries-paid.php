@@ -154,4 +154,7 @@ $html .= "</tbody>
 </body>
 </html>
 ";
+
+  // downloaded pdf name
+  $pdf_name = "paid-salaries-of-" . $year .'-' . $month . ".pdf";
 }

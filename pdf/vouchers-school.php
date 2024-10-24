@@ -264,4 +264,7 @@ body {
     $html .= "</body>
 </html>
   ";
+  
+  // downloaded pdf name
+  $pdf_name = "fee-vouchers-school.pdf";
 }

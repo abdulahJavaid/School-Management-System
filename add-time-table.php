@@ -10,10 +10,17 @@ $client = escape($_SESSION['client_id']);
 
 <?php
 // checking session for appropriate access
-if ($level == 'clerk' || $level == 'super') {}
-else {
+if ($level == 'clerk' || $level == 'super') {
+} else {
   redirect("./");
 }
+// checking the last page
+// if ($_SESSION['pdf'] == 'set') {
+//   echo "<script>alert('this is alert')</script>";
+//   unset($_SESSION['pdf']);
+//   redirect("./");
+//   exit;
+// }
 ?>
 
 <main id="main" class="main">
@@ -130,7 +137,7 @@ else {
           $row1 = mysqli_fetch_assoc($result1);
           $log_class = $row['class_name']; // class name for log creation
           $log_section = $row1['section_name']; // section name for log creation
-          
+
         ?>
           <div class="card">
             <div class="card-body">
@@ -319,7 +326,16 @@ else {
               <!-- <p><code><u>Timetable:</u></code></p> -->
 
               <div class="d-flex justify-content-end">
-                <form action="" method="post">
+                <form action="generate-pdf.php" method="post" class="form-inline">
+                  <div class="me-2">
+                    <input type="hidden" name="class_section" value="<?php echo $row['class_name'] . " " . $row1['section_name']; ?>">
+                    <input type="hidden" name="section_id" value="<?php echo $section; ?>">
+                    <button type="submit" name="download_timetable" class="btn btn-sm btn-outline-success">
+                      Download
+                    </button>
+                  </div>
+                </form>
+                <form action="" method="post" class="">
                   <input type="hidden" name="section_id" value="<?php echo $section; ?>">
                   <input type="hidden" name="class_id" value="<?php echo $class; ?>">
                   <button type="submit" name="update" class="btn btn-sm btn-success">Update timetable</button>

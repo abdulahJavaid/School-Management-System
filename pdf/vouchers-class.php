@@ -282,4 +282,7 @@ body {
     // adding activity into the logs
     $query = "INSERT INTO admin_logs(log_message, time, fk_client_id) VALUES('$log', '$times', '$client')";
     $pass_query2 = mysqli_query($conn, $query);
+    
+  // downloaded pdf name
+  $pdf_name = "fee-vouchers-class-" . $class. '-' . $section . ".pdf";
 }

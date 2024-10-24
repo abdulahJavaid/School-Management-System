@@ -219,6 +219,9 @@ if (isset($_POST['due_name'])) {
                 </body>
               </html>
             ";
+            
+    // downloaded pdf name
+    $pdf_name = "dues-record-of-name-" . $get_name . ".pdf";
 }
 
 // the logo code

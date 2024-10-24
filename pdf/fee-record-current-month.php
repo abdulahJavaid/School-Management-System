@@ -224,6 +224,9 @@ if (isset($_POST['current'])) {
       </body>
     </html>
   ";
+  
+  // downloaded pdf name
+  $pdf_name = "paid-fee-record-of-" . $current_year . '-' . $current_month . ".pdf";
 }
 // the logo code
 //   <div id='logo'>

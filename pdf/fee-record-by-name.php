@@ -222,6 +222,9 @@ if (isset($_POST['name'])) {
       </body>
     </html>
   ";
+  
+  // downloaded pdf name
+  $pdf_name = "paid-fee-record-of-name-" . $get_name . ".pdf";
 }
 // the logo code
 //   <div id='logo'>

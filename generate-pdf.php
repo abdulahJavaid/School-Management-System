@@ -6,16 +6,13 @@ require_once('./db_connection/configs.php');
 require_once('./db_connection/connection.php');
 require_once('./includes/functions.php');
 
-if (!isset($_POST['generate']) && !isset($_POST['current_month']) && !isset($_POST['generate_name']) && !isset($_POST['generate_reg']) && !isset($_POST['dues_current_month']) && !isset($_POST['dues_name']) && !isset($_POST['dues_reg']) && !isset($_POST['notpaid_current_month']) && !isset($_POST['notpaid_name']) && !isset($_POST['notpaid_reg']) && !isset($_POST['download_school_vouchers']) && !isset($_POST['download_class_vouchers']) && !isset($_POST['download_student_voucher']) && !isset($_POST['generate_paid_salary']) && !isset($_POST['notpaid_month']) && !isset($_POST['dues_month']) && !isset($_POST['generate_month'])) {
+if (!isset($_POST['generate']) && !isset($_POST['current_month']) && !isset($_POST['generate_name']) && !isset($_POST['generate_reg']) && !isset($_POST['dues_current_month']) && !isset($_POST['dues_name']) && !isset($_POST['dues_reg']) && !isset($_POST['notpaid_current_month']) && !isset($_POST['notpaid_name']) && !isset($_POST['notpaid_reg']) && !isset($_POST['download_school_vouchers']) && !isset($_POST['download_class_vouchers']) && !isset($_POST['download_student_voucher']) && !isset($_POST['generate_paid_salary']) && !isset($_POST['notpaid_month']) && !isset($_POST['dues_month']) && !isset($_POST['generate_month']) && !isset($_POST['download_timetable']) && !isset($_POST['download_exam_schedule'])) {
     redirect("./");
 }
 
 // getting the session id
 $client = escape($_SESSION['client_id']);
-
-// if ( !isset($_POST['dues_name']) && !isset($_POST['dues_reg'])) {
-//     redirect("./");
-// }
+// $_SESSION['pdf'] = 'set';
 
 // generating the pdf
 
@@ -40,6 +37,8 @@ include "pdf/vouchers-school.php";
 include "pdf/vouchers-class.php";
 include "pdf/vouchers-student.php";
 include "pdf/salaries-paid.php";
+include "pdf/download-timetable.php";
+include "pdf/download-exam-schedule.php";
 
 
 // using the Dompdf namespace
@@ -63,5 +62,5 @@ $pdf->loadHtml($html);
 // loading pdf
 $pdf->render();
 // $pdf->addInfo("Title", "The expense sheet");
-$pdf->stream("expense.pdf", ["Attachment" => 0]);
+$pdf->stream($pdf_name, ["Attachment" => 0]);
 ?>
