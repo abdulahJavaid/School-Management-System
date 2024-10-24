@@ -139,6 +139,6 @@ if (isset($_POST['download_exam_schedule'])) {
     $query = "INSERT INTO admin_logs(log_message, time, fk_client_id) VALUES('$log', '$times', '$client')";
     $pass_query2 = mysqli_query($conn, $query);
 
-    // downloaded pdf name
+     // downloaded pdf name
     $pdf_name = $class_name . "-date-sheet.pdf";
 }
