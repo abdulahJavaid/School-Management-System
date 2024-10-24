@@ -97,7 +97,7 @@ if (isset($_POST['auto_mcqs'])) {
 
             if (strpos($line, 'O.') === 0) {
                 // Remove 'O.' and get the options
-                $options = trim(substr($line, 3)); // Remove 'O.{' from the start
+                $options = trim(substr($line, 4)); // Remove 'O.{' from the start
                 $options = trim(substr($line, 0, -1)); // Remove '}' from the end
                 $optionList = explode('} {', $options);
                 $optionCount = 1;
