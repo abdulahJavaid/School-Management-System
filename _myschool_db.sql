@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 24, 2024 at 11:37 AM
+-- Generation Time: Oct 24, 2024 at 02:20 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -1055,6 +1055,22 @@ INSERT INTO `employee_salary` (`salary_id`, `fk_teacher_id`, `fk_staff_id`, `yea
 (167, 0, 2, '2024', 'October', '65000', '0000-00-00', '', 'unpaid', '2'),
 (168, 0, 3, '2024', 'October', '70000', '0000-00-00', '', 'unpaid', '2'),
 (169, 0, 4, '2024', 'October', '50000', '0000-00-00', '', 'unpaid', '2');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `exam_result`
+--
+
+CREATE TABLE `exam_result` (
+  `exam_result_id` int(11) NOT NULL,
+  `fk_student_id` int(11) NOT NULL,
+  `fk_exam_title_id` int(11) NOT NULL,
+  `fk_subject_id` int(11) NOT NULL,
+  `total_marks` varchar(3) NOT NULL,
+  `obtained_marks` varchar(3) NOT NULL,
+  `fk_client_id` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -4097,7 +4113,11 @@ INSERT INTO `section_subjects` (`subject_id`, `fk_section_id`, `subject_name`, `
 (5, 1, 'Science', '2'),
 (6, 1, 'Urdu', '2'),
 (7, 1, 'Islamiat', '2'),
-(8, 1, 'Drawing', '2');
+(8, 1, 'Drawing', '2'),
+(10, 2, 'Science', '2'),
+(11, 2, 'Urdu', '2'),
+(12, 2, 'Islamiat', '2'),
+(13, 2, 'Drawing', '2');
 
 -- --------------------------------------------------------
 
@@ -5983,6 +6003,16 @@ ALTER TABLE `employee_salary`
   ADD KEY `fk_client_id_for_employee_salary` (`fk_client_id`);
 
 --
+-- Indexes for table `exam_result`
+--
+ALTER TABLE `exam_result`
+  ADD PRIMARY KEY (`exam_result_id`),
+  ADD KEY `fk_student_id_for_exam_result` (`fk_student_id`),
+  ADD KEY `fk_exam_title_id_for_exam_result` (`fk_exam_title_id`),
+  ADD KEY `fk_subject_id_for_exam_result` (`fk_subject_id`),
+  ADD KEY `fk_client_id_for_exam_result` (`fk_client_id`);
+
+--
 -- Indexes for table `exam_schedule`
 --
 ALTER TABLE `exam_schedule`
@@ -6239,6 +6269,12 @@ ALTER TABLE `employee_salary`
   MODIFY `salary_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=170;
 
 --
+-- AUTO_INCREMENT for table `exam_result`
+--
+ALTER TABLE `exam_result`
+  MODIFY `exam_result_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `exam_schedule`
 --
 ALTER TABLE `exam_schedule`
@@ -6308,7 +6344,7 @@ ALTER TABLE `school_profile_`
 -- AUTO_INCREMENT for table `section_subjects`
 --
 ALTER TABLE `section_subjects`
-  MODIFY `subject_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `subject_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `staff_profile`
@@ -6443,6 +6479,15 @@ ALTER TABLE `class_sections`
 --
 ALTER TABLE `employee_salary`
   ADD CONSTRAINT `fk_client_id_for_employee_salary` FOREIGN KEY (`fk_client_id`) REFERENCES `school_profile_` (`client_id`);
+
+--
+-- Constraints for table `exam_result`
+--
+ALTER TABLE `exam_result`
+  ADD CONSTRAINT `fk_client_id_for_exam_result` FOREIGN KEY (`fk_client_id`) REFERENCES `school_profile_` (`client_id`),
+  ADD CONSTRAINT `fk_exam_title_id_for_exam_result` FOREIGN KEY (`fk_exam_title_id`) REFERENCES `exam_title` (`exam_title_id`),
+  ADD CONSTRAINT `fk_student_id_for_exam_result` FOREIGN KEY (`fk_student_id`) REFERENCES `student_profile` (`student_id`),
+  ADD CONSTRAINT `fk_subject_id_for_exam_result` FOREIGN KEY (`fk_subject_id`) REFERENCES `section_subjects` (`subject_id`);
 
 --
 -- Constraints for table `exam_schedule`
