@@ -230,6 +230,11 @@
               <i class="bi bi-arrow-right"></i><span>Attendance</span>
             </a>
           </li>
+          <li>
+            <a href="exam-results.php">
+              <i class="bi bi-arrow-right"></i><span>Exam Results</span>
+            </a>
+          </li>
         </ul>
       </li><!-- End student daily reports -->
     <?php
