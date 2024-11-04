@@ -270,6 +270,25 @@
     <?php
     } // end of if statement
     ?>
+    
+    <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#syllabus" data-bs-toggle="collapse" href="#">
+        <i class=><img src="images/syllabus.jpeg" width="30px" height="30px" alt=""></i><span>MCQ's</span>
+        <i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul id="syllabus" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+        <li>
+          <a href="add-mcq.php">
+            <i class="bi bi-arrow-right"></i><span>Add Mcq's</span>
+          </a>
+        </li>
+        <li>
+          <a href="view-mcq.php">
+            <i class="bi bi-arrow-right"></i><span>View Mcq's</span>
+          </a>
+        </li>
+      </ul>
+    </li><!-- End Syllabus -->
 
     <?php
     // if the logged in user is from the school
@@ -285,24 +304,6 @@
     <?php
     } // end of if statement
     ?>
-    <li class="nav-item">
-        <a class="nav-link collapsed" data-bs-target="#syllabus" data-bs-toggle="collapse" href="#">
-          <i class=><img src="images/syllabus.jpeg" width="30px" height="30px" alt=""></i><span>MCQ's</span>
-          <i class="bi bi-chevron-down ms-auto"></i>
-        </a>
-        <ul id="syllabus" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-          <li>
-            <a href="add-mcq.php">
-              <i class="bi bi-arrow-right"></i><span>Add Mcq's</span>
-            </a>
-          </li>
-          <li>
-            <a href="view-mcq.php">
-              <i class="bi bi-arrow-right"></i><span>View Mcq's</span>
-            </a>
-          </li>
-        </ul>
-      </li><!-- End Syllabus -->
 
   </ul>
 
