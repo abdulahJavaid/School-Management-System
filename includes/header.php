@@ -142,7 +142,7 @@ if (!str_contains($uri, '/select-school.php')) {
               <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow notifications">
                 <li class="dropdown-header">
                   All notification
-                  <a href="#"><span class="badge rounded-pill bg-success p-2 ms-2">View</span></a>
+                  <a href="./all-notifications.php"><span class="badge rounded-pill bg-success p-2 ms-2">View</span></a>
                 </li>
                 <li>
                   <hr class="dropdown-divider">
