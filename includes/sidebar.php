@@ -271,12 +271,21 @@
     } // end of if statement
     ?>
     
+    <?php
+    // not showing for now
+    // if ($level == 'nothing=here') {
+    ?>
     <li class="nav-item">
       <a class="nav-link collapsed" data-bs-target="#syllabus" data-bs-toggle="collapse" href="#">
-        <i class=><img src="images/syllabus.jpeg" width="30px" height="30px" alt=""></i><span>MCQ's</span>
+        <i class=><img src="images/syllabus.jpeg" width="30px" height="30px" alt=""></i><span>Academics</span>
         <i class="bi bi-chevron-down ms-auto"></i>
       </a>
       <ul id="syllabus" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+        <!-- <li>
+          <a href="http://localhost:8501">
+            <i class="bi bi-arrow-right"></i><span>Books</span>
+          </a>
+        </li> -->
         <li>
           <a href="add-mcq.php">
             <i class="bi bi-arrow-right"></i><span>Add Mcq's</span>
@@ -289,6 +298,9 @@
         </li>
       </ul>
     </li><!-- End Syllabus -->
+    <?php
+    // } // not showing for now
+    ?>
 
     <?php
     // if the logged in user is from the school

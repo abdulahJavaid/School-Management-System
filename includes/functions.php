@@ -15,7 +15,7 @@ function employee_salary()
         $check_record = query($query);
         if (mysqli_num_rows($check_record) == 0) {
             $date = date('d', time());
-            if ($date == '11') {
+            if ($date == '28') {
                 // teachers salary
                 $query = "SELECT * FROM teacher_profile WHERE teacher_status='1' AND fk_client_id='$client'";
                 $result = mysqli_query($conn, $query);
@@ -48,7 +48,7 @@ function employee_salary()
 }
 // On the selected date call the salary function
 $date = date('d', time());
-if ($date == '11') {
+if ($date == '28') {
     employee_salary(); // calling the function
 }
 
