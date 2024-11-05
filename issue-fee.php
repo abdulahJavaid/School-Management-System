@@ -38,12 +38,14 @@ if ($level == 'accountant' || $level == 'super') {
 
         $query = "SELECT student_id, fee_amount FROM student_profile ";
         $query .= "LEFT JOIN student_fee ON student_profile.student_id=student_fee.fk_student_id ";
-        $query .= "WHERE student_status='1' AND student_profile.fk_client_id='$client' AND fk_student_id IS NULL";
+        $query .= "AND month='$month' AND year='$year' ";
+        $query .= "WHERE student_status='1' AND student_profile.fk_client_id='$client' ";
+        $query .= "AND fk_student_id IS NULL";
         $results = mysqli_query($conn, $query);
         while ($row = mysqli_fetch_array($results)) {
             $student_id = $row['student_id'];
             $monthly_fee = $row['fee_amount'];
-            
+
             // calculating the total fees
             $total_fee = (int) $monthly_fee;
             if (!empty($_POST['fund1'])) {
@@ -140,9 +142,10 @@ if ($level == 'accountant' || $level == 'super') {
         $query .= "class_sections.section_id=student_class.fk_section_id LEFT JOIN ";
         $query .= "student_profile ON student_class.fk_student_id=student_profile.student_id ";
         $query .= "LEFT JOIN student_fee ON student_profile.student_id=student_fee.fk_student_id ";
+        $query .= "AND month='$month' AND year='$year' ";
         $query .= "WHERE class_id='$class' AND section_id='$section' AND ";
-        $query .= "all_classes.fk_client_id='$client' AND ";
-        $query .= "student_fee.fk_student_id IS NULL";
+        $query .= "all_classes.fk_client_id='$client' AND student_profile.student_status='1' ";
+        $query .= "AND student_fee.fk_student_id IS NULL";
         $results = query($query);
         $class_name = "";
         $section_name = "";
@@ -229,7 +232,6 @@ if ($level == 'accountant' || $level == 'super') {
     }
     ?>
 
-    <!-- class and sections -->
     <div class="pagetitle">
         <div class="row">
 
@@ -437,13 +439,17 @@ if ($level == 'accountant' || $level == 'super') {
                 <?php
                 } // end if to issue fees to all school
 
+                // getting the current month and year
+                $month = date('F', time());
+                $year = date('Y', time());
                 // issue fees class wise
                 $query = "SELECT * FROM class_sections LEFT JOIN student_class ON ";
                 $query .= "class_sections.section_id=student_class.fk_section_id LEFT JOIN ";
                 $query .= "student_profile ON student_class.fk_student_id=student_profile.student_id ";
                 $query .= "LEFT JOIN student_fee ON student_profile.student_id=student_fee.fk_student_id ";
-                $query .= "WHERE class_sections.fk_client_id='$client' AND ";
-                $query .= "student_fee.fk_student_id IS NULL";
+                $query .= "AND month='$month' AND year='$year' ";
+                $query .= "WHERE class_sections.fk_client_id='$client' AND student_profile.student_status='1' ";
+                $query .= "AND student_fee.fk_student_id IS NULL";
                 $all_section_fee = query($query);
                 if (mysqli_num_rows($all_section_fee) != 0) {
                 ?>
@@ -473,6 +479,9 @@ if ($level == 'accountant' || $level == 'super') {
                                                 required>
                                                 <option value="" disabled selected>Choose Class</option>
                                                 <?php
+                                                // getting the current month and year
+                                                $month = date('F', time());
+                                                $year = date('Y', time());
                                                 // fetching all the classes
                                                 $query = "SELECT * FROM all_classes WHERE fk_client_id='$client'";
                                                 $result = query($query);
@@ -491,8 +500,10 @@ if ($level == 'accountant' || $level == 'super') {
                                                             $query .= "class_sections.section_id=student_class.fk_section_id LEFT JOIN ";
                                                             $query .= "student_profile ON student_class.fk_student_id=student_profile.student_id ";
                                                             $query .= "LEFT JOIN student_fee ON student_profile.student_id=student_fee.fk_student_id ";
+                                                            $query .= "AND month='$month' AND year='$year' ";
                                                             $query .= "WHERE section_name='$sect_name' AND section_id='$sect_id' AND ";
-                                                            $query .= "class_sections.fk_client_id='$client' AND ";
+                                                            $query .= "student_profile.student_status='1' ";
+                                                            $query .= "AND class_sections.fk_client_id='$client' AND ";
                                                             $query .= "student_fee.fk_student_id IS NULL";
                                                             $section_fee = query($query);
                                                             if (mysqli_num_rows($section_fee) != 0) {
@@ -764,8 +775,8 @@ if ($level == 'accountant' || $level == 'super') {
         var is_fund6 = document.getElementById('fund6_ch').checked;
         var is_fund7 = document.getElementById('fund7_ch').checked;
         var is_fund8 = document.getElementById('fund8_ch').checked;
-        
-        
+
+
         // if fund5 is checked
         if (is_fund5 == true) {
             document.getElementById("fund5_d").style.display = "block";
