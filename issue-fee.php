@@ -280,7 +280,7 @@ if ($level == 'accountant' || $level == 'super') {
                 $feees = query($query);
                 $total_fees = mysqli_num_rows($feees);
                 if (($total_fees / $total_students) * 100 < 50) {
-                ?>
+                ?> 
                     <form action="" method="post">
                         <div class="card">
                             <div class="card-header card-bg-header text-dark mb-3">
