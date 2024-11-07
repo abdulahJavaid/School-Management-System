@@ -213,6 +213,8 @@ if ($level == 'clerk' || $level == 'super') {
                                 <div class="d-flex justify-content-end">
                                     <form action="generate-pdf.php" method="post" class="form-inline">
                                         <div class="">
+                                            <input type="hidden" name="exam_title_id" value="<?php echo $exam_title_id; ?>">
+                                            <input type="hidden" name="roll_no" value="<?php echo $roll_no; ?>">
                                             <button type="submit" name="download_student_result" class="btn btn-sm btn-outline-success">
                                                 Download
                                             </button>
@@ -224,11 +226,14 @@ if ($level == 'clerk' || $level == 'super') {
                                     <table class="table table-bordered border-primary table-hover">
                                         <thead>
                                             <tr>
-                                                <th colspan="2"><?php echo $val['exam_title']; ?></th>
+                                                <th class="text-center" colspan="3">
+                                                    <h4><?php echo $val['exam_title']; ?></h4>
+                                                </th>
                                             </tr>
                                             <tr class="text-center">
                                                 <th>Subject</th>
-                                                <th>Marks</th>
+                                                <th>Obtained</th>
+                                                <th>Total</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -242,14 +247,16 @@ if ($level == 'clerk' || $level == 'super') {
                                             ?>
                                                 <tr class="text-center">
                                                     <td><?php echo $fetch['subject_name']; ?></td>
-                                                    <td><?php echo $fetch['obtained_marks'] . '/' . $fetch['total_marks']; ?></td>
+                                                    <td><?php echo $fetch['obtained_marks']; ?></td>
+                                                    <td><?php echo $fetch['total_marks']; ?></td>
                                                 </tr>
                                             <?php
                                             } // end of inner foreach
                                             ?>
-                                            <tr>
-                                                <td><strong>Total</strong></td>
-                                                <td><?php echo $obtained . '/' . $total; ?></td>
+                                            <tr class="text-center">
+                                                <td><strong>Result</strong></td>
+                                                <td><?php echo $obtained; ?></td>
+                                                <td><?php echo $total; ?></td>
                                             </tr>
                                         </tbody>
                                     </table>
@@ -312,6 +319,7 @@ if ($level == 'clerk' || $level == 'super') {
                                 'exam_title' => $row['exam_title'],
                                 'student_class' => $row['class_name'] . ' ' . $row['section_name'],
                                 'result_subjects' => [],
+                                'subject_marks' => [],
                                 'results' => []
                             ];
                         }
@@ -319,6 +327,11 @@ if ($level == 'clerk' || $level == 'super') {
                         if (!in_array($row['subject_name'], $data[$title_id]['result_subjects'])) {
                             $data[$title_id]['result_subjects'][] = $row['subject_name'];
                             $colsapn++;
+                        }
+                        // mapping total marks of the subjects
+                        if (!array_key_exists($row['subject_name'], $data[$title_id]['subject_marks'])) {
+                            $data[$title_id]['subject_marks'] += [$row['subject_name'] => $row['total_marks']];
+                            // $colsapn++;
                         }
                         // mappin each student only once
                         if (!array_key_exists($row['fk_student_id'], $data[$title_id]['results'])) {
@@ -350,7 +363,9 @@ if ($level == 'clerk' || $level == 'super') {
                                 <div class="d-flex justify-content-end">
                                     <form action="generate-pdf.php" method="post" class="form-inline">
                                         <div class="">
-                                            <button type="submit" name="download_student_result" class="btn btn-sm btn-outline-success">
+                                            <input type="hidden" name="exam_title_id" value="<?php echo $exam_title_id; ?>">
+                                            <input type="hidden" name="section_id" value="<?php echo $section_id; ?>">
+                                            <button type="submit" name="download_class_result" class="btn btn-sm btn-outline-success">
                                                 Download
                                             </button>
                                         </div>
@@ -361,7 +376,9 @@ if ($level == 'clerk' || $level == 'super') {
                                     <table class="table table-bordered border-primary table-hover">
                                         <thead>
                                             <tr>
-                                                <th colspan="<?php echo $colsapn; ?>"><?php echo $val['exam_title']; ?></th>
+                                                <th class="text-center" colspan="<?php echo $colsapn; ?>">
+                                                    <h4><?php echo $val['exam_title']; ?></h4>
+                                                </th>
                                             </tr>
                                             <tr class="text-center">
                                                 <th>Reg#</th>
@@ -373,6 +390,18 @@ if ($level == 'clerk' || $level == 'super') {
                                                 }
                                                 ?>
                                                 <th>Total</th>
+                                            </tr>
+                                            <tr class="text-center">
+                                                <th colspan="2">Marks</th>
+                                                <?php
+                                                $total_marks = 0;
+                                                // showing total marks of subjects
+                                                foreach ($val['subject_marks'] as $key => $marks) {
+                                                    $total_marks += $marks;
+                                                    echo "<td>$marks</td>";
+                                                }
+                                                ?>
+                                                <td><?php echo $total_marks; ?></td>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -391,11 +420,11 @@ if ($level == 'clerk' || $level == 'super') {
                                                         $total += $marks['total'];
                                                         $obtained += $marks['obtained'];
                                                     ?>
-                                                        <td><?php echo $marks['obtained'] . '/' . $marks['total']; ?></td>
+                                                        <td><?php echo $marks['obtained']; ?></td>
                                                     <?php
                                                     } // end of inner foreach for student marks
                                                     ?>
-                                                    <td><?php echo $obtained . '/' . $total; ?></td>
+                                                    <td><?php echo $obtained; ?></td>
                                                 </tr>
                                             <?php
                                             } // end of inner foreach for each student
