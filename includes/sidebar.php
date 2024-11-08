@@ -292,6 +292,11 @@
           </a>
         </li>
         <li>
+          <a href="generate-mcq.php">
+            <i class="bi bi-arrow-right"></i><span>Generate Mcq's</span>
+          </a>
+        </li>
+        <li>
           <a href="view-mcq.php">
             <i class="bi bi-arrow-right"></i><span>View Mcq's</span>
           </a>
