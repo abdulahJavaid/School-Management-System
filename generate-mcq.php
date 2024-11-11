@@ -10,10 +10,153 @@ $client = escape($_SESSION['client_id']);
 
 <?php include_once("./refactoring/add-mcq-requests.php"); ?>
 
+
+
+<?php
+// getting the mcqs
+if (isset($_POST['generate'])) {
+    $board = escape($_POST['board']);
+    $class = escape($_POST['class']);
+    $subject = escape($_POST['subject']);
+    $chapter = escape($_POST['chapter']);
+
+    // API endpoint URL
+    $apiUrl = 'http://127.0.0.1:8000/generate_mcqs';
+
+    $file = $_FILES['file']['tmp_name'];
+    $number = escape($_POST['number']);
+    $command = escape($_POST['query']);
+
+    // file path and query for the request
+    $filePath = './5-pages-computer.pdf';
+    $filePath = $file;
+    $query = $command;
+    $num = $number;
+
+    // if the file exists
+    if (!file_exists($filePath)) {
+        die("File not found at specified path.");
+    }
+
+    // Initialize cURL session
+    $curl = curl_init();
+
+    curl_setopt_array($curl, [
+        CURLOPT_URL => $apiUrl,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_POST => true,
+        CURLOPT_HTTPHEADER => [
+            'Content-Type: multipart/form-data'
+        ],
+        CURLOPT_POSTFIELDS => [
+            'file' => new CURLFile($filePath),
+            'query' => $query,
+            'num_mcqs' => $number
+        ],
+    ]);
+
+    // Execute request
+    $response = curl_exec($curl);
+
+    // Check for errors in cURL request
+    if (curl_errno($curl)) {
+        echo "cURL error: " . curl_error($curl);
+        curl_close($curl);
+        exit;
+    }
+
+    // Close cURL session
+    curl_close($curl);
+    // Decode and print response from FastAPI
+    $responseData = json_decode($response, true);
+
+    // // Check the structure of the response
+    // print_r($responseData);
+
+    if (isset($responseData['simplified_mcqs']['simplified_mcqs']['mcqs']) && is_array($responseData['simplified_mcqs']['simplified_mcqs']['mcqs'])) {
+        $mcqs = $responseData['simplified_mcqs']['simplified_mcqs']['mcqs'];
+        $_SESSION['mcqs'] = $mcqs;
+        $data = [
+            'board' => $board,
+            'class' => $class,
+            'subject' => $subject,
+            'chapter' => $chapter,
+        ];
+        $_SESSION['data'] = $data;
+        // redirect to the same page
+        redirect('./generate-mcq.php');
+    } else {
+        echo "MCQs data is not available or is empty.";
+    }
+}
+
+?>
+
+
+<?php
+// saving the mcq's
+if (isset($_POST['save_mcqs'])) {
+    $board = escape($_POST['board']);
+    $class = escape($_POST['class']);
+    $subject = escape($_POST['subject']);
+    $chapter = escape($_POST['chapter']);
+
+    $total_mcq = escape($_POST['total_mcqs']);
+    $counter = 1;
+    for (;$counter <= $total_mcq; $counter++) {
+        // preparing the keys
+        $check = "cbox".$counter."";
+        $q_key = "question".$counter."";
+        $opt_ans_key = "optanswer".$counter."";
+        $answer = escape($_POST[$opt_ans_key]);
+        if (isset($_POST[$check])) {
+            $question = escape($_POST[$q_key]);
+            $query = "INSERT INTO questions(question, fk_chapter_id) ";
+            $query .= "VALUES('$question', '$chapter')";
+            $add_question = query($query);
+            $last_id = last_id();
+            for ($i = 1; $i <= 4; $i++) {
+                $opt_key = "opt".$counter.$i."";
+                $option = escape($_POST[$opt_key]);
+                if ($answer == $i) {
+                    $query = "INSERT INTO options(option_description, option_status, fk_question_id) ";
+                    $query .= "VALUES('$option', 'correct', '$last_id')";
+                    $add_option = query($query);
+                } else {
+                    $query = "INSERT INTO options(option_description, option_status, fk_question_id) ";
+                    $query .= "VALUES('$option', 'incorrect', '$last_id')";
+                    $add_option = query($query);
+                }
+
+            }
+
+        }
+    }
+
+
+    unset($_SESSION['mcqs']);
+    unset($_SESSION['data']);
+    redirect('./generate-mcq.php');
+
+
+
+
+
+
+}
+
+?>
+
+
+
+
+
+
+
 <main id="main" class="main">
 
     <div class="pagetitle">
-        <h1>Add MCQ's</h1>
+        <h1>Generate MCQ's</h1>
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item active"><?php echo $_SESSION['school_name']; ?></li>
@@ -102,7 +245,7 @@ $client = escape($_SESSION['client_id']);
                     <div class="col-auto" id='submitBtn' style="display: none;">
                         <div class="input-group mb-2">
                             <button name="add_mcqs" class="btn btn-sm btn-success" type="submit" id="button-addon4">
-                                Add MCQ's
+                                Generate MCQ's
                             </button>
                         </div>
                     </div>
@@ -124,19 +267,17 @@ $client = escape($_SESSION['client_id']);
                                                 <form method="post" action="" enctype="multipart/form-data">
 
                                                     <div class="row mb-3">
-                                                        <!-- Select the Subject -->
-                                                        <!-- <div class="col-6">
-                                                            <div class="input-group mb-2"> -->
                                                         <label for="name" class="col-md-4 col-lg-3 col-form-label"><strong>Pdf</strong> <code>*</code></label>
                                                         <div class="col-md-8 col-lg-9">
                                                             <input name="file" type="file" class="form-control" id="image"
-                                                                aria-label="Example Input" aria-describedby="button-addon5" accept=".pdf">
+                                                                aria-label="Example Input" aria-describedby="button-addon5" accept=".pdf" required>
                                                         </div>
-                                                        <!-- <button name="auto_mcqs" class="btn btn-sm btn-outline-success" type="submit" id="button-addon5">
-                                                                Auto Upload
-                                                            </button> -->
-                                                        <!-- </div>
-                                                    </div> -->
+                                                    </div>
+                                                    <div class="row mb-3">
+                                                        <label for="query" class="col-md-4 col-lg-3 col-form-label"><strong>Command</strong> <code>*</code></label>
+                                                        <div class="col-md-8 col-lg-9">
+                                                            <input name="query" type="text" class="form-control" id="fullName" placeholder="eg, generate mcqs from 1st chapter" required>
+                                                        </div>
                                                     </div>
                                                     <div class="row mb-3">
                                                         <label for="name" class="col-md-4 col-lg-3 col-form-label"><strong>No. of mcqs</strong> <code>*</code></label>
@@ -148,7 +289,8 @@ $client = escape($_SESSION['client_id']);
                                                     <div class="d-flex justify-content-end">
                                                         <button type="submit" name="generate" class="btn btn-sm btn-success">Generate MCQ's</button>
                                                     </div>
-                                                </form><!-- End Profile Edit Form -->
+
+                                                </form><!-- End Form -->
 
                                             </div>
 
@@ -166,81 +308,140 @@ $client = escape($_SESSION['client_id']);
                 </div>
             </form>
 
+            <?php
+            // showing the mcqs
+            if (isset($_SESSION['mcqs'])) {
+                // print_r($_SESSION['mcqs']);
+            ?>
+                <div class="card">
+                    <div class="card-body">
+
+                        <h5 class="card-title">Generated MCQ's</h5>
+                        <form action="" method="post">
+                            <?php
+                            // looping to get the mcqs
+                            $total_mcq = 0;
+                            $var = 1;
+                            foreach ($_SESSION['mcqs'] as $mcq) {
+                            ?>
+                                <div class="outer-card-mcq row p-3 mb-3 align-items-center">
+                                    <div class="col-auto">
+                                        <input type="checkbox" name="cbox<?php echo $var; ?>" class="form-check-input card-checkbox-mcq">
+                                    </div>
+
+                                    <!-- Question Section (6 columns) -->
+                                    <div class="question-section-mcq col-md-6">
+                                        <u class="text-success">Question <?php echo $var; ?></u> &nbsp;
+                                        <span onclick="edit('<?php echo $var; ?>')" id="edit<?php echo $var; ?>" class="edit-pencil">
+                                            <!-- <i class="bi bi-pencil"></i> -->
+                                            <i class="fas fa-edit"></i>
+                                        </span>
+                                        <span onclick="save('<?php echo $var; ?>')" class="edit-pencil" id="save<?php echo $var; ?>" style="display: none;">
+                                            <i class="fas fa-save"></i>
+                                        </span>
+                                        <textarea
+                                            name="question<?php echo $var; ?>"
+                                            id="question<?php echo $var; ?>"
+                                            class="w-100 border-0 p-0 bg-transparent"
+                                            rows="4"
+                                            readonly
+                                            style="font-weight: bold; resize: none;"
+                                            onfocus="this.blur();"><?php echo trim($mcq['question']); ?>
+                                    </textarea>
+                                    </div>
+
+                                    <!-- Options Section (6 columns) -->
+                                    <div class="options-section-mcq col-md-5">
+                                        <ul class="list-unstyled mb-0">
+                                            <?php
+                                            // looping to get the options
+                                            $alphabs = ['a', 'b', 'c', 'd'];
+                                            $index = 0;
+                                            $var1 = 1;
+                                            $target = 0;
+                                            foreach ($mcq['options'] as $option) {
+                                            ?>
+                                                <li>
+                                                    <strong class="text-success"><?php echo $alphabs[$index]; ?>) </strong>&nbsp;
+                                                    <span onclick="edit('<?php echo $var . $var1; ?>')" id="edit<?php echo $var . $var1; ?>" class="edit-pencil">
+                                                        <!-- <i class="bi bi-pencil"></i> -->
+                                                        <i class="fas fa-edit"></i>
+                                                    </span>
+                                                    <span onclick="save('<?php echo $var . $var1; ?>')" class="edit-pencil" id="save<?php echo $var . $var1; ?>" style="display: none;">
+                                                        <i class="fas fa-save"></i>
+                                                    </span>
+
+                                                    <textarea name="opt<?php echo $var . $var1; ?>"
+                                                        class="w-100 border-0 p-0 bg-transparent auto-height-textarea"
+                                                        id="question<?php echo $var . $var1; ?>"
+                                                        cols="1"
+                                                        readonly
+                                                        style="font-weight: normal; resize: none; overflow: hidden;"
+                                                        onfocus="this.blur();"><?php echo trim($option); ?>
+                                                </textarea>
+                                                </li>
+
+                                                <?php
+                                                // checking the answer option
+                                                if (str_contains($mcq['answer'], $option)) {
+                                                ?>
+                                                    <input type="hidden" name="optanswer<?php echo $var; ?>" id="optanswer<?php echo $var; ?>" value="<?php echo $var1; ?>">
+                                                <?php
+                                                    $target = $var1;
+                                                }
+                                                ?>
+
+                                            <?php
+                                            echo $target;
+                                                $index++;
+                                                $var1++;
+                                            } // end of loop to get options
+                                            ?>
+
+                                            <li class="mt-3">
+                                                <strong class="text-success">Answer: </strong> &nbsp;
+                                                <span onclick="ansEdit('<?php echo $var; ?>')" id="ansedit<?php echo $var; ?>" class="edit-pencil">
+                                                    <!-- <i class="bi bi-pencil"></i> -->
+                                                    <i class="fas fa-edit"></i>
+                                                </span>
+                                                <span onclick="ansSave('<?php echo $var; ?>')" class="edit-pencil" id="anssave<?php echo $var; ?>" style="display: none;">
+                                                    <i class="fas fa-save"></i>
+                                                </span>
+                                                <textarea name="answer<?php echo $var; ?>"
+                                                    id="answer<?php echo $var; ?>"
+                                                    class="w-100 border-0 p-0 bg-transparent"
+                                                    readonly
+                                                    style="font-weight: normal; resize: none;"
+                                                    onfocus="this.blur();"><?php echo trim($mcq['answer']); ?>
+                                            </textarea>
+                                            </li>
+
+                                        </ul>
+                                    </div>
+                                </div>
+
+                            <?php
+                                $var++;
+                                $total_mcq++;
+                            } // end loop to get mcqs
+                            ?>
+
+                            <input type="hidden" name="board" value="<?php echo $_SESSION['data']['board']; ?>">
+                            <input type="hidden" name="class" value="<?php echo $_SESSION['data']['class']; ?>">
+                            <input type="hidden" name="subject" value="<?php echo $_SESSION['data']['subject']; ?>">
+                            <input type="hidden" name="chapter" value="<?php echo $_SESSION['data']['chapter']; ?>">
+                            <input type="hidden" name="total_mcqs" value="<?php echo $total_mcq; ?>">
+
+                            <div class="d-flex justify-content-end">
+                                <button type="submit" name="save_mcqs" class="btn btn-sm btn-success">Save MCQ's</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
 
             <?php
-            // getting the mcqs
-            if (isset($_POST['generate'])) {
-                // API endpoint URL
-                $apiUrl = 'http://127.0.0.1:8000/generate_mcqs';
-
-                // file path and query for the request
-                $filePath = './5-pages-computer.pdf'; // Update this path to the actual file location
-                $query = 'Generate 10 MCQs from this document about any topic with answers at the end';
-
-                // if the file exists
-                if (!file_exists($filePath)) {
-                    die("File not found at specified path.");
-                }
-
-                // Initialize cURL session
-                $curl = curl_init();
-
-                curl_setopt_array($curl, [
-                    CURLOPT_URL => $apiUrl,
-                    CURLOPT_RETURNTRANSFER => true,
-                    CURLOPT_POST => true,
-                    CURLOPT_HTTPHEADER => [
-                        'Content-Type: multipart/form-data'
-                    ],
-                    CURLOPT_POSTFIELDS => [
-                        'file' => new CURLFile($filePath),
-                        'query' => $query,
-                        'num_mcqs' => 10
-                    ],
-                ]);
-
-                // Execute request
-                $response = curl_exec($curl);
-
-                // Check for errors in cURL request
-                if (curl_errno($curl)) {
-                    echo "cURL error: " . curl_error($curl);
-                    curl_close($curl);
-                    exit;
-                }
-
-                // Close cURL session
-                curl_close($curl);
-                // Decode and print response from FastAPI
-                $responseData = json_decode($response, true);
-
-                // Check the structure of the response
-                // print_r($responseData);
-
-                if (isset($responseData['simplified_mcqs']['simplified_mcqs']['mcqs']) && is_array($responseData['simplified_mcqs']['simplified_mcqs']['mcqs'])) {
-                    $mcqs = $responseData['simplified_mcqs']['simplified_mcqs']['mcqs'];
-                    $_SESSION['mcqs'] = $mcqs;
-                    // redirect to the same page
-
-                    // // Loop through the MCQs and display the data
-                    // foreach ($mcqs as $mcq) {
-                    //     echo "<p><strong>Question:</strong> " . htmlspecialchars($mcq['question']) . "</p>";
-                    //     echo "<ul>";
-                    //     foreach ($mcq['options'] as $option) {
-                    //         echo "<li>" . htmlspecialchars($option) . "</li>";
-                    //     }
-                    //     echo "</ul>";
-                    //     echo "<p><strong>Answer:</strong> " . htmlspecialchars($mcq['answer']) . "</p>";
-                    //     echo "<hr>"; // Separate each MCQ
-                    // }
-                } else {
-                    echo "MCQs data is not available or is empty.";
-                }
-            }
-
+            } // end of if (the session is set)
             ?>
-
-            
 
         </div>
     </div>
@@ -248,6 +449,121 @@ $client = escape($_SESSION['client_id']);
 </main><!-- End #main -->
 
 <script>
+    // function autoResize(textarea) {
+    //     textarea.style.height = 'auto'; // Reset height first
+    //     textarea.style.height = textarea.scrollHeight + 'px'; // Adjust height based on content
+    // }
+
+    // // Run autoResize on page load for each textarea
+    // document.querySelectorAll('.auto-height-textarea').forEach(textarea => autoResize(textarea));
+
+    // // Optional: Resize on window resize to adapt for line breaks
+    // window.addEventListener('resize', () => {
+    //     document.querySelectorAll('.auto-height-textarea').forEach(textarea => autoResize(textarea));
+    // });
+
+    // to edit the question and option
+    function edit(theId) {
+        var id = document.getElementById('question' + theId);
+        id.removeAttribute("readonly");
+        id.onfocus = null;
+        id.classList.remove("border-0");
+        id.classList.add("textarea-mcq");
+        id.classList.remove("border-0");
+        id.focus();
+
+        var edit = document.getElementById('edit' + theId);
+        edit.style.display = "none";
+        var save = document.getElementById('save' + theId);
+        save.style.display = "inline-block";
+    }
+
+    // to edit the answer
+    function ansEdit(theId) {
+        var id = document.getElementById('answer' + theId);
+        id.removeAttribute("readonly");
+        id.onfocus = null;
+        id.classList.remove("border-0");
+        id.classList.add("textarea-mcq");
+        id.classList.remove("border-0");
+        id.focus();
+
+        var edit = document.getElementById('ansedit' + theId);
+        edit.style.display = "none";
+        var save = document.getElementById('anssave' + theId);
+        save.style.display = "inline-block";
+    }
+
+    // to save the question and option
+    function save(theId) {
+        var id = document.getElementById('question' + theId);
+        id.setAttribute('readonly', true);
+        id.onfocus = null;
+        id.blur();
+        id.setAttribute('onfocus', 'this.blur();');
+        id.classList.add("border-0");
+        id.classList.remove("textarea-mcq");
+
+        var edit = document.getElementById('edit' + theId);
+        edit.style.display = "inline-block";
+        var save = document.getElementById('save' + theId);
+        save.style.display = "none";
+
+        if (theId.length === 2) {
+            // console.log(theId);
+            var first = theId.charAt(0);
+            var second = theId.charAt(1);
+            // console.log(first);
+            // console.log(second);
+            var optAnswer = document.getElementById('optanswer' + first).value;
+            // console.log(optAnswer);
+            if (optAnswer == second) {
+                // console.log(optAnswer);
+                var place = document.getElementById('question' + theId).value;
+                // console.log(place);
+                document.getElementById('answer' + first).value = place;
+            }
+        }
+        if (theId.length > 2) {
+            // console.log(theId);
+            var first = theId.charAt(0) + theId.charAt(1);
+            var second = theId.charAt(2);
+            // console.log(first);
+            // console.log(second);
+            var optAnswer = document.getElementById('optanswer' + first).value;
+            // console.log(optAnswer);
+            if (optAnswer == second) {
+                // console.log(optAnswer);
+                var place = document.getElementById('question' + theId).value;
+                // console.log(place);
+                document.getElementById('answer' + first).value = place;
+            }
+        }
+    }
+
+    // to save the answer
+    function ansSave(theId) {
+        var id = document.getElementById('answer' + theId);
+        id.setAttribute('readonly', true);
+        id.onfocus = null;
+        id.blur();
+        id.setAttribute('onfocus', 'this.blur();');
+        id.classList.add("border-0");
+        id.classList.remove("textarea-mcq");
+
+        var edit = document.getElementById('ansedit' + theId);
+        edit.style.display = "inline-block";
+        var save = document.getElementById('anssave' + theId);
+        save.style.display = "none";
+
+        var optAnswer = document.getElementById('optanswer' + theId).value;
+        var place = document.getElementById('answer' + theId).value;
+        if (place.startsWith('a) ') || place.startsWith('b) ') || place.startsWith('c) ') || place.startsWith('d) ')) {
+            place = place.slice(3);
+        }
+        document.getElementById('question' + theId + optAnswer).value = place;
+    }
+
     // Function to update class options based on the selected Board
     function showClasses() {
         const boardId = document.getElementById('boardSelect').value;

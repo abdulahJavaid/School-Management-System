@@ -139,15 +139,15 @@ $client = escape($_SESSION['client_id']);
                     // if add MCQ request is submitted
                     if (isset($_GET['add_mcqs']) || isset($_POST['add_mcqs'])) {
                         if (isset($_GET['add_mcqs'])) {
-                            $board = $_GET['board'];
-                            $class = $_GET['class'];
-                            $subject = $_GET['subject'];
-                            $chapter = $_GET['chapter'];
+                            $board = escape($_GET['board']);
+                            $class = escape($_GET['class']);
+                            $subject = escape($_GET['subject']);
+                            $chapter = escape($_GET['chapter']);
                         } elseif (isset($_POST['add_mcqs'])) {
-                            $board = $_POST['board'];
-                            $class = $_POST['class'];
-                            $subject = $_POST['subject'];
-                            $chapter = $_POST['chapter'];
+                            $board = escape($_POST['board']);
+                            $class = escape($_POST['class']);
+                            $subject = escape($_POST['subject']);
+                            $chapter = escape($_POST['chapter']);
                         }
                     ?>
                         <div class="col-lg-12">

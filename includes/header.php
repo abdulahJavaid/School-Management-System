@@ -73,6 +73,20 @@ if (!str_contains($uri, '/select-school.php')) {
     <?php
     // getting the url of the page
     $uri = "" . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'] . "";
+
+    // clearing the sessions of the generate mcq page
+    if (!str_contains($uri, '/generate-mcq.php')) {
+      // data from that page
+      if (isset($_SESSION['data'])) {
+        unset($_SESSION['data']);
+      }
+      // mcqs from that page
+      if (isset($_SESSION['mcqs'])) {
+        unset($_SESSION['mcqs']);
+      }
+    }
+    
+    // differentiating the client side and managing side views
     if (!str_contains($uri, '/select-school.php')) {
     ?>
 
@@ -96,7 +110,7 @@ if (!str_contains($uri, '/select-school.php')) {
         <ul class="d-flex align-items-center">
 
           <!-- <li class="nav-item d-block d-lg-none">
-            <a class="nav-link nav-icon search-bar-toggle " href="#">
+             <a class="nav-link nav-icon search-bar-toggle " href="#">
               <i class="bi bi-search"></i>
             </a>
           </li> -->
