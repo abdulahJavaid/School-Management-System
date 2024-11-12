@@ -130,6 +130,11 @@
             </a>
           </li>
           <li>
+            <a href="owner-payment.php">
+              <i class="bi bi-arrow-right"></i><span>Pay Owner</span>
+            </a>
+          </li>
+          <li>
             <a href="add-expense.php">
               <i class="bi bi-arrow-right"></i><span>Add Expense</span>
             </a>

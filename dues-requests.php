@@ -70,6 +70,7 @@ else {
                                                 $query .= "AND (fee_status='dues' OR fee_status='dues_request' OR fee_status='due_request')";
                                                 // $query .= "";
                                                 $rslt = query($query);
+                                                $dues = 0;
                                                 while ($ros = mysqli_fetch_assoc($rslt)) {
                                                     $dues += $ros['pending_dues'];
                                                 }

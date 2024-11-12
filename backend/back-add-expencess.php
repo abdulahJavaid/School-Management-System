@@ -8,7 +8,7 @@ require_once('../includes/functions.php');
 // getting the client id
 $client = escape($_SESSION['client_id']);
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
         // Get form data
         $comment = escape($_POST["comment"]);
         $cost = escape($_POST["expense"]);
@@ -67,9 +67,61 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $pass_query2 = mysqli_query($conn, $query);
         
         if ($result) {
-            redirect("../add-expense.php?m=Data has been successfully inserted.");
+            redirect("../add-expense.php?m=Record has been successfully inserted.");
         } else {
             redirect("../add-expense.php?m=Error: " . mysqli_error($conn) . "");
             // echo "Error: " . mysqli_error($conn);
         }        
+}
+
+// payment to owner as expense
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['owner'])) {
+    // Get form data
+    $comment = escape($_POST["comment"]);
+    $cost = escape($_POST["expense"]);
+    $date = escape($_POST["date"]);
+
+    // File upload handling
+    $target_dir = "../uploads/expense-receiving/";
+    $target_file = $target_dir . basename($_FILES["image"]["name"]);
+    $pic = basename($_FILES["image"]["name"]);
+    $tmp_pic = $_FILES['image']['tmp_name'];
+
+    // Check if the file already exists
+    if (!empty($_FILES['image']['tmp_name'])) {
+        $one = rand(10, 200);
+        $two = rand(10000, 50000);
+        $num = rand($one, $two);
+
+        move_uploaded_file($tmp_pic, $target_file);
+        $new_pic = $client . substr($comment, 0, 1) . $num . $date . $cost . 'own' . $pic;
+        rename($target_file, "../uploads/expense-receiving/" . $new_pic . "");
+
+        $new_pic = escape($new_pic);
+    } else {
+        $new_pic = '';
+    }
+
+    // Insert form data and image path into the database
+    $query = "INSERT INTO expense_receiving (image, comment, expense, receiving, date, fk_client_id) VALUES ('$new_pic', '$comment', '$cost', '0', '$date', '$client')";
+    $result = mysqli_query($conn, $query);
+
+    
+    // fetching the admin id and adding the data
+    $id = escape($_SESSION['login_id']);
+    $admin_name = escape($_SESSION['login_name']);
+    $log = "Admin <strong>$admin_name</strong> gave <strong>Rs.$cost</strong> to owner !";
+    $times = date('d/m/Y h:i a', time());
+    $times = (string) $times;
+
+    // adding activity into the logs
+    $query = "INSERT INTO admin_logs(log_message, time, fk_client_id) VALUES('$log', '$times', '$client')";
+    $pass_query2 = mysqli_query($conn, $query);
+    
+    if ($result) {
+        redirect("../owner-payment.php?m=Record has been successfully inserted.");
+    } else {
+        redirect("../owner-payment.php?m=Error: " . mysqli_error($conn) . "");
+        // echo "Error: " . mysqli_error($conn);
+    }        
 }

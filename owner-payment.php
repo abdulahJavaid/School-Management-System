@@ -1,0 +1,105 @@
+<?php require_once("includes/header.php"); ?>
+
+<!-- ======= Sidebar ======= -->
+<?php require_once("includes/sidebar.php"); ?>
+
+
+<?php
+// $pageWasRefreshed = isset($_SERVER['HTTP_CACHE_CONTROL']) && $_SERVER['HTTP_CACHE_CONTROL'] === 'max-age=10';
+// if(isset($_GET['message']) && $pageWasRefreshed ) {
+//     // unset($_GET['message']);
+//     redirect("./add-expense.php");
+// }
+?>
+
+<?php
+// checking session for appropriate access
+if ($level == 'accountant' || $level == 'super') {}
+else {
+  redirect("./");
+}
+?>
+
+
+
+
+<main id="main" class="main">
+    <div class="pagetitle">
+        <h1>Owner's Payment</h1>
+        <nav>
+            <ol class="breadcrumb">
+                <!-- <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                <li class="breadcrumb-item">Users</li> -->
+                <li class="breadcrumb-item active"><?php echo $_SESSION['school_name']; ?></li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section profile">
+        <div class="row">
+            <div class="col-md-8 offset-md-2">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title text-center ">Owner Payment</h3>
+                        <?php
+                        if (isset($_GET['m'])) {
+                            $message = $_GET['m'];
+                        ?>
+                            <div class="row">
+                                <div class="d-flex justify-content-center">
+                                    <div class="col-xl-8">
+                                        <div class="alert alert-success text-center">
+                                            <?php echo $message; ?>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <?php
+                        }
+                        ?>
+
+                        <!-- Multi Columns Form -->
+                        <form method="post" action="./backend/back-add-expencess.php" enctype="multipart/form-data" class="row g-3">
+                            <div class="col-md-12">
+                                <label for="cost" class="form-label">Amount</label>
+                                <input name="expense" type="text" class="form-control" id="cost" placeholder="Rs." required>
+                            </div>
+                            <div class="col-md-12">
+                                <label for="comment" class="form-label">Remarks</label>
+                                <input name="comment" type="text" class="form-control" id="comment" placeholder="comments" required>
+                            </div>
+                            <div class="col-md-12">
+                                <label for="image" class="form-label">Upload image</label>
+                                <input name="image" type="file" class="form-control" id="image">
+                            </div>
+
+                            <?php
+
+                            $date = date('Y-m-d', time());
+                            ?>
+                            <div class="col-md-12">
+                                <label for="date" class="form-label">Date</label>
+                                <input type="date" class="form-control" id="date" name="date" value="<?php echo $date; ?>" readonly>
+                            </div>
+                            <!-- <div class="col-md-12">
+                                <label for="inputCity" class="form-label">Other Expencess</label>
+                                <input type="text" class="form-control" id="inputCity">
+                            </div>
+                            -->
+
+                            <div class="text-center">
+                                <button type="submit" name="owner" class="btn btn-sm btn-success">Submit</button>
+                                <button type="reset" class="btn btn-sm btn-secondary">Reset</button>
+                            </div>
+                        </form><!-- End Multi Columns Form -->
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</main><!-- End #main -->
+
+<!-- ======= Footer ======= -->
+<?php include_once("includes/footer.php"); ?>
