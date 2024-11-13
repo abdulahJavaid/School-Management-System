@@ -348,7 +348,8 @@ h6 {
 .nav-tabs-bordered .nav-link.active {
   background-color: #fff;
   color: #4154f1;
-  border-bottom: 2px solid #4154f1;
+  border-bottom: 2px solid #2193b0;
+  /* border-bottom: 2px solid #08856e; */
 }
 
 /*--------------------------------------------------------------
@@ -1253,15 +1254,18 @@ h6 {
   /* #2193b0 */
   /* background: linear-gradient(to right, #395bce , #41daa7 ) !important; */
   background: #2193b0;
+  /* background: #08856E; */
 
 
   scrollbar-color: #6dd5ed !important;
+  /* scrollbar-color: #50dec4 !important; */
 }
 .sidebar-nav .nav-link {
   /* #6dd5ed */
   /* background: rgb(68, 38, 189) !important; */
   /* color:      white !important; */
   background: #6dd5ed !important;
+  /* background: #50dec4 !important; */
   color: black !important;
 }
 .sidebar-nav .nav-link:hover {
@@ -1276,6 +1280,7 @@ h6 {
   /* #2193b0 */
   /* background: linear-gradient(to left, #395bce , #47e2af) !important; */
   background: #2193b0;
+  /* background: #08856E; */
 }
 .logo span {
   color: black;
@@ -1296,12 +1301,15 @@ h6 {
 
 .button {
   background: #2193b0;
+  /* background: #08856E; */
   color: white;
   /* border-radius: 10px; */
   border-color: #2193b0;
+  /* border-color: #08856E; */
 }
 .msg {
   background: #6dd5ed !important;
+  /* background: #50dec4 !important; */
   border-radius: 20%;
 }
 .inpt {
@@ -1467,6 +1475,7 @@ end Code for showing radio buttons as nice checkbox buttons
   padding: 30px;
   text-align: center;
   background: linear-gradient(135deg, #2193b0 0%, #6dd5ed 100%);
+  /* background: linear-gradient(135deg, #08856E 0%, #50dec4 100%); */
   color: #fff;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
@@ -1526,6 +1535,7 @@ end Code for showing radio buttons as nice checkbox buttons
 
 .nav-tabs .nav-link.active {
   background-color: #2193b0;
+  /* background-color: #08856E; */
   color: #fff;
 }
 /* start school,teacher,student profile hover */
@@ -1540,6 +1550,7 @@ end Code for showing radio buttons as nice checkbox buttons
 .card-bg-header {
   /* #6dd5ed #2193b0 */
   background-color: #2193b0 !important;
+  /* background-color: #08856E !important; */
 }
 
 /* End card headers on view student tracking pages */

@@ -266,178 +266,6 @@ if ($level == 'accountant' || $level == 'super') {
             }
             // if the admin wants to issue fees
             if (isset($_GET['issue_fees'])) {
-                // issue fees to all school
-
-                // getting total students
-                $month = date('F');
-                $year = date('Y');
-                $query = "SELECT * FROM student_profile WHERE fk_client_id='$client' AND student_status='1'";
-                $get_all_students = query($query);
-                $total_students = mysqli_num_rows($get_all_students);
-                // getting issued fees
-                $query = "SELECT * FROM student_fee WHERE month='$month' AND year='$year' ";
-                $query .= "AND fk_client_id='$client'";
-                $feees = query($query);
-                $total_fees = mysqli_num_rows($feees);
-                if (($total_fees / $total_students) * 100 < 50) {
-                ?> 
-                    <form action="" method="post">
-                        <div class="card">
-                            <div class="card-header card-bg-header text-dark mb-3">
-                                <h5 class="mb-0">
-                                    <strong>Issue Fees / </strong><?php echo date('Y') . ', ' . date('F'); ?>
-                                    <span class="d-inline-block"
-                                        tabindex="0"
-                                        data-bs-toggle="tooltip"
-                                        title="Fees & Funds will be issued to all the students whose fees is not issued.">
-                                        <button type="button" class="btn btn-sm btn-outline-light"><i class="fa-solid fa-question"></i></button>
-                                    </span>
-                                </h5>
-                            </div>
-                            <div class="row mb-3 px-3">
-                                <div class="col-sm-4 mb-1">
-                                    <label for="due-date" class="form-label"><strong>Fees Last date</strong> <code>*</code></label>
-
-                                    <div class="col-auto">
-                                        <div class="input-group">
-                                            <input
-                                                name="last_date"
-                                                type="date"
-                                                class="form-control"
-                                                aria-label="Example input"
-                                                aria-describedby="button-addon2" required />
-
-                                            <button type="submit" name="issued_fees" id="button-addon2" class="btn btn-sm btn-success">
-                                                Issue Fees
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-4 mb-1">
-                                    <div class="form-check ps-5" id="fund1">
-                                        <input class="form-check-input border-dark" type="checkbox" onclick="add_funds()" value="" id="fund1_ch">
-                                        <label class="form-check-label" for="fund1">
-                                            <strong>Add Fund?</strong>
-                                        </label>
-                                    </div>
-                                    <div id="fund1_d" style="display: none;">
-                                        <div class="row mb-3 d-flex align-items-center mt-2">
-                                            <div class="col-sm-7">
-                                                <input
-                                                    id="fund_one_t"
-                                                    name="fund1t"
-                                                    type="text"
-                                                    class="form-control"
-                                                    value=""
-                                                    placeholder="Funds title">
-                                            </div>
-                                            <div class="col-sm-5">
-                                                <input
-                                                    id="fund_one"
-                                                    name="fund1"
-                                                    type="text"
-                                                    class="form-control"
-                                                    value=""
-                                                    placeholder="Rs.">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-4 mb-1">
-                                    <div class="form-check ps-5" id="fund2">
-                                        <input class="form-check-input border-dark" type="checkbox" onclick="add_funds()" value="" id="fund2_ch">
-                                        <label class="form-check-label" for="fund2">
-                                            <strong>Add Fund?</strong>
-                                        </label>
-                                    </div>
-                                    <div id="fund2_d" style="display: none;">
-                                        <div class="row mb-3 d-flex align-items-center mt-2">
-                                            <div class="col-sm-7">
-                                                <input
-                                                    id="fund_two_t"
-                                                    name="fund2t"
-                                                    type="text"
-                                                    class="form-control"
-                                                    value=""
-                                                    placeholder="Funds title">
-                                            </div>
-                                            <div class="col-sm-5">
-                                                <input
-                                                    id="fund_two"
-                                                    name="fund2"
-                                                    type="text"
-                                                    class="form-control"
-                                                    value=""
-                                                    placeholder="Rs.">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-4 offset-sm-4 mb-1">
-                                    <div class="form-check ps-5" id="fund3">
-                                        <input class="form-check-input border-dark" type="checkbox" onclick="add_funds()" value="" id="fund3_ch">
-                                        <label class="form-check-label" for="fund3">
-                                            <strong>Add Fund?</strong>
-                                        </label>
-                                    </div>
-                                    <div id="fund3_d" style="display: none;">
-                                        <div class="row mb-3 d-flex align-items-center mt-2">
-                                            <div class="col-sm-7">
-                                                <input
-                                                    id="fund_three_t"
-                                                    name="fund3t"
-                                                    type="text"
-                                                    class="form-control"
-                                                    value=""
-                                                    placeholder="Funds title">
-                                            </div>
-                                            <div class="col-sm-5">
-                                                <input
-                                                    id="fund_three"
-                                                    name="fund3"
-                                                    type="text"
-                                                    class="form-control"
-                                                    value=""
-                                                    placeholder="Rs.">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-4 mb-1">
-                                    <div class="form-check ps-5" id="fund4">
-                                        <input class="form-check-input border-dark" type="checkbox" onclick="add_funds()" value="" id="fund4_ch">
-                                        <label class="form-check-label" for="fund4">
-                                            <strong>Add Fund?</strong>
-                                        </label>
-                                    </div>
-                                    <div id="fund4_d" style="display: none;">
-                                        <div class="row mb-3 d-flex align-items-center mt-2">
-                                            <div class="col-sm-7">
-                                                <input
-                                                    id="fund_four_t"
-                                                    name="fund4t"
-                                                    type="text"
-                                                    class="form-control"
-                                                    value=""
-                                                    placeholder="Funds title">
-                                            </div>
-                                            <div class="col-sm-5">
-                                                <input
-                                                    id="fund_four"
-                                                    name="fund4"
-                                                    type="text"
-                                                    class="form-control"
-                                                    value=""
-                                                    placeholder="Rs.">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                <?php
-                } // end if to issue fees to all school
 
                 // getting the current month and year
                 $month = date('F', time());
@@ -670,6 +498,179 @@ if ($level == 'accountant' || $level == 'super') {
 
             <?php
                 } // end of if - issue fees section wise
+
+                
+                // issue fees to all school
+                // getting total students
+                $month = date('F');
+                $year = date('Y');
+                $query = "SELECT * FROM student_profile WHERE fk_client_id='$client' AND student_status='1'";
+                $get_all_students = query($query);
+                $total_students = mysqli_num_rows($get_all_students);
+                // getting issued fees
+                $query = "SELECT * FROM student_fee WHERE month='$month' AND year='$year' ";
+                $query .= "AND fk_client_id='$client'";
+                $feees = query($query);
+                $total_fees = mysqli_num_rows($feees);
+                if (($total_fees / $total_students) * 100 < 50) {
+                ?> 
+                    <form action="" method="post">
+                        <div class="card">
+                            <div class="card-header card-bg-header text-dark mb-3">
+                                <h5 class="mb-0">
+                                    <strong>Issue Fees / </strong><?php echo date('Y') . ', ' . date('F'); ?>
+                                    <span class="d-inline-block"
+                                        tabindex="0"
+                                        data-bs-toggle="tooltip"
+                                        title="Fees & Funds will be issued to all the students whose fees is not issued.">
+                                        <button type="button" class="btn btn-sm btn-outline-light"><i class="fa-solid fa-question"></i></button>
+                                    </span>
+                                </h5>
+                            </div>
+                            <div class="row mb-3 px-3">
+                                <div class="col-sm-4 mb-1">
+                                    <label for="due-date" class="form-label"><strong>Fees Last date</strong> <code>*</code></label>
+
+                                    <div class="col-auto">
+                                        <div class="input-group">
+                                            <input
+                                                name="last_date"
+                                                type="date"
+                                                class="form-control"
+                                                aria-label="Example input"
+                                                aria-describedby="button-addon2" required />
+
+                                            <button type="submit" name="issued_fees" id="button-addon2" class="btn btn-sm btn-success">
+                                                Issue Fees
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4 mb-1">
+                                    <div class="form-check ps-5" id="fund1">
+                                        <input class="form-check-input border-dark" type="checkbox" onclick="add_funds()" value="" id="fund1_ch">
+                                        <label class="form-check-label" for="fund1">
+                                            <strong>Add Fund?</strong>
+                                        </label>
+                                    </div>
+                                    <div id="fund1_d" style="display: none;">
+                                        <div class="row mb-3 d-flex align-items-center mt-2">
+                                            <div class="col-sm-7">
+                                                <input
+                                                    id="fund_one_t"
+                                                    name="fund1t"
+                                                    type="text"
+                                                    class="form-control"
+                                                    value=""
+                                                    placeholder="Funds title">
+                                            </div>
+                                            <div class="col-sm-5">
+                                                <input
+                                                    id="fund_one"
+                                                    name="fund1"
+                                                    type="text"
+                                                    class="form-control"
+                                                    value=""
+                                                    placeholder="Rs.">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4 mb-1">
+                                    <div class="form-check ps-5" id="fund2">
+                                        <input class="form-check-input border-dark" type="checkbox" onclick="add_funds()" value="" id="fund2_ch">
+                                        <label class="form-check-label" for="fund2">
+                                            <strong>Add Fund?</strong>
+                                        </label>
+                                    </div>
+                                    <div id="fund2_d" style="display: none;">
+                                        <div class="row mb-3 d-flex align-items-center mt-2">
+                                            <div class="col-sm-7">
+                                                <input
+                                                    id="fund_two_t"
+                                                    name="fund2t"
+                                                    type="text"
+                                                    class="form-control"
+                                                    value=""
+                                                    placeholder="Funds title">
+                                            </div>
+                                            <div class="col-sm-5">
+                                                <input
+                                                    id="fund_two"
+                                                    name="fund2"
+                                                    type="text"
+                                                    class="form-control"
+                                                    value=""
+                                                    placeholder="Rs.">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4 offset-sm-4 mb-1">
+                                    <div class="form-check ps-5" id="fund3">
+                                        <input class="form-check-input border-dark" type="checkbox" onclick="add_funds()" value="" id="fund3_ch">
+                                        <label class="form-check-label" for="fund3">
+                                            <strong>Add Fund?</strong>
+                                        </label>
+                                    </div>
+                                    <div id="fund3_d" style="display: none;">
+                                        <div class="row mb-3 d-flex align-items-center mt-2">
+                                            <div class="col-sm-7">
+                                                <input
+                                                    id="fund_three_t"
+                                                    name="fund3t"
+                                                    type="text"
+                                                    class="form-control"
+                                                    value=""
+                                                    placeholder="Funds title">
+                                            </div>
+                                            <div class="col-sm-5">
+                                                <input
+                                                    id="fund_three"
+                                                    name="fund3"
+                                                    type="text"
+                                                    class="form-control"
+                                                    value=""
+                                                    placeholder="Rs.">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4 mb-1">
+                                    <div class="form-check ps-5" id="fund4">
+                                        <input class="form-check-input border-dark" type="checkbox" onclick="add_funds()" value="" id="fund4_ch">
+                                        <label class="form-check-label" for="fund4">
+                                            <strong>Add Fund?</strong>
+                                        </label>
+                                    </div>
+                                    <div id="fund4_d" style="display: none;">
+                                        <div class="row mb-3 d-flex align-items-center mt-2">
+                                            <div class="col-sm-7">
+                                                <input
+                                                    id="fund_four_t"
+                                                    name="fund4t"
+                                                    type="text"
+                                                    class="form-control"
+                                                    value=""
+                                                    placeholder="Funds title">
+                                            </div>
+                                            <div class="col-sm-5">
+                                                <input
+                                                    id="fund_four"
+                                                    name="fund4"
+                                                    type="text"
+                                                    class="form-control"
+                                                    value=""
+                                                    placeholder="Rs.">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                <?php
+                } // end if to issue fees to all school
             } // if the issue fees button is pressed
             ?>
 

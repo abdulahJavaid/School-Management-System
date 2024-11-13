@@ -16,6 +16,33 @@ if ($level == 'accountant' || $level == 'super') {
 }
 ?>
 
+<?php
+// add more fees for the student
+if (isset($_POST['addmore'])) {
+    $fee_id = escape($_POST['fk_fee_id']);
+    $fund_title = escape($_POST['fund_title']);
+    $fund_amount = escape($_POST['fund_amount']);
+    $total_fee = escape($_POST['total_fee']);
+
+    // adding the additional amount into the funds table
+    $query = "INSERT INTO student_funds(fk_fee_id, fund_title, fund_amount, fk_client_id) ";
+    $query .= "VALUES('$fee_id', '$fund_title', '$fund_amount', '$client')";
+    $add_more = query($query);
+
+    if ($add_more) {
+        $total = (int) $total_fee + (int) $fund_amount;
+        // updating the total fees of the student
+        $query = "UPDATE student_fee SET total_fee='$total' WHERE fee_id='$fee_id' AND fk_client_id='$client'";
+        $update_total = query($query);
+
+        if ($update_total) {
+            redirect('./fee-not-paid.php');
+        }
+    }
+}
+
+?>
+
 <main id="main" class="main">
 
     <div class="pagetitle">
@@ -204,7 +231,7 @@ if ($level == 'accountant' || $level == 'super') {
                                         <th scope="col">Funds</th>
                                         <th scope="col">Total Fee</th>
                                         <th scope="col">Month</th>
-                                        <th scope="col">Paid Amount</th>
+                                        <th scope="col">Add More</th>
                                         <!-- <th scope="col">Dues</th> -->
                                     </tr>
                                 </thead>
@@ -270,6 +297,9 @@ if ($level == 'accountant' || $level == 'super') {
                                     // showing the records in the main table
                                     foreach ($main_data as $row) {
                                         $current_id = $row['fee_id'];
+                                        $std_roll_no = $row['roll_no'];
+                                        $std_name = $row['name'];
+                                        $std_total_fee = $row['total_fee'];
                                     ?>
                                         <tr>
                                             <td><?php echo $row['roll_no']; ?></td>
@@ -289,10 +319,16 @@ if ($level == 'accountant' || $level == 'super') {
                                             </td>
                                             <td>Rs.<?php echo $row['total_fee']; ?></td>
                                             <td><?php echo $row['year'] . ', ' . $row['month']; ?></td>
-                                            <td>
+                                            <td class="text-center">
                                                 <?php
                                                 if ($row['fee_status'] == 'unpaid' || $row['fee_status'] == 'rejected') {
-                                                    echo 'Rs.' . 0;
+                                                    // echo 'Rs.' . 0;
+                                                ?>
+                                                    <button class="btn btn-sm btn-outline-success" data-bs-toggle="modal" data-bs-target="#addFee"
+                                                        onclick="feeInfo('<?php echo $std_name; ?>', '<?php echo $std_roll_no; ?>', '<?php echo $current_id; ?>', '<?php echo $std_total_fee; ?>')">
+                                                        <i class="fa fa-plus" aria-hidden="true"></i>
+                                                    </button>
+                                                <?php
                                                 } else {
                                                     $dues = (int) $row['pending_dues'];
                                                     $paid = (int) $row['monthly_fee'] - $dues;
@@ -319,7 +355,57 @@ if ($level == 'accountant' || $level == 'super') {
         </div>
     </section>
 
+    <!-- The modal to add more amount to student fee -->
+    <div class="modal fade" id="addFee" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header card-bg-header text-white">
+                    <h5 class="modal-title" id="staticBackdropLabel"><strong>Fees addition</strong></h5>
+                    <button type="button" class="ms-auto bg-transparent border-0 text-white" data-bs-dismiss="modal" aria-label="Close"><i class="fa fa-times" aria-hidden="true"></i></button>
+                </div>
+                <form action="" method="post">
+                    <div class="modal-body" id="">
+                        <p class="lead" id="addFeeReg"><strong>Reg#: </strong></p>
+                        <p class="lead" id="addFeeName"><strong>Name: </strong></p>
+                        <input type="hidden" name="fk_fee_id" id="addFeeFkId">
+                        <input type="hidden" name="total_fee" id="addFeeTotalFee">
+                        <div class="row mb-3">
+                            <label for="" class="col-md-4 col-lg-3 col-form-label"><strong>Title</strong> <code>*</code></label>
+                            <div class="col-md-8 col-lg-9">
+                                <input name="fund_title" type="text" class="form-control" id="fullName" placeholder="Stationary etc." required>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <label for="" class="col-md-4 col-lg-3 col-form-label"><strong>Amount</strong> <code>*</code></label>
+                            <div class="col-md-8 col-lg-9">
+                                <input name="fund_amount" type="text" class="form-control" id="fullName" placeholder="Rs." required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" name="addmore" class="btn btn-success">Add</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
 </main><!-- End #main -->
+
+<script>
+    function feeInfo(stdName, rollNo, feeId, total) {
+        var name = document.getElementById('addFeeName');
+        var reg = document.getElementById('addFeeReg');
+        var fkId = document.getElementById('addFeeFkId');
+        var totalFee = document.getElementById('addFeeTotalFee');
+
+        name.innerHTML = '<strong>Name# </strong>' + stdName;
+        reg.innerHTML = '<strong>Reg# </strong>' + rollNo;
+        fkId.value = feeId;
+        totalFee.value = total;
+    }
+</script>
 
 <!-- ======= Footer ======= -->
 <?php include_once("includes/footer.php"); ?>
