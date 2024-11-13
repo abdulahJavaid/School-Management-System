@@ -498,7 +498,6 @@ if ($level == 'accountant' || $level == 'super') {
 
             <?php
                 } // end of if - issue fees section wise
-
                 
                 // issue fees to all school
                 // getting total students
