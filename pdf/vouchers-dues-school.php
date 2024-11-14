@@ -1,22 +1,7 @@
 <?php
-// paid fee for the current month
+// dues of the the student
 
-if (isset($_POST['roll_no_voucher'])) {
-    $roll_no = escape($_POST['roll_no_voucher']);
-    // fetching the admin id and adding the data
-    $admin_name = escape($_SESSION['login_name']);
-    $log = "Admin <strong>$admin_name</strong> generated fee voucher of student with reg# {<strong>$roll_no</strong>} !";
-    $times = date('d/m/Y h:i a', time());
-    $times = (string) $times;
-    // adding activity into the logs
-    $query = "INSERT INTO admin_logs(log_message, time, fk_client_id) VALUES('$log', '$times', '$client')";
-    $pass_query2 = mysqli_query($conn, $query);
-
-    $query = "SELECT * FROM student_profile WHERE roll_no='$roll_no' AND fk_client_id='$client'";
-    $data = query($query);
-    if (mysqli_num_rows($data) == 0) {
-        redirect("./fee-vouchers.php?ms=1");
-    }
+if (isset($_POST['all_students_for_dues_voucher'])) {
 
     $query = "SELECT * FROM school_profile_ WHERE client_id='$client'";
     $result = mysqli_query($conn, $query);
@@ -30,33 +15,37 @@ if (isset($_POST['roll_no_voucher'])) {
     $month = date('F');
     $year = date('Y');
 
-    $query = "SELECT * FROM student_fee LEFT JOIN student_funds ON ";
-    $query .= "student_fee.fee_id=student_funds.fk_fee_id ";
+    $query = "SELECT * FROM student_fee ";
     $query .= "INNER JOIN student_profile ON ";
     $query .= "student_fee.fk_student_id=student_profile.student_id INNER JOIN ";
     $query .= "student_class ON student_profile.student_id=student_class.fk_student_id INNER JOIN ";
     $query .= "class_sections ON student_class.fk_section_id=class_sections.section_id INNER JOIN ";
     $query .= "all_classes ON class_sections.fk_class_id=all_classes.class_id ";
-    $query .= "WHERE year='$year' AND month='$month' AND fee_status='unpaid' AND roll_no='$roll_no' ";
-    $query .= "AND student_status='1' AND student_fee.fk_client_id='$client'";
+    $query .= "WHERE fee_status LIKE '%due%' ";
+    $query .= "AND student_status='1' AND student_fee.fk_client_id='$client' ORDER BY student_id";
 
     // looping to get the funds record
+    $the_class = '';
+    $the_section = '';
     $result = query($query);
-    $funds = [];
+    $student = [];
     $main_data = [];
     while ($row = mysqli_fetch_assoc($result)) {
+        if ($the_class == '' || $the_section == '') {
+            $the_class = $row['class_name'];
+            $the_section = $row['section_name'];
+        }
+
         $main_id = $row['fee_id'];
-        if (!empty($row['fk_fee_id'])) {
-            if (!isset($funds[$main_id])) {
-                $funds[$main_id] = [
-                    'funds' => []
-                ];
-            }
-            $funds[$main_id]['funds'][] = '<tr><td>' . $row['fund_title'] . '</td><td>Rs.' . $row['fund_amount'] . '</td></tr>';
+        $student_id = $row['student_id'];
+
+        if (!isset($student[$student_id])) {
+            $student[$student_id] = [
+                'student' => $row,
+                'dues' => [],
+            ];
         }
-        if (!isset($main_data[$main_id])) {
-            $main_data[$main_id] = $row;
-        }
+        $student[$student_id]['dues'][] = $row;
     }
 
     $html = "
@@ -156,18 +145,13 @@ body {
 </head>
 <body>";
     // showing the records in the main table
-    foreach ($main_data as $rows) {
-        $current_id = $rows['fee_id'];
-
+    foreach ($student as $key => $gets) {
+        $rows = $gets['student'];
         $student_name = $rows['name'];
         $roll_no = $rows['roll_no'];
         $class = $rows['class_name'];
         $section = $rows['section_name'];
-        $fee = $rows['monthly_fee'];
-        $last_date = $rows['due_date'];
-        $total_fee = $rows['total_fee'];
 
-        // $html .= "1";
         $html .= "<div class='vouchers'>
         <div class='voucher-container'>
             <div class='voucher-header'>
@@ -175,7 +159,7 @@ body {
             <span class='voucher-type'>Student Copy</span><br>
                 <h3 class='school-name'>$name</h3>
             </div>
-            <h2 class='voucher-title'>Fee Voucher</h2>
+            <h2 class='voucher-title'>Dues Voucher</h2>
             
             <div class='voucher-details'>
                 <p><strong>Student Name:</strong> $student_name</p>
@@ -191,26 +175,29 @@ body {
                         <th>Amount</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td>Monthly Fee</td>
-                        <td>Rs.$fee</td>
+                <tbody>";
+        $total_to_pay = 0;
+        foreach ($gets['dues'] as $row) {
+            $due_month = $row['month'];
+            $due_year = $row['year'];
+            $remaining_dues = $row['pending_dues'];
+            $html .= "<tr>
+                        <td>$due_month, $due_year</td>
+                        <td>Rs.$remaining_dues</td>
                     </tr>";
-        if (isset($funds[$current_id])) {
-            foreach ($funds[$current_id]['funds'] as $get) {
-                $html .= "$get";
-            }
+            $total_to_pay += $remaining_dues;
         }
+
         $html .= "<tr>
-                        <td><strong>Total Fee</strong></td>
-                        <td>Rs.$total_fee</td>
+                        <td><strong>Total Dues</strong></td>
+                        <td>Rs.$total_to_pay</td>
                     </tr>
                     </tbody>
             </table>
             
-            <div class='payment-info'>
-                <p><strong>Last Date:</strong> $last_date</p>
-                <p><strong>Payment Method:</strong> Online Transfer/Cash</p>
+            <div class='payment-info'>";
+            // <p><strong>Last Date:</strong> 10 days</p>
+                $html .= "<p><strong>Payment Method:</strong> Online Transfer/Cash</p>
             </div>
             
             <div class='footer'>
@@ -224,7 +211,7 @@ body {
             <span class='voucher-type'>School Copy</span><br>
                 <h3 class='school-name'>$name</h3>
             </div>
-            <h2 class='voucher-title'>Fee Voucher</h2>
+            <h2 class='voucher-title'>Dues Voucher</h2>
             
             <div class='voucher-details'>
                 <p><strong>Student Name:</strong> $student_name</p>
@@ -240,26 +227,28 @@ body {
                         <th>Amount</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td>Monthly Fee</td>
-                        <td>Rs.$fee</td>
+                <tbody>";
+        $total_to_pay = 0;
+        foreach ($gets['dues'] as $row) {
+            $due_month = $row['month'];
+            $due_year = $row['year'];
+            $remaining_dues = $row['pending_dues'];
+            $html .= "<tr>
+                        <td>$due_month, $due_year</td>
+                        <td>Rs.$remaining_dues</td>
                     </tr>";
-        if (isset($funds[$current_id])) {
-            foreach ($funds[$current_id]['funds'] as $get) {
-                $html .= "$get";
-            }
+            $total_to_pay += $remaining_dues;
         }
         $html .= "<tr>
-                        <td><strong>Total Fee</strong></td>
-                        <td>Rs.$total_fee</td>
+                        <td><strong>Total Dues</strong></td>
+                        <td>Rs.$total_to_pay</td>
                     </tr>
                     </tbody>
             </table>
             
-            <div class='payment-info'>
-                <p><strong>Last Date:</strong> $last_date</p>
-                <p><strong>Payment Method:</strong> Online Transfer/Cash</p>
+            <div class='payment-info'>";
+            // <p><strong>Last Date:</strong> 10 days</p>
+                $html .= "<p><strong>Payment Method:</strong> Online Transfer/Cash</p>
             </div>
             
             <div class='footer'>
@@ -272,6 +261,15 @@ body {
 </html>
   ";
   
-  // downloaded pdf name
-  $pdf_name = "fee-voucher-reg-no-" . $roll_no . ".pdf";
+    // fetching the admin id and adding the data
+    $admin_name = escape($_SESSION['login_name']);
+    $log = "Admin <strong>$admin_name</strong> generated dues vouchers of all students !";
+    $times = date('d/m/Y h:i a', time());
+    $times = (string) $times;
+    // adding activity into the logs
+    $query = "INSERT INTO admin_logs(log_message, time, fk_client_id) VALUES('$log', '$times', '$client')";
+    $pass_query2 = mysqli_query($conn, $query);
+
+    // downloaded pdf name
+    $pdf_name = "dues-vouchers-school.pdf";
 }

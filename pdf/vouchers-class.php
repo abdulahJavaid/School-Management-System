@@ -182,7 +182,7 @@ body {
         
         <div class='voucher-details'>
             <p><strong>Student Name:</strong> $student_name</p>
-            <p><strong>Roll Number:</strong> $roll_no</p>
+            <p><strong>Reg. Number:</strong> $roll_no</p>
             <p><strong>Class:</strong> $class $section</p>
             <p><strong>Month:</strong> $year $month</p>
         </div>
@@ -213,11 +213,11 @@ body {
         
         <div class='payment-info'>
             <p><strong>Last Date:</strong> $last_date</p>
-            <p><strong>Payment Method:</strong> Bank Transfer/Cash</p>
+            <p><strong>Payment Method:</strong> Online Transfer/Cash</p>
         </div>
         
         <div class='footer'>
-            <p><strong>Note:</strong> Please ensure payment is made by the due date to avoid any late fees.</p>
+            <p><strong>Note:</strong> Please ensure payment is made by the due date to avoid any inconvenience.</p>
         </div>
     </div>
 
@@ -231,7 +231,7 @@ body {
         
         <div class='voucher-details'>
             <p><strong>Student Name:</strong> $student_name</p>
-            <p><strong>Roll Number:</strong> $roll_no</p>
+            <p><strong>Reg. Number:</strong> $roll_no</p>
             <p><strong>Class:</strong> $class $section</p>
             <p><strong>Month:</strong> $year $month</p>
         </div>
@@ -262,11 +262,11 @@ body {
         
         <div class='payment-info'>
             <p><strong>Last Date:</strong> $last_date</p>
-            <p><strong>Payment Method:</strong> Bank Transfer/Cash</p>
+            <p><strong>Payment Method:</strong> Online Transfer/Cash</p>
         </div>
         
         <div class='footer'>
-            <p><strong>Note:</strong> Please ensure payment is made by the due date to avoid any late fees.</p>
+            <p><strong>Note:</strong> Please ensure payment is made by the due date to avoid any inconvenience.</p>
         </div>
     </div>
 </div>";

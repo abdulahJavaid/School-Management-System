@@ -285,7 +285,7 @@ if ($level == 'accountant' || $level == 'super') {
                         <div class="card">
                             <div class="card-header card-bg-header text-dark mb-3">
                                 <h5 class="mb-0">
-                                    <strong>Issue Fees class wise / </strong><?php echo date('Y') . ', ' . date('F'); ?>
+                                    <strong>Issue Fees class wise - </strong><?php echo date('Y') . ', ' . date('F'); ?>
                                     <span class="d-inline-block"
                                         tabindex="0"
                                         data-bs-toggle="tooltip"
@@ -517,7 +517,7 @@ if ($level == 'accountant' || $level == 'super') {
                         <div class="card">
                             <div class="card-header card-bg-header text-dark mb-3">
                                 <h5 class="mb-0">
-                                    <strong>Issue Fees / </strong><?php echo date('Y') . ', ' . date('F'); ?>
+                                    <strong>Issue Fees(school) - </strong><?php echo date('Y') . ', ' . date('F'); ?>
                                     <span class="d-inline-block"
                                         tabindex="0"
                                         data-bs-toggle="tooltip"
@@ -713,7 +713,7 @@ if ($level == 'accountant' || $level == 'super') {
                 <form action="" method="post">
                     <div class="row mb-3">
 
-                        <code>- Unpaid fees will be added to pending fees/dues of students</code>
+                        <code>- Unpaid fees will be added to pending dues.</code>
                         <div class="col-sm-4">
                             <button type="submit" name="add_unpaid" class="btn btn-sm btn-success">Add to Dues</button>
                         </div>

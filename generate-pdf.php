@@ -6,7 +6,17 @@ require_once('./db_connection/configs.php');
 require_once('./db_connection/connection.php');
 require_once('./includes/functions.php');
 
-if (!isset($_POST['generate']) && !isset($_POST['current_month']) && !isset($_POST['generate_name']) && !isset($_POST['generate_reg']) && !isset($_POST['dues_current_month']) && !isset($_POST['dues_name']) && !isset($_POST['dues_reg']) && !isset($_POST['notpaid_current_month']) && !isset($_POST['notpaid_name']) && !isset($_POST['notpaid_reg']) && !isset($_POST['download_school_vouchers']) && !isset($_POST['download_class_vouchers']) && !isset($_POST['download_student_voucher']) && !isset($_POST['generate_paid_salary']) && !isset($_POST['notpaid_month']) && !isset($_POST['dues_month']) && !isset($_POST['generate_month']) && !isset($_POST['download_timetable']) && !isset($_POST['download_exam_schedule']) && !isset($_POST['download_student_result']) && !isset($_POST['download_class_result'])) {
+if (!isset($_POST['generate']) && !isset($_POST['current_month']) && !isset($_POST['generate_name']) && 
+!isset($_POST['generate_reg']) && !isset($_POST['dues_current_month']) && !isset($_POST['dues_name']) && 
+!isset($_POST['dues_reg']) && !isset($_POST['notpaid_current_month']) && !isset($_POST['notpaid_name']) && 
+!isset($_POST['notpaid_reg']) && !isset($_POST['download_school_vouchers']) && 
+!isset($_POST['download_class_vouchers']) && !isset($_POST['download_student_voucher']) && 
+!isset($_POST['generate_paid_salary']) && !isset($_POST['notpaid_month']) && 
+!isset($_POST['dues_month']) && !isset($_POST['generate_month']) && 
+!isset($_POST['download_timetable']) && !isset($_POST['download_exam_schedule']) && 
+!isset($_POST['download_student_result']) && !isset($_POST['download_class_result']) && 
+!isset($_POST['student_dues_voucher']) && ! isset($_POST['class_dues_vouchers']) && 
+!isset($_POST['school_dues_vouchers'])) {
     redirect("./");
 }
 
@@ -41,7 +51,9 @@ include "pdf/download-timetable.php";
 include "pdf/download-exam-schedule.php";
 include "pdf/student-result.php";
 include "pdf/class-result.php";
-
+include "pdf/vouchers-dues-student.php";
+include "pdf/vouchers-dues-class.php";
+include "pdf/vouchers-dues-school.php";
 
 // using the Dompdf namespace
 use Dompdf\Dompdf;
