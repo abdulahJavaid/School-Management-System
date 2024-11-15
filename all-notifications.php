@@ -3,6 +3,14 @@
 <!-- ======= Sidebar ======= -->
 <?php require_once("includes/sidebar.php"); ?>
 
+<?php
+// if the admin is not super or developer, redirect
+if ($level == 'super' || $level == 'developer') {
+} else {
+    redirect("./");
+}
+?>
+
 <main id="main" class="main">
 
     <div class="pagetitle">

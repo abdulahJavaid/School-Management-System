@@ -394,6 +394,10 @@
       <div class="col-lg-4">
 
         <!-- Recent Activity -->
+         <?php
+         // if the logged in user is super or developer, show activity
+         if ($level == 'super' || $level == 'developer') {
+          ?>
         <div class="card">
           <!-- <div class="filter">
               <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
@@ -438,7 +442,10 @@
             </div>
 
           </div>
-        </div><!-- End Recent Activity -->
+        </div>
+        <?php
+         } // end if to show recent activity to super admin & developer
+        ?>
 
         <!-- Website Traffic -->
         <div class="card">
