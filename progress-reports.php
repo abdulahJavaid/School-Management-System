@@ -143,7 +143,7 @@ if ($level == 'clerk' || $level == 'super') {
                         <div class="col-md-6">
                             <div class="card">
                                 <div class="card-header card-bg-header text-white mb-3">
-                                    <h5 class="mb-0"><i class="fas fa-calendar-alt pro-header-icon"></i><strong>Week 1</strong></h5>
+                                    <h5 class="mb-0 text-dark"><i class="fas fa-calendar-alt pro-header-icon"></i><strong>Week 1</strong></h5>
                                 </div>
                                 <?php
                                 // week 1 progress report
@@ -181,7 +181,7 @@ if ($level == 'clerk' || $level == 'super') {
                         <div class="col-md-6">
                             <div class="card">
                                 <div class="card-header card-bg-header text-white mb-3">
-                                    <h5 class="mb-0"><i class="fas fa-calendar-alt pro-header-icon"></i><strong>Week 2</strong></h5>
+                                    <h5 class="mb-0 text-dark"><i class="fas fa-calendar-alt pro-header-icon"></i><strong>Week 2</strong></h5>
                                 </div>
                                 <?php
                                 // week 1 progress report
@@ -223,7 +223,7 @@ if ($level == 'clerk' || $level == 'super') {
                         <div class="col-md-6">
                             <div class="card">
                                 <div class="card-header card-bg-header text-white mb-3">
-                                    <h5 class="mb-0"><i class="fas fa-calendar-alt pro-header-icon"></i><strong>Week 3</strong></h5>
+                                    <h5 class="mb-0 text-dark"><i class="fas fa-calendar-alt pro-header-icon"></i><strong>Week 3</strong></h5>
                                 </div>
                                 <?php
                                 // week 1 progress report
@@ -261,7 +261,7 @@ if ($level == 'clerk' || $level == 'super') {
                         <div class="col-md-6">
                             <div class="card">
                                 <div class="card-header card-bg-header text-white mb-3">
-                                    <h5 class="mb-0"><i class="fas fa-calendar-alt pro-header-icon"></i><strong>Week 4</strong></h5>
+                                    <h5 class="mb-0 text-dark"><i class="fas fa-calendar-alt pro-header-icon"></i><strong>Week 4</strong></h5>
                                 </div>
                                 <?php
                                 // week 1 progress report

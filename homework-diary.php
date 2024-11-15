@@ -138,8 +138,8 @@ else {
 
             <!-- Homework Diary Card -->
             <div class="card">
-                <div class="card-header card-bg-header text-white mb-3">
-                    <h5 class="mb-0"><strong>Class: <?php echo $rows['class_name'] . " " . $rows['section_name']; ?> / <?php echo date("jS \of F Y", strtotime($date)); ?></strong></h5>
+                <div class="card-header card-bg-header mb-3">
+                    <h5 class="mb-0 text-dark"><strong><i class="fas fa-book pro-header-icon"></i> Class: <?php echo $rows['class_name'] . " " . $rows['section_name']; ?> - <?php echo date("jS \of F Y", strtotime($date)); ?></strong></h5>
                 </div>
 
                 <?php
