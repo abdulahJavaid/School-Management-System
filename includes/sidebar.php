@@ -2,20 +2,12 @@
 
   <ul class="sidebar-nav" id="sidebar-nav">
 
-    <?php
-    // // if the logged in user is other than developer
-    // if($level != 'developer'){
-    ?>
     <li class="nav-item">
       <a class="nav-link " href="index.php">
         <i class=""><img src="images/dashboard.gif" width="30px" height="30px" alt=""></i>
         <span>Dashboard</span>
       </a>
     </li>
-    <!-- End Dashboard Sidebar -->
-    <?php
-    // } // end of if
-    ?>
 
     <li class="nav-item">
       <a class="nav-link collapsed" data-bs-target="#components-nav" href="school-profile.php"> <!-- data-bs-toggle="collapse" -->
@@ -24,10 +16,9 @@
         <!-- <i class="bi bi-chevron-down ms-auto"></i> -->
       </a>
     </li>
-    <!-- End School Profile Sidebar -->
 
     <?php
-    // if the logged in user is developer
+    // if - logged in user is developer(codsmine)
     if ($level == 'developer') {
     ?>
       <li class="nav-item">
@@ -35,13 +26,13 @@
           <i class=><img src="images/subscribe.gif" width="30px" height="30px" alt=""></i>
           <span>Subscriptions</span>
         </a>
-      </li><!-- Undefined functionality -->
+      </li>
     <?php
-    } // end of if
+    } // end of if - codsmine subscription tab
     ?>
 
     <?php
-    // if the logged in user is clerk or super
+    // if - logged in user is clerk/super
     if ($level == 'clerk' || $level == 'super') {
     ?>
       <li class="nav-item">
@@ -67,13 +58,13 @@
             </a>
           </li>
         </ul>
-      </li><!-- End Profiles -->
+      </li>
     <?php
-    } // end of if statement
+    } // end of if - profiles tab
     ?>
 
     <?php
-    // if the logged in user is clerk or super
+    // if - logged in user is clerk/super
     if ($level == 'clerk' || $level == 'super') {
     ?>
       <li class="nav-item">
@@ -93,6 +84,11 @@
             </a>
           </li>
           <li>
+            <a href="#">
+              <i class="bi bi-arrow-right"></i><span>Promote Class</span>
+            </a>
+          </li>
+          <li>
             <a href="add-time-table.php">
               <i class="bi bi-arrow-right"></i><span>Timetables</span>
             </a>
@@ -103,13 +99,13 @@
             </a>
           </li>
         </ul>
-      </li><!-- End Timetable and exam schedule -->
+      </li>
     <?php
-    } // end of if statement
+    } // end of if - classes management tabs
     ?>
 
     <?php
-    // if the logged in user is accountant or super
+    // if - logged in user is accountant/super
     if ($level == 'accountant' || $level == 'super') {
     ?>
       <li class="nav-item">
@@ -144,13 +140,13 @@
             </a>
           </li>
         </ul>
-      </li><!-- End Finance Management -->
+      </li>
     <?php
-    } // end of if statement
+    } // end of if - expence/receiving tabs
     ?>
 
     <?php
-    // if the logged in user is accountant or super
+    // if the logged in user is accountant/super
     if ($level == 'accountant' || $level == 'super') {
     ?>
       <li class="nav-item">
@@ -190,13 +186,13 @@
             </a>
           </li>
         </ul>
-      </li><!-- End Student Fee Section -->
+      </li>
     <?php
-    } // end of if statement
+    } // end of if - student fee tab
     ?>
 
     <?php
-    // if the logged in user is from school
+    // if - logged in user is clerk/super
     if ($level == 'clerk' || $level == 'super') {
     ?>
       <li class="nav-item">
@@ -226,13 +222,13 @@
             </a>
           </li>
         </ul>
-      </li><!-- End student daily reports -->
+      </li>
     <?php
-    } // end of if statement
+    } // end of if - student reports tab
     ?>
 
     <?php
-    // if the loggd in user is from school
+    // if - loggd in user is from school
     if ($level == 'super' || $level == 'accountant' || $level == 'clerk') {
     ?>
 
@@ -243,11 +239,11 @@
         </a>
       </li>
     <?php
-    } // end of if statement
+    } // end of if - fee vouchers tab
     ?>
 
     <?php
-    // if the logged in user is developer
+    // if - logged in user is accountant/super
     if ($level == 'accountant' || $level == 'super') {
     ?>
       <li class="nav-item">
@@ -255,13 +251,13 @@
           <i class=><img src="images/subscribe.gif" width="30px" height="30px" alt=""></i>
           <span>Subscriptions</span>
         </a>
-      </li><!-- Undefined functionality -->
+      </li>
     <?php
-    } // end of if
+    } // end of if - subscriptions tab
     ?>
 
     <?php
-    // if the logged in user is from school
+    // if - logged in user is from school
     if ($level == 'super' || $level == 'accountant' || $level == 'clerk') {
     ?>
 
@@ -270,13 +266,13 @@
           <i class=><img src="images/promote.gif" width="30px" height="30px" alt=""></i>
           <span>Add Announcements</span>
         </a>
-      </li><!-- End Announcements tab -->
+      </li>
     <?php
-    } // end of if statement
+    } // end of if - announcements tab
     ?>
 
     <?php
-    // not showing for now the mcqs section
+    // if - not showing for now the mcqs section
     if ($level == 'not=here') {
     ?>
       <li class="nav-item">
@@ -306,13 +302,13 @@
             </a>
           </li>
         </ul>
-      </li><!-- End Syllabus -->
+      </li>
     <?php
-    } // not showing for now the mcqs section
+    } // end of if - not showing for now the mcqs section
     ?>
 
     <?php
-    // if the logged in user is from the school
+    // if - logged in user is from the school
     if ($level == 'super' || $level == 'accountant' || $level == 'clerk') {
     ?>
 
@@ -321,9 +317,9 @@
           <i class=><img src="images/more.gif" width="30px" height="30px" alt=""></i>
           <span>More Features</span>
         </a>
-      </li><!-- Undefined functionality -->
+      </li>
     <?php
-    } // end of if statement
+    } // end of if - more fatures tab
     ?>
 
   </ul>
