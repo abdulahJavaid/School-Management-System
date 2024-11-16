@@ -108,7 +108,6 @@
     } // end of if statement
     ?>
 
-
     <?php
     // if the logged in user is accountant or super
     if ($level == 'accountant' || $level == 'super') {
@@ -197,26 +196,12 @@
     ?>
 
     <?php
-    // if the logged in user is developer
-    if ($level == 'accountant' || $level == 'super') {
-    ?>
-      <li class="nav-item">
-        <a class="nav-link collapsed" href="./subs-school.php">
-          <i class=><img src="images/subscribe.gif" width="30px" height="30px" alt=""></i>
-          <span>Subscriptions</span>
-        </a>
-      </li><!-- Undefined functionality -->
-    <?php
-    } // end of if
-    ?>
-
-    <?php
     // if the logged in user is from school
     if ($level == 'clerk' || $level == 'super') {
     ?>
       <li class="nav-item">
         <a class="nav-link collapsed" data-bs-target="#student-tracking" data-bs-toggle="collapse" href="#">
-          <i class=><img src="images/analytics.gif" width="30px" height="30px" alt=""></i><span>Student Tracking</span>
+          <i class=><img src="images/analytics.gif" width="30px" height="30px" alt=""></i><span>Student Reports</span>
           <i class="bi bi-chevron-down ms-auto"></i>
         </a>
         <ul id="student-tracking" class="nav-content collapse " data-bs-parent="#sidebar-nav">
@@ -262,6 +247,20 @@
     ?>
 
     <?php
+    // if the logged in user is developer
+    if ($level == 'accountant' || $level == 'super') {
+    ?>
+      <li class="nav-item">
+        <a class="nav-link collapsed" href="./subs-school.php">
+          <i class=><img src="images/subscribe.gif" width="30px" height="30px" alt=""></i>
+          <span>Subscriptions</span>
+        </a>
+      </li><!-- Undefined functionality -->
+    <?php
+    } // end of if
+    ?>
+
+    <?php
     // if the logged in user is from school
     if ($level == 'super' || $level == 'accountant' || $level == 'clerk') {
     ?>
@@ -275,41 +274,41 @@
     <?php
     } // end of if statement
     ?>
-    
+
     <?php
-    // not showing for now
-    // if ($level == 'nothing=here') {
+    // not showing for now the mcqs section
+    if ($level == 'not=here') {
     ?>
-    <li class="nav-item">
-      <a class="nav-link collapsed" data-bs-target="#syllabus" data-bs-toggle="collapse" href="#">
-        <i class=><img src="images/syllabus.jpeg" width="30px" height="30px" alt=""></i><span>Academics</span>
-        <i class="bi bi-chevron-down ms-auto"></i>
-      </a>
-      <ul id="syllabus" class="nav-content collapse " data-bs-parent="#sidebar-nav">
-        <!-- <li>
+      <li class="nav-item">
+        <a class="nav-link collapsed" data-bs-target="#syllabus" data-bs-toggle="collapse" href="#">
+          <i class=><img src="images/syllabus.jpeg" width="30px" height="30px" alt=""></i><span>Academics</span>
+          <i class="bi bi-chevron-down ms-auto"></i>
+        </a>
+        <ul id="syllabus" class="nav-content collapse " data-bs-parent="#sidebar-nav">
+          <!-- <li>
           <a href="http://localhost:8501">
             <i class="bi bi-arrow-right"></i><span>Books</span>
           </a>
         </li> -->
-        <li>
-          <a href="add-mcq.php">
-            <i class="bi bi-arrow-right"></i><span>Add Mcq's</span>
-          </a>
-        </li>
-        <li>
-          <a href="generate-mcq.php">
-            <i class="bi bi-arrow-right"></i><span>Generate Mcq's</span>
-          </a>
-        </li>
-        <li>
-          <a href="view-mcq.php">
-            <i class="bi bi-arrow-right"></i><span>View Mcq's</span>
-          </a>
-        </li>
-      </ul>
-    </li><!-- End Syllabus -->
+          <li>
+            <a href="add-mcq.php">
+              <i class="bi bi-arrow-right"></i><span>Add Mcq's</span>
+            </a>
+          </li>
+          <li>
+            <a href="generate-mcq.php">
+              <i class="bi bi-arrow-right"></i><span>Generate Mcq's</span>
+            </a>
+          </li>
+          <li>
+            <a href="view-mcq.php">
+              <i class="bi bi-arrow-right"></i><span>View Mcq's</span>
+            </a>
+          </li>
+        </ul>
+      </li><!-- End Syllabus -->
     <?php
-    // } // not showing for now
+    } // not showing for now the mcqs section
     ?>
 
     <?php

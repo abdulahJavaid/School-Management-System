@@ -8,9 +8,13 @@
 $client = escape($_SESSION['client_id']);
 ?>
 
-<?php include_once("./refactoring/add-mcq-requests.php"); ?>
-
-
+<?php
+// checking session for appropriate access
+if ($level == 'not=here') {
+} else {
+    redirect("./");
+}
+?>
 
 <?php
 // getting the mcqs
