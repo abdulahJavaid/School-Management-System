@@ -84,7 +84,7 @@
             </a>
           </li>
           <li>
-            <a href="#">
+            <a href="./promote-class.php">
               <i class="bi bi-arrow-right"></i><span>Promote Class</span>
             </a>
           </li>
