@@ -85,7 +85,7 @@
           </li>
           <li>
             <a href="./promote-class.php">
-              <i class="bi bi-arrow-right"></i><span>Promote Class</span>
+              <i class="bi bi-arrow-right"></i><span>Change Class-section</span>
             </a>
           </li>
           <li>

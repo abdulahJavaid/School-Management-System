@@ -22,20 +22,26 @@ if (isset($_POST['section_id'])) {
     $query .= "student_profile as sp ON sc.fk_student_id=sp.student_id ";
     $query .= "INNER JOIN all_classes as ac ON sc.fk_class_id=ac.class_id ";
     $query .= "INNER JOIN class_sections as cs ON sc.fk_section_id=cs.section_id ";
-    $query .= "WHERE fk_section_id='$section_id' AND sc.fk_client_id='$client'";
+    $query .= "WHERE sc.fk_section_id='$section_id' AND sc.status='1' AND sc.fk_client_id='$client'";
 
     $result = mysqli_query($conn, $query);
     $matches = [];
 
     // Fetch results and store them in the $matches array$results = [];
-    while ($row = mysqli_fetch_assoc($result)) {
-        $class = $row['class_name'] . ' ' . $row['section_name'];
+    if (mysqli_num_rows($result) != 0) {
+        while ($row = mysqli_fetch_assoc($result)) {
+            $class = $row['class_name'] . ' ' . $row['section_name'];
+            $matches[] = [
+                'id' => $row['fk_student_id'],
+                'name' => $row['name'],
+                'roll_no' => $row['roll_no'],
+                'class_sect' => $class,
+                'section_id' => $row['section_id']
+            ];
+        }
+    } else {
         $matches[] = [
-            'id' => $row['fk_student_id'],
-            'name' => $row['name'],
-            'roll_no' => $row['roll_no'],
-            'class_sect' => $class,
-            'section_id' => $row['section_id']
+            'message' => 'Class is empty, no students to Pass Out.'
         ];
     }
 

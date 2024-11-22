@@ -16,16 +16,30 @@ if ($level == 'clerk' || $level == 'super') {
 }
 ?>
 
+<?php include_once("./refactoring/class-promotion-requests.php"); ?>
+
+<?php
+// if the students are passed out successfully
+if (isset($_GET['passOut'])) {
+?>
+    <span id="passed-out"></span>
+<?php
+} // end if
+?>
+
 <main id="main" class="main">
 
     <div class="pagetitle">
-        <h1>Promote Class</h1>
+        <h1>Change Class-section</h1>
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item active"><?php echo $_SESSION['school_name']; ?></li>
             </ol>
         </nav>
     </div><!-- End Page Title -->
+
+    <div id="po-success-popup" style="display:none;">Passed Out students are now aluminis of this school.</div>
+    <div id="po-noStudent-popup" style="display:none;">Class is empty, no students to Pass Out.</div>
 
     <div class="row">
         <div class="container">
@@ -37,7 +51,7 @@ if ($level == 'clerk' || $level == 'super') {
                 <div class="col-auto">
                     <div class="input-group mb-2" id="classSelectDiv">
                         <button type="submit" name="add_subject" id="button-addon1" class="btn btn-sm btn-secondary">
-                            Promote Class
+                            Pass Out
                         </button>
                         <select id="sectionId"
                             name="section"
@@ -128,18 +142,18 @@ if ($level == 'clerk' || $level == 'super') {
                         <div class="card">
                             <div class="card-header card-bg-header border-0 text-dark mb-0">
                                 <h5 class="mb-0">
-                                    <strong>Class Promotion</strong>
+                                    <strong>Pass Out Class</strong>
                                     <span class="d-inline-block"
                                         tabindex="0"
                                         data-bs-toggle="tooltip"
-                                        title="If you do not want to promote a single/some student, first promote the whole class then demote a single/some student from the promoted class.">
+                                        title="The class has completed their study at <?php echo $_SESSION['school_name']; ?>">
                                         <button type="button" class="btn btn-sm btn-outline-light"><i class="fa-solid fa-question"></i></button>
                                     </span>
                                 </h5>
                             </div>
                             <div class="card-body px-0 pb-0">
                                 <div class="row">
-                                    <div class="col-sm-6 pe-0">
+                                    <div class="col-sm-12 pe-">
                                         <!-- <div class="card border border-info border-end rounded-start">One</div> -->
                                         <!-- <div id="one" class="card border border-info border-end rounded-start m-0 p-4" style='border-right: 1px solid #17a2b8 !important; border-radius: 0 0 0 0.375rem !important;'> -->
                                         <div id="one" class="">
@@ -147,13 +161,22 @@ if ($level == 'clerk' || $level == 'super') {
                                                 <div class="col-12 mb- mb-lg-">
                                                     <div class="overflow-hidden card table-nowrap table-card custom-profile">
                                                         <div class="card-header d-flex justify-content-between align-items-center">
-                                                            <h5 class="mb-0 text-dark">Class Students</h5>
-                                                            <span class="d-inline-block"
-                                                                tabindex="0"
-                                                                data-bs-toggle="tooltip"
-                                                                title="Students of the selected class.">
-                                                                <button type="button" class="btn btn-sm btn-outline-dark"><i class="fa-solid fa-question"></i></button>
-                                                            </span>
+                                                            <h5 class="mb-0 text-dark">
+                                                                Class Students
+                                                                <span class="d-inline-block"
+                                                                    tabindex="0"
+                                                                    data-bs-toggle="tooltip"
+                                                                    title="Students of the selected class.">
+                                                                    <button type="button" class="btn btn-sm btn-outline-dark"><i class="fa-solid fa-question"></i></button>
+                                                                </span>
+                                                            </h5>
+                                                            <button onclick="passOut()" class="btn btnsm btn-outline-success rounded-4" type="button">
+                                                                Pass Out Class
+                                                                <span class="bg-success rounded-circle text-white px-2 py-1">
+                                                                    <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                                                                    <!-- <i class="fas fa-chevron-right"></i> -->
+                                                                </span>
+                                                            </button>
                                                         </div>
                                                         <div class="table-responsive">
                                                             <table class="table mb-0">
@@ -175,9 +198,9 @@ if ($level == 'clerk' || $level == 'super') {
                                     </div>
                                     <input type="hidden" id="hid_section_id" name="hid_section_id">
                                     <input type="hidden" id="hid_class_section" name="hid_class_section">
-                                    <div class="col-sm-6 ps-0">
-                                        <!-- <div class="card border border-info border-start rounded-end">Two</div> -->
-                                        <!-- <div class="card border border-info border-end rounded-start m-0 p-4" style="border-left: 1px solid #17a2b8 !important; border-radius: 0 0 0.375rem 0 !important;"> -->
+                                    <!-- <div class="col-sm-6 ps-0">
+                                        <div class="card border border-info border-start rounded-end">Two</div>
+                                        <div class="card border border-info border-end rounded-start m-0 p-4" style="border-left: 1px solid #17a2b8 !important; border-radius: 0 0 0.375rem 0 !important;">
                                         <div id="two" class="">
                                             <div class="row">
                                                 <div class="col-12 mb- mb-lg-">
@@ -198,28 +221,29 @@ if ($level == 'clerk' || $level == 'super') {
                                                                 </div>
                                                             </div>
                                                             <?php
-                                                            // getting the class and sections of the school
-                                                            $query = "SELECT * FROM all_classes AS ac INNER JOIN ";
-                                                            $query .= "class_sections cs ON ac.class_id=cs.fk_class_id ";
-                                                            $query .= "WHERE ac.fk_client_id='$client'";
-                                                            $get_class_sections = query($query);
+                                                            // // getting the class and sections of the school
+                                                            // $query = "SELECT * FROM all_classes AS ac INNER JOIN ";
+                                                            // $query .= "class_sections cs ON ac.class_id=cs.fk_class_id ";
+                                                            // $query .= "WHERE ac.fk_client_id='$client'";
+                                                            // $get_class_sections = query($query);
 
-                                                            while ($row = mysqli_fetch_assoc($get_class_sections)) {
+                                                            // while ($row = mysqli_fetch_assoc($get_class_sections)) {
                                                             ?>
                                                                 <div class="col-6">
                                                                     <div class="card-body pt-2 pointer custom-profile">
-                                                                        <?php echo $row['class_name'] . ' ' . $row['section_name']; ?>
+                                                                        <?php // echo $row['class_name'] . ' ' . $row['section_name']; 
+                                                                        ?>
                                                                     </div>
                                                                 </div>
                                                             <?php
-                                                            } // end of loop to fetch results
+                                                            // } // end of loop to fetch results
                                                             ?>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    </div> -->
                                 </div>
 
                             </div>
@@ -230,7 +254,130 @@ if ($level == 'clerk' || $level == 'super') {
                 <!--  -->
                 <!--  -->
             </section>
+            <div class="container mt-5 pt-4">
+    <!-- <div class="row align-items-end mb-4 pb-2">
+        <div class="col-md-8">
+            <div class="section-title text-center text-md-start">
+                <h4 class="title mb-4">Find the perfect jobs</h4>
+                <p class="text-muted mb-0 para-desc">Start work with Leaping. Build responsive, mobile-first projects on the web with the world's most popular front-end component library.</p>
+            </div>
+        </div>
 
+        <div class="col-md-4 mt-4 mt-sm-0 d-none d-md-block">
+            <div class="text-center text-md-end">
+                <a href="#" class="text-primary">View more Jobs <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right fea icon-sm"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+            </div>
+        </div>
+    </div> -->
+
+    <div class="row">
+        <div class="col-lg-4 col-md-6 col-12 mt-4 pt-2">
+            <div class="card border-0 bg-light rounded shadow">
+                <div class="card-body p-4">
+                    <span class="badge rounded-pill bg-primary float-md-end mb-3 mb-sm-0">Full time</span>
+                    <h5>Web Designer</h5>
+                    <div class="mt-3">
+                        <span class="text-muted d-block"><i class="fa fa-home" aria-hidden="true"></i> <a href="#" target="_blank" class="text-muted">Bootdey.com LLC.</a></span>
+                        <span class="text-muted d-block"><i class="fa fa-map-marker" aria-hidden="true"></i> USA</span>
+                    </div>
+                    
+                    <div class="mt-3">
+                        <a href="#" class="btn btn-primary">View Details</a>
+                    </div>
+                </div>
+            </div>
+        </div><!--end col-->
+        
+        <div class="col-lg-4 col-md-6 col-12 mt-4 pt-2">
+            <div class="card border-0 bg-light rounded shadow">
+                <div class="card-body p-4">
+                    <span class="badge rounded-pill bg-primary float-md-end mb-3 mb-sm-0">Remote</span>
+                    <h5>Front-end Developer</h5>
+                    <div class="mt-3">
+                        <span class="text-muted d-block"><i class="fa fa-home" aria-hidden="true"></i> <a href="#" target="_blank" class="text-muted">Bootdey.com LLC.</a></span>
+                        <span class="text-muted d-block"><i class="fa fa-map-marker" aria-hidden="true"></i> USA</span>
+                    </div>
+                    
+                    <div class="mt-3">
+                        <a href="#" class="btn btn-primary">View Details</a>
+                    </div>
+                </div>
+            </div>
+        </div><!--end col-->
+        
+        <div class="col-lg-4 col-md-6 col-12 mt-4 pt-2">
+            <div class="card border-0 bg-light rounded shadow">
+                <div class="card-body p-4">
+                    <span class="badge rounded-pill bg-primary float-md-end mb-3 mb-sm-0">Contract</span>
+                    <h5>Web Developer</h5>
+                    <div class="mt-3">
+                        <span class="text-muted d-block"><i class="fa fa-home" aria-hidden="true"></i> <a href="#" target="_blank" class="text-muted">Bootdey.com LLC.</a></span>
+                        <span class="text-muted d-block"><i class="fa fa-map-marker" aria-hidden="true"></i> USA</span>
+                    </div>
+                    
+                    <div class="mt-3">
+                        <a href="#" class="btn btn-primary">View Details</a>
+                    </div>
+                </div>
+            </div>
+        </div><!--end col-->
+        
+        <div class="col-lg-4 col-md-6 col-12 mt-4 pt-2">
+            <div class="card border-0 bg-light rounded shadow">
+                <div class="card-body p-4">
+                    <span class="badge rounded-pill bg-primary float-md-end mb-3 mb-sm-0">WFH</span>
+                    <h5>Back-end Developer</h5>
+                    <div class="mt-3">
+                        <span class="text-muted d-block"><i class="fa fa-home" aria-hidden="true"></i> <a href="#" target="_blank" class="text-muted">Bootdey.com LLC.</a></span>
+                        <span class="text-muted d-block"><i class="fa fa-map-marker" aria-hidden="true"></i> USA</span>
+                    </div>
+                    
+                    <div class="mt-3">
+                        <a href="#" class="btn btn-primary">View Details</a>
+                    </div>
+                </div>
+            </div>
+        </div><!--end col-->
+        
+        <div class="col-lg-4 col-md-6 col-12 mt-4 pt-2">
+            <div class="card border-0 bg-light rounded shadow">
+                <div class="card-body p-4">
+                    <span class="badge rounded-pill bg-primary float-md-end mb-3 mb-sm-0">Full time</span>
+                    <h5>UX / UI Designer</h5>
+                    <div class="mt-3">
+                        <span class="text-muted d-block"><i class="fa fa-home" aria-hidden="true"></i> <a href="#" target="_blank" class="text-muted">Bootdey.com LLC.</a></span>
+                        <span class="text-muted d-block"><i class="fa fa-map-marker" aria-hidden="true"></i> USA</span>
+                    </div>
+                    
+                    <div class="mt-3">
+                        <a href="#" class="btn btn-primary">View Details</a>
+                    </div>
+                </div>
+            </div>
+        </div><!--end col-->
+        
+        <div class="col-lg-4 col-md-6 col-12 mt-4 pt-2">
+            <div class="card border-0 bg-light rounded shadow">
+                <div class="card-body p-4">
+                    <span class="badge rounded-pill bg-primary float-md-end mb-3 mb-sm-0">Remote</span>
+                    <h5>Tester</h5>
+                    <div class="mt-3">
+                        <span class="text-muted d-block"><i class="fa fa-home" aria-hidden="true"></i> <a href="#" target="_blank" class="text-muted">Bootdey.com LLC.</a></span>
+                        <span class="text-muted d-block"><i class="fa fa-map-marker" aria-hidden="true"></i> USA</span>
+                    </div>
+                    
+                    <div class="mt-3">
+                        <a href="#" class="btn btn-primary">View Details</a>
+                    </div>
+                </div>
+            </div>
+        </div><!--end col-->
+
+        <div class="col-12 mt-4 pt-2 d-block d-md-none text-center">
+            <a href="#" class="btn btn-primary">View more Jobs <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right fea icon-sm"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></a>
+        </div><!--end col-->
+    </div><!--end row-->
+</div>
         </div>
     </div>
 
@@ -246,24 +393,12 @@ if ($level == 'clerk' || $level == 'super') {
             </div>
             <form action="" method="post">
                 <div class="modal-body" id="">
-                    <p class="lead" id="addFeeReg"><strong>This means that students of this class has completed their studies at <strong><?php echo $_SESSION['school_name']; ?></strong> and from now will be the previous students of <strong><?php echo $_SESSION['school_name']; ?></strong>!</strong></p>
+                    <p class="lead" id="addFeeReg"><strong>This means that the students of this class have completed their studies at <strong><?php echo $_SESSION['school_name']; ?></strong> and from now will be the <strong>alumini of <?php echo $_SESSION['school_name']; ?></strong>!</strong></p>
                     <input type="hidden" name="section_id" id="passSectionId">
-                    <!-- <div class="row mb-3">
-                        <label for="" class="col-md-4 col-lg-3 col-form-label"><strong>Title</strong> <code>*</code></label>
-                        <div class="col-md-8 col-lg-9">
-                            <input name="fund_title" type="text" class="form-control" id="fullName" placeholder="Stationary etc." required>
-                        </div>
-                    </div>
-                    <div class="row mb-3">
-                        <label for="" class="col-md-4 col-lg-3 col-form-label"><strong>Amount</strong> <code>*</code></label>
-                        <div class="col-md-8 col-lg-9">
-                            <input name="fund_amount" type="text" class="form-control" id="fullName" placeholder="Rs." required>
-                        </div>
-                    </div> -->
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" name="addmore" class="btn btn-success">Pass Out</button>
+                    <button type="submit" name="pass_out" class="btn btn-success">Pass Out</button>
                 </div>
             </form>
         </div>
@@ -271,34 +406,44 @@ if ($level == 'clerk' || $level == 'super') {
 </div>
 
 <script>
+    // Check if the span exists (to show an alert - success alert)
+    if (document.getElementById('passed-out')) {
+        // Show the popup
+        var popup = document.getElementById('po-success-popup');
+        // console.log(popup);
+        popup.style.display = 'block';
+        popup.style.position = 'fixed';
+        popup.style.top = '15%';
+        popup.style.right = '30%';
+        popup.style.backgroundColor = '#d4edda';
+        popup.style.color = '#155724';
+        popup.style.padding = '10px';
+        popup.style.borderRadius = '5px';
+        popup.style.boxShadow = '0px 0px 10px rgba(0, 0, 0, 0.1)';
+        popup.style.zIndex = '9999';
+
+        // Hide the popup after 3 seconds
+        setTimeout(function() {
+            popup.style.display = 'none';
+            window.location.href = "./promote-class.php";
+        }, 2000);
+    }
+
     // pass-out a class
     function passOut() {
+        // getting the modal
         const modal = new bootstrap.Modal(document.getElementById('passOut'));
+        // getting class and section name
         var classSection = document.getElementById('hid_class_section').value;
-        var sectionId = document.getElementById('hid_class_section').value;
+        // getting section id
+        var sectionId = document.getElementById('hid_section_id').value;
+        // setting section_id in modal
         document.getElementById('passSectionId').value = sectionId;
-        document.getElementById('staticBackdropLabel').innerText = 'Pass Out - '+classSection;
-
+        // setting modal header
+        document.getElementById('staticBackdropLabel').innerText = 'Pass Out - ' + classSection;
+        // showing the modal
         modal.show();
     }
-    // function passOut() {
-    //     const modalElement = document.getElementById('passOut');
-    //     if (modalElement) {
-    //         const modal = new bootstrap.Modal(modalElement);
-
-    //         var classSection = document.getElementById('hid_class_section').value;
-    //         const labelElement = document.getElementById('staticBackdropLabel');
-    //         if (labelElement) {
-    //             labelElement.innerText += classSection;
-    //         } else {
-    //             console.error('Element with id "staticBackdropLabel" not found');
-    //         }
-
-    //         modal.show();
-    //     } else {
-    //         console.error('Modal element with id "addFee" not found');
-    //     }
-    // }
 
     // Show class students to promote the class
     function promoteStudents(sectId) {
@@ -307,47 +452,67 @@ if ($level == 'clerk' || $level == 'super') {
         var xhr = new XMLHttpRequest();
         xhr.open('POST', './backend/promote-section.php', true);
         xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-
         xhr.onreadystatechange = function() {
             if (xhr.readyState === 4 && xhr.status === 200) {
-                console.log(xhr.responseText);
+                // console.log(xhr.responseText);
                 try {
                     var response = JSON.parse(xhr.responseText);
-
                     if (response.length > 0) {
-                        // display to block of class select
-                        document.getElementById('class-promotion').style.display = "block";
                         // classes maping
                         var subjects = {
                             show: []
                         };
-                        // pushin data records in the map
-                        response.forEach(function(item) {
-                            subjects.show.push({
-                                id: item.id,
-                                name: item.name,
-                                roll_no: item.roll_no,
-                                class_sect: item.class_sect,
-                                section_id: item.section_id
-                            });
-                        });
-                        var section = subjects.show[0].section_id;
-                        document.getElementById('hid_section_id').value = section;
-                        var classSection = subjects.show[0].class_sect;
-                        document.getElementById('hid_class_section').value = classSection;
+                        if (response[0].message) {
+                            // display to none of class select
+                            document.getElementById('class-promotion').style.display = "none";
+                            console.log(response.message);
+                            var popup = document.getElementById('po-noStudent-popup');
+                            // console.log(popup);
+                            popup.style.display = 'block';
+                            popup.style.position = 'fixed';
+                            popup.style.top = '15%';
+                            popup.style.right = '30%';
+                            popup.style.backgroundColor = '#f8d7da';
+                            popup.style.color = '#721c24';
+                            popup.style.padding = '10px';
+                            popup.style.borderRadius = '5px';
+                            popup.style.boxShadow = '0px 0px 10px rgba(0, 0, 0, 0.1)';
+                            popup.style.zIndex = '9999';
 
-                        const tbody = document.getElementById('promotion_students_tbody');
-                        tbody.innerHTML = "";
-                        subjects.show.forEach(item => {
-                            const tr = document.createElement('tr');
-                            ['roll_no', 'name', 'class_sect'].forEach(key => {
-                                const td = document.createElement('td');
-                                td.innerText = item[key];
-                                tr.appendChild(td);
+                            // Hide the popup after 3 seconds
+                            setTimeout(function() {
+                                popup.style.display = 'none';
+                            }, 3000);
+                        } else {
+                            // display to block of class select
+                            document.getElementById('class-promotion').style.display = "block";
+                            // pushin data records in the map
+                            response.forEach(function(item) {
+                                subjects.show.push({
+                                    id: item.id,
+                                    name: item.name,
+                                    roll_no: item.roll_no,
+                                    class_sect: item.class_sect,
+                                    section_id: item.section_id
+                                });
                             });
-                            tbody.appendChild(tr);
-                        });
+                            var section = subjects.show[0].section_id;
+                            document.getElementById('hid_section_id').value = section;
+                            var classSection = subjects.show[0].class_sect;
+                            document.getElementById('hid_class_section').value = classSection;
 
+                            const tbody = document.getElementById('promotion_students_tbody');
+                            tbody.innerHTML = "";
+                            subjects.show.forEach(item => {
+                                const tr = document.createElement('tr');
+                                ['roll_no', 'name', 'class_sect'].forEach(key => {
+                                    const td = document.createElement('td');
+                                    td.innerText = item[key];
+                                    tr.appendChild(td);
+                                });
+                                tbody.appendChild(tr);
+                            });
+                        }
                     }
                 } catch (e) {
                     console.error('Error parsing JSON:', e);
@@ -355,7 +520,7 @@ if ($level == 'clerk' || $level == 'super') {
                 }
             }
         };
-
+        // send ajax request
         xhr.send('section_id=' + encodeURIComponent(sectionId));
     }
 </script>
