@@ -16,7 +16,7 @@ if ($level == 'clerk' || $level == 'super') {
 }
 ?>
 
-<?php include_once("./refactoring/promote-class-requests.php"); ?>
+<?php include_once("./refactoring/promote-class-php.php"); ?>
 
 <?php
 // if the students are passed out successfully
@@ -52,6 +52,9 @@ if (isset($_GET['promote'])) {
     <div id="p-success-popup" style="display:none;">Students have been successfully promoted to the next class.</div>
     <div id="p-noStudent-popup" style="display:none;">Class is empty, no students to Promote.</div>
     <div id="p-notEmpty-popup" style="display:none;">Selected class is not empty, Promotion is not possible.</div>
+    <div id="d-noStudent-popup" style="display:none;">Class is empty, no students to Demote.</div>
+    <div id="d-none-selected" style="display:none;">No students selected for demotion.</div>
+    <div id="d-empty-popup" style="display:none;">Selected class is empty, Demotion is not possible.</div>
 
     <div class="row">
         <div class="container">
@@ -131,6 +134,43 @@ if (isset($_GET['promote'])) {
                         </select>
                     </div>
                 </div>
+                
+                <!-- demote students -->
+                <div class="col-auto">
+                    <div class="input-group mb-2" id="classSelectDiv">
+                        <button type="submit" name="add_subject" id="button-addon2" class="btn btn-sm btn-secondary">
+                            Demote Students
+                        </button>
+                        <select id="sectionId"
+                            name="section"
+                            class="form-select"
+                            onchange="demoteStudents(this.value)"
+                            aria-describedby="button-addon1"
+                            required>
+                            <option value="" disabled selected>Choose Class</option>
+                            <?php
+                            // fetching all the classes
+                            $query = "SELECT * FROM all_classes WHERE fk_client_id='$client'";
+                            $result = query($query);
+                            while ($row = mysqli_fetch_assoc($result)) {
+                                $clas_id = $row['class_id'];
+                            ?>
+                                <optgroup label="Class: <?php echo $row['class_name']; ?>">
+                                    <?php
+                                    // fetching the related sections
+                                    $query = "SELECT * FROM class_sections WHERE fk_class_id='$clas_id' AND fk_client_id='$client'";
+                                    $result1 = query($query);
+                                    while ($row1 = mysqli_fetch_assoc($result1)) {
+                                    ?>
+                                        <option value="<?php echo $row1['section_id']; ?>"><?php echo $row['class_name'] . " " . $row1['section_name']; ?></option>
+                                    <?php
+                                    }
+                                    ?>
+                                </optgroup>
+                            <?php } ?>
+                        </select>
+                    </div>
+                </div>
 
             </div>
 
@@ -138,32 +178,32 @@ if (isset($_GET['promote'])) {
                 <!--  -->
                 <!--  -->
                 <!--  -->
-                    <style>
-                        .card {
-                            box-shadow: 0 20px 27px 0 rgb(0 0 0 / 5%);
-                        }
+                <style>
+                    .card {
+                        box-shadow: 0 20px 27px 0 rgb(0 0 0 / 5%);
+                    }
 
-                        .avatar.sm {
-                            width: 2.25rem;
-                            height: 2.25rem;
-                            font-size: .818125rem;
-                        }
+                    .avatar.sm {
+                        width: 2.25rem;
+                        height: 2.25rem;
+                        font-size: .818125rem;
+                    }
 
-                        .table-nowrap .table td,
-                        .table-nowrap .table th {
-                            white-space: nowrap;
-                        }
+                    .table-nowrap .table td,
+                    .table-nowrap .table th {
+                        white-space: nowrap;
+                    }
 
-                        .table>:not(caption)>*>* {
-                            padding: 0.75rem 1.25rem;
-                            border-bottom-width: 1px;
-                        }
+                    .table>:not(caption)>*>* {
+                        padding: 0.75rem 1.25rem;
+                        border-bottom-width: 1px;
+                    }
 
-                        table th {
-                            font-weight: 600;
-                            background-color: #eeecfd !important;
-                        }
-                    </style>
+                    table th {
+                        font-weight: 600;
+                        background-color: #eeecfd !important;
+                    }
+                </style>
 
                 <div class="row">
 
@@ -302,12 +342,83 @@ if (isset($_GET['promote'])) {
                     </div>
 
                 </div>
+
+                <div class="row">
+
+                    <!-- demote -->
+                    <div id="class-demote" class="col-sm-12" style="display: none;">
+                        <div class="card">
+                            <div class="card-header card-bg-header border-0 text-dark mb-0">
+                                <h5 class="mb-0">
+                                    <strong>Students Demotion</strong>
+                                    <span class="d-inline-block"
+                                        tabindex="0"
+                                        data-bs-toggle="tooltip"
+                                        title="Selected students will be demoted to the lower class.">
+                                        <button type="button" class="btn btn-sm btn-outline-light"><i class="fa-solid fa-question"></i></button>
+                                    </span>
+                                </h5>
+                            </div>
+                            <div class="card-body px-0 pb-0">
+                                <div class="row">
+                                    <div class="col-sm-12 pe-">
+                                        <div id="one" class="">
+                                            <div class="row">
+                                                <div class="col-12 mb- mb-lg-">
+                                                    <div class="overflow-hidden card table-nowrap table-card custom-profile">
+                                                        <div class="card-header d-flex justify-content-between align-items-center">
+                                                            <h5 class="mb-0 text-dark">
+                                                                Class Students
+                                                                <span class="d-inline-block"
+                                                                    tabindex="0"
+                                                                    data-bs-toggle="tooltip"
+                                                                    title="Students of the selected class.">
+                                                                    <button type="button" class="btn btn-sm btn-outline-dark"><i class="fa-solid fa-question"></i></button>
+                                                                </span>
+                                                            </h5>
+                                                            <button onclick="demote()" class="btn btnsm btn-outline-danger rounded-4" type="button">
+                                                                Demote Students
+                                                                <span class="bg-danger rounded-circle text-white px-2 py-1">
+                                                                    <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                                                                    <!-- <i class="fas fa-chevron-right"></i> -->
+                                                                </span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="table-responsive">
+                                                            <table class="table mb-0">
+                                                                <thead class="small text-uppercase bg-body text-muted">
+                                                                    <tr>
+                                                                        <th>Select</th>
+                                                                        <th>Reg#</th>
+                                                                        <th>Name</th>
+                                                                        <th>Class</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody id="d_students_tbody">
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" id="d_section_id" name="hid_section_id">
+                                    <input type="hidden" id="d_class_section" name="hid_class_section">
+                                    <input type="hidden" id="d_student_ids" name="hid_student_ids">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
                 <!--  -->
                 <!--  -->
                 <!--  -->
 
-<!-- ====== Modals for this page =======  -->
-<?php include_once("./refactoring/promote-class-modals.php"); ?>
+                <!-- ====== Modals for this page =======  -->
+                <?php include_once("./refactoring/promote-class-modals.php"); ?>
 
             </section>
             <!--  -->
