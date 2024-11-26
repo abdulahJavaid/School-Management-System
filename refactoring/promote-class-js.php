@@ -21,6 +21,7 @@
             window.location.href = "./promote-class.php";
         }, 2000);
     }
+    
     // Check if the span exists (to show an alert - success alert)
     if (document.getElementById('promoted')) {
         // Show the popup
@@ -43,6 +44,30 @@
             window.location.href = "./promote-class.php";
         }, 2000);
     }
+
+    // Check if the span exists (to show an alert - success alert)
+    if (document.getElementById('demoted')) {
+        // Show the popup
+        var popup = document.getElementById('d-success-popup');
+        // console.log(popup);
+        popup.style.display = 'block';
+        popup.style.position = 'fixed';
+        popup.style.top = '15%';
+        popup.style.right = '30%';
+        popup.style.backgroundColor = '#d4edda';
+        popup.style.color = '#155724';
+        popup.style.padding = '10px';
+        popup.style.borderRadius = '5px';
+        popup.style.boxShadow = '0px 0px 10px rgba(0, 0, 0, 0.1)';
+        popup.style.zIndex = '9999';
+
+        // Hide the popup after 3 seconds
+        setTimeout(function() {
+            popup.style.display = 'none';
+            window.location.href = "./promote-class.php";
+        }, 2000);
+    }
+
     // pass-out a class
     function passOut() {
         // getting the modal

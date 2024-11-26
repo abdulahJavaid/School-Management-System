@@ -36,6 +36,15 @@ if (isset($_GET['promote'])) {
 } // end if
 ?>
 
+<?php
+// if the students are promoted successfully
+if (isset($_GET['demote'])) {
+?>
+    <span id="demoted"></span>
+<?php
+} // end if
+?>
+
 <main id="main" class="main">
 
     <div class="pagetitle">
@@ -52,6 +61,7 @@ if (isset($_GET['promote'])) {
     <div id="p-success-popup" style="display:none;">Students have been successfully promoted to the next class.</div>
     <div id="p-noStudent-popup" style="display:none;">Class is empty, no students to Promote.</div>
     <div id="p-notEmpty-popup" style="display:none;">Selected class is not empty, Promotion is not possible.</div>
+    <div id="d-success-popup" style="display:none;">Students have been demoted to the selected class.</div>
     <div id="d-noStudent-popup" style="display:none;">Class is empty, no students to Demote.</div>
     <div id="d-none-selected" style="display:none;">No students selected for demotion.</div>
     <div id="d-empty-popup" style="display:none;">Selected class is empty, Demotion is not possible.</div>
@@ -163,6 +173,43 @@ if (isset($_GET['promote'])) {
                                     while ($row1 = mysqli_fetch_assoc($result1)) {
                                     ?>
                                         <option value="<?php echo $row1['section_id']; ?>"><?php echo $row['class_name'] . " " . $row1['section_name']; ?></option>
+                                    <?php
+                                    }
+                                    ?>
+                                </optgroup>
+                            <?php } ?>
+                        </select>
+                    </div>
+                </div>
+                
+                <!-- change section -->
+                <div class="col-auto">
+                    <div class="input-group mb-2" id="classSelectDiv">
+                        <button type="submit" name="add_subject" id="button-addon2" class="btn btn-sm btn-secondary">
+                            Change Section
+                        </button>
+                        <select id="sectionId"
+                            name="section"
+                            class="form-select"
+                            onchange="changeSection(this.value)"
+                            aria-describedby="button-addon1"
+                            required>
+                            <option value="" disabled selected>Choose Class</option>
+                            <?php
+                            // fetching all the classes
+                            $query = "SELECT * FROM all_classes WHERE fk_client_id='$client'";
+                            $result = query($query);
+                            while ($row = mysqli_fetch_assoc($result)) {
+                                $clas_id = $row['class_id'];
+                            ?>
+                                <optgroup label="Class: <?php echo $row['class_name']; ?>">
+                                    <?php
+                                    // fetching the related sections
+                                    $query = "SELECT * FROM class_sections WHERE fk_class_id='$clas_id' AND fk_client_id='$client'";
+                                    $result1 = query($query);
+                                    while ($row1 = mysqli_fetch_assoc($result1)) {
+                                    ?>
+                                        <option value="<?php echo $row['class_id'] ." ".  $row1['section_id']; ?>"><?php echo $row['class_name'] . " " . $row1['section_name']; ?></option>
                                     <?php
                                     }
                                     ?>
@@ -515,7 +562,7 @@ if (isset($_GET['promote'])) {
                     <div class="col-lg-4 col-md-6 col-12 mt-4 pt-2">
                         <div class="card border-0 bg-light rounded shadow">
                             <div class="card-body p-4">
-                                <span class="badge rounded-pill bg-primary float-md-end mb-3 mb-sm-0">Full time</span>
+                                <span class="badge rounded-pill bg-success float-md-end mb-3 mb-sm-0">Full time</span>
                                 <h5>UX / UI Designer</h5>
                                 <div class="mt-3">
                                     <span class="text-muted d-block"><i class="fa fa-home" aria-hidden="true"></i> <a href="#" target="_blank" class="text-muted">Bootdey.com LLC.</a></span>
@@ -523,7 +570,7 @@ if (isset($_GET['promote'])) {
                                 </div>
 
                                 <div class="mt-3">
-                                    <a href="#" class="btn btn-primary">View Details</a>
+                                    <a href="#" class="btn btn-success">View Details</a>
                                 </div>
                             </div>
                         </div>
