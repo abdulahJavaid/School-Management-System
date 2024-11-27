@@ -37,10 +37,19 @@ if (isset($_GET['promote'])) {
 ?>
 
 <?php
-// if the students are promoted successfully
+// if the students are demoted successfully
 if (isset($_GET['demote'])) {
 ?>
     <span id="demoted"></span>
+<?php
+} // end if
+?>
+
+<?php
+// if the students section are changed successfully
+if (isset($_GET['change'])) {
+?>
+    <span id="changed"></span>
 <?php
 } // end if
 ?>
@@ -65,6 +74,11 @@ if (isset($_GET['demote'])) {
     <div id="d-noStudent-popup" style="display:none;">Class is empty, no students to Demote.</div>
     <div id="d-none-selected" style="display:none;">No students selected for demotion.</div>
     <div id="d-empty-popup" style="display:none;">Selected class is empty, Demotion is not possible.</div>
+    <div id="c-success-popup" style="display:none;">Students section has been successfully changed.</div>
+    <div id="c-noStudent-popup" style="display:none;">Class is empty, no students available.</div>
+    <div id="c-none-selected" style="display:none;">No students selected to change the section.</div>
+    <div id="c-one-section" style="display:none;">This class has only one section, Section change not possible.</div>
+    <div id="c-empty-popup" style="display:none;">Selected section is empty, Section change not possible.</div>
 
     <div class="row">
         <div class="container">
@@ -453,6 +467,77 @@ if (isset($_GET['demote'])) {
                                     <input type="hidden" id="d_section_id" name="hid_section_id">
                                     <input type="hidden" id="d_class_section" name="hid_class_section">
                                     <input type="hidden" id="d_student_ids" name="hid_student_ids">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <!-- change section -->
+                    <div id="class-change" class="col-sm-12" style="display: none;">
+                        <div class="card">
+                            <div class="card-header card-bg-header border-0 text-dark mb-0">
+                                <h5 class="mb-0">
+                                    <strong>Change Section</strong>
+                                    <span class="d-inline-block"
+                                        tabindex="0"
+                                        data-bs-toggle="tooltip"
+                                        title="Section of the selected students will be changed.">
+                                        <button type="button" class="btn btn-sm btn-outline-light"><i class="fa-solid fa-question"></i></button>
+                                    </span>
+                                </h5>
+                            </div>
+                            <div class="card-body px-0 pb-0">
+                                <div class="row">
+                                    <div class="col-sm-12 pe-">
+                                        <div id="one" class="">
+                                            <div class="row">
+                                                <div class="col-12 mb- mb-lg-">
+                                                    <div class="overflow-hidden card table-nowrap table-card custom-profile">
+                                                        <div class="card-header d-flex justify-content-between align-items-center">
+                                                            <h5 class="mb-0 text-dark">
+                                                                Class Students
+                                                                <span class="d-inline-block"
+                                                                    tabindex="0"
+                                                                    data-bs-toggle="tooltip"
+                                                                    title="Students of the selected class.">
+                                                                    <button type="button" class="btn btn-sm btn-outline-dark"><i class="fa-solid fa-question"></i></button>
+                                                                </span>
+                                                            </h5>
+                                                            <button onclick="change()" class="btn btnsm btn-outline-success rounded-4" type="button">
+                                                                Change Section
+                                                                <span class="bg-success rounded-circle text-white px-2 py-1">
+                                                                    <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                                                                    <!-- <i class="fas fa-chevron-right"></i> -->
+                                                                </span>
+                                                            </button>
+                                                        </div>
+                                                        <div class="table-responsive">
+                                                            <table class="table mb-0">
+                                                                <thead class="small text-uppercase bg-body text-muted">
+                                                                    <tr>
+                                                                        <th>Select</th>
+                                                                        <th>Reg#</th>
+                                                                        <th>Name</th>
+                                                                        <th>Class</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody id="c_students_tbody">
+                                                                </tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <input type="hidden" id="c_class_id" name="hid_class_id">
+                                    <input type="hidden" id="c_section_id" name="hid_section_id">
+                                    <input type="hidden" id="c_class_section" name="hid_class_section">
+                                    <input type="hidden" id="c_student_ids" name="hid_student_ids">
                                 </div>
                             </div>
                         </div>

@@ -129,7 +129,46 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Cancel</button>
-                    <button type="submit" name="demote" class="btn btn-success">Promote</button>
+                    <button type="submit" name="demote" class="btn btn-danger">Demote</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- for changing a section -->
+<div class="modal fade" id="change" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header card-bg-header text-white">
+                <h5 class="modal-title" id="cstaticBackdropLabel"><strong></strong></h5>
+                <button type="button" class="ms-auto bg-transparent border-0 text-white" data-bs-dismiss="modal" aria-label="Close"><i class="fa fa-times" aria-hidden="true"></i></button>
+            </div>
+            <form action="" method="post">
+                <div class="modal-body" id="">
+                    <div class="py-2">
+                        <label for="classes" class="form-label"><strong>New Section <code>*</code></strong></label>
+                        <div class="col-auto">
+                            <div class="input-group">
+                                <select id="cEmptySection"
+                                    name="change_section"
+                                    class="form-select"
+                                    onchange="ifSectionEmpty(this.value)"
+                                    aria-describedby="button-addon1"
+                                    required>
+                                    <option value="" disabled selected>Choose Section</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <input type="hidden" name="class_id" id="changeClassId">
+                    <input type="hidden" name="section_id" id="changeSectionId">
+                    <input type="hidden" name="class_section" id="changeClassSection">
+                    <input type="hidden" name="change_students" id="changeStudents">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" name="change" class="btn btn-success">Change Section</button>
                 </div>
             </form>
         </div>

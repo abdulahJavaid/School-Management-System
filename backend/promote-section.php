@@ -178,3 +178,105 @@ if (isset($_POST['d_empty_section_id'])) {
     // Return the results as a JSON response
     echo json_encode($matches);
 }
+
+// for change section
+if (isset($_POST['change_section_id'])) {
+    $section_id = escape($_POST['change_section_id']);
+    $class_id = escape($_POST['change_class_id']);
+
+    // SQL query to search for matches
+    $query = "SELECT sc.*, sp.name, sp.roll_no, ac.class_name, ac.class_id, cs.section_name, cs.section_id FROM student_class as sc INNER JOIN ";
+    $query .= "student_profile as sp ON sc.fk_student_id=sp.student_id ";
+    $query .= "INNER JOIN all_classes as ac ON sc.fk_class_id=ac.class_id ";
+    $query .= "INNER JOIN class_sections as cs ON sc.fk_section_id=cs.section_id ";
+    $query .= "WHERE sc.fk_section_id='$section_id' AND sc.status='1' AND sc.fk_client_id='$client'";
+
+    $result = mysqli_query($conn, $query);
+    $matches = [];
+
+    // Fetch results and store them in the $matches array$results = [];
+    if (mysqli_num_rows($result) != 0) {
+        while ($row = mysqli_fetch_assoc($result)) {
+            $class = $row['class_name'] . ' ' . $row['section_name'];
+            $matches[] = [
+                'id' => $row['fk_student_id'],
+                'name' => $row['name'],
+                'roll_no' => $row['roll_no'],
+                'class_sect' => $class,
+                'section_id' => $row['section_id'],
+                'class_id' => $row['class_id']
+            ];
+        }
+    } else {
+        $matches[] = [
+            'message' => 'Class is empty, no students available.'
+        ];
+    }
+
+    // Return the results as a JSON response
+    echo json_encode($matches);
+}
+
+// for change section
+if (isset($_POST['change_section'])) {
+    $section_id = escape($_POST['change_section']);
+    $class_id = escape($_POST['change_class']);
+
+    // SQL query to search for matches
+    $query = "SELECT ac.class_name, ac.class_id, cs.section_name, cs.section_id FROM ";
+    $query .= "all_classes as ac ";
+    $query .= "INNER JOIN class_sections as cs ON ac.class_id=cs.fk_class_id ";
+    $query .= "WHERE NOT cs.section_id='$section_id' AND cs.fk_class_id='$class_id' AND cs.fk_client_id='$client'";
+
+    $result = mysqli_query($conn, $query);
+    $matches = [];
+
+    // Fetch results and store them in the $matches array$results = [];
+    if (mysqli_num_rows($result) != 0) {
+        while ($row = mysqli_fetch_assoc($result)) {
+            // $class = $row['class_name'] . ' ' . $row['section_name'];
+            $matches[] = [
+                'class_name' => $row['class_name'],
+                'class_id' => $row['class_id'],
+                'section_id' => $row['section_id'],
+                'section_name' => $row['section_name']
+            ];
+        }
+    } else {
+        $matches[] = [
+            'message' => 'Class has only one section, Section change is not possible.'
+        ];
+    }
+
+    // Return the results as a JSON response
+    echo json_encode($matches);
+}
+
+// for section change - section empty
+if (isset($_POST['c_empty_section_id'])) {
+    $section_id = escape($_POST['c_empty_section_id']);
+
+    // SQL query to search for matches
+    $query = "SELECT sc.*, sp.name, sp.roll_no, ac.class_name, cs.section_name, cs.section_id FROM student_class as sc INNER JOIN ";
+    $query .= "student_profile as sp ON sc.fk_student_id=sp.student_id ";
+    $query .= "INNER JOIN all_classes as ac ON sc.fk_class_id=ac.class_id ";
+    $query .= "INNER JOIN class_sections as cs ON sc.fk_section_id=cs.section_id ";
+    $query .= "WHERE sc.fk_section_id='$section_id' AND sc.status='1' AND sc.fk_client_id='$client'";
+
+    $result = mysqli_query($conn, $query);
+    $matches = [];
+
+    // Fetch results and store them in the $matches array$results = [];
+    if (mysqli_num_rows($result) != 0) {
+        $matches[] = [
+            'messages' => 'Selected section not empty.'
+        ];
+    } else {
+        $matches[] = [
+            'message' => 'Selected section is empty, Section change not possible.'
+        ];
+    }
+
+    // Return the results as a JSON response
+    echo json_encode($matches);
+}
