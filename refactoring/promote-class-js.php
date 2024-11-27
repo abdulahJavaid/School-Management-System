@@ -91,6 +91,29 @@
         }, 2000);
     }
 
+    // Check if the span exists (to show an alert - success alert)
+    if (document.getElementById('disabled')) {
+        // Show the popup
+        var popup = document.getElementById('spo-success-popup');
+        // console.log(popup);
+        popup.style.display = 'block';
+        popup.style.position = 'fixed';
+        popup.style.top = '15%';
+        popup.style.right = '30%';
+        popup.style.backgroundColor = '#d4edda';
+        popup.style.color = '#155724';
+        popup.style.padding = '10px';
+        popup.style.borderRadius = '5px';
+        popup.style.boxShadow = '0px 0px 10px rgba(0, 0, 0, 0.1)';
+        popup.style.zIndex = '9999';
+
+        // Hide the popup after 3 seconds
+        setTimeout(function() {
+            popup.style.display = 'none';
+            window.location.href = "./promote-class.php";
+        }, 2000);
+    }
+
     // pass-out a class
     function passOut() {
         // getting the modal
@@ -290,6 +313,50 @@
                 }
             }
             xhr.send('change_class=' + encodeURIComponent(classId) + '&change_section=' + encodeURIComponent(sectionId));
+        }
+    }
+    
+    // student left school - decactivate profile
+    function left() {
+        var selectedVals = document.getElementById('spo_student_ids').value;
+        if (selectedVals == "") {
+            // Show the popup
+            var popup = document.getElementById('spo-none-selected');
+            // console.log(popup);
+            popup.style.display = 'block';
+            popup.style.position = 'fixed';
+            popup.style.top = '15%';
+            popup.style.right = '30%';
+            popup.style.backgroundColor = '#f8d7da';
+            popup.style.color = '#721c24';
+            popup.style.padding = '10px';
+            popup.style.borderRadius = '5px';
+            popup.style.boxShadow = '0px 0px 10px rgba(0, 0, 0, 0.1)';
+            popup.style.zIndex = '9999';
+
+            // Hide the popup after 3 seconds
+            setTimeout(function() {
+                popup.style.display = 'none';
+            }, 3000);
+        } else {
+            // getting the modal
+            const modal = new bootstrap.Modal(document.getElementById('leftSchool'));
+            // getting class and section name
+            var classSection = document.getElementById('spo_class_section').value;
+            // getting section id
+            var sectionId = document.getElementById('spo_section_id').value;
+            // getting students for demotion
+            var leftStudents = document.getElementById('spo_student_ids').value;
+            // setting section_id in modal
+            document.getElementById('leftSectionId').value = sectionId;
+            // setting section_id in modal
+            document.getElementById('leftClassSection').value = classSection;
+            // setting demoted student ids in modal
+            document.getElementById('leftStudents').value = leftStudents;
+            // setting modal header
+            document.getElementById('leftstaticBackdropLabel').innerText = 'Disable Profiles';
+            // showing the modal
+            modal.show();
         }
     }
 
@@ -652,6 +719,105 @@
         xhr.send('change_section_id=' + encodeURIComponent(sectionId) + '&change_class_id=' + encodeURIComponent(classId));
     }
 
+    // Some students left school section
+    function leftSchool(sectId) {
+        const sectionId = sectId;
+
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', './backend/promote-section.php', true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === 4 && xhr.status === 200) {
+                // console.log(xhr.responseText);
+                try {
+                    var response = JSON.parse(xhr.responseText);
+                    if (response.length > 0) {
+                        // classes maping
+                        var subjects = {
+                            show: []
+                        };
+                        if (response[0].message) {
+                            // display to none of class select
+                            document.getElementById('student-left-school').style.display = "none";
+                            // console.log(response.message);
+                            var popup = document.getElementById('spo-noStudent-popup');
+                            // console.log(popup);
+                            popup.style.display = 'block';
+                            popup.style.position = 'fixed';
+                            popup.style.top = '15%';
+                            popup.style.right = '30%';
+                            popup.style.backgroundColor = '#f8d7da';
+                            popup.style.color = '#721c24';
+                            popup.style.padding = '10px';
+                            popup.style.borderRadius = '5px';
+                            popup.style.boxShadow = '0px 0px 10px rgba(0, 0, 0, 0.1)';
+                            popup.style.zIndex = '9999';
+
+                            // Hide the popup after 3 seconds
+                            setTimeout(function() {
+                                popup.style.display = 'none';
+                            }, 3000);
+                        } else {
+                            // display to block of class select
+                            document.getElementById('student-left-school').style.display = "block";
+                            // pushin data records in the map
+                            response.forEach(function(item) {
+                                subjects.show.push({
+                                    id: item.id,
+                                    name: item.name,
+                                    roll_no: item.roll_no,
+                                    class_sect: item.class_sect,
+                                    section_id: item.section_id
+                                });
+                            });
+                            var section = subjects.show[0].section_id;
+                            document.getElementById('spo_section_id').value = section;
+                            var classSection = subjects.show[0].class_sect;
+                            document.getElementById('spo_class_section').value = classSection;
+
+                            const tbody = document.getElementById('spo_students_tbody');
+                            tbody.innerHTML = "";
+                            subjects.show.forEach(item => {
+                                const tr = document.createElement('tr');
+                                var checktd = document.createElement('td');
+                                var checkbox = document.createElement('input');
+                                checkbox.type = 'checkbox';
+                                checkbox.id = item['id'];
+                                checkbox.value = item['id'];
+
+                                checkbox.addEventListener("click", function() {
+                                    var ifchecked = document.getElementById(checkbox.id).checked;
+                                    if (ifchecked) {
+                                        document.getElementById('spo_student_ids').value += checkbox.value + " ";
+                                    } else {
+                                        var values = document.getElementById('spo_student_ids').value;
+                                        var toReplace = checkbox.value + " ";
+                                        var updatedValues = values.replace(toReplace, "");
+                                        document.getElementById('spo_student_ids').value = updatedValues;
+                                    }
+                                });
+                                checktd.appendChild(checkbox);
+                                tr.appendChild(checktd);
+
+                                ['roll_no', 'name', 'class_sect'].forEach(key => {
+                                    const td = document.createElement('td');
+                                    td.innerText = item[key];
+                                    tr.appendChild(td);
+                                });
+                                tbody.appendChild(tr);
+                            });
+                        }
+                    }
+                } catch (e) {
+                    console.error('Error parsing JSON:', e);
+                    console.error('Response text:', xhr.responseText);
+                }
+            }
+        };
+        // send ajax request
+        xhr.send('left_section_id=' + encodeURIComponent(sectionId));
+    }
+
     // If the class for promotion is not empty
     function ifNotEmpty(sectId) {
         const sectionId = sectId;
@@ -795,4 +961,17 @@
         // send ajax request
         xhr.send('c_empty_section_id=' + encodeURIComponent(sectionId));
     }
+
+// 
+// 
+//  Show the appropriate section for the admin as per click
+    function unhide (toUnhide) {
+        let arr = ['po-main', 'p-main', 'd-main', 'c-main', 'spo-main'];
+        arr.forEach(function(value) {
+            document.getElementById(value).style.display = "none";
+        });
+        document.getElementById(toUnhide).style.display = "block";
+    }
+
+
 </script>

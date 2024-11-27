@@ -174,3 +174,27 @@
         </div>
     </div>
 </div>
+
+<!-- student left school - disable student profile -->
+<div class="modal fade" id="leftSchool" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header card-bg-header text-white">
+                <h5 class="modal-title" id="leftstaticBackdropLabel"><strong></strong></h5>
+                <button type="button" class="ms-auto bg-transparent border-0 text-white" data-bs-dismiss="modal" aria-label="Close"><i class="fa fa-times" aria-hidden="true"></i></button>
+            </div>
+            <form action="" method="post">
+                <div class="modal-body" id="">
+                    <p class="lead" id="addFeeReg"><strong>This action means that students have left school due to any reason, their profiles will be disabled and cannot be activated agian. </p>
+                    <input type="hidden" name="section_id" id="leftSectionId">
+                    <input type="hidden" name="class_section" id="leftClassSection">
+                    <input type="hidden" name="left_students" id="leftStudents">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-danger" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" name="left" class="btn btn-success">Confirm</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

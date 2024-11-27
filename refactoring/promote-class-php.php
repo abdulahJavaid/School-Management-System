@@ -165,3 +165,39 @@ if (isset($_POST['change'])) {
 
     redirect("promote-class.php?change=done");
 }
+
+// pass out a class
+if (isset($_POST['left'])) {
+    $section_id = escape($_POST['section_id']);
+    $class_section = escape($_POST['class_section']);
+    $students_string = escape($_POST['left_students']);
+    $students_string = trim($students_string, ' ');
+    $left_students = explode(' ', $students_string);
+
+    // query for the selected students
+    foreach ($left_students as $std_id) {
+        $query = "UPDATE student_profile ";
+        $query .= "INNER JOIN student_class ON student_profile.student_id=student_class.fk_student_id ";
+        $query .= "SET student_status='0' ";
+        $query .= "WHERE fk_section_id='$section_id' AND student_class.fk_client_id='$client' ";
+        $query .= "AND student_id='$std_id'";
+        $student_left_school = query($query);
+    }
+    // query for disabling student classes
+    foreach ($left_students as $std_id) {
+        $query = "UPDATE student_class SET `status`='0' ";
+        $query .= "WHERE fk_section_id='$section_id' AND `status`='1' AND fk_client_id='$client' ";
+        $query .= "AND fk_student_id='$std_id'";
+        $disable_student_class = query($query);
+    }
+    // fetching the admin id and adding the data
+    $admin_name = escape($_SESSION['login_name']);
+    $log = "Admin <strong>$admin_name</strong> disabled some student profiles from <strong>$class_section</strong>!";
+    $times = date('d/m/Y h:i a', time());
+    $times = (string) $times;
+    // adding activity into the logs
+    $query = "INSERT INTO admin_logs(log_message, time, fk_client_id) VALUES('$log', '$times', '$client')";
+    $pass_query2 = mysqli_query($conn, $query);
+
+    redirect("./promote-class.php?left=done");
+}
