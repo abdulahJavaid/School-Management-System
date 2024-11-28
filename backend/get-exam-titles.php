@@ -22,7 +22,7 @@ if (isset($_POST['roll_no'])) {
     $query .= "FROM exam_result INNER JOIN student_profile ON ";
     $query .= "exam_result.fk_student_id=student_profile.student_id ";
     $query .= "INNER JOIN exam_title ON exam_result.fk_exam_title_id=exam_title.exam_title_id ";
-    $query .= "WHERE exam_result.fk_student_id='$roll_no' AND exam_result.fk_client_id='$client' ";
+    $query .= "WHERE exam_result.fk_student_id='$roll_no' AND student_profile.student_status='1' AND exam_result.fk_client_id='$client' ";
     $query .= "ORDER BY exam_result.fk_exam_title_id DESC";
     $result = query($query);
 
@@ -111,7 +111,10 @@ if (isset($_POST['section'])) {
     $query .= "INNER JOIN student_class ON ";
     $query .= "student_profile.student_id=student_class.fk_student_id ";
     $query .= "INNER JOIN exam_title ON exam_result.fk_exam_title_id=exam_title.exam_title_id ";
-    $query .= "WHERE student_class.fk_section_id='$section' AND exam_result.fk_client_id='$client' ";
+    $query .= "WHERE student_class.fk_section_id='$section' ";
+    $query .= "AND student_profile.student_status='1' ";
+    $query .= "AND student_class.status='1' ";
+    $query .= "AND exam_result.fk_client_id='$client' ";
     $query .= "ORDER BY exam_result.fk_exam_title_id DESC";
     $result = query($query);
 
@@ -160,6 +163,8 @@ if (isset($_POST['bothDate']) && isset($_POST['bothSection'])) {
     $query .= "student_profile.student_id=student_class.fk_student_id ";
     $query .= "INNER JOIN exam_title ON exam_result.fk_exam_title_id=exam_title.exam_title_id ";
     $query .= "WHERE student_class.fk_section_id='$section' ";
+    $query .= "AND student_profile.student_status='1' ";
+    $query .= "AND student_class.status='1' ";
     $query .= "AND exam_title.exam_month='$exam_month' AND exam_title.exam_year='$exam_year' ";
     $query .= "AND exam_result.fk_client_id='$client' ";
     $query .= "ORDER BY exam_result.fk_exam_title_id DESC";

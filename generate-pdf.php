@@ -1,5 +1,5 @@
 <?php
-// the required documents
+// required files and funcitons
 session_start();
 ob_start();
 require_once('./db_connection/configs.php');
@@ -49,8 +49,8 @@ include "pdf/vouchers-student.php";
 include "pdf/salaries-paid.php";
 include "pdf/download-timetable.php";
 include "pdf/download-exam-schedule.php";
-include "pdf/student-result.php";
-include "pdf/class-result.php";
+include "pdf/result-class.php";
+include "pdf/result-student.php";
 include "pdf/vouchers-dues-student.php";
 include "pdf/vouchers-dues-class.php";
 include "pdf/vouchers-dues-school.php";

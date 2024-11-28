@@ -7,6 +7,19 @@ require_once('../db_connection/configs.php');
 require_once('../db_connection/connection.php');
 require_once('../includes/functions.php');
 
+// 
+// 
+// 
+// 
+// This page is no longer used, in case it is used, add the admin activity/logs also
+// 
+// 
+// 
+// 
+
+// getting the client id
+$client = escape($_SESSION['client_id']);
+
 // when the attendance is submitted
 if (isset($_POST['submit'])) {
     // $count = count($_POST);
@@ -18,7 +31,8 @@ if (isset($_POST['submit'])) {
     $query .= "all_classes.class_id = class_sections.fk_class_id INNER JOIN ";
     $query .= "student_class ON class_sections.section_id = student_class.fk_section_id ";
     $query .= "INNER JOIN student_profile ON student_class.fk_student_id = student_profile.student_id ";
-    $query .= "WHERE class_id = '$class' AND section_id = '$section'";
+    $query .= "WHERE class_id = '$class' AND section_id = '$section' ";
+    $query .= "AND student_class.status='1' AND all_classes.fk_client_id='$client'";
 
     $result = query($query);
     while($row = mysqli_fetch_assoc($result)){

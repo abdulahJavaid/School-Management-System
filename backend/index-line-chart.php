@@ -12,6 +12,24 @@ header('Content-Type: application/json');
 // Fetch filter from GET, default to 'Today'
 $filter = isset($_GET['filter']) ? $_GET['filter'] : 'today';
 
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+// This page is not properly functional
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+
 // Prepare query based on the filter
 if ($filter == 'Today') {
     $query1 = "SELECT expense, date FROM expense_receiving WHERE receiving = 0 AND date >= CURDATE()";
@@ -57,4 +75,3 @@ if ($result3->num_rows > 0) {
 
 // Return JSON response
 echo json_encode(['data' => $data, 'categories' => array_unique($categories)]);
-?>

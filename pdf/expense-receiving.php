@@ -76,7 +76,7 @@ if (isset($_POST['one'])) {
         // fetching the admin id and adding the data
         $id = escape($_SESSION['login_id']);
         $admin_name = escape($_SESSION['login_name']);
-        $log = "Admin <strong>$admin_name</strong> generated expense/receiving sheet for date <strong>$date</strong> !";
+        $log = "Admin <strong>$admin_name</strong> generated expense/receiving sheet for date <strong>$date</strong>!";
         $times = date('d/m/Y h:i a', time());
         $times = (string) $times;
         // adding activity into the logs
@@ -120,7 +120,7 @@ if (isset($_POST['one'])) {
         // fetching the admin id and adding the data
         $id = escape($_SESSION['login_id']);
         $admin_name = escape($_SESSION['login_name']);
-        $log = "Admin <strong>$admin_name</strong> generated expense/receiving sheet from <strong>$date</strong> to <strong>$date1</strong> !";
+        $log = "Admin <strong>$admin_name</strong> generated expense/receiving sheet from <strong>$date</strong> to <strong>$date1</strong>!";
         $times = date('d/m/Y h:i a', time());
         $times = (string) $times;
         // adding activity into the logs
@@ -167,7 +167,7 @@ if (isset($_POST['one'])) {
 <td colspan='2'>---</td>
 <td colspan='2'><strong>Total: </strong>Rs. $sum</td>
 </tr>";
-$html .= "</tbody>
+    $html .= "</tbody>
           </table>
         </div>
         <br><br><br>

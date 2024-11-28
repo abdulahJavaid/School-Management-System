@@ -6,7 +6,7 @@ if (isset($_POST['npaid_current'])) {
   $current_month = date('F', time());
   // fetching the admin id and adding the data
   $admin_name = escape($_SESSION['login_name']);
-  $log = "Admin <strong>$admin_name</strong> generated unpaid fee records of <strong>$current_month, $current_year</strong> !";
+  $log = "Admin <strong>$admin_name</strong> generated unpaid fee records of <strong>$current_month, $current_year</strong>!";
   $times = date('d/m/Y h:i a', time());
   $times = (string) $times;
   // adding activity into the logs
@@ -200,7 +200,7 @@ if (isset($_POST['npaid_current'])) {
       foreach ($funds[$current_id]['funds'] as $get) {
         $html .= "$get";
       }
-    }else {
+    } else {
       $html .= "---";
     }
     $html .= "</td>
@@ -221,7 +221,7 @@ if (isset($_POST['npaid_current'])) {
       </body>
     </html>
   ";
-  
+
   // downloaded pdf name
   $pdf_name = "unpaid-fee-record-of-" . $current_year . '-' . $current_month . ".pdf";
 }

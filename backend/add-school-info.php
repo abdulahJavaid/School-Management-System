@@ -74,7 +74,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
     // code to add developer activity into the logs
     $id = escape($_SESSION['login_id']);
     $admin_name = escape($_SESSION['login_name']);
-    $log = "<strong>$admin_name</strong> from CodsMine updated School Profile !";
+    $log = "<strong>$admin_name</strong> from CodsMine updated School Profile!";
     $time = date('d/m/Y h:i a', time());
     $time = (string) $time;
 

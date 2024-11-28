@@ -24,7 +24,7 @@ if (isset($_POST['board_id'])) {
     while ($row = mysqli_fetch_assoc($result)) {
         $matches[] = [
             'id' => $row['board_class_id'],
-            'name' => $row['board_class_name'] 
+            'name' => $row['board_class_name']
         ];
     }
 
@@ -46,7 +46,7 @@ if (isset($_POST['class_id'])) {
     while ($row = mysqli_fetch_assoc($result)) {
         $matches[] = [
             'id' => $row['subject_id'],
-            'name' => $row['subject_name'] 
+            'name' => $row['subject_name']
         ];
     }
 
@@ -76,4 +76,3 @@ if (isset($_POST['subject_id'])) {
     // Return the results as a JSON response
     echo json_encode($matches);
 }
-?>

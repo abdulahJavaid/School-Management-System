@@ -85,7 +85,7 @@ if (!str_contains($uri, '/select-school.php')) {
         unset($_SESSION['mcqs']);
       }
     }
-    
+
     // differentiating the client side and managing side views
     if (!str_contains($uri, '/select-school.php')) {
     ?>
@@ -345,22 +345,22 @@ if (!str_contains($uri, '/select-school.php')) {
               <li>
                 <hr class="dropdown-divider">
               </li>
-                <?php
-                // not showing the option to dev access
-                if ($level != 'developer') {
-                ?>
-              <li>
-              <a class="dropdown-item d-flex align-items-center" href="admin-profile.php">
-                <i class="bi bi-gear"></i>
-                <span>Change Password</span>
-              </a>
-            </li>
-            <li>
-              <hr class="dropdown-divider">
-            </li>
-            <?php
-    }
-            ?>
+              <?php
+              // not showing the option to dev access
+              if ($level != 'developer') {
+              ?>
+                <li>
+                  <a class="dropdown-item d-flex align-items-center" href="admin-profile.php">
+                    <i class="bi bi-gear"></i>
+                    <span>Change Password</span>
+                  </a>
+                </li>
+                <li>
+                  <hr class="dropdown-divider">
+                </li>
+              <?php
+              }
+              ?>
 
               <!-- <li>
               <a class="dropdown-item d-flex align-items-center" href="pages-faq.html">

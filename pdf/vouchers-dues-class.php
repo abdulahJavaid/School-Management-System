@@ -30,6 +30,7 @@ if (isset($_POST['section_for_dues_voucher'])) {
     $query .= "class_sections ON student_class.fk_section_id=class_sections.section_id INNER JOIN ";
     $query .= "all_classes ON class_sections.fk_class_id=all_classes.class_id ";
     $query .= "WHERE fee_status LIKE '%due%' AND section_id='$section' ";
+    $query .= "AND student_class.status='1' ";
     $query .= "AND student_status='1' AND student_fee.fk_client_id='$client' ORDER BY student_id";
 
     // looping to get the funds record
@@ -204,8 +205,8 @@ body {
             </table>
             
             <div class='payment-info'>";
-            // <p><strong>Last Date:</strong> 10 days</p>
-                $html .= "<p><strong>Payment Method:</strong> Online Transfer/Cash</p>
+        // <p><strong>Last Date:</strong> 10 days</p>
+        $html .= "<p><strong>Payment Method:</strong> Online Transfer/Cash</p>
             </div>
             
             <div class='footer'>
@@ -255,8 +256,8 @@ body {
             </table>
             
             <div class='payment-info'>";
-            // <p><strong>Last Date:</strong> 10 days</p>
-                $html .= "<p><strong>Payment Method:</strong> Online Transfer/Cash</p>
+        // <p><strong>Last Date:</strong> 10 days</p>
+        $html .= "<p><strong>Payment Method:</strong> Online Transfer/Cash</p>
             </div>
             
             <div class='footer'>
@@ -268,10 +269,10 @@ body {
     $html .= "</body>
 </html>
   ";
-  
+
     // fetching the admin id and adding the data
     $admin_name = escape($_SESSION['login_name']);
-    $log = "Admin <strong>$admin_name</strong> generated dues vouchers of class <strong>$the_class $the_section</strong> !";
+    $log = "Admin <strong>$admin_name</strong> generated dues vouchers of class <strong>$the_class $the_section</strong>!";
     $times = date('d/m/Y h:i a', time());
     $times = (string) $times;
     // adding activity into the logs

@@ -9,69 +9,54 @@ require_once('../includes/functions.php');
 $client = escape($_SESSION['client_id']);
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
-        // Get form data
-        $comment = escape($_POST["comment"]);
-        $cost = escape($_POST["expense"]);
-        $date = escape($_POST["date"]);
+    // Get form data
+    $comment = escape($_POST["comment"]);
+    $cost = escape($_POST["expense"]);
+    $date = escape($_POST["date"]);
 
-        // File upload handling
-        $target_dir = "../uploads/expense-receiving/"; // Directory where the file will be saved
-        $target_file = $target_dir . basename($_FILES["image"]["name"]); // Path of the uploaded file
-        $pic = basename($_FILES["image"]["name"]);
-        $tmp_pic = $_FILES['image']['tmp_name'];
-        // $uploadOk = 1; // Flag to check if file is uploaded successfully
-        // $imageFileType = strtolower(pathinfo($target_file, PATHINFO_EXTENSION)); // File extension
+    // File upload handling
+    $target_dir = "../uploads/expense-receiving/"; // Directory where the file will be saved
+    $target_file = $target_dir . basename($_FILES["image"]["name"]); // Path of the uploaded file
+    $pic = basename($_FILES["image"]["name"]);
+    $tmp_pic = $_FILES['image']['tmp_name'];
 
-        // Check if image file is an actual image or a fake image
-        // $check = getimagesize($_FILES["image"]["tmp_name"]);
-        // if ($check !== false) {
-        //     // Allow certain file formats
-        //     if ($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif") {
-        //         redirect("../add-expense.php?m=Sorry, only JPG, JPEG, PNG, GIF files are allowed.");
-        //         $uploadOk = 0;
-        //     }
-        // } else {
-        //     redirect("../add-expense.php?m=File is not an image.");
-        //     $uploadOk = 0;
-        // }
+    // Check if the file already exists
+    if (!empty($_FILES['image']['tmp_name'])) {
+        $one = rand(10, 200);
+        $two = rand(10000, 50000);
+        $num = rand($one, $two);
 
-        // Check if the file already exists
-        if (!empty($_FILES['image']['tmp_name'])) {
-            $one = rand(10, 200);
-            $two = rand(10000, 50000);
-            $num = rand($one, $two);
+        move_uploaded_file($tmp_pic, $target_file);
+        $new_pic = $client . substr($comment, 0, 1) . $num . $date . $cost . 'exp' . $pic;
+        rename($target_file, "../uploads/expense-receiving/" . $new_pic . "");
 
-            move_uploaded_file($tmp_pic, $target_file);
-            $new_pic = $client . substr($comment, 0, 1) . $num . $date . $cost . 'exp' . $pic;
-            rename($target_file, "../uploads/expense-receiving/" . $new_pic . "");
+        $new_pic = escape($new_pic);
+    } else {
+        $new_pic = '';
+    }
 
-            $new_pic = escape($new_pic);
-        } else {
-            $new_pic = '';
-        }
+    // Insert form data and image path into the database
+    $query = "INSERT INTO expense_receiving (image, comment, expense, receiving, date, fk_client_id) VALUES ('$new_pic', '$comment', '$cost', '0', '$date', '$client')";
+    $result = mysqli_query($conn, $query);
 
-        // Insert form data and image path into the database
-        $query = "INSERT INTO expense_receiving (image, comment, expense, receiving, date, fk_client_id) VALUES ('$new_pic', '$comment', '$cost', '0', '$date', '$client')";
-        $result = mysqli_query($conn, $query);
 
-        
-        // fetching the admin id and adding the data
-        $id = escape($_SESSION['login_id']);
-        $admin_name = escape($_SESSION['login_name']);
-        $log = "Admin <strong>$admin_name</strong> added expense into the expense/receiving sheet !";
-        $times = date('d/m/Y h:i a', time());
-        $times = (string) $times;
+    // fetching the admin id and adding the data
+    $id = escape($_SESSION['login_id']);
+    $admin_name = escape($_SESSION['login_name']);
+    $log = "Admin <strong>$admin_name</strong> added expense into the expense/receiving sheet!";
+    $times = date('d/m/Y h:i a', time());
+    $times = (string) $times;
 
-        // adding activity into the logs
-        $query = "INSERT INTO admin_logs(log_message, time, fk_client_id) VALUES('$log', '$times', '$client')";
-        $pass_query2 = mysqli_query($conn, $query);
-        
-        if ($result) {
-            redirect("../add-expense.php?m=Record has been successfully inserted.");
-        } else {
-            redirect("../add-expense.php?m=Error: " . mysqli_error($conn) . "");
-            // echo "Error: " . mysqli_error($conn);
-        }        
+    // adding activity into the logs
+    $query = "INSERT INTO admin_logs(log_message, time, fk_client_id) VALUES('$log', '$times', '$client')";
+    $pass_query2 = mysqli_query($conn, $query);
+
+    if ($result) {
+        redirect("../add-expense.php?m=Record has been successfully inserted.");
+    } else {
+        redirect("../add-expense.php?m=Error: " . mysqli_error($conn) . "");
+        // echo "Error: " . mysqli_error($conn);
+    }
 }
 
 // payment to owner as expense
@@ -106,22 +91,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['owner'])) {
     $query = "INSERT INTO expense_receiving (image, comment, expense, receiving, date, fk_client_id) VALUES ('$new_pic', '$comment', '$cost', '0', '$date', '$client')";
     $result = mysqli_query($conn, $query);
 
-    
+
     // fetching the admin id and adding the data
     $id = escape($_SESSION['login_id']);
     $admin_name = escape($_SESSION['login_name']);
-    $log = "Admin <strong>$admin_name</strong> gave <strong>Rs.$cost</strong> to owner !";
+    $log = "Admin <strong>$admin_name</strong> gave <strong>Rs.$cost</strong> to owner!";
     $times = date('d/m/Y h:i a', time());
     $times = (string) $times;
 
     // adding activity into the logs
     $query = "INSERT INTO admin_logs(log_message, time, fk_client_id) VALUES('$log', '$times', '$client')";
     $pass_query2 = mysqli_query($conn, $query);
-    
+
     if ($result) {
         redirect("../owner-payment.php?m=Record has been successfully inserted.");
     } else {
         redirect("../owner-payment.php?m=Error: " . mysqli_error($conn) . "");
-        // echo "Error: " . mysqli_error($conn);
-    }        
+    }
 }

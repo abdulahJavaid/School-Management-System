@@ -41,6 +41,7 @@ if (isset($_POST['select'])) {
     $query .= "class_sections ON student_class.fk_section_id=class_sections.section_id INNER JOIN ";
     $query .= "all_classes ON class_sections.fk_class_id=all_classes.class_id ";
     $query .= "WHERE year='$year' AND month='$month' AND fee_status='unpaid' AND section_id='$section' ";
+    $query .= "AND student_class.status='1' ";
     $query .= "AND student_status='1' AND student_fee.fk_client_id='$client'";
 
     // looping to get the funds record
@@ -276,13 +277,13 @@ body {
   ";
     // fetching the admin id and adding the data
     $admin_name = escape($_SESSION['login_name']);
-    $log = "Admin <strong>$admin_name</strong> generated fee vouchers of class <strong>$class $section</strong> !";
+    $log = "Admin <strong>$admin_name</strong> generated fee vouchers of class <strong>$class $section</strong>!";
     $times = date('d/m/Y h:i a', time());
     $times = (string) $times;
     // adding activity into the logs
     $query = "INSERT INTO admin_logs(log_message, time, fk_client_id) VALUES('$log', '$times', '$client')";
     $pass_query2 = mysqli_query($conn, $query);
-    
-  // downloaded pdf name
-  $pdf_name = "fee-vouchers-class-" . $class. '-' . $section . ".pdf";
+
+    // downloaded pdf name
+    $pdf_name = "fee-vouchers-class-" . $class . '-' . $section . ".pdf";
 }

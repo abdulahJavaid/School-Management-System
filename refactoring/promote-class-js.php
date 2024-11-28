@@ -315,7 +315,7 @@
             xhr.send('change_class=' + encodeURIComponent(classId) + '&change_section=' + encodeURIComponent(sectionId));
         }
     }
-    
+
     // student left school - decactivate profile
     function left() {
         var selectedVals = document.getElementById('spo_student_ids').value;
@@ -962,16 +962,14 @@
         xhr.send('c_empty_section_id=' + encodeURIComponent(sectionId));
     }
 
-// 
-// 
-//  Show the appropriate section for the admin as per click
-    function unhide (toUnhide) {
+    // 
+    // 
+    //  Show the appropriate section for the admin as per click
+    function unhide(toUnhide) {
         let arr = ['po-main', 'p-main', 'd-main', 'c-main', 'spo-main'];
         arr.forEach(function(value) {
             document.getElementById(value).style.display = "none";
         });
         document.getElementById(toUnhide).style.display = "block";
     }
-
-
 </script>

@@ -1,4 +1,6 @@
 <?php
+// adding and updating the timetable
+// inclusion of required files and functions
 session_start();
 ob_start();
 require_once('../db_connection/configs.php');
@@ -8,6 +10,7 @@ require_once('../includes/functions.php');
 // getting the client id
 $client = escape($_SESSION['client_id']);
 
+// add/update time table
 if (isset($_POST['submit'])) {
 
     $class_name = escape($_POST['class']);
@@ -68,10 +71,9 @@ if (isset($_POST['submit'])) {
         // fetching the admin id and adding the data
         $id = escape($_SESSION['login_id']);
         $admin_name = escape($_SESSION['login_name']);
-        $log = "Admin <strong>$admin_name</strong> added new timetable for class <strong>$class_name $section_name</strong> !";
+        $log = "Admin <strong>$admin_name</strong> added new timetable for class <strong>$class_name $section_name</strong>!";
         $times = date('d/m/Y h:i a', time());
         $times = (string) $times;
-
         // adding activity into the logs
         $query = "INSERT INTO admin_logs(log_message, time, fk_client_id) VALUES('$log', '$times', '$client')";
         $pass_query2 = mysqli_query($conn, $query);
@@ -135,14 +137,12 @@ if (isset($_POST['submit'])) {
         // fetching the admin id and adding the data
         $id = escape($_SESSION['login_id']);
         $admin_name = escape($_SESSION['login_name']);
-        $log = "Admin <strong>$admin_name</strong> added new timetable for class <strong>$class_name $section_name</strong> !";
+        $log = "Admin <strong>$admin_name</strong> updated timetable for class <strong>$class_name $section_name</strong>!";
         $times = date('d/m/Y h:i a', time());
         $times = (string) $times;
-
         // adding activity into the logs
         $query = "INSERT INTO admin_logs(log_message, time, fk_client_id) VALUES('$log', '$times', '$client')";
         $pass_query2 = mysqli_query($conn, $query);
-
     }
     redirect("../add-time-table.php");
 }

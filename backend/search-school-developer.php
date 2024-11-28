@@ -24,11 +24,10 @@ if (isset($_POST['query'])) {
     while ($row = mysqli_fetch_assoc($result)) {
         $matches[] = [
             'name' => $row['name'],
-            'address' => $row['address'] 
+            'address' => $row['address']
         ];
     }
 
     // Return the results as a JSON response
     echo json_encode($matches);
 }
-?>

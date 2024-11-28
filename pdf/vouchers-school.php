@@ -4,7 +4,7 @@
 if (isset($_POST['all_students'])) {
     // fetching the admin id and adding the data
     $admin_name = escape($_SESSION['login_name']);
-    $log = "Admin <strong>$admin_name</strong> generated fee vouchers of all students !";
+    $log = "Admin <strong>$admin_name</strong> generated fee vouchers of all students!";
     $times = date('d/m/Y h:i a', time());
     $times = (string) $times;
     // adding activity into the logs
@@ -31,6 +31,7 @@ if (isset($_POST['all_students'])) {
     $query .= "class_sections ON student_class.fk_section_id=class_sections.section_id INNER JOIN ";
     $query .= "all_classes ON class_sections.fk_class_id=all_classes.class_id ";
     $query .= "WHERE year='$year' AND month='$month' AND fee_status='unpaid' ";
+    $query .= "AND student_class.status='1' ";
     $query .= "AND student_status='1' AND student_fee.fk_client_id='$client'";
 
     // looping to get the funds record
@@ -264,7 +265,7 @@ body {
     $html .= "</body>
 </html>
   ";
-  
-  // downloaded pdf name
-  $pdf_name = "fee-vouchers-school.pdf";
+
+    // downloaded pdf name
+    $pdf_name = "fee-vouchers-school.pdf";
 }

@@ -15,7 +15,7 @@ if (isset($_POST['allquery'])) {
     // $searchQuery = escape($_POST['allquery']);
 
     // SQL query to search for matches (adjust based on your table structure)
-    $query = "SELECT * FROM teacher_profile";
+    $query = "SELECT * FROM teacher_profile WHERE teacher_status='1'";
 
     $result = mysqli_query($conn, $query);
     $matches = [];
@@ -37,7 +37,8 @@ if (isset($_POST['query'])) {
     $searchQuery = escape($_POST['query']);
 
     // SQL query to search for matches (adjust based on your table structure)
-    $query = "SELECT teacher_id, name FROM teacher_profile WHERE name LIKE '$searchQuery%'";
+    $query = "SELECT teacher_id, name FROM teacher_profile WHERE name LIKE '$searchQuery%' ";
+    $query .= "AND teacher_status='1'";
 
     $result = mysqli_query($conn, $query);
     $matches = [];
@@ -53,5 +54,3 @@ if (isset($_POST['query'])) {
     // Return the results as a JSON response
     echo json_encode($matches);
 }
-
-?>

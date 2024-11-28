@@ -6,7 +6,7 @@ if (isset($_POST['due_current'])) {
   $current_month = date('F', time());
   // fetching the admin id and adding the data
   $admin_name = escape($_SESSION['login_name']);
-  $log = "Admin <strong>$admin_name</strong> generated pending due records of <strong>$current_month, $current_year</strong> !";
+  $log = "Admin <strong>$admin_name</strong> generated pending due records of <strong>$current_month, $current_year</strong>!";
   $times = date('d/m/Y h:i a', time());
   $times = (string) $times;
   // adding activity into the logs

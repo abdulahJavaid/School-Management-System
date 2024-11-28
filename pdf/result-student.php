@@ -41,6 +41,7 @@ if (isset($_POST['download_student_result'])) {
     $query .= "INNER JOIN all_classes ON ";
     $query .= "class_sections.fk_class_id=all_classes.class_id ";
     $query .= "WHERE exam_result.fk_exam_title_id='$exam_title_id' ";
+    $query .= "AND student_profile.student_status='1' ";
     $query .= "AND student_profile.roll_no='$roll_no' AND exam_result.fk_client_id='$client'";
     $get_result = query($query);
 
@@ -104,10 +105,10 @@ if (isset($_POST['download_student_result'])) {
     $html .= "<br><br><strong>Teacher:</strong> <u>___________________</u>
               &nbsp;&nbsp;&nbsp;&nbsp;<strong>Principal:</strong> <u>___________________</u>
               <br><br><strong>Dated:</strong> <u>___________________</u>";
-              
+
     // fetching the admin id and adding the data
     $admin_name = escape($_SESSION['login_name']);
-    $log = "Admin <strong>$admin_name</strong> generated Exams Result of student <strong>{$data[$exam_title_id]['student_name']}</strong> !";
+    $log = "Admin <strong>$admin_name</strong> generated Exams Result of student <strong>{$data[$exam_title_id]['student_name']}</strong>!";
     $times = date('d/m/Y h:i a', time());
     $times = (string) $times;
     // adding activity into the logs
@@ -117,4 +118,3 @@ if (isset($_POST['download_student_result'])) {
     // Generate PDF
     $pdf_name = $data[$exam_title_id]['student_name'] . "-result" . ".pdf";
 }
-?>

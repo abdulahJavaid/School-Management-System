@@ -18,7 +18,7 @@ if (isset($_POST['request_sub'])) {
     $std_id = $_POST['request_sub']; // the student id
 
     // getting the student name
-    $query = "SELECT name FROM student_profile WHERE student_id='$std_id' AND fk_client_id='$client'";
+    $query = "SELECT name FROM student_profile WHERE student_id='$std_id' AND student_status='1' AND fk_client_id='$client'";
     $get_student = query($query);
     $student_name = mysqli_fetch_assoc($get_student);
     $student_name = $student_name['name'];
@@ -51,7 +51,7 @@ if (isset($_POST['request_sub'])) {
             // fetching the admin id and adding the data
             $id = escape($_SESSION['login_id']);
             $admin_name = escape($_SESSION['login_name']);
-            $log = "Admin <strong>$admin_name</strong> requested subscription of student <strong>$student_name</strong> !";
+            $log = "Admin <strong>$admin_name</strong> requested subscription of student <strong>$student_name</strong>!";
             $times = date('d/m/Y h:i a', time());
             $times = (string) $times;
             // adding activity into the logs
@@ -72,7 +72,7 @@ if (isset($_POST['approve_sub'])) {
     $std_id = $_POST['approve_sub']; // the student id
 
     // getting the student name
-    $query = "SELECT name FROM student_profile WHERE student_id='$std_id' AND fk_client_id='$client'";
+    $query = "SELECT name FROM student_profile WHERE student_id='$std_id' AND student_status='1' AND fk_client_id='$client'";
     $get_student = query($query);
     $student_name = mysqli_fetch_assoc($get_student);
     $student_name = $student_name['name'];
@@ -80,7 +80,8 @@ if (isset($_POST['approve_sub'])) {
     // approving subscription
     $expiry = date('Y-m-d', time() + (60 * 60 * 24 * 365));
     $query = "UPDATE student_subscriptions SET sub_status='on', sub_expiry='$expiry' ";
-    $query .= "WHERE fk_student_id='$std_id' AND fk_client_id='$client'";
+    $query .= "WHERE fk_student_id='$std_id' AND fk_client_id='$client' ";
+    $query .= "AND sub_status='requested'";
     $set_subscription = query($query);
 
     $matches = [];
@@ -88,7 +89,7 @@ if (isset($_POST['approve_sub'])) {
         // fetching the admin id and adding the data
         $id = escape($_SESSION['login_id']);
         $admin_name = escape($_SESSION['login_name']);
-        $log = "<strong>$admin_name</strong> from CodsMine activated subscription of student <strong>$student_name</strong> !";
+        $log = "<strong>$admin_name</strong> from CodsMine activated subscription of student <strong>$student_name</strong>!";
         $times = date('d/m/Y h:i a', time());
         $times = (string) $times;
         // adding activity into the logs
@@ -138,7 +139,7 @@ if (isset($_POST['school_paid'])) {
             // fetching the admin id and adding the data
             $id = escape($_SESSION['login_id']);
             $admin_name = escape($_SESSION['login_name']);
-            $log = "Admin <strong>$admin_name</strong> paid <strong>Rs.$paid</strong> to CodsMine !";
+            $log = "Admin <strong>$admin_name</strong> paid <strong>Rs.$paid</strong> to CodsMine!";
             $times = date('d/m/Y h:i a', time());
             $times = (string) $times;
             // adding activity into the logs
@@ -179,7 +180,7 @@ if (isset($_POST['codsmine_paid'])) {
             // fetching the admin id and adding the data
             $id = escape($_SESSION['login_id']);
             $admin_name = escape($_SESSION['login_name']);
-            $log = "<strong>$admin_name</strong> from Codsmine paid <strong>Rs.$paid</strong> to $to_school !";
+            $log = "<strong>$admin_name</strong> from Codsmine paid <strong>Rs.$paid</strong> to $to_school!";
             $times = date('d/m/Y h:i a', time());
             $times = (string) $times;
             // adding activity into the logs

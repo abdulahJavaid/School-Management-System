@@ -116,10 +116,10 @@ if (isset($_POST['download_timetable'])) {
     </body>
     </html>
     ";
-    
+
     // fetching the admin id and adding the data
     $admin_name = escape($_SESSION['login_name']);
-    $log = "Admin <strong>$admin_name</strong> generated timetable of class <strong>$class_name</strong> !";
+    $log = "Admin <strong>$admin_name</strong> generated timetable of class <strong>$class_name</strong>!";
     $times = date('d/m/Y h:i a', time());
     $times = (string) $times;
     // adding activity into the logs

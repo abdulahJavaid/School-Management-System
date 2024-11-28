@@ -9,7 +9,7 @@ if (isset($_POST['pass_out'])) {
     $query = "UPDATE student_profile ";
     $query .= "INNER JOIN student_class ON student_profile.student_id=student_class.fk_student_id ";
     $query .= "SET student_status='0' ";
-    $query .= "WHERE fk_section_id='$section_id' AND student_class.fk_client_id='$client'";
+    $query .= "WHERE fk_section_id='$section_id' AND student_class.status='1' AND student_class.fk_client_id='$client'";
     $make_students_alumini = query($query);
 
     if ($make_students_alumini) {
@@ -49,7 +49,7 @@ if (isset($_POST['promote'])) {
 
     // getting the students of the class to be promoted
     $query = "SELECT fk_student_id FROM student_class ";
-    $query .= "WHERE fk_section_id='$section_id' AND fk_client_id='$client'";
+    $query .= "WHERE fk_section_id='$section_id' AND status='1' AND fk_client_id='$client'";
     $get_std_ids = query($query);
     while ($row = mysqli_fetch_assoc($get_std_ids)) {
         $student_id = $row['fk_student_id'];
@@ -179,7 +179,7 @@ if (isset($_POST['left'])) {
         $query = "UPDATE student_profile ";
         $query .= "INNER JOIN student_class ON student_profile.student_id=student_class.fk_student_id ";
         $query .= "SET student_status='0' ";
-        $query .= "WHERE fk_section_id='$section_id' AND student_class.fk_client_id='$client' ";
+        $query .= "WHERE fk_section_id='$section_id' AND status='1' AND student_class.fk_client_id='$client' ";
         $query .= "AND student_id='$std_id'";
         $student_left_school = query($query);
     }

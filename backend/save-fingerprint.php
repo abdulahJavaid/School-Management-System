@@ -10,6 +10,17 @@ require_once('../includes/functions.php');
 // getting the client id
 $client = escape($_SESSION['client_id']);
 
+// 
+// 
+// 
+// 
+// This page is no longer used
+// 
+// 
+// 
+// 
+// 
+
 // Check if the request is a POST request
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Log the POST data for debugging

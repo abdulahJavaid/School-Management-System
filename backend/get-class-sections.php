@@ -24,12 +24,10 @@ if (isset($_POST['class_id'])) {
     while ($row = mysqli_fetch_assoc($result)) {
         $matches[] = [
             'id' => $row['section_id'],
-            'name' => $row['section_name'] 
+            'name' => $row['section_name']
         ];
     }
 
     // Return the results as a JSON response
     echo json_encode($matches);
 }
-
-?>

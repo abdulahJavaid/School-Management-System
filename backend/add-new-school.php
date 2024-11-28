@@ -17,10 +17,10 @@ if (isset($_POST['query'])) {
     $matches = [];
     if (mysqli_num_rows($result) != 0) {
         $matches[] = ['msg' => "Client Id already taken!"];
-    }else{
+    } else {
         $matches[] = ['msg' => "Client Id is available!"];
     }
-    
+
     echo json_encode($matches);
 }
 
@@ -72,7 +72,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['add_school'])) {
     // code to add developer activity into the logs
     $id = escape($_SESSION['login_id']);
     $admin_name = escape($_SESSION['login_name']);
-    $log = "<strong>$admin_name</strong> from CodsMine added new school $name !";
+    $log = "<strong>$admin_name</strong> from CodsMine added new school $name!";
     $time = date('d/m/Y h:i a', time());
     $time = (string) $time;
 

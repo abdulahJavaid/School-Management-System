@@ -3,7 +3,7 @@ if (isset($_POST['npaid_name'])) {
   $get_name = escape($_POST['npaid_name']);
   // fetching the admin id and adding the data
   $admin_name = escape($_SESSION['login_name']);
-  $log = "Admin <strong>$admin_name</strong> generated unpaid fee records of students with name {<strong>$get_name</strong>} !";
+  $log = "Admin <strong>$admin_name</strong> generated unpaid fee records of students with name {<strong>$get_name</strong>}!";
   $times = date('d/m/Y h:i a', time());
   $times = (string) $times;
   // adding activity into the logs
@@ -217,7 +217,7 @@ if (isset($_POST['npaid_name'])) {
       </body>
     </html>
   ";
-  
+
   // downloaded pdf name
   $pdf_name = "unpaid-fee-record-of-name-" . $get_name . ".pdf";
 }
