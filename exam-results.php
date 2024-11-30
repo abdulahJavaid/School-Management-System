@@ -182,7 +182,9 @@ if ($level == 'clerk' || $level == 'super') {
                     $query .= "INNER JOIN all_classes ON ";
                     $query .= "class_sections.fk_class_id=all_classes.class_id ";
                     $query .= "WHERE exam_result.fk_exam_title_id='$exam_title_id' ";
-                    $query .= "AND student_profile.roll_no='$roll_no' AND exam_result.fk_client_id='$client'";
+                    $query .= "AND student_profile.roll_no='$roll_no' AND student_profile.student_status='1' ";
+                    $query .= "AND student_class.status='1' ";
+                    $query .= "AND exam_result.fk_client_id='$client'";
                     $get_result = query($query);
 
                     $data = [];
@@ -303,6 +305,8 @@ if ($level == 'clerk' || $level == 'super') {
                     $query .= "INNER JOIN all_classes ON ";
                     $query .= "class_sections.fk_class_id=all_classes.class_id ";
                     $query .= "WHERE exam_result.fk_exam_title_id='$exam_title_id' ";
+                    $query .= "AND student_profile.student_status='1' ";
+                    $query .= "AND student_class.status='1' ";
                     $query .= "AND class_sections.section_id='$section_id' AND exam_result.fk_client_id='$client' ";
                     $query .= "ORDER BY exam_result.fk_student_id, exam_result.fk_subject_id";
                     $get_result = query($query);

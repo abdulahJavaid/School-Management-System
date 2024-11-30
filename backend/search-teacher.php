@@ -10,12 +10,15 @@ require_once('../includes/functions.php');
 // Set the content type to JSON
 header('Content-Type: application/json');
 
+// getting the client id
+$client = escape($_SESSION['client_id']);
+
 // Check if 'query' is sent via POST
 if (isset($_POST['allquery'])) {
     // $searchQuery = escape($_POST['allquery']);
 
     // SQL query to search for matches (adjust based on your table structure)
-    $query = "SELECT * FROM teacher_profile WHERE teacher_status='1'";
+    $query = "SELECT * FROM teacher_profile WHERE teacher_status='1' AND fk_client_id='$client'";
 
     $result = mysqli_query($conn, $query);
     $matches = [];
@@ -38,7 +41,7 @@ if (isset($_POST['query'])) {
 
     // SQL query to search for matches (adjust based on your table structure)
     $query = "SELECT teacher_id, name FROM teacher_profile WHERE name LIKE '$searchQuery%' ";
-    $query .= "AND teacher_status='1'";
+    $query .= "AND teacher_status='1' AND fk_client_id='$client'";
 
     $result = mysqli_query($conn, $query);
     $matches = [];

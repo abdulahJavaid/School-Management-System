@@ -147,21 +147,21 @@ if (isset($_POST['submit'])) {
                                     <form action="" method="post">
 
                                         <div class="row mb-3">
-                                            <label for="old_password" class="col-4 col-form-label"><strong>Old Password <code>*</code></strong></label>
+                                            <label for="old_password" class="col-4 col-form-label text-secondary"><strong>Old Password <code>*</code></strong></label>
                                             <div class="col-8">
                                                 <input name="old_password" type="password" class="form-control" id="old_password" placeholder="***********" required>
                                             </div>
                                         </div>
 
                                         <div class="row mb-3">
-                                            <label for="new_password" class="col-4 col-form-label"><strong>New Password <code>*</code></strong></label>
+                                            <label for="new_password" class="col-4 col-form-label text-secondary"><strong>New Password <code>*</code></strong></label>
                                             <div class="col-8">
                                                 <input name="new_password" type="password" class="form-control" id="new_password" placeholder="***********" minlength="8" required>
                                             </div>
                                         </div>
 
                                         <div class="row mb-3">
-                                            <label for="confirm_password" class="col-4 col-form-label"><strong>Confirm Password <code>*</code></strong></label>
+                                            <label for="confirm_password" class="col-4 col-form-label text-secondary"><strong>Confirm Password <code>*</code></strong></label>
                                             <div class="col-8">
                                                 <input name="confirm_password" type="password" class="form-control" id="confirm_password" placeholder="***********" required>
                                             </div>
@@ -173,7 +173,6 @@ if (isset($_POST['submit'])) {
 
                                 </div>
                             </div>
-
 
                         </div>
                     </div>

@@ -10,9 +10,9 @@ $client = escape($_SESSION['client_id']);
 
 <?php
 // checking session for appropriate access
-if ($level == 'accountant' || $level == 'super') {}
-else {
-  redirect("./");
+if ($level == 'accountant' || $level == 'super') {
+} else {
+    redirect("./");
 }
 ?>
 

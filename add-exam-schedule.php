@@ -146,9 +146,12 @@ if ($level == 'clerk' || $level == 'super') {
           $log_section = $row1['section_name'];
         ?>
           <div class="card">
-            <div class="card-body pt-3">
-
-              <h5 class="card-title pb-0 mb-1">Class: <?php echo $row['class_name'] . ' ' . $row1['section_name']; ?></h5>
+            <div class="card-header card-bg-header text-white mb-3">
+              <h5 class="mb-0 text-dark"><i class="fas fa-clipboard-list pro-header-icon"></i><strong>Class: <?php echo $row['class_name'] . ' ' . $row1['section_name']; ?></strong></h5>
+            </div>
+            <div class="card-body pt3">
+              <!-- <h5 class="card-title pb-0 mb-1">Class: <?php //echo $row['class_name'] . ' ' . $row1['section_name']; 
+                                                            ?></h5> -->
               <p><code><u>Instructions:</u></code>
                 <br><code>1. If you leave any field empty, that record (paper/row) will not be added.</code>
               </p>
@@ -315,10 +318,10 @@ if ($level == 'clerk' || $level == 'super') {
                           <input type="hidden" name="class_section" value="<?php echo $get['class_name'] . ' ' . $get['section_name']; ?>">
                           <input type="hidden" name="section_id" value="<?php echo $section; ?>">
                           <input type="hidden" name="exam_title_id" value="<?php echo $key; ?>">
-                        <button type="submit" name="download_exam_schedule" class="btn btn-sm btn-outline-success">
-                          Download
-                        </button>
-                      </div>
+                          <button type="submit" name="download_exam_schedule" class="btn btn-sm btn-outline-success">
+                            Download
+                          </button>
+                        </div>
                       </form>
                       <form action="" method="post">
                         <input type="hidden" name="section_id" value="<?php echo $section; ?>">
@@ -419,17 +422,21 @@ if ($level == 'clerk' || $level == 'super') {
             $data[$row['exam_title_id']]['schedule'][] = $row;
           }
         ?>
-          <div class="card">
-            <div class="card-body pt-3">
 
-              <form method="post" action="backend/back-add-exam.php">
+          <?php
+          // getting all the exam schedules
+          foreach ($data as $key => $get) {
 
-                <?php
-                // getting all the exam schedules
-                foreach ($data as $key => $get) {
+          ?>
+            <div class="card">
+              <div class="card-header card-bg-header text-white mb-3">
+                <h5 class="mb-0 text-dark"><i class="fas fa-clipboard-list pro-header-icon"></i><strong>Class: <?php echo $get['class_name'] . ' ' . $get['section_name']; ?></strong></h5>
+              </div>
+              <div class="card-body pt3">
 
-                ?>
-                  <h5 class="card-title mb-0 pb-1">Class: <?php echo $get['class_name'] . ' ' . $get['section_name']; ?></h5>
+                <form method="post" action="backend/back-add-exam.php">
+                  <!-- <h5 class="card-title mb-0 pb-1">Class: <?php //echo $get['class_name'] . ' ' . $get['section_name']; 
+                                                                ?></h5> -->
                   <code><u>Instructions:</u></code>
                   <br><code>1. If you leave any field empty, that record (paper/row) will not be added.</code>
                   <div class="table-md-responsive">
@@ -532,14 +539,14 @@ if ($level == 'clerk' || $level == 'super') {
                     &nbsp;
                     <button type="submit" name="update" class="btn btn-sm btn-success">Update schedule</button>
                   </div>
-                <?php
-                } // end of outer foreach loop
-                ?>
-              </form><!-- End Add timetable Form -->
+                </form><!-- End Add timetable Form -->
+
+              </div>
 
             </div>
-
-          </div>
+          <?php
+          } // end of outer foreach loop
+          ?>
 
       </div>
     </div>

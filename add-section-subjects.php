@@ -39,7 +39,26 @@ if (isset($_POST['add_subject'])) {
     $query .= "VALUES('$section_id', '$subject_name', '$client')";
     $pass_query = query($query);
 
+    // getting the class and section names
+    $query = "SELECT all_classes.class_name, class_sections.section_name FROM all_classes ";
+    $query .= "INNER JOIN class_sections ON all_classes.class_id=class_sections.fk_class_id ";
+    $query .= "WHERE fk_section_id='$section_id' AND fk_class_id='$class_id' ";
+    $query .= "AND all_classes.fk_client_id='$client'";
+    $get_class_section = query($query);
+    $get_data = mysqli_fetch_assoc($get_class_section);
+    $class_name = $get_data['class_name'];
+    $section_name = $get_data['section_name'];
+
     if ($pass_query) {
+        // fetching the admin id and adding the data
+        $admin_name = escape($_SESSION['login_name']);
+        $log = "Admin <strong>$admin_name</strong> added a new subject <strong>$subject_name</strong> for class <strong>$class_name $section_name</strong>!";
+        $times = date('d/m/Y h:i a', time());
+        $times = (string) $times;
+        // adding activity into the logs
+        $query = "INSERT INTO admin_logs(log_message, time, fk_client_id) VALUES('$log', '$times', '$client')";
+        $pass_query2 = mysqli_query($conn, $query);
+
         redirect("./add-section-subjects.php");
     }
 }
@@ -47,9 +66,8 @@ if (isset($_POST['add_subject'])) {
 ?>
 
 <main id="main" class="main">
-
     <div class="pagetitle">
-        <h1>Add Subjects</h1>
+        <h1>Subjects</h1>
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item active"><?php echo $_SESSION['school_name']; ?></li>
@@ -59,10 +77,8 @@ if (isset($_POST['add_subject'])) {
 
     <div class="row">
         <div class="container">
-
             <form action="" method="post">
                 <div class="row align-items-center my-3">
-
                     <!-- Select the Board -->
                     <div class="col-auto">
                         <div class="input-group mb-2" id="classSelectDiv">
@@ -122,11 +138,13 @@ if (isset($_POST['add_subject'])) {
 
             <section class="section profile">
                 <div class="row">
-                    
-                <div class="col-sm-12">
+                    <div class="col-sm-12">
                         <div class="card">
-                            <div class="card-body pt-3">
-                                <h5 class="card-title">Class & Sections</h5>
+                            <div class="card-header card-bg-header text-white mb-3">
+                                <h5 class="mb-0 text-dark"><i class="fas fa-book pro-header-icon"></i><strong>Section's Subjects</strong></h5>
+                            </div>
+                            <div class="card-body pt3">
+                                <!-- <h5 class="card-title">Section's Subjects</h5> -->
                                 <div class="tab-content pt-2">
                                     <?php
                                     // getting all the classes and related sections
@@ -157,10 +175,7 @@ if (isset($_POST['add_subject'])) {
                                 </div>
                             </div>
                         </div>
-
                     </div>
-
-
                 </div>
             </section>
 

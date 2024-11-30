@@ -26,6 +26,21 @@ if (isset($_POST['add_section'])) {
     $query .= "VALUES('$class_id', '$section_name', '$client')";
     $pass_query = query($query);
 
+    // getting the class name where the section is added
+    $query = "SELECT class_name FROM all_classes WHERE class_id='$class_id' AND fk_client_id='$client'";
+    $get_class_name = query($query);
+    $get_data = mysqli_fetch_assoc($get_class_name);
+    $class_name = $get_data['class_name'];
+
+    // fetching the admin id and adding the data
+    $admin_name = escape($_SESSION['login_name']);
+    $log = "Admin <strong>$admin_name</strong> added a new section <strong>$section_name</strong> for class <strong>$class_name</strong>!";
+    $times = date('d/m/Y h:i a', time());
+    $times = (string) $times;
+    // adding activity into the logs
+    $query = "INSERT INTO admin_logs(log_message, time, fk_client_id) VALUES('$log', '$times', '$client')";
+    $pass_query2 = mysqli_query($conn, $query);
+
     if ($pass_query) {
         redirect("./add-class-section.php");
     }
@@ -47,6 +62,15 @@ if (isset($_POST['submit_class'])) {
         $add_section = query($query);
 
         if ($add_section) {
+            // fetching the admin id and adding the data
+            $admin_name = escape($_SESSION['login_name']);
+            $log = "Admin <strong>$admin_name</strong> added a new class <strong>$class_name</strong> with section <strong>$section_name</strong>!";
+            $times = date('d/m/Y h:i a', time());
+            $times = (string) $times;
+            // adding activity into the logs
+            $query = "INSERT INTO admin_logs(log_message, time, fk_client_id) VALUES('$log', '$times', '$client')";
+            $pass_query2 = mysqli_query($conn, $query);
+
             redirect("./add-class-section.php");
         }
     }
@@ -59,7 +83,7 @@ if (isset($_POST['submit_class'])) {
 <main id="main" class="main">
 
     <div class="pagetitle">
-        <h1>Add Class & Section's</h1>
+        <h1>Class & Sections</h1>
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item active"><?php echo $_SESSION['school_name']; ?></li>
@@ -69,25 +93,21 @@ if (isset($_POST['submit_class'])) {
 
     <div class="row">
         <div class="container">
-            <?php
-            // if add class option is selected then hide this
-            if (!isset($_GET['add_class'])) {
-            ?>
-                <div class="row align-items-center my-3">
-                    <form action="" method="get">
-                        <button type="submit" name="add_class" class="btn btn-sm btn-success w-25">Add New Class</button>
-                    </form>
-                </div>
-            <?php
-            } // end of if (hide if add_class is selected)
-            ?>
 
             <?php
             // if add class option is selected then hide this
             if (!isset($_GET['add_class'])) {
             ?>
-                <form action="" method="post">
-                    <div class="row align-items-center my-3">
+                <form action="" method="post" class="form-inline">
+                    <div class="row align-items-center mb-4">
+                        <?php
+                        // if add class option is selected then hide this
+                        if (!isset($_GET['add_class'])) {
+                        ?>
+                            <a href="./add-class-section.php?add_class=request" class="btn btn-success w-25">Add New Class</a>
+                        <?php
+                        } // end of if (hide if add_class is selected)
+                        ?>
 
                         <!-- Select the Board -->
                         <div class="col-auto">
@@ -145,46 +165,51 @@ if (isset($_POST['submit_class'])) {
                     // add class form
                     if (isset($_GET['add_class'])) {
                     ?>
-                        <div class="col-sm-6">
-                            <div class="card">
-                                <div class="card-body pt-3">
-                                    <h5 class="card-title">Add New Class</h5>
-                                    <div class="tab-content pt-2">
-                                        <form method="post" action="">
-                                            <div class="row mb-3">
-                                                <label for="class_name" class="col-6 col-form-label text-secondary"><strong>Class Name</strong> <code>*</code></label>
-                                                <div class="col-6">
-                                                    <input name="class_name" type="text" class="form-control" id="class_name" placeholder="Class name" required>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <div class="card">
+                                    <div class="card-body pt-3">
+                                        <h5 class="card-title">Add New Class</h5>
+                                        <div class="tab-content pt-2">
+                                            <form method="post" action="">
+                                                <div class="row mb-3">
+                                                    <label for="class_name" class="col-6 col-form-label text-secondary"><strong>Class Name</strong> <code>*</code></label>
+                                                    <div class="col-6">
+                                                        <input name="class_name" type="text" class="form-control" id="class_name" placeholder="Class name" required>
+                                                    </div>
                                                 </div>
-                                            </div>
 
-                                            <div class="row mb-3">
-                                                <label for="section_name" class="col-6 col-form-label text-secondary"><strong>Section Name</strong> <code>*</code></label>
-                                                <div class="col-6">
-                                                    <input name="section_name" type="text" class="form-control" id="section_name" placeholder="Section name" required>
+                                                <div class="row mb-3">
+                                                    <label for="section_name" class="col-6 col-form-label text-secondary"><strong>Section Name</strong> <code>*</code></label>
+                                                    <div class="col-6">
+                                                        <input name="section_name" type="text" class="form-control" id="section_name" placeholder="Section name" required>
+                                                    </div>
                                                 </div>
-                                            </div>
 
-                                            <div class="text-end">
-                                                <a href="./add-class-section.php" class="btn btn-sm btn-outline-danger">Cancel</a>
-                                                <button type="submit" name="submit_class" class="btn btn-sm btn-success">Add Class</button>
-                                            </div>
-                                        </form><!-- End Profile Edit Form -->
-                                    </div><!-- End Bordered Tabs -->
+                                                <div class="text-end">
+                                                    <a href="./add-class-section.php" class="btn btn-sm btn-outline-danger">Cancel</a>
+                                                    <button type="submit" name="submit_class" class="btn btn-sm btn-success">Add Class</button>
+                                                </div>
+                                            </form><!-- End Profile Edit Form -->
+                                        </div><!-- End Bordered Tabs -->
 
+                                    </div>
                                 </div>
-                            </div>
 
+                            </div>
                         </div>
                     <?php
                     } // end of add class form if
                     ?>
 
 
-                    <div class="col-sm-12">
+                    <div class="col-sm-7">
                         <div class="card">
-                            <div class="card-body pt-3">
-                                <h5 class="card-title">Class & Sections</h5>
+                            <div class="card-header card-bg-header text-white mb-3">
+                                <h5 class="mb-0 text-dark"><i class="fas fa-chalkboard-teacher pro-header-icon"></i><strong>Class & Sections</strong></h5>
+                            </div>
+                            <div class="card-body pt3">
+                                <!-- <h5 class="card-title">Class & Sections</h5> -->
                                 <div class="tab-content pt-2">
                                     <?php
                                     // getting all the classes and related sections

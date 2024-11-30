@@ -17,8 +17,38 @@ if ($level == 'not=here') {
 ?>
 
 <?php
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+// This file is no longer in use
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+?>
+
+<?php
 // getting the mcqs
 if (isset($_POST['generate'])) {
+    // 
     $board = escape($_POST['board']);
     $class = escape($_POST['class']);
     $subject = escape($_POST['subject']);
@@ -107,11 +137,11 @@ if (isset($_POST['save_mcqs'])) {
 
     $total_mcq = escape($_POST['total_mcqs']);
     $counter = 1;
-    for (;$counter <= $total_mcq; $counter++) {
+    for (; $counter <= $total_mcq; $counter++) {
         // preparing the keys
-        $check = "cbox".$counter."";
-        $q_key = "question".$counter."";
-        $opt_ans_key = "optanswer".$counter."";
+        $check = "cbox" . $counter . "";
+        $q_key = "question" . $counter . "";
+        $opt_ans_key = "optanswer" . $counter . "";
         $answer = escape($_POST[$opt_ans_key]);
         if (isset($_POST[$check])) {
             $question = escape($_POST[$q_key]);
@@ -120,7 +150,7 @@ if (isset($_POST['save_mcqs'])) {
             $add_question = query($query);
             $last_id = last_id();
             for ($i = 1; $i <= 4; $i++) {
-                $opt_key = "opt".$counter.$i."";
+                $opt_key = "opt" . $counter . $i . "";
                 $option = escape($_POST[$opt_key]);
                 if ($answer == $i) {
                     $query = "INSERT INTO options(option_description, option_status, fk_question_id) ";
@@ -131,9 +161,7 @@ if (isset($_POST['save_mcqs'])) {
                     $query .= "VALUES('$option', 'incorrect', '$last_id')";
                     $add_option = query($query);
                 }
-
             }
-
         }
     }
 
@@ -141,12 +169,6 @@ if (isset($_POST['save_mcqs'])) {
     unset($_SESSION['mcqs']);
     unset($_SESSION['data']);
     redirect('./generate-mcq.php');
-
-
-
-
-
-
 }
 
 ?>
@@ -396,7 +418,7 @@ if (isset($_POST['save_mcqs'])) {
                                                 ?>
 
                                             <?php
-                                            echo $target;
+                                                echo $target;
                                                 $index++;
                                                 $var1++;
                                             } // end of loop to get options

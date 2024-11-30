@@ -42,7 +42,7 @@
                         <div class="activity">
 
                             <?php
-                            // fetching recent 5 actions
+                            // getting all recent actions
                             $client = escape($_SESSION['client_id']);
                             $query = "SELECT * FROM admin_logs WHERE fk_client_id='$client' ORDER BY admin_log_id DESC";
                             $result = mysqli_query($conn, $query);

@@ -43,7 +43,6 @@ if ($level == 'super' || $level == 'developer') {
                             <li><a class="dropdown-item" href="#">This Year</a></li>
                         </ul>
                     </div> -->
-
                     <div class="card-body">
                         <h5 class="card-title">Recent Notifications <span>| all</span></h5>
 

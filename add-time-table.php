@@ -140,9 +140,12 @@ if ($level == 'clerk' || $level == 'super') {
 
         ?>
           <div class="card">
+            <div class="card-header card-bg-header text-white mb-3">
+              <h5 class="mb-0 text-dark"><i class="fas fa-clipboard-list pro-header-icon"></i><strong>Class: <?php echo $row['class_name'] . ' ' . $row1['section_name']; ?></strong></h5>
+            </div>
             <div class="card-body">
-
-              <h5 class="card-title">Class: <?php echo $row['class_name'] . ' ' . $row1['section_name']; ?></h5>
+              <!-- <h5 class="card-title">Class: <?php //echo $row['class_name'] . ' ' . $row1['section_name']; 
+                                                  ?></h5> -->
               <p><code><u>Instructions:</u></code>
                 <br><code>1. Don't leave time empty or the relevant records will not be added</code>
                 <br><code>2. If you want to add a break, tick the break box</code>
@@ -432,9 +435,12 @@ if ($level == 'clerk' || $level == 'super') {
 
         ?>
           <div class="card">
+            <div class="card-header card-bg-header text-white mb-3">
+              <h5 class="mb-0 text-dark"><i class="fas fa-clipboard-list pro-header-icon"></i><strong>Class: <?php echo $row['class_name'] . ' ' . $row1['section_name']; ?></strong></h5>
+            </div>
             <div class="card-body">
-
-              <h5 class="card-title">Class: <?php echo $row['class_name'] . ' ' . $row1['section_name']; ?></h5>
+              <!-- <h5 class="card-title">Class: <?php //echo $row['class_name'] . ' ' . $row1['section_name']; 
+                                                  ?></h5> -->
               <p><code><u>Instructions:</u></code>
                 <br><code>1. Don't leave time empty or the relevant records will not be added</code>
                 <br><code>2. If you want to add a break, tick the break box</code>
@@ -653,8 +659,6 @@ if ($level == 'clerk' || $level == 'super') {
         <!-- End Primary Color Bordered Table -->
         <!-- end update timetable -->
         <!-- end of card -->
-
-
 
       </div>
     </div>

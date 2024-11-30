@@ -10,9 +10,9 @@ $client = escape($_SESSION['client_id']);
 
 <?php
 // checking session for appropriate access
-if ($level == 'clerk' || $level == 'super' || $level == 'accountant') {}
-else {
-  redirect("./");
+if ($level == 'clerk' || $level == 'super' || $level == 'accountant') {
+} else {
+    redirect("./");
 }
 ?>
 
@@ -38,7 +38,7 @@ else {
 
         // fetching the admin id and adding the data
         $admin_name = escape($_SESSION['login_name']);
-        $log = "Admin <strong>$admin_name</strong> added an announcement for school !";
+        $log = "Admin <strong>$admin_name</strong> added an announcement for school!";
         $times = date('d/m/Y h:i a', time());
         $times = (string) $times;
         // adding activity into the logs
@@ -46,8 +46,8 @@ else {
         $pass_query2 = mysqli_query($conn, $query);
 
         if ($result) {
-            echo "data has been successfully inserted";
-            // redirect('../');
+            // echo "data has been successfully inserted";
+            redirect('../add-announcements.php');
         } else {
             echo "Error: " . mysqli_error($conn);
         }
@@ -60,23 +60,26 @@ else {
         <div class="row">
             <div class="col-md-8">
                 <div class="card">
+                    <div class="card-header card-bg-header text-white mb-3">
+                        <h5 class="mb-0 text-dark"><i class="fa-solid fa-bullhorn pro-header-icon"></i><strong>Announcements</strong></h5>
+                    </div>
                     <div class="card-body">
-                        <h5 class="card-title">Add Announcements</h5>
+                        <!-- <h5 class="card-title">Add Announcements</h5> -->
 
                         <!-- Multi Columns Form -->
                         <form method="post" action="">
 
 
                             <div class="row mb-3">
-                                <label for="about" class="col-md-4 col-lg-3 col-form-label">Description</label>
+                                <label for="about" class="col-md-4 col-lg-3 col-form-label"><strong>Description <code>*</code></strong></label>
                                 <div class="col-md-8 col-lg-9">
                                     <textarea name="notice_description" class="form-control" id="about" style="height: 30vh" required></textarea>
                                 </div>
                             </div>
 
-                            <div class="text-center">
-                                <button type="submit" name="submit" class="btn btn-sm btn-success">Add</button>
-                                <button type="reset" class="btn btn-sm btn-secondary">Reset</button>
+                            <div class="text-end">
+                                <button type="reset" class="btn btn-sm btn-outline-danger">Reset</button>
+                                <button type="submit" name="submit" class="btn btn-sm btn-success">Add Announcement</button>
                             </div>
 
                         </form>
