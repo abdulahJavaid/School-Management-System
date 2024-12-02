@@ -47,7 +47,7 @@ if ($level == 'clerk' || $level == 'super' || $level == 'accountant') {
 
         if ($result) {
             // echo "data has been successfully inserted";
-            redirect('../add-announcements.php');
+            redirect('./add-announcements.php');
         } else {
             echo "Error: " . mysqli_error($conn);
         }
