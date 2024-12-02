@@ -8,6 +8,39 @@
 redirect("./");
 ?>
 
+<?php
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+// This page is not being used
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+// 
+?>
+
 <main id="main" class="main">
 
     <div class="pagetitle">
@@ -41,21 +74,21 @@ redirect("./");
                             </thead>
                             <tbody>
                                 <?php
-                              // get student info
-                              $query = "SELECT * FROM progress_report INNER JOIN ";
-                              $query .= "student_profile ON progress_report.fk_student_id=student_profile.student_id ";
-                              $query .= "INNER JOIN student_class ON student_profile.student_id=student_class.fk_student_id ";
-                              $query .= "INNER JOIN class_sections ON student_class.fk_section_id=class_sections.section_id ";
-                              $query .= "INNER JOIN all_classes ON class_sections.fk_class_id=all_classes.class_id ";
-                        $result = query($query);
-                        $rows = mysqli_fetch_assoc($result);
+                                // get student info
+                                $query = "SELECT * FROM progress_report INNER JOIN ";
+                                $query .= "student_profile ON progress_report.fk_student_id=student_profile.student_id ";
+                                $query .= "INNER JOIN student_class ON student_profile.student_id=student_class.fk_student_id ";
+                                $query .= "INNER JOIN class_sections ON student_class.fk_section_id=class_sections.section_id ";
+                                $query .= "INNER JOIN all_classes ON class_sections.fk_class_id=all_classes.class_id ";
+                                $result = query($query);
+                                $rows = mysqli_fetch_assoc($result);
 
-                               
+
                                 // Fetch data from the database
 
                                 if ($result->num_rows > 0) {
                                     // Output data of each row
-                                    while($row = $result->fetch_assoc()) {
+                                    while ($row = $result->fetch_assoc()) {
                                         echo "<tr>";
                                         echo "<td>" . $row['roll_no'] . "</td>";
                                         echo "<td>" . $row['name'] . "</td>";
@@ -82,9 +115,8 @@ redirect("./");
     </section>
 
 
-    
+
 </main><!-- End #main -->
 
 <!-- ======= Footer ======= -->
 <?php include_once("includes/footer.php"); ?>
-

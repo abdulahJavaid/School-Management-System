@@ -10,9 +10,9 @@ $client = escape($_SESSION['client_id']);
 
 <?php
 // checking session for appropriate access
-if ($level == 'clerk' || $level == 'super') {}
-else {
-  redirect("./");
+if ($level == 'clerk' || $level == 'super') {
+} else {
+    redirect("./");
 }
 ?>
 
@@ -37,7 +37,7 @@ else {
                         <option selected value="choose_class">Choose Class</option>
                         <?php
                         // fetching all the classes
-                        $query = "SELECT * FROM all_classes WHERE fk_client_id='$client'"; 
+                        $query = "SELECT * FROM all_classes WHERE fk_client_id='$client'";
                         $result = query($query);
                         while ($row = mysqli_fetch_assoc($result)) {
                             $clas_id = $row['class_id'];

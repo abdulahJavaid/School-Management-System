@@ -10,9 +10,9 @@ $client = escape($_SESSION['client_id']);
 
 <?php
 // checking session for appropriate access
-if ($level == 'accountant' || $level == 'super') {}
-else {
-  redirect("./");
+if ($level == 'accountant' || $level == 'super') {
+} else {
+    redirect("./");
 }
 ?>
 
@@ -42,7 +42,7 @@ if (isset($_POST['reject']) && !empty($_POST['rejection_reason'])) {
     $name = escape($_POST['name']);
     // fetching the admin id and adding the data
     $admin_name = escape($_SESSION['login_name']);
-    $log = "Admin <strong>$admin_name</strong> rejected dues payment of student <strong>$name</strong> !";
+    $log = "Admin <strong>$admin_name</strong> rejected dues payment of student <strong>$name</strong>!";
     $times = date('d/m/Y h:i a', time());
     $times = (string) $times;
     // adding activity into the logs
@@ -81,7 +81,7 @@ if (isset($_POST['clear_dues']) && !empty($_POST['dues_amount'])) {
     $name = escape($_POST['name']);
     // fetching the admin id and adding the data
     $admin_name = escape($_SESSION['login_name']);
-    $log = "Admin <strong>$admin_name</strong> accepted dues payment of student <strong>$name</strong> !";
+    $log = "Admin <strong>$admin_name</strong> accepted dues payment of student <strong>$name</strong>!";
     $times = date('d/m/Y h:i a', time());
     $times = (string) $times;
     // adding activity into the logs

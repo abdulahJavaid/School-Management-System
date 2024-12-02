@@ -9,9 +9,9 @@
 
 <?php
 // checking session for appropriate access
-if ($level == 'clerk' || $level == 'super' || $level == 'accountant') {}
-else {
-  redirect("./");
+if ($level == 'clerk' || $level == 'super' || $level == 'accountant') {
+} else {
+    redirect("./");
 }
 ?>
 
@@ -38,7 +38,7 @@ else {
         <div class="row">
             <div class="col-md-12">
                 <div class="text-center">
-            <img src="./images/coming-soon-default-image3.svg" height="440px" width="900px" style="border-radius: 10px;" alt="">
+                    <img src="./images/coming-soon-default-image3.svg" height="440px" width="900px" style="border-radius: 10px;" alt="">
                 </div>
                 <!-- <div class="card">
                     <div class="card-body">

@@ -266,7 +266,7 @@
 
                 // get all expense of the day
                 $today = date('Y-m-d', time());
-                $query = "SELECT * FROM expense_receiving WHERE receiving='0' AND date='$today'";
+                $query = "SELECT * FROM expense_receiving WHERE receiving='0' AND date='$today' AND fk_client_id='$client'";
                 $get_expense = query($query);
                 $expenses = [0];
                 $add_expense = 0;
@@ -277,7 +277,7 @@
 
                 // get all receivings of the day
                 $today = date('Y-m-d', time());
-                $query = "SELECT * FROM expense_receiving WHERE expense='0' AND date='$today'";
+                $query = "SELECT * FROM expense_receiving WHERE expense='0' AND date='$today' AND fk_client_id='$client'";
                 $get_receiving = query($query);
                 $receivings = [0];
                 $add_receiving = 0;
@@ -288,7 +288,7 @@
 
                 // get all pending dues of the day
                 $today = date('Y-m-d', time());
-                $query = "SELECT * FROM student_fee WHERE NOT pending_dues='0' AND payment_date='$today'";
+                $query = "SELECT * FROM student_fee WHERE NOT pending_dues='0' AND payment_date='$today' AND fk_client_id='$client'";
                 $get_dues = query($query);
                 $dues = [0];
                 $add_dues = 0;
@@ -296,7 +296,7 @@
                   $add_dues += (int) $row['pending_dues'];
                 }
                 $dues[] = $add_dues;
-                
+
                 $dates = [0];
                 $dates[] = $today;
 
@@ -326,7 +326,7 @@
 
                   document.addEventListener("DOMContentLoaded", () => {
                     new ApexCharts(document.querySelector("#reportsChart"), {
-                        series: [{
+                      series: [{
                           name: 'Expense',
                           data: expenseData,
                         },
@@ -337,7 +337,8 @@
                         {
                           name: 'Dues',
                           data: duesData,
-                        }],
+                        }
+                      ],
                       chart: {
                         height: 350,
                         type: 'area',
@@ -394,12 +395,12 @@
       <div class="col-lg-4">
 
         <!-- Recent Activity -->
-         <?php
-         // if the logged in user is super or developer, show activity
-         if ($level == 'super' || $level == 'developer') {
-          ?>
-        <div class="card">
-          <!-- <div class="filter">
+        <?php
+        // if the logged in user is super or developer, show activity
+        if ($level == 'super' || $level == 'developer') {
+        ?>
+          <div class="card">
+            <!-- <div class="filter">
               <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
               <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
                 <li class="dropdown-header text-start">
@@ -412,39 +413,39 @@
               </ul>
             </div> -->
 
-          <div class="card-body">
-            <h5 class="card-title">Recent Activity <span>| all actions</span></h5>
+            <div class="card-body">
+              <h5 class="card-title">Recent Activity <span>| all actions</span></h5>
 
-            <div class="activity">
+              <div class="activity">
 
-              <?php
-              // fetching recent 5 actions
-              $client = escape($_SESSION['client_id']);
-              $query = "SELECT * FROM admin_logs WHERE fk_client_id='$client' ORDER BY admin_log_id DESC LIMIT 5";
-              $result = mysqli_query($conn, $query);
-              while ($row = mysqli_fetch_assoc($result)) {
-              ?>
-                <div class="activity-item d-flex">
-                  <div class="activite-label"><?php echo substr($row['time'], -8); ?></div>
-                  <i class='bi bi-circle-fill activity-badge text-danger align-self-start'></i>
-                  <div class="activity-content">
-                    <?php echo $row['log_message']; ?>
-                  </div>
-                </div><!-- End activity item-->
+                <?php
+                // fetching recent 5 actions
+                $client = escape($_SESSION['client_id']);
+                $query = "SELECT * FROM admin_logs WHERE fk_client_id='$client' ORDER BY admin_log_id DESC LIMIT 5";
+                $result = mysqli_query($conn, $query);
+                while ($row = mysqli_fetch_assoc($result)) {
+                ?>
+                  <div class="activity-item d-flex">
+                    <div class="activite-label"><?php echo substr($row['time'], -8); ?></div>
+                    <i class='bi bi-circle-fill activity-badge text-danger align-self-start'></i>
+                    <div class="activity-content">
+                      <?php echo $row['log_message']; ?>
+                    </div>
+                  </div><!-- End activity item-->
 
-              <?php
-              }
-              ?>
-              <div class="d-flex justify-content-end">
-                <a class="btn btn-sm btn-danger" href="all-logs.php">View All</a>
+                <?php
+                }
+                ?>
+                <div class="d-flex justify-content-end">
+                  <a class="btn btn-sm btn-danger" href="all-logs.php">View All</a>
+                </div>
+
               </div>
 
             </div>
-
           </div>
-        </div>
         <?php
-         } // end if to show recent activity to super admin & developer
+        } // end if to show recent activity to super admin & developer
         ?>
 
         <!-- Website Traffic -->

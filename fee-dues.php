@@ -10,9 +10,9 @@ $client = escape($_SESSION['client_id'])
 
 <?php
 // checking session for appropriate access
-if ($level == 'accountant' || $level == 'super') {}
-else {
-  redirect("./");
+if ($level == 'accountant' || $level == 'super') {
+} else {
+    redirect("./");
 }
 ?>
 
@@ -131,7 +131,6 @@ else {
 
 
                                     <!-- button position second -->
-
                                     <div class="col-auto">
                                         <form action="" method="post">
                                             <div class="input-group">
@@ -160,7 +159,6 @@ else {
 
 
                                     <!-- Month Input and View Button on the Right -->
-
                                     <div class="col-auto ms-auto">
                                         <form action="" method="post">
                                             <div class="input-group">
@@ -289,11 +287,11 @@ else {
                                             <td>
                                                 <?php
                                                 if ($row['fee_status'] == 'paid') {
-                                                    echo 'Rs.'.$row['total_fee'];
+                                                    echo 'Rs.' . $row['total_fee'];
                                                 } else {
                                                     $dues = (int) $row['pending_dues'];
                                                     $paid = (int) $row['total_fee'] - $dues;
-                                                    echo 'Rs.'. $paid;
+                                                    echo 'Rs.' . $paid;
                                                 }
                                                 ?>
                                             </td>

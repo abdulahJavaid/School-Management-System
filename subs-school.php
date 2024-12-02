@@ -85,6 +85,7 @@ if ($level != 'accountant' && $level != 'super') {
                                                 $query .= "INNER JOIN student_subscriptions ON student_profile.student_id=student_subscriptions.fk_student_id ";
                                                 $query .= "INNER JOIN school_profile_ ON student_profile.fk_client_id=school_profile_.client_id ";
                                                 $query .= "WHERE student_profile.fk_client_id='$client' AND sub_status='on' ";
+                                                $query .= "AND student_profile.student_status='1' AND student_class.status='1' ";
                                                 $query .= "ORDER BY fk_sub_log_id, sub_id";
                                                 $get_pay_std = query($query);
 
@@ -246,7 +247,8 @@ if ($level != 'accountant' && $level != 'super') {
                                                 $query .= "INNER JOIN all_classes ON class_sections.fk_class_id=all_classes.class_id ";
                                                 $query .= "INNER JOIN student_subscriptions ON student_profile.student_id=student_subscriptions.fk_student_id ";
                                                 $query .= "INNER JOIN school_profile_ ON student_profile.fk_client_id=school_profile_.client_id ";
-                                                $query .= "WHERE student_profile.fk_client_id='$client' AND sub_status='on'";
+                                                $query .= "WHERE student_profile.fk_client_id='$client' AND sub_status='on' ";
+                                                $query .= "AND student_profile.student_status='1' AND student_class.status='1'";
                                                 $get_sub_std = query($query);
 
                                                 while ($sub_std = mysqli_fetch_assoc($get_sub_std)) {
@@ -300,7 +302,8 @@ if ($level != 'accountant' && $level != 'super') {
                                                 $query .= "INNER JOIN class_sections ON student_class.fk_section_id=class_sections.section_id ";
                                                 $query .= "INNER JOIN all_classes ON class_sections.fk_class_id=all_classes.class_id ";
                                                 $query .= "INNER JOIN school_profile_ ON student_profile.fk_client_id=school_profile_.client_id ";
-                                                $query .= "WHERE student_profile.fk_client_id='$client'";
+                                                $query .= "WHERE student_profile.fk_client_id='$client' ";
+                                                $query .= "AND student_profile.student_status='1' AND student_class.status='1'";
                                                 $get_unsub_std = query($query);
 
                                                 while ($unsub_std = mysqli_fetch_assoc($get_unsub_std)) {
@@ -364,7 +367,8 @@ if ($level != 'accountant' && $level != 'super') {
                                                 $query .= "INNER JOIN all_classes ON class_sections.fk_class_id=all_classes.class_id ";
                                                 $query .= "INNER JOIN student_subscriptions ON student_profile.student_id=student_subscriptions.fk_student_id ";
                                                 $query .= "INNER JOIN school_profile_ ON student_profile.fk_client_id=school_profile_.client_id ";
-                                                $query .= "WHERE student_profile.fk_client_id='$client' AND sub_status='requested'";
+                                                $query .= "WHERE student_profile.fk_client_id='$client' AND sub_status='requested' ";
+                                                $query .= "AND student_profile.student_status='1' AND student_class.status='1'";
                                                 $get_requested_std = query($query);
 
                                                 while ($req_std = mysqli_fetch_assoc($get_requested_std)) {
@@ -461,8 +465,8 @@ if ($level != 'accountant' && $level != 'super') {
 
                             if (item.msg == 'success') {
                                 rowToRemove = document.getElementById(del);
-                                rowToRemove.remove(); 
-                                
+                                rowToRemove.remove();
+
                                 // Show the popup
                                 var popup = document.getElementById('success-popup');
                                 // console.log(popup);

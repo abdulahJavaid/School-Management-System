@@ -19,7 +19,7 @@ if (isset($_SESSION['login_access'])) {
   <!-- Favicons -->
   <link href="./images/school-logo4.png" rel="icon">
   <link href="./images/school-logo4.png" rel="apple-touch-icon">
-  
+
   <!-- LINEARICONS -->
   <link rel="stylesheet" href="assets/login-files/fonts/linearicons/style.css">
 
@@ -54,7 +54,6 @@ if (isset($_POST['submit'])) {
           $_SESSION['login_id'] = $result['admin_id'];
 
           redirect("./select-school.php");
-
         }
         $_SESSION['login_email'] = $result['email'];
         $_SESSION['login_name'] = $result['admin_name'];

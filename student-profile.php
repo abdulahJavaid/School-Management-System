@@ -10,9 +10,9 @@ $client = escape($_SESSION['client_id']);
 
 <?php
 // checking session for appropriate access
-if ($level == 'clerk' || $level == 'super') {}
-else {
-  redirect("./");
+if ($level == 'clerk' || $level == 'super') {
+} else {
+    redirect("./");
 }
 ?>
 
@@ -126,13 +126,13 @@ if (isset($_POST['submit'])) {
                         $fetch = mysqli_fetch_assoc($result);
                         $id = escape($_SESSION['login_id']);
                         $admin_name = escape($_SESSION['login_name']);
-                        $log = "Admin <strong>$admin_name</strong> added new student <strong>$name</strong> !";
+                        $log = "Admin <strong>$admin_name</strong> added new student <strong>$name</strong>!";
                         $time = date('d/m/Y h:i a', time());
                         $time = (string) $time;
-
                         // adding activity into the logs
                         $query = "INSERT INTO admin_logs(log_message, time, fk_client_id) VALUES('$log', '$time', '$client')";
                         $pass_query2 = mysqli_query($conn, $query);
+
                         if (!$pass_query2) {
                             echo "Error: " . mysqli_error($conn);
                         } else {

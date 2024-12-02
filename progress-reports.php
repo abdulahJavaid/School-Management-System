@@ -44,10 +44,10 @@ if ($level == 'clerk' || $level == 'super') {
                                 aria-label="By name"
                                 aria-describedby="button-addon2"
                                 value="<?php
-                                if (isset($_POST['name'])) {
-                                    echo $_POST['name'];
-                                }
-                                ?>"
+                                        if (isset($_POST['name'])) {
+                                            echo $_POST['name'];
+                                        }
+                                        ?>"
                                 required />
                         </div>
                     </div>
@@ -64,10 +64,10 @@ if ($level == 'clerk' || $level == 'super') {
                                 aria-label="By reg#"
                                 aria-describedby="button-addon3"
                                 value="<?php
-                                if (isset($_POST['roll_no'])) {
-                                    echo $_POST['roll_no'];
-                                }
-                                ?>"
+                                        if (isset($_POST['roll_no'])) {
+                                            echo $_POST['roll_no'];
+                                        }
+                                        ?>"
                                 required />
                         </div>
                     </div>
@@ -84,10 +84,10 @@ if ($level == 'clerk' || $level == 'super') {
                                 aria-label="For date"
                                 aria-describedby="button-addon3"
                                 value="<?php
-                                if (isset($_POST['date'])) {
-                                    echo $_POST['date'];
-                                }
-                                ?>"
+                                        if (isset($_POST['date'])) {
+                                            echo $_POST['date'];
+                                        }
+                                        ?>"
                                 required />
                         </div>
                     </div>

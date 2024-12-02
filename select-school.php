@@ -267,11 +267,14 @@ if ($level == 'developer') {
 
                         <div class="modal-footer">
                             <button type="button" class="btn btn-sm btn-outline-danger" data-bs-dismiss="modal">Close</button>
-                            <?php //if (isset($_POST['jsValue'])) { ?>
+                            <?php //if (isset($_POST['jsValue'])) { 
+                            ?>
                             <!-- <button type="submit" name="add_school" class="btn btn-sm btn-success" disabled>Submit</button> -->
-                            <?php //} else { ?>
+                            <?php //} else { 
+                            ?>
                             <button type="submit" name="add_school" class="btn btn-sm btn-success">Submit</button>
-                            <?php //} ?>
+                            <?php //} 
+                            ?>
                         </div>
                     </form>
                 </div>
@@ -370,7 +373,7 @@ if ($level == 'developer') {
     function sendJsValue(vals) {
         var jsVar = document.getElementById('ds').style.display;
         document.getElementById('jsValue').value = jsVar;
-        
+
         // Automatically submit the form, targeting the hidden iframe
         if (vals == 'no') {
             document.getElementById('hiddenForm').submit();

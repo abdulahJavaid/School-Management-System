@@ -121,7 +121,7 @@ $row = mysqli_fetch_assoc($pass);
           $fetch = mysqli_fetch_assoc($result);
           $id = escape($_SESSION['login_id']);
           $admin_name = escape($_SESSION['login_name']);
-          $log = "Admin <strong>$admin_name</strong> updated profile of student <strong>$name</strong> !";
+          $log = "Admin <strong>$admin_name</strong> updated profile of student <strong>$name</strong>!";
           $time = date('d/m/Y h:i a', time());
           $time = (string) $time;
 

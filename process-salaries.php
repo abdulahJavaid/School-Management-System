@@ -17,9 +17,9 @@ if (!isset($_GET['id'])) {
 
 <?php
 // checking session for appropriate access
-if ($level == 'accountant' || $level == 'super') {}
-else {
-  redirect("./");
+if ($level == 'accountant' || $level == 'super') {
+} else {
+    redirect("./");
 }
 ?>
 
@@ -73,26 +73,24 @@ if (isset($_POST['paid'])) {
         // fetching the admin id and adding the data
         $id = escape($_SESSION['login_id']);
         $admin_name = escape($_SESSION['login_name']);
-        $log = "Admin <strong>$admin_name</strong> paid salary to teacher <strong>$name</strong> !";
+        $log = "Admin <strong>$admin_name</strong> paid salary to teacher <strong>$name</strong>!";
         $times = date('d/m/Y h:i a', time());
         $times = (string) $times;
         // adding activity into the logs
         $query = "INSERT INTO admin_logs(log_message, time, fk_client_id) VALUES('$log', '$times', '$client')";
         $pass_query2 = mysqli_query($conn, $query);
-    
     } else {
         $designation = $_POST['designation'];
         $comments = "Salary of " . $designation . " " . $name . "was paid.";
         // fetching the admin id and adding the data
         $id = escape($_SESSION['login_id']);
         $admin_name = escape($_SESSION['login_name']);
-        $log = "Admin <strong>$admin_name</strong> paid salary to $designation <strong>$name</stron> !";
+        $log = "Admin <strong>$admin_name</strong> paid salary to $designation <strong>$name</stron>!";
         $times = date('d/m/Y h:i a', time());
         $times = (string) $times;
         // adding activity into the logs
         $query = "INSERT INTO admin_logs(log_message, time, fk_client_id) VALUES('$log', '$times', '$client')";
         $pass_query2 = mysqli_query($conn, $query);
-
     }
     $qer = "INSERT INTO expense_receiving (comment, expense, receiving, date, fk_client_id) ";
     $qer .= "VALUES ('$comments', '$salary', '0', '$date', '$client')";

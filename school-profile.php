@@ -56,15 +56,15 @@
         <div class="card custom-card">
           <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
-          <!-- class="rounded-circle" -->
-          <!-- style="width: 300px; height: 150px;" -->
-          <?php
-          if (!empty($img)) {
-          ?>
-            <img src="uploads/school-profile-uploads/<?php echo $img; ?>" width="200px" height="200px" alt="Profile">
+            <!-- class="rounded-circle" -->
+            <!-- style="width: 300px; height: 150px;" -->
+            <?php
+            if (!empty($img)) {
+            ?>
+              <img src="uploads/school-profile-uploads/<?php echo $img; ?>" width="200px" height="200px" alt="Profile">
             <?php } else { ?>
               <img src="uploads/school-profile-uploads/default-school-profile-image.jpg" width="200px" height="200px" alt="Profile">
-              <?php } ?>
+            <?php } ?>
             <h2 class=""><?php echo $name; ?></h2>
             <h3><?php echo $address; ?></h3>
             <div class="social-links mt-2">
@@ -208,7 +208,7 @@
                         <!-- <input name="name" type="text" class="form-control" id="fullName" value="" placeholder="Full Name" required> -->
                       </div>
                     </div>
-                    
+
                     <div class="row mb-3">
                       <label for="about" class="col-md-4 col-lg-3 col-form-label"><strong>About School</strong></label>
                       <div class="col-md-8 col-lg-9">
@@ -321,25 +321,25 @@
     </div>
   </section>
 
-<script>
+  <script>
     // code to upload and view the image
     document.getElementById('uploadButton').addEventListener('click', function() {
-        document.getElementById('fileInput').click();
+      document.getElementById('fileInput').click();
     });
     document.getElementById('deleteButton').addEventListener('click', function() {
-        document.getElementById('fileInput').value = '';
-        document.getElementById('imagePreview').src = 'https://via.placeholder.com/100';
+      document.getElementById('fileInput').value = '';
+      document.getElementById('imagePreview').src = 'https://via.placeholder.com/100';
     });
 
     function previewImage(event) {
-        const reader = new FileReader();
-        reader.onload = function() {
-            const output = document.getElementById('imagePreview');
-            output.src = reader.result;
-        }
-        reader.readAsDataURL(event.target.files[0]);
+      const reader = new FileReader();
+      reader.onload = function() {
+        const output = document.getElementById('imagePreview');
+        output.src = reader.result;
+      }
+      reader.readAsDataURL(event.target.files[0]);
     }
-</script>
+  </script>
 
 </main><!-- End #main -->
 

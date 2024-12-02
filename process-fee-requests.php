@@ -36,7 +36,7 @@ if (isset($_POST['rejected']) && !empty($_POST['rejection_reason'])) {
         $name = escape($_POST['student_name']);
         // fetching the admin id and adding the data
         $admin_name = escape($_SESSION['login_name']);
-        $log = "Admin <strong>$admin_name</strong> rejected fees of student <strong>$name</strong> !";
+        $log = "Admin <strong>$admin_name</strong> rejected fees of student <strong>$name</strong>!";
         $times = date('d/m/Y h:i a', time());
         $times = (string) $times;
         // adding activity into the logs
@@ -60,7 +60,7 @@ if (isset($_POST['due']) && !empty($_POST['dues'])) {
         $name = escape($_POST['student_name']);
         // fetching the admin id and adding the data
         $admin_name = escape($_SESSION['login_name']);
-        $log = "Admin <strong>$admin_name</strong> accepted fees of student <strong>$name</strong> as paid with some remaining dues !";
+        $log = "Admin <strong>$admin_name</strong> accepted fees of student <strong>$name</strong> as paid with some remaining dues!";
         $times = date('d/m/Y h:i a', time());
         $times = (string) $times;
         // adding activity into the logs
@@ -96,7 +96,7 @@ if (isset($_POST['paid'])) {
         $name = escape($_POST['student_name']);
         // fetching the admin id and adding the data
         $admin_name = escape($_SESSION['login_name']);
-        $log = "Admin <strong>$admin_name</strong> accepted fees of student <strong>$name</strong> as totally paid !";
+        $log = "Admin <strong>$admin_name</strong> accepted fees of student <strong>$name</strong> as totally paid!";
         $times = date('d/m/Y h:i a', time());
         $times = (string) $times;
         // adding activity into the logs

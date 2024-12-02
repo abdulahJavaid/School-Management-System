@@ -106,7 +106,7 @@ if ($level == 'accountant' || $level == 'super') {
         }
         // fetching the admin id and adding the data
         $admin_name = escape($_SESSION['login_name']);
-        $log = "Admin <strong>$admin_name</strong> issued Fees to students !";
+        $log = "Admin <strong>$admin_name</strong> issued Fees to students!";
         $times = date('d/m/Y h:i a', time());
         $times = (string) $times;
         // adding activity into the logs
@@ -145,7 +145,7 @@ if ($level == 'accountant' || $level == 'super') {
         $query .= "AND month='$month' AND year='$year' ";
         $query .= "WHERE class_id='$class' AND section_id='$section' AND ";
         $query .= "all_classes.fk_client_id='$client' AND student_profile.student_status='1' ";
-        $query .= "AND student_fee.fk_student_id IS NULL";
+        $query .= "AND student_class.status='1' AND student_fee.fk_student_id IS NULL";
         $results = query($query);
         $class_name = "";
         $section_name = "";
@@ -221,7 +221,7 @@ if ($level == 'accountant' || $level == 'super') {
         }
         // fetching the admin id and adding the data
         $admin_name = escape($_SESSION['login_name']);
-        $log = "Admin <strong>$admin_name</strong> issued Fees to students of <strong>$class_name $section_name</strong> !";
+        $log = "Admin <strong>$admin_name</strong> issued Fees to students of <strong>$class_name $section_name</strong>!";
         $times = date('d/m/Y h:i a', time());
         $times = (string) $times;
         // adding activity into the logs
@@ -330,7 +330,7 @@ if ($level == 'accountant' || $level == 'super') {
                                                             $query .= "LEFT JOIN student_fee ON student_profile.student_id=student_fee.fk_student_id ";
                                                             $query .= "AND month='$month' AND year='$year' ";
                                                             $query .= "WHERE section_name='$sect_name' AND section_id='$sect_id' AND ";
-                                                            $query .= "student_profile.student_status='1' ";
+                                                            $query .= "student_profile.student_status='1' AND student_class.status='1' ";
                                                             $query .= "AND class_sections.fk_client_id='$client' AND ";
                                                             $query .= "student_fee.fk_student_id IS NULL";
                                                             $section_fee = query($query);
@@ -496,9 +496,9 @@ if ($level == 'accountant' || $level == 'super') {
                     </form>
 
 
-            <?php
+                <?php
                 } // end of if - issue fees section wise
-                
+
                 // issue fees to all school
                 // getting total students
                 $month = date('F');
@@ -512,7 +512,7 @@ if ($level == 'accountant' || $level == 'super') {
                 $feees = query($query);
                 $total_fees = mysqli_num_rows($feees);
                 if (($total_fees / $total_students) * 100 < 50) {
-                ?> 
+                ?>
                     <form action="" method="post">
                         <div class="card">
                             <div class="card-header card-bg-header text-dark mb-3">
@@ -668,7 +668,7 @@ if ($level == 'accountant' || $level == 'super') {
                             </div>
                         </div>
                     </form>
-                <?php
+            <?php
                 } // end if to issue fees to all school
             } // if the issue fees button is pressed
             ?>
@@ -690,7 +690,7 @@ if ($level == 'accountant' || $level == 'super') {
                 }
                 // fetching the admin id and adding the data
                 $admin_name = escape($_SESSION['login_name']);
-                $log = "Admin <strong>$admin_name</strong> added unpaid fees to students pending dues !";
+                $log = "Admin <strong>$admin_name</strong> added unpaid fees to students pending dues!";
                 $times = date('d/m/Y h:i a', time());
                 $times = (string) $times;
                 // adding activity into the logs

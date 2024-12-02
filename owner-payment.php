@@ -14,9 +14,9 @@
 
 <?php
 // checking session for appropriate access
-if ($level == 'accountant' || $level == 'super') {}
-else {
-  redirect("./");
+if ($level == 'accountant' || $level == 'super') {
+} else {
+    redirect("./");
 }
 ?>
 
@@ -39,8 +39,11 @@ else {
         <div class="row">
             <div class="col-md-8 offset-md-2">
                 <div class="card">
+                    <div class="card-header card-bg-header text-white mb-3">
+                        <h5 class="mb-0 text-dark"><i class="fas fa-dollar-sign pro-header-icon"></i><strong>Owner Payment</strong></h5>
+                    </div>
                     <div class="card-body">
-                        <h3 class="card-title text-center ">Owner Payment</h3>
+                        <!-- <h3 class="card-title text-center ">Owner Payment</h3> -->
                         <?php
                         if (isset($_GET['m'])) {
                             $message = $_GET['m'];
@@ -61,15 +64,15 @@ else {
                         <!-- Multi Columns Form -->
                         <form method="post" action="./backend/back-add-expencess.php" enctype="multipart/form-data" class="row g-3">
                             <div class="col-md-12">
-                                <label for="cost" class="form-label">Amount</label>
+                                <label for="cost" class="form-label text-secondary"><strong>Amount <code>*</code></strong></label>
                                 <input name="expense" type="text" class="form-control" id="cost" placeholder="Rs." required>
                             </div>
                             <div class="col-md-12">
-                                <label for="comment" class="form-label">Remarks</label>
+                                <label for="comment" class="form-label text-secondary"><strong>Remarks <code>*</code></strong></label>
                                 <input name="comment" type="text" class="form-control" id="comment" placeholder="comments" required>
                             </div>
                             <div class="col-md-12">
-                                <label for="image" class="form-label">Upload image</label>
+                                <label for="image" class="form-label text-secondary"><strong>Upload image</strong></label>
                                 <input name="image" type="file" class="form-control" id="image">
                             </div>
 
@@ -78,7 +81,7 @@ else {
                             $date = date('Y-m-d', time());
                             ?>
                             <div class="col-md-12">
-                                <label for="date" class="form-label">Date</label>
+                                <label for="date" class="form-label text-secondary"><strong>Date <code>*</code></strong></label>
                                 <input type="date" class="form-control" id="date" name="date" value="<?php echo $date; ?>" readonly>
                             </div>
                             <!-- <div class="col-md-12">
@@ -87,9 +90,9 @@ else {
                             </div>
                             -->
 
-                            <div class="text-center">
-                                <button type="submit" name="owner" class="btn btn-sm btn-success">Submit</button>
-                                <button type="reset" class="btn btn-sm btn-secondary">Reset</button>
+                            <div class="text-end mt-4">
+                                <button type="reset" class="btn btn-sm btn-outline-danger">Reset</button>
+                                <button type="submit" name="owner" class="btn btn-sm btn-success">Pay Owner</button>
                             </div>
                         </form><!-- End Multi Columns Form -->
 
