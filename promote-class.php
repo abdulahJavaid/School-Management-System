@@ -681,7 +681,7 @@ if (isset($_GET['left'])) {
                                     </div>
 
                                     <div class="mt-3">
-                                        <button onclick="unhide('show-po-main')" type="button" class="btn btn-success">Pass Out</button>
+                                        <button onclick="unhide('show-po-main')" type="button" class="btn btn-outline-success">Pass Out</button>
                                         <!-- <a href="#" class="btn btn-success">Pass Out</a> -->
                                     </div>
                                 </div>
@@ -699,7 +699,7 @@ if (isset($_GET['left'])) {
                                     </div>
 
                                     <div class="mt-3">
-                                        <button onclick="unhide('show-p-main')" type="button" class="btn btn-success">Promote</button>
+                                        <button onclick="unhide('show-p-main')" type="button" class="btn btn-outline-success">Promote</button>
                                     </div>
                                 </div>
                             </div>
@@ -716,7 +716,7 @@ if (isset($_GET['left'])) {
                                     </div>
 
                                     <div class="mt-3">
-                                        <button onclick="unhide('show-d-main')" type="button" class="btn btn-success">Demote</button>
+                                        <button onclick="unhide('show-d-main')" type="button" class="btn btn-outline-success">Demote</button>
                                     </div>
                                 </div>
                             </div>
@@ -733,7 +733,7 @@ if (isset($_GET['left'])) {
                                     </div>
 
                                     <div class="mt-3">
-                                        <button onclick="unhide('show-c-main')" type="button" class="btn btn-success">Change</button>
+                                        <button onclick="unhide('show-c-main')" type="button" class="btn btn-outline-success">Change</button>
                                     </div>
                                 </div>
                             </div>
@@ -750,7 +750,7 @@ if (isset($_GET['left'])) {
                                     </div>
 
                                     <div class="mt-3">
-                                        <button onclick="unhide('show-spo-main')" type="button" class="btn btn-success">Disable</button>
+                                        <button onclick="unhide('show-spo-main')" type="button" class="btn btn-outline-success">Disable</button>
                                     </div>
                                 </div>
                             </div>
