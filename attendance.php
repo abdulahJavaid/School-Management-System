@@ -443,10 +443,10 @@ if (isset($_POST['attendance_monthly'])) {
                                     <td><?php echo $data[$key]['name']; ?></td>
 
                                     <?php
-                                            $present = 0;
-                                            $absent = 0;
-                                            $leave = 0;
-                                            $un_marked = 0;
+                                    $present = 0;
+                                    $absent = 0;
+                                    $leave = 0;
+                                    $un_marked = 0;
                                     for ($i = 1; $i <= $month_days; $i++) {
                                         $itterating_day = trim($date) . '-' . str_pad($i, 2, '0', STR_PAD_LEFT);
                                         $current_day = date('Y-m-d', strtotime($itterating_day));
