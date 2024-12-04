@@ -161,6 +161,11 @@
             </a>
           </li>
           <li>
+            <a href="process-fee-dues.php">
+              <i class="bi bi-arrow-right"></i><span>Mark Paid Fee & Dues</span>
+            </a>
+          </li>
+          <li>
             <a href="fee-requests.php">
               <i class="bi bi-arrow-right"></i><span>Fee paid requests</span>
             </a>
