@@ -59,13 +59,13 @@ if ($level == 'accountant' || $level == 'super') {
       <div class="col-md-3">
         <form method="post" action="generate-pdf.php">
           <div class="input-group mb-3">
-            <button class="btn btn-sm btn-secondary mt-3" type="button">From</button>
+            <button class="btn btn-sm btn-secondary mt-3 disabled" type="button">From</button>
             <input type="date" name="one" class="form-control mt-3" required>
           </div>
       </div>
       <div class="col-md-3">
         <div class="input-group mb-3">
-          <button class="btn btn-sm btn-secondary mt-3" type="button">To</button>
+          <button class="btn btn-sm btn-secondary mt-3 disabled" type="button">To</button>
           <input type="date" name="two" class="form-control mt-3">
         </div>
       </div>
@@ -81,13 +81,13 @@ if ($level == 'accountant' || $level == 'super') {
       <div class="col-md-3">
         <form method="post" action="">
           <div class="input-group mb-3">
-            <button class="btn btn-sm btn-secondary mt-3" type="button">From</button>
+            <button class="btn btn-sm btn-secondary mt-3 disabled" type="button">From</button>
             <input type="date" name="one" class="form-control mt-3" required>
           </div>
       </div>
       <div class="col-md-3">
         <div class="input-group mb-3">
-          <button class="btn btn-sm btn-secondary mt-3" type="button">To</button>
+          <button class="btn btn-sm btn-secondary mt-3 disabled" type="button">To</button>
           <input type="date" name="two" class="form-control mt-3">
         </div>
       </div>
