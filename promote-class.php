@@ -100,7 +100,7 @@ if (isset($_GET['left'])) {
                 <!-- pass out students -->
                 <div class="col-auto" id="show-po-main" style="display: none;">
                     <div class="input-group mb-2" id="classSelectDiv">
-                        <button type="submit" name="add_subject" id="button-addon1" class="btn btn-sm btn-secondary">
+                        <button type="submit" name="add_subject" id="button-addon1" class="btn btn-sm btn-secondary disabled">
                             Pass Out
                         </button>
                         <select id="sectionId"
@@ -137,7 +137,7 @@ if (isset($_GET['left'])) {
                 <!-- promote students -->
                 <div class="col-auto" id="show-p-main" style="display: none;">
                     <div class="input-group mb-2" id="classSelectDiv">
-                        <button type="submit" name="add_subject" id="button-addon2" class="btn btn-sm btn-secondary">
+                        <button type="submit" name="add_subject" id="button-addon2" class="btn btn-sm btn-secondary disabled">
                             Promote Class
                         </button>
                         <select id="sectionId"
@@ -174,7 +174,7 @@ if (isset($_GET['left'])) {
                 <!-- demote students -->
                 <div class="col-auto" id="show-d-main" style="display: none;">
                     <div class="input-group mb-2" id="classSelectDiv">
-                        <button type="submit" name="add_subject" id="button-addon2" class="btn btn-sm btn-secondary">
+                        <button type="submit" name="add_subject" id="button-addon2" class="btn btn-sm btn-secondary disabled">
                             Demote Students
                         </button>
                         <select id="sectionId"
@@ -211,7 +211,7 @@ if (isset($_GET['left'])) {
                 <!-- change section -->
                 <div class="col-auto" id="show-c-main" style="display: none;">
                     <div class="input-group mb-2" id="classSelectDiv">
-                        <button type="submit" name="add_subject" id="button-addon2" class="btn btn-sm btn-secondary">
+                        <button type="submit" name="add_subject" id="button-addon2" class="btn btn-sm btn-secondary disabled">
                             Change Section
                         </button>
                         <select id="sectionId"
@@ -248,7 +248,7 @@ if (isset($_GET['left'])) {
                 <!-- single student promotion -->
                 <div class="col-auto" id="show-spo-main" style="display: none;">
                     <div class="input-group mb-2" id="classSelectDiv">
-                        <button type="submit" name="add_subject" id="button-addon1" class="btn btn-sm btn-secondary">
+                        <button type="submit" name="add_subject" id="button-addon1" class="btn btn-sm btn-secondary disabled">
                             Disable Profiles
                         </button>
                         <select id="sectionId"
