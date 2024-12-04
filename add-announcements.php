@@ -71,7 +71,7 @@ if ($level == 'clerk' || $level == 'super' || $level == 'accountant') {
 
 
                             <div class="row mb-3">
-                                <label for="about" class="col-md-4 col-lg-3 col-form-label"><strong>Description <code>*</code></strong></label>
+                                <label for="about" class="col-md-4 col-lg-3 col-form-label text-secondary"><strong>Description <code>*</code></strong></label>
                                 <div class="col-md-8 col-lg-9">
                                     <textarea name="notice_description" class="form-control" id="about" style="height: 30vh" required></textarea>
                                 </div>
