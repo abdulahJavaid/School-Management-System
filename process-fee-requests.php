@@ -246,17 +246,17 @@ if (isset($_POST['paid'])) {
                                         <input type="hidden" name="month" value="<?php echo $rows['month']; ?>" id="">
                                         <div class="row mb-3">
                                             <div class="col-md-8 col-lg-9 mt-2">
-                                                <input name="dues" type="text" class="form-control" value="" placeholder="Add dues (if fees is not full paid)">
+                                                <input name="dues" type="text" class="form-control" value="" placeholder="Remaining dues (if fees is not full paid)">
                                             </div>
                                         </div>
                                         <div class="row mb-3">
                                             <div class="col-md-8 col-lg-9 mt-2">
-                                                <input name="rejection_reason" type="text" class="form-control" value="" placeholder="Add reason (if rejected)">
+                                                <input name="rejection_reason" type="text" class="form-control" value="" placeholder="Give reason (if rejected)">
                                             </div>
                                         </div>
 
                                         <div class="text-center">
-                                            <button type="submit" name="paid" class="btn btn-sm btn-success">Mark Paid</button>
+                                            <button type="submit" name="paid" class="btn btn-sm btn-success">Full Paid</button>
                                             <button type="submit" name="due" class="btn btn-sm btn-primary">Add dues</button>
                                             <button type="submit" name="rejected" class="btn btn-sm btn-danger">Rejected</button>
                                         </div>
