@@ -108,7 +108,7 @@ if (isset($_POST['paid'])) {
         $date = date('Y-m-d', time());
         $name = escape($_POST['student_name']);
         $reg = escape($_POST['roll_no']);
-        $fee = escape($_POST['monthly_fee']);
+        $fee = escape($_POST['total_fee']);
         $comment = "Student $name, reg# $reg paid full fee amount Rs.$fee (Monthly Fee)";
         $qer = "INSERT INTO expense_receiving (comment, expense, receiving, date, fk_client_id) ";
         $qer .= "VALUES ('$comment', '0', '$fee', '$date', '$client')";
@@ -241,7 +241,7 @@ if (isset($_POST['paid'])) {
                                         <input type="hidden" name="student_id" value="<?php echo $rows['student_id']; ?>" id="">
                                         <input type="hidden" name="student_name" value="<?php echo $rows['name']; ?>" id="">
                                         <input type="hidden" name="roll_no" value="<?php echo $rows['roll_no']; ?>" id="">
-                                        <input type="hidden" name="monthly_fee" value="<?php echo $rows['total_fee']; ?>" id="">
+                                        <input type="hidden" name="total_fee" value="<?php echo $rows['total_fee']; ?>" id="">
                                         <input type="hidden" name="year" value="<?php echo $rows['year']; ?>" id="">
                                         <input type="hidden" name="month" value="<?php echo $rows['month']; ?>" id="">
                                         <div class="row mb-3">
