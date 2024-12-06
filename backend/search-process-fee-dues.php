@@ -276,3 +276,92 @@ if (isset($_POST['fee_clear_dues'])) {
         echo json_encode($matches);
     }
 }
+
+// student pending dues
+if (isset($_POST['pendingDues'])) {
+    $roll_no = escape($_POST['pendingDues']);
+    $query = "SELECT student_profile.roll_no, student_profile.name, ";
+    $query .= "student_profile.student_id, student_fee.* ";
+    $query .= "FROM student_fee ";
+    // $query .= "student_fee.fee_id=student_funds.fk_fee_id ";
+    $query .= "INNER JOIN student_profile ON ";
+    $query .= "student_fee.fk_student_id=student_profile.student_id ";
+    $query .= "WHERE roll_no='$roll_no' AND student_status='1' ";
+    $query .= "AND fee_status LIKE '%dues%' ";
+    $query .= "AND student_fee.fk_client_id='$client'";
+
+    $result = mysqli_query($conn, $query);
+    $matches = [];
+
+    // Fetch results and organize them
+    while ($row = mysqli_fetch_assoc($result)) {
+        $main_id = $row['fee_id'];
+
+        // Initialize entry if it doesn't exist
+        if (!isset($matches[$main_id])) {
+            $matches[$main_id] = [
+                'main_data' => $row
+            ];
+        }
+    }
+
+    // Return the results as a JSON response
+    echo json_encode($matches);
+}
+
+// clear dues of student
+if (isset($_POST['clear_dues'])) {
+    $total_paid = (int) escape($_POST['total_paid']);
+    $paid_amount = escape($_POST['total_paid']);
+    $std_id = escape($_POST['student_id']);
+    $query = "SELECT * FROM student_fee WHERE fk_student_id='$std_id' AND fk_client_id='$client' ";
+    $query .= "AND fee_status LIKE '%due%'";
+    $res = query($query);
+    while ($row = mysqli_fetch_assoc($res)) {
+        $fee_id = escape($row['fee_id']);
+        $dues = (int) $row['pending_dues'];
+
+        if ($total_paid >= $dues) {
+            $q = "UPDATE student_fee SET fee_status='paid', pending_dues='0' ";
+            $q .= "WHERE fee_id='$fee_id' AND fk_client_id='$client'";
+            $total_paid -= $dues;
+        } elseif ($total_paid < $dues) {
+            $dues = $dues - $total_paid;
+            $q = "UPDATE student_fee SET fee_status='dues', pending_dues='$dues', admin_remarks='' ";
+            $q .= "WHERE fee_id='$fee_id' AND fk_client_id='$client'";
+            $total_paid = 0;
+        }
+        $result = query($q);
+    }
+    $name = escape($_POST['name']);
+    // fetching the admin id and adding the data
+    $admin_name = escape($_SESSION['login_name']);
+    $log = "Admin <strong>$admin_name</strong> marked dues payment of student <strong>$name</strong>!";
+    $times = date('d/m/Y h:i a', time());
+    $times = (string) $times;
+    // adding activity into the logs
+    $query = "INSERT INTO admin_logs(log_message, time, fk_client_id) VALUES('$log', '$times', '$client')";
+    $pass_query2 = mysqli_query($conn, $query);
+
+
+    $date = date('Y-m-d', time());
+    $name = escape($_POST['name']);
+    $reg = escape($_POST['roll_no']);
+    $comment = "Student $name, reg# $reg paid dues amount Rs.$paid_amount (Pending Dues)";
+    $qer = "INSERT INTO expense_receiving (comment, expense, receiving, date, fk_client_id) ";
+    $qer .= "VALUES ('$comment', '0', '$paid_amount', '$date', '$client')";
+    $res = query($qer);
+    $matches = [];
+    if ($res) {
+        $matches[] = [
+            'message' => 'Added dues amount cleared!'
+        ];
+    } else {
+        $matches[] = [
+            'message' => 'An error occured, try again!'
+        ];
+    }
+
+    // Return the results as a JSON response
+    echo json_encode($matches);
+}
