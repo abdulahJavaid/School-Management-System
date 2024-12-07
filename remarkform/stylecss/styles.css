@@ -7,7 +7,7 @@
   
   body {
     font-family: Arial, sans-serif;
-    background: url('/images/newbusiness.jpg') no-repeat center center/cover, #765c5c;
+    background: url('../images/newbusiness.jpg') no-repeat center center/cover, #765c5c;
     margin: 0;
     padding: 0;
     display: flex;
