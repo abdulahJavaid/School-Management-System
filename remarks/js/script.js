@@ -31,11 +31,11 @@ function showDetails(clientId) {
               box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);">
               <h3 style="color: #333; border-bottom: 2px solid #ccc; padding-bottom: 5px;">Client Details</h3>
               <div style="margin-bottom: 10px;"><strong>Name:</strong> ${clientData.main.temp_client_name}</div>
+              <div style="margin-bottom: 10px;"><strong>School:</strong> ${clientData.main.temp_client_school}</div>
               <div style="margin-bottom: 10px;"><strong>City:</strong> ${clientData.main.temp_client_city}</div>
               <div style="margin-bottom: 10px;"><strong>Phone:</strong> ${clientData.main.temp_client_phone}</div>
               <div style="margin-bottom: 10px;"><strong>Email:</strong> ${clientData.main.temp_client_email}</div>
               <div style="margin-bottom: 10px;"><strong>Address:</strong> ${clientData.main.temp_client_address}</div>
-              <div style="margin-bottom: 10px;"><strong>School:</strong> ${clientData.main.temp_client_school}</div>
             </section>
           `;
           }
