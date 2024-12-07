@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Remark Form</title>
+  <link rel="stylesheet" href="/stylecss/styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Remark Form</h1>
+    <form id="remarkForm">
+      <div class="form-group">
+        <label for="serialNo">Serial No:</label>
+        <input type="number" id="serialNo" name="serialNo" required>
+      </div>
+
+      <div class="form-group">
+        <label for="schoolName">School Name:</label>
+        <input type="text" id="schoolName" name="schoolName" required>
+      </div>
+
+      <div class="form-group">
+        <label for="personName">Person Name:</label>
+        <input type="text" id="personName" name="personName" required>
+      </div>
+
+      <div class="form-group">
+        <label for="address">Address:</label>
+        <textarea id="address" name="address" rows="3" required></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="firstRemark">Meeting Remark:</label>
+        <textarea id="firstRemark" name="firstRemark" rows="3" required></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="followUp1">Follow-up Remark:</label>
+        <textarea id="followUp1" name="followUp1" rows="2" required></textarea>
+      </div>
+
+     
+
+     
+
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>

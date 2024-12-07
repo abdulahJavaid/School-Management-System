@@ -1,0 +1,130 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    height: 100vh;
+  }
+  
+  .container {
+    display: flex;
+    width: 100%;
+  }
+  
+  .school-list {
+    width: 30%;
+    background-color: #f8f8f8;
+    border-right: 1px solid #ccc;
+    padding: 20px;
+    overflow-y: auto;
+  }
+  .school-list li.active {
+    background-color: #b0b0ff; /* Light blue */
+    color: #fff;
+    font-weight: bold;
+  }
+  
+  
+  .school-list input {
+    width: 97%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  .school-list ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .school-list li {
+    padding: 10px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    background-color: #e0e0e0;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+  }
+  
+  .school-list li:hover {
+    background-color: #d0d0d0;
+  }
+  
+  .school-details {
+    flex: 1;
+    padding: 20px;
+  }
+  
+  .school-details h2 {
+    margin-top: 0;
+  }
+  
+  .school-details p {
+    color: #555;
+  }
+
+
+  /* add new/edit button styling */
+  /* .button {
+    padding: 10px 15px;
+    margin: 5px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  .add-button {
+    background-color: #198754; 
+  }
+  .edit-button {
+    background-color: #DC3545; 
+  }
+  .edit-button {
+    background-color: #ccc; 
+    cursor: not-allowed;
+  } */
+
+
+  .button {
+    padding: 10px 15px;
+    margin: 5px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  .add-button {
+background-color: #198754;
+width: 200px;
+ /* margin-left: 200px;  */
+ margin-top: -10px;
+ margin-bottom: -10px;
+ 
+text-align: center;
+display: inline-block;
+list-style: none;
+}
+
+   .edit-button { 
+    background-color: #DC3545; 
+  }
+  .remark-button {
+    background-color: #007bff; 
+  }
+  .school-list {
+    margin-bottom: 15px; 
+  }
+  .school-details {
+    position: relative;
+  }
+  .buttons-container {
+    position: absolute;
+    top: 15px; 
+    right: 15px;
+    display: flex;
+    gap: 10px;
+  }
+  

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>School Details</title>
+  <link rel="stylesheet" href="./stylecss/style2.css">
+  <style>
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Left Section: School List with Search -->
+    <div class="school-list">
+      <input type="text" id="search-bar" placeholder="Search School...">
+      <!-- "Add New" Button with Hyperlink -->
+      <a href="index..html" class="button add-button">Add New</a>
+      <ul id="school-names">
+        <li onclick="showDetails('Green Valley High School')">Green Valley High School</li>
+        <li onclick="showDetails('Sunrise Academy')">Sunrise Academy</li>
+        <li onclick="showDetails('Riverwood School')">Riverwood School</li>
+        <li onclick="showDetails('Maple Leaf School')">Maple Leaf School</li>
+        <li onclick="showDetails('Hilltop Academy')">Hilltop Academy</li>
+        <li onclick="showDetails('Crescent Moon School')">Crescent Moon School</li>
+        <li onclick="showDetails('Pine Hill School')">Pine Hill School</li>
+        <li onclick="showDetails('Oceanview Academy')">Oceanview Academy</li>
+        <li onclick="showDetails('Mountain Ridge School')">Mountain Ridge School</li>
+        <li onclick="showDetails('Star Academy')">Star Academy</li>
+        <li onclick="showDetails('Lakeside School')">Lakeside School</li>
+        <li onclick="showDetails('Woodland High School')">Woodland High School</li>
+      </ul>
+    </div>
+
+    <!-- Right Section: School Details -->
+    <div class="school-details">
+      <h2 id="school-title">Select a School</h2>
+      <div class="buttons-container">
+        <!-- Link to edit-school.html -->
+        <a href="edit-school.html" class="button edit-button" id="edit-button">Edit</a>
+        
+        <!-- Link to add-remark.html -->
+        <a href="./ramark.html" class="button remark-button" id="remark-button">Remark</a>
+      </div>
+      
+      <p id="school-description">School details will appear here when you select a school.</p>
+    </div>
+  </div>
+
+  <script>
+    const schoolData = {
+      "Green Valley High School": "This is the detail of Green Valley High School. It is a great school.",
+      "Sunrise Academy": "This is the detail of Sunrise Academy. It has excellent facilities.",
+      "Riverwood School": "This is the detail of Riverwood School. Known for its academic excellence.",
+      "Maple Leaf School": "This is the detail of Maple Leaf School. Focused on sports and extracurricular activities.",
+      "Hilltop Academy": "This is the detail of Hilltop Academy. A well-rounded education.",
+      "Crescent Moon School": "This is the detail of Crescent Moon School. Offers innovative programs.",
+      "Pine Hill School": "This is the detail of Pine Hill School. Emphasizes community service.",
+      "Oceanview Academy": "This is the detail of Oceanview Academy. Strong arts program.",
+      "Mountain Ridge School": "This is the detail of Mountain Ridge School. Known for science and technology.",
+      "Star Academy": "This is the detail of Star Academy. Great location and community.",
+      "Lakeside School": "This is the detail of Lakeside School. Personalized learning.",
+      "Woodland High School": "This is the detail of Woodland High School. Focused on leadership skills."
+    };
+
+    let currentSchool = '';
+
+    function showDetails(schoolName) {
+      const title = document.getElementById('school-title');
+      const description = document.getElementById('school-description');
+      const editButton = document.getElementById('edit-button');
+
+      title.textContent = schoolName;
+      description.textContent = schoolData[schoolName] || "Details not available.";
+      currentSchool = schoolName;
+
+      // Highlight selected school
+      document.querySelectorAll('#school-names li').forEach(li => li.classList.remove('active'));
+      const selectedSchool = Array.from(document.querySelectorAll('#school-names li'))
+        .find(li => li.textContent.trim().toLowerCase() === schoolName.toLowerCase());
+      if (selectedSchool) {
+        selectedSchool.classList.add('active');
+      }
+    }
+
+    function addNewSchool() {
+      alert('Add New School functionality is not implemented yet.');
+    }
+
+    function editSchool() {
+      if (currentSchool) {
+        const newDetails = prompt("Edit details for " + currentSchool, schoolData[currentSchool]);
+        if (newDetails !== null) {
+          schoolData[currentSchool] = newDetails;
+          showDetails(currentSchool); // Refresh details display
+        }
+      }
+    }
+
+    function addRemark() {
+      if (currentSchool) {
+        const remark = prompt("Add remark for " + currentSchool);
+        if (remark) {
+          alert("Remark added: " + remark);
+        }
+      } else {
+        alert("Please select a school first.");
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const searchBar = document.getElementById('search-bar');
+
+      searchBar.addEventListener('input', function () {
+        const filter = this.value.toLowerCase();
+        const schoolList = document.querySelectorAll('#school-names li');
+
+        schoolList.forEach(item => {
+          const text = item.textContent.toLowerCase();
+          item.style.display = text.includes(filter) ? '' : 'none';
+        });
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,66 @@
+/* Reset CSS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: Arial, sans-serif;
+    background: url('/images/newbusiness.jpg') no-repeat center center/cover, #765c5c;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+  
+  .container {
+    width: 100%;
+    max-width: 500px;
+    background: #eeeaea;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(255, 6, 6, 0.2);
+    opacity: 0.9;
+  }
+  
+  h1 {
+    text-align: center;
+    color: rgb(37, 37, 37);
+    margin-bottom: 20px;
+    
+  }
+  
+  .form-group {
+    margin-bottom: 15px;
+  }
+  
+  label {
+    display: block;
+    margin-bottom: 5px;
+    color: #232323;
+  }
+  
+  input, textarea, button {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #7c6969;
+    border-radius: 5px;
+    box-sizing: border-box; /* Ensure fields fit properly */
+  }
+  
+  input:focus, textarea:focus {
+    border-color: #007BFF;
+    outline: none;
+  }
+  
+  button { 
+    background-color: #198754;
+    height: 50px;
+    font-size: 18px;
+    color: white;
+    cursor: pointer;
+    }  
