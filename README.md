@@ -1,6 +1,10 @@
 School Mangement System   
 This system was developed from scratch and is still running with some modifications at the following url   
-a. [School Management System](https://myschoolsystem.org)   
+a. [School Management System](https://myschoolsystem.org)    
+
+There is a login for demonstration purposes which you can use to look at features   
+- email-is    : email1@mail.com
+- password-is : pass
    
 The system is pretty extensive and almost covers all the needs of a school that need to be systemized or digitalized   
 1. Fees System
