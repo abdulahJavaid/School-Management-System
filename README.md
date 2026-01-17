@@ -1,6 +1,6 @@
 School Mangement System   
 This system was developed from scratch and is still running with some modifications at the following url   
-a. [School Management System](myschoolsystem.org)   
+a. [School Management System](https://myschoolsystem.org)   
    
 The system is pretty extensive and almost covers all the needs of a school that need to be systemized or digitalized   
 1. Fees System
